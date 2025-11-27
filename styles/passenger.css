@@ -1,0 +1,311 @@
+.passenger-greeting-section{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid var(--primary-border-color);
+    box-shadow: var(--primary-box-shadow);
+    border-radius: 10px;
+    margin: 20px 10px;
+    margin-bottom: 0px;
+    padding: 15px 20px;
+}
+
+.greeting-desc{
+    margin-top: 5px;
+}
+
+/* environment + search section */
+/* @media (min-width: 601px){
+    .environment-search-section{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+    }
+    
+} */
+
+/* environmental impact */
+.environment-impact-section{
+    display: flex;
+    justify-content: center;
+}
+
+.environment-impact-container{
+    background-color: var(--green-bg-color);
+    padding: 15px;
+    margin: 20px 10px;
+    margin-bottom: 0px;
+    border-radius: 10px;
+    border: 1px solid var(--primary-border-color);
+    box-shadow: var(--primary-box-shadow);
+    width: 335px;
+}
+
+.environment-impact-logo{
+    width: 40px;
+    margin-right: 5px;
+}
+
+.environment-impact-row-1{
+    display: flex;
+    align-items: center;
+}
+
+.environment-impact-stats{
+    margin: 20px 0px;
+}
+
+.view-leaderboard-button{
+    background-color: white;
+    border: 1px solid var(--primary-border-color);
+    border-radius: 5px;
+    box-shadow: var(--primary-box-shadow);
+    font-size: 12px;
+    padding: 5px;
+}
+
+/* search section */
+.search-section{
+    display: flex;
+    justify-content: center;
+}
+@media (max-width: 999px){
+    .search-container{
+        background-color: white;
+        padding: 30px 15px;
+        border: var(--primary-border-color);
+        box-shadow: var(--primary-box-shadow);
+        border-radius: 10px;
+        margin: 20px 10px 0px 10px;
+        width: 100%;
+    
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 1000px){
+    .search-container{
+        background-color: red;
+        padding: 30px 15px;
+        border: var(--primary-border-color);
+        box-shadow: var(--primary-box-shadow);
+        border-radius: 10px;
+        margin: 20px 10px 0px 10px;
+        width: 100%;
+    
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+
+
+.search-field{
+    margin-top:15px ;
+    background-color: var(--grey-bg-color);
+    border: 1px solid var(--primary-border-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+
+
+.field-1{
+    margin-top: 0px;
+}
+
+@media (max-width:600px){
+    .available-rides-section{
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 480px;
+    }
+
+    .ride-card{
+        background-color: white;
+        margin: 15px 0px 0px 0px;
+        border: 1px solid var(--primary-border-color);
+        box-shadow: var(--primary-box-shadow);
+        border-radius: 10px;
+
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+    
+    }
+}
+
+@media (min-width:601px){
+    .available-rides-section{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
+    .ride-card{
+        background-color: white;
+        margin: 15px 10px 0px 10px;
+        border: 1px solid var(--primary-border-color);
+        box-shadow: var(--primary-box-shadow);
+        border-radius: 10px;
+    
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+    
+    }
+}
+
+@media (min-width:1000px){
+    .available-rides-section{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        width: 100%;
+    }
+
+    .ride-card{
+        background-color: white;
+        margin: 15px 10px 0px 10px;
+        border: 1px solid var(--primary-border-color);
+        box-shadow: var(--primary-box-shadow);
+        border-radius: 10px;
+    
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+    
+    }
+}
+
+.ride-card{
+    background-color: white;
+    margin: 15px 10px 0px 10px;
+    border: 1px solid var(--primary-border-color);
+    box-shadow: var(--primary-box-shadow);
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+
+}
+
+.ride-card-row-1{
+    display: flex;
+    justify-content: space-between;
+}
+
+.locations{
+    font-size: 15px;
+}
+
+.ride-status{
+    background-color: var(--grey-bg-color);
+    padding: 3px 5px;
+    border: var(--primary-border-color);
+    border-radius: 5px;
+    height: 15px;
+}
+
+.ride-card-row-2{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.driver-details{
+    display: flex; 
+    flex: 3;
+}
+
+.driver-pfp{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.view-button-container{
+    display: flex;
+    justify-content: flex-start;
+
+    flex: 2;
+}
+
+.view-profile-button{
+    padding: 5px 7px;
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    font-size: 12px;
+    transition: border 0.5s;
+    width: 110px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.view-profile-button:hover{
+    border: 2px solid var(--button-green);
+    cursor: pointer;
+}
+
+.user-logo{
+    width: 20px;
+}
+
+.ride-card-row-3{
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.ride-card-row-4{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.clock-logo, .users-logo{
+    margin-right: 7px;
+    width: 15px;
+}
+
+.request-ride-button{
+    margin-top: 10px;
+    background-color: var(--button-green);
+    color: white;
+    padding: 6px 0px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.5s;
+}
+
+.request-ride-button:hover{
+    background-color:rgb(25, 194, 138);
+    cursor: pointer;
+}
+
+/* Cancel request button */
+.requested-rides-title{
+    margin: 30px 10px 0px 15px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.cancel-request-button{
+    width: 130px;
+    background-color: var(--grey-bg-color);
+    border: 1px solid var(--primary-border-color);
+    box-shadow: var(--primary-box-shadow);
+    border-radius: 3px;
+    margin-top: 10px;
+    padding: 3px 0px;
+    transition: background-color 0.5s;
+}
+
+.cancel-request-button:hover{
+    cursor: pointer;
+    background-color: var(--green-bg-color);
+}

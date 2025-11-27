@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbonara Passenger</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/passenger.css">
+</head>
+<body>
+  
+  <!-- Greeting Section -->
+    <div class="passenger-greeting-section">
+        <p class="bold">Welcome Demo!</p>
+        <p class="grey-text greeting-desc">Find and join rides to your destination</p>
+    </div>
+
+    <!-- Environment Impact Stats-->
+    <div class="environment-search-section">
+        <div class="environment-impact-section">
+            <div class="environment-impact-container">
+                <div class="environment-impact-row-1">
+                    <img class="environment-impact-logo" src="assets/img/leaf.png">
+                    <p class="bold">Your Environmental Impact</p>
+                </div>
+                <p class="grey-text">CO2 saved through carpooling</p>
+                <p class="bold-green-text environment-impact-stats">145.5kg</p>
+                <a href="leaderboard.html"><button class="view-leaderboard-button" >View Leaderboard</button></a>
+            </div>
+        </div>
+        
+    
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <input class="search-field field-1" type="text" placeholder="From (e.g., Sri Petaling)">
+                <input class="search-field" type="text" placeholder="To (e.g.,Sunway University)">
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <!-- Available Rides  -->
+    <div class="available-rides-section" id="availableRides">
+    </div>
+
+
+    
+    <!-- Requested -->
+    <div class="requested-rides-section" id="requestedRides">
+        <p class="requested-rides-title">Requested Rides</p>
+        <div class="ride-card" id="ride-${ride.ride_id}">
+            <div class="ride-card-row-1">
+                <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
+                <div class="ride-status grey-text">
+                    ${ ride.status}
+                </div>
+            </div>
+            <div class="ride-card-row-2">
+                <div class="driver-details">
+                    <img class="driver-pfp" src="assets/img/leaf.png">
+                    <div>
+                        <p>${ride.driver.name}</p>
+                        <p class="grey-text">★ ${ride.driver.average_rating}</p>
+                    </div>
+                </div>
+                
+                <div class="view-button-container">
+                    <button class="view-profile-button">
+                        <img class="user-logo" src="assets/img/user.svg">
+                         View Profile
+                    </button>
+                </div>
+            </div>
+            <div class="ride-card-row-3 grey-text">
+                <img class="clock-logo" src="assets/img/clock.svg">
+                <p>${ride.departure_datetime}</p>
+            </div>
+            
+            <button class="cancel-request-button">
+                &#10006; Cancel Request
+            </button>
+        </div>
+    </div>
+
+    <!-- Requested Ride Section -->
+    <script src="scripts/passenger.js"></script>
+</body>
+</html>
+
+
