@@ -48,9 +48,10 @@
 
     
     <!-- Requested -->
+    <p class="requested-rides-title">Requested Rides</p>
     <div class="requested-rides-section" id="requestedRides">
-        <p class="requested-rides-title">Requested Rides</p>
-        <div class="ride-card" id="ride-${ride.ride_id}">
+        
+        <!-- <div class="ride-card" id="ride-${ride.ride_id}">
             <div class="ride-card-row-1">
                 <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
                 <div class="ride-status grey-text">
@@ -81,11 +82,11 @@
             <button class="cancel-request-button">
                 &#10006; Cancel Request
             </button>
-        </div>
+        </div> -->
     </div>
 
     <!-- Requested Ride Section -->
-    <script src="scripts/passenger.js"></script>
+    <script type="module" src="scripts/passenger.js"></script>
 </body>
 </html>
 
