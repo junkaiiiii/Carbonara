@@ -1,31 +1,15 @@
-const users = [
-  {username : 'Hi im number one',
-    role : 'Driver',
-    savedCO2 : '421.6'
-  },
-  {username : 'Jessie Chin',
-    role : 'Driver',
-    savedCO2 : '301.6'
-  },
-  {username : 'GAY',
-    role : 'Passenger',
-    savedCO2 : '281.6'
-  },
-  {username : 'no.4 doesnt deserve border',
-    role : 'Driver',
-    savedCO2 : '421.6'
-  },
-  {username : 'NOOB',
-    role : 'Driver',
-    savedCO2 : '421.6'
-  }
+const states =[
+  users = [
+  ]
 ];
 
 const leaderboard = document.getElementById('leaderboard');
 const topThreeLeaderboard = document.getElementById('top3Leaderboard')
+const co2 = document.getElementById('co2-kg');
 console.log(leaderboard.innerHTML);
 
-const createUserCard = ({username, role, savedCO2},ranking) => {
+// components
+const createUserCard = ({username, role, saved_co2},ranking) => {
   const div = document.createElement('div');
   div.innerHTML = `
   <div class="leaderboard-user-card">
@@ -43,7 +27,7 @@ const createUserCard = ({username, role, savedCO2},ranking) => {
     </div>
     
     <div class="user-card-right">
-      <p class="stats">${savedCO2}</p>
+      <p class="stats">${saved_co2}</p>
       <p class="stats-unit">kg CO₂</p>
     </div>
   </div>
@@ -63,28 +47,40 @@ const createTopThreeCard = ({username}) =>{
     return div.firstElementChild;
 }
 
+
+//fetch function
+const getAllUsers = () => {
+  fetch('api/ranking_api.php')
+    .then (response => response.json())
+    .then (data => {
+      states.users = data;
+      console.log(states.users);
+      render();
+    })
+    .catch(error => console.error("Fetch error:", error));
+}
+
 const render= () => {
     leaderboard.innerHTML = '';
     topThreeLeaderboard.innerHTML = '';
-  
-    users.forEach((user,index) => {
+    co2.innerHTML = '';
+
+    let totalCO2 = 0;
+    states.users.forEach((user,index) => {
+
+      totalCO2 += Number(user.saved_co2);
+      const userCard = createUserCard(user,index+1);
+      // Add a class for top 3
+      if (index < 3) {
+          userCard.classList.add('top-3');
+          userCard.classList.add(`rank-${index+1}`);
+      }
     
-    const userCard = createUserCard(user,index+1);
-    // Add a class for top 3
-    if (index < 3) {
-        userCard.classList.add('top-3');
-        userCard.classList.add(`rank-${index+1}`);
+      leaderboard.appendChild(userCard);
   
-        const topThreeCard = createTopThreeCard(user);
-        console.log(`rank-${index+1}`)
-        topThreeCard.classList.add(`rank-${index+1}`)
-        topThreeLeaderboard.appendChild(topThreeCard);
-    }
-  
-    leaderboard.appendChild(userCard);
-  
-  });
+    });
+
+    co2.innerHTML = String(totalCO2);
 }
 
-
-render();
+getAllUsers();
