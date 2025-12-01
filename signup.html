@@ -14,7 +14,7 @@
             <p class="bold">Create an account</p>
             <p class="grey-text">Join Carbonara and start sharing rides</p>
 
-            <form class="sign-up-form">
+            <form class="sign-up-form" id="signUpForm">
                 <div>
                     <label>
                         Full Name
@@ -53,16 +53,21 @@
                     
                 </div>
 
-                <button type="submit" >Create Account</button>
+                <button type="submit" id="signUpBtn" >Create Account</button>
             </form>
+
+            <p id="messageBox"></p>
 
             <p class="log-in-link">
                 Already Have an account? <a href="login.html">
                     Log In
                 </a>
             </p>
-        </div>
 
+            
+        </div>
+        
     </div>
+    <script type="module" src="scripts/signup.js"></script>
 </body>
 </html>
