@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost","root","","ridegreen_practice");
+$conn = mysqli_connect("localhost","root","","Carbonara");
 
 if (!$conn){
     header("Content-Type: application/json");
