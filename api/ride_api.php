@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include "headers.php";
 include "../db_connect.php";
@@ -10,7 +11,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === "GET"){
 
-    $sessionUserId = "US_003"; // or however you store session user ID
+    $user_id = $_SESSION['user_id']; // or however you store session user ID
 
     $sql = "SELECT 
                 r.*, 

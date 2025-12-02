@@ -46,7 +46,7 @@ const handleRequestRide = (rideId) => {
     if (rideIndex !== -1) {
         const [requestedRide] = states.available_rides.splice(rideIndex, 1);
 
-        requestedRide.request_status = "pending"; // or whatever status you use
+        requestedRide.request_status = "pending"; 
         states.requested_rides.push(requestedRide);
     }
 
@@ -83,11 +83,16 @@ const render = () => {
     });
 
     requestedRides.innerHTML = '';
+    //add title to the section if requested rides exist
+    if (states.requested_rides.length > 0){
+        requestedRides.innerHTML = '<p class="requested-rides-title">Requested Rides</p>'; 
+    }
+    
     states.requested_rides.forEach(ride => {
         const requestedCard = createRequestedRideCard(ride, handleCancelRequest);
         requestedRides.appendChild(requestedCard);
     });
 };
 
-
 getAllRides();
+console.log(states);

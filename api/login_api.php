@@ -23,7 +23,7 @@ if ($method === "POST") {
         $password = $data['password'];
 
         
-        $sql = "SELECT username, password_hash FROM users WHERE username = ?";
+        $sql = "SELECT user_id, username, password_hash, role FROM users WHERE username = ?";
         $stmt = mysqli_prepare($conn, $sql);
         
         if (!$stmt) {
@@ -36,12 +36,18 @@ if ($method === "POST") {
         mysqli_stmt_store_result($stmt);
         
         if (mysqli_stmt_num_rows($stmt) > 0) {
+            $db_user_id = '';
             $db_username = '';
             $db_password_hash = '';
-            mysqli_stmt_bind_result($stmt, $db_username, $db_password_hash);
+            $db_role = '';
+            mysqli_stmt_bind_result($stmt,$db_user_id, $db_username, $db_password_hash, $db_role);
             mysqli_stmt_fetch($stmt);
             
             if (password_verify($password, $db_password_hash)) {
+                $_SESSION['user_id'] = $db_user_id;
+                $_SESSION['username'] = $db_username;
+                $_SESSION['role'] = $db_role;
+
                 respond(["success" => "Welcome back " . $db_username]);
             } else {
                 respond(["error" => "Invalid credentials"], 401);

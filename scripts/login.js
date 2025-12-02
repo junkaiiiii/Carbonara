@@ -30,12 +30,17 @@ button.addEventListener('click',(e)=>{
         }
 
         // ------------------------------
-        //   🎉 SHOW SUCCESS
+        //   SHOW SUCCESS
         // ------------------------------
         if (result.success) {
             messageBox.style.color = "green";
             messageBox.style.textAlign = 'center';
             messageBox.textContent = "Logged In successfully!";
+
+            setTimeout(()=>{
+                window.location.href = 'passenger.html';
+
+            },1000);
         }
     })
     .catch(error => console.error("Fetch error:", error));
