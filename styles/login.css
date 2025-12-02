@@ -80,11 +80,11 @@ h1{
     background-color:rgb(5, 174, 118) ;
 }
 
-.log-in-link{
+.sign-up-link{
     align-self: center;
 }
 
-.log-in-link a{
+.sign-up-link a{
     color: var(--dark-green);
     text-decoration: none;
 }
