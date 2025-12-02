@@ -35,12 +35,12 @@ button.addEventListener('click',(e)=>{
         if (result.success) {
             messageBox.style.color = "green";
             messageBox.style.textAlign = 'center';
-            messageBox.textContent = "Logged In successfully!";
+            messageBox.textContent = "Logged In successfully! Redirecting to user's dashboard";
 
             setTimeout(()=>{
                 window.location.href = 'passenger.html';
 
-            },1000);
+            },500);
         }
     })
     .catch(error => console.error("Fetch error:", error));
