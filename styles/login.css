@@ -1,4 +1,4 @@
-.sign-up-section{
+.log-in-section{
     position: fixed;
     top:0;
     bottom: 0;
@@ -17,7 +17,7 @@ h1{
 }
 
 
-.sign-up-form-container{
+.log-in-form-container{
     background-color: white;
     border: 1px solid var(--primary-border-color);
     box-shadow: var(--primary-box-shadow);
@@ -30,11 +30,11 @@ h1{
     flex-direction: column;
 }
 
-.sign-up-form-container p {
+.log-in-form-container p {
     margin-top: 10px;
 }
 
-.sign-up-form {
+.log-in-form {
     margin-top: 10px;
 
     display: flex;
@@ -42,7 +42,7 @@ h1{
     justify-content: space-around;
 }
 
-.sign-up-form input{
+.log-in-form input{
     width: 90%;
     background-color: var(--grey-bg-color);
     border: 1px solid var(--primary-border-color);
@@ -54,15 +54,15 @@ h1{
     
 }
 
-.sign-up-form label{
+.log-in-form label{
     display: block;
 }
 
-.sign-up-form div{
+.log-in-form div{
     margin-top: 20px;
 }
 
-.sign-up-form button{
+.log-in-form button{
     margin-top: 30px;
     color: white;
     padding: 10px 0px;
@@ -74,7 +74,7 @@ h1{
     transition: background-color 0.5s;
 }
 
-.sign-up-form button:hover{
+.log-in-form button:hover{
     cursor: pointer;
 
     background-color:rgb(5, 174, 118) ;

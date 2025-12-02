@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In Page</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+<body>
+    <div class="log-in-section">
+        <h1>Carbonara</h1>
+        <div class="log-in-form-container">
+            <p class="bold">Login to Your Account!</p>
+            <p class="grey-text">Join Carbonara and start sharing rides</p>
+
+            <form class="log-in-form" id="logInForm">
+                <div>
+                    <label>
+                        Username / Email
+                    </label>
+                    <input type="text" name="username" placeholder="e.g. johndoe_123">
+                </div>
+                
+                <div>
+                    <label>
+                        Password
+                    </label>
+                    <input type="password" name="password" >
+    
+                    
+                </div>
+
+                <button type="submit" id="logInBtn" >Login</button>
+            </form>
+
+            <p id="messageBox"></p>
+
+            <p class="sign-up-link">
+                Dont Have an account? <a href="signup.html">
+                    Sign Up!
+                </a>
+            </p>
+
+            
+        </div>
+        
+    </div>
+    <script type="module" src="scripts/login.js"></script>
+</body>
+</html>
