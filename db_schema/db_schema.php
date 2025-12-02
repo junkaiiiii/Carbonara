@@ -161,116 +161,94 @@ INSERT INTO `users` (`user_id`, `full_name`, `username`, `email`, `password_hash
 
 
 -- Rides
-INSERT INTO rides (ride_id, driver_id, origin_text, origin_lat, origin_lon, destination_text, destination_lat, destination_lon, route_geojson, departure_datetime, available_seats, created_at, room_code) VALUES
-('RD_101', 'US_692f0e453c9dd', 'Sri Petaling', 3.068810, 101.689710, 'Asia Pacific University', 3.042300, 101.688800,
-    '{ \"0\": [101.68971, 3.06881], \"1\": [101.6888, 3.0423] }',
-    '2025-10-31 10:05:00', 3, '2025-10-25 09:00:00', 123456),
-('RD_102', 'US_692f0e453c9dd', 'Bukit Jalil', 3.054300, 101.690200, 'APU Campus', 3.052000, 101.689000,
-    '{ \"0\": [101.6902, 3.0543], \"1\": [101.689, 3.052] }',
-    '2025-11-01 08:30:00', 2, '2025-10-26 11:00:00', 654321),
-('RD_103', 'US_692f0e453c9dd', 'Puchong IOI Mall', 3.043210, 101.618400, 'APU Campus', 3.052100, 101.689200,
-    '{ \"0\": [101.6184, 3.04321], \"1\": [101.6892, 3.0521] }',
-    '2025-11-02 09:15:00', 3, '2025-10-27 10:20:00', 223344),
-('RD_104', 'US_692f0e453c9dd', 'OUG Parklane', 3.066900, 101.658900, 'Bukit Jalil LRT', 3.056700, 101.692200,
-    '{ \"0\": [101.6589, 3.0669], \"1\": [101.6922, 3.0567] }',
-    '2025-11-03 07:45:00', 4, '2025-10-28 08:15:00', 998877),
-('RD_105', 'US_692f0e453c9dd', 'Cheras Leisure Mall', 3.084300, 101.742900, 'APU Campus', 3.052000, 101.689000,
-    '{ \"0\": [101.7429, 3.0843], \"1\": [101.689, 3.052] }',
-    '2025-11-04 08:00:00', 2, '2025-10-29 09:00:00', 121212),
-('RD_106', 'US_692f0e453c9dd', 'Kuchai Lama', 3.095500, 101.690300, 'Sri Petaling', 3.068800, 101.689700,
-    '{ \"0\": [101.6903, 3.0955], \"1\": [101.6897, 3.0688] }',
-    '2025-11-05 09:30:00', 3, '2025-10-30 11:10:00', 343434),
-('RD_107', 'US_692f0e453c9dd', 'KL Sentral', 3.134800, 101.686300, 'APU Campus', 3.052100, 101.689200,
-    '{ \"0\": [101.6863, 3.1348], \"1\": [101.6892, 3.0521] }',
-    '2025-11-06 08:20:00', 1, '2025-11-01 13:00:00', 565656),
-('RD_108', 'US_692f0e453c9dd', 'Mid Valley Megamall', 3.118500, 101.677000, 'Technology Park Malaysia', 3.049900, 101.702300,
-    '{ \"0\": [101.6770, 3.1185], \"1\": [101.7023, 3.0499] }',
-    '2025-11-07 09:40:00', 3, '2025-11-02 14:30:00', 787878),
-('RD_109', 'US_692f0e453c9dd', 'Sunway Pyramid', 3.072200, 101.606900, 'Bukit Jalil Stadium', 3.056300, 101.689500,
-    '{ \"0\": [101.6069, 3.0722], \"1\": [101.6895, 3.0563] }',
-    '2025-11-08 10:00:00', 4, '2025-11-03 09:45:00', 909090),
-('RD_110', 'US_692f0e453c9dd', 'Taman Connaught', 3.074800, 101.739800, 'APU Campus', 3.052100, 101.689200,
-    '{ \"0\": [101.7398, 3.0748], \"1\": [101.6892, 3.0521] }',
-    '2025-11-09 07:55:00', 2, '2025-11-04 12:40:00', 454545),
-('RD_111', 'US_692f0e453c9dd', 'Bandar Kinrara 5', 3.038600, 101.635000, 'Sri Petaling LRT', 3.074300, 101.690800,
-    '{ \"0\": [101.6350, 3.0386], \"1\": [101.6908, 3.0743] }',
-    '2025-11-10 08:25:00', 3, '2025-11-05 18:30:00', 112233),
-('RD_112', 'US_692f0e453c9dd', 'Old Klang Road', 3.089200, 101.666600, 'Bukit Jalil', 3.054300, 101.690200,
-    '{ \"0\": [101.6666, 3.0892], \"1\": [101.6902, 3.0543] }',
-    '2025-11-11 09:05:00', 2, '2025-11-06 10:00:00', 889900);
+INSERT INTO `rides` (`ride_id`, `driver_id`, `origin_text`, `origin_lat`, `origin_lon`, `destination_text`, `destination_lat`, `destination_lon`, `route_geojson`, `departure_datetime`, `available_seats`, `created_at`, `room_code`) VALUES
+(' RD_692f17d1e7ebd', 'US_692f0e453c9dd', 'Sri Petaling', 3.068810, 101.689710, 'Asia Pacific University', 3.042300, 101.688800, '{ \"0\": [101.68971, 3.06881], \"1\": [101.6888, 3.0423] }', '2025-10-31 10:05:00', 3, '2025-10-25 09:00:00', 123456),
+('RD_692f17d1e7eda', 'US_692f0e453c9dd', 'Bukit Jalil', 3.054300, 101.690200, 'APU Campus', 3.052000, 101.689000, '{ \"0\": [101.6902, 3.0543], \"1\": [101.689, 3.052] }', '2025-11-01 08:30:00', 2, '2025-10-26 11:00:00', 654321),
+('RD_692f17d1e7edb', 'US_692f0e453c9dd', 'Puchong IOI Mall', 3.043210, 101.618400, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.6184, 3.04321], \"1\": [101.6892, 3.0521] }', '2025-11-02 09:15:00', 3, '2025-10-27 10:20:00', 223344),
+('RD_692f17d1e7edc', 'US_692f0e453c9dd', 'OUG Parklane', 3.066900, 101.658900, 'Bukit Jalil LRT', 3.056700, 101.692200, '{ \"0\": [101.6589, 3.0669], \"1\": [101.6922, 3.0567] }', '2025-11-03 07:45:00', 4, '2025-10-28 08:15:00', 998877),
+('RD_692f17d1e7edd', 'US_692f0e453c9dd', 'Cheras Leisure Mall', 3.084300, 101.742900, 'APU Campus', 3.052000, 101.689000, '{ \"0\": [101.7429, 3.0843], \"1\": [101.689, 3.052] }', '2025-11-04 08:00:00', 2, '2025-10-29 09:00:00', 121212),
+('RD_692f17d1e7ede', 'US_692f0e453c9dd', 'Kuchai Lama', 3.095500, 101.690300, 'Sri Petaling', 3.068800, 101.689700, '{ \"0\": [101.6903, 3.0955], \"1\": [101.6897, 3.0688] }', '2025-11-05 09:30:00', 3, '2025-10-30 11:10:00', 343434),
+('RD_692f17d1e7edf', 'US_692f0e453c9dd', 'KL Sentral', 3.134800, 101.686300, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.6863, 3.1348], \"1\": [101.6892, 3.0521] }', '2025-11-06 08:20:00', 1, '2025-11-01 13:00:00', 565656),
+('RD_692f17d1e7ee0', 'US_692f0e453c9dd', 'Mid Valley Megamall', 3.118500, 101.677000, 'Technology Park Malaysia', 3.049900, 101.702300, '{ \"0\": [101.6770, 3.1185], \"1\": [101.7023, 3.0499] }', '2025-11-07 09:40:00', 3, '2025-11-02 14:30:00', 787878),
+('RD_692f17d1e7ee1', 'US_692f0e453c9dd', 'Sunway Pyramid', 3.072200, 101.606900, 'Bukit Jalil Stadium', 3.056300, 101.689500, '{ \"0\": [101.6069, 3.0722], \"1\": [101.6895, 3.0563] }', '2025-11-08 10:00:00', 4, '2025-11-03 09:45:00', 909090),
+('RD_692f17d1e7ee2', 'US_692f0e453c9dd', 'Taman Connaught', 3.074800, 101.739800, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.7398, 3.0748], \"1\": [101.6892, 3.0521] }', '2025-11-09 07:55:00', 2, '2025-11-04 12:40:00', 454545),
+('RD_692f17d1e7ee3', 'US_692f0e453c9dd', 'Bandar Kinrara 5', 3.038600, 101.635000, 'Sri Petaling LRT', 3.074300, 101.690800, '{ \"0\": [101.6350, 3.0386], \"1\": [101.6908, 3.0743] }', '2025-11-10 08:25:00', 3, '2025-11-05 18:30:00', 112233),
+('RD_692f17d1e7ee4', 'US_692f0e453c9dd', 'Old Klang Road', 3.089200, 101.666600, 'Bukit Jalil', 3.054300, 101.690200, '{ \"0\": [101.6666, 3.0892], \"1\": [101.6902, 3.0543] }', '2025-11-11 09:05:00', 2, '2025-11-06 10:00:00', 889900);
 
 
 
 -- Points Log
-INSERT INTO points_log (point_id, ride_id, user_id, points_earned, log_at) VALUES
-('PO_001', 'RD_101', 'US_692f0e82a7fb7', 20, '2025-10-31 10:05'),
-('PO_002', 'RD_102', 'US_692f0ebbe9265', 15, '2025-11-01 08:35');
+INSERT INTO `points_log` (`point_id`, `ride_id`, `user_id`, `points_earned`, `log_at`) VALUES
+('PO_692f1407c294e', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 20, '2025-10-31 10:05:00'),
+('PO_692f1407c3bcb', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 15, '2025-11-01 08:35:00');
 
 
 
 -- CO2 Log
-INSERT INTO co2_log (co2_id, ride_id, user_id, co2_saved, distance_km, log_at) VALUES
-('CO_001', 'RD_101', 'US_692f0e82a7fb7', 1.50, 5.10, '2025-10-31 10:05'),
-('CO_002', 'RD_102', 'US_692f0ebbe9265', 2.20, 10.20 ,'2025-11-01 08:35');
+INSERT INTO `co2_log` (`co2_id`, `ride_id`, `user_id`, `co2_saved`, `distance_km`, `log_at`) VALUES
+('CO_692f14271e3fe', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 1.50, 5.10, '2025-10-31 10:05:00'),
+('CO_692f14271e40f', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 2.20, 10.20, '2025-11-01 08:35:00');
 
 
 
 -- Ride Participants
-INSERT INTO ride_participants (participant_id, ride_id, user_id, joined_at) VALUES
-('RP_001', 'RD_101', 'US_692f0e82a7fb7', '2025-10-31 09:50'),
-('RP_002', 'RD_101', 'US_692f0ebbe9265', '2025-10-31 09:52');
+INSERT INTO `ride_participants` (`participant_id`, `ride_id`, `user_id`, `joined_at`) VALUES
+('RP_692f1451a6442', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', '2025-10-31 09:50:00'),
+('RP_692f1451a6452', ' RD_692f17d1e7ebd', 'US_692f0ebbe9265', '2025-10-31 09:52:00');
+
 
 
 
 -- Requests
-INSERT INTO requests (request_id, ride_id, passenger_id, status, requested_at) VALUES
-('RQ_001', 'RD_101', 'US_692f0e82a7fb7', 'approved', '2025-10-30 20:00'),
-('RQ_002', 'RD_101', 'US_692f0ebbe9265', 'approved', '2025-10-30 20:10'),
-('RQ_003', 'RD_102', 'US_692f0ebbe9265', 'requested', '2025-10-31 14:00');
+INSERT INTO `requests` (`request_id`, `ride_id`, `passenger_id`, `status`, `requested_at`) VALUES
+('RQ_692f1479d6ca1', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'approved', '2025-10-30 20:00:00'),
+('RQ_692f1479d6cb3', ' RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'approved', '2025-10-30 20:10:00'),
+('RQ_692f1479d6cb4', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'requested', '2025-10-31 14:00:00');
 
 
 
 -- Ratings
-INSERT INTO ratings (rating_id, ride_id, rater_id, rated_id, score, description, created_at) VALUES
-('RT_001', 'RD_101', 'US_692f0e82a7fb7', 'US_692f0e453c9dd', 5.0, 'Driver was nice', '2025-10-31 12:00'),
-('RT_002', 'RD_101', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 4.5, 'Smooth ride', '2025-10-31 12:10');
+INSERT INTO `ratings` (`rating_id`, `ride_id`, `rater_id`, `rated_id`, `score`, `description`, `created_at`) VALUES
+('RT_692f14ac09ceb', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0e453c9dd', 5.0, 'Driver was nice', '2025-10-31 12:00:00'),
+('RT_692f14ac09f38', ' RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 4.5, 'Smooth ride', '2025-10-31 12:10:00');
 
 
 
 -- Reports
-INSERT INTO reports (report_id, ride_id, reporter_id, reported_user_id, description, status, created_at) VALUES
-('RE_001', 'RD_102', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 'Driver was late', 'Pending', '2025-11-01 09:00'),
-('RE_002', 'RD_101', 'US_692f0e82a7fb7', 'US_692f0ebbe9265', 'Passenger was rude', 'Approved', '2025-10-31 13:20');
+INSERT INTO `reports` (`report_id`, `ride_id`, `reporter_id`, `reported_user_id`, `description`, `status`, `created_at`) VALUES
+('RE_692f14ebc30eb', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 'Driver was late', 'Pending', '2025-11-01 09:00:00'),
+('RE_692f14ebc319e', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0ebbe9265', 'Passenger was rude', 'Approved', '2025-10-31 13:20:00');
 
 
 
 -- Prizes
-INSERT INTO prizes (prize_id, prize_name, points_required, stock, prize_image_url) VALUES
-('PR_001', 'BadgeA', 100, 50, 'badgeA.png'),
-('PR_002', 'BadgeB', 150, 40, 'badgeB.png');
+INSERT INTO `prizes` (`prize_id`, `prize_name`, `points_required`, `stock`, `prize_image_url`) VALUES
+('PR_692f18730aefd', 'BadgeA', 100, 50, 'badgeA.png'),
+('PR_692f18730b37e', 'BadgeB', 150, 40, 'badgeB.png');
 
 
 
 -- Redemption
-INSERT INTO redemption (redemption_id, prize_id, user_id, cost, redeemed_at) VALUES
-('RED_001', 'PR_001', 'US_692f0e82a7fb7', 100, '2025-11-10 14:00'),
-('RED_002', 'PR_002', 'US_692f0ebbe9265', 150, '2025-11-12 16:00');
+INSERT INTO `redemption` (`redemption_id`, `prize_id`, `user_id`, `cost`, `redeemed_at`) VALUES
+('RED_692f135fd2663', 'PR_692f18730aefd', 'US_692f0e82a7fb7', 100, '2025-11-10 14:00:00'),
+('RED_692f135fd2dcc', 'PR_692f18730b37e', 'US_692f0ebbe9265', 150, '2025-11-12 16:00:00');
 
 
 
 -- Driving License
-INSERT INTO driving_license (license_id, user_id, status, license_image_url) VALUES
-('DL_001', 'US_692f0e453c9dd', 'Approved', 'license1.png'),
-('DL_002', 'US_692f0ebbe9265', 'Pending', 'license2.png');
+INSERT INTO `driving_license` (`license_id`, `user_id`, `status`, `license_image_url`) VALUES
+('DL_692f13c0e2812', 'US_692f0e453c9dd', 'Approved', 'license1.png'),
+('DL_692f13c0e2822', 'US_692f0ebbe9265', 'Pending', 'license2.png');
 
 
 
 -- Vehicles
-INSERT INTO vehicles (vehicle_id, driver_id, car_plate_number, color, type, registered_at) VALUES
-('VH_001', 'US_692f0e453c9dd', 'SJK732', 'Blue', 'Sedan', '2025-12-30 09:10'),
-('VH_002', 'US_692f0e453c9dd', 'WXY123', 'Red', 'SUV', '2025-12-15 17:20');
+INSERT INTO `vehicles` (`vehicle_id`, `driver_id`, `car_plate_number`, `color`, `type`, `registered_at`) VALUES
+('VH_692f13de625f8', 'US_692f0e453c9dd', 'SJK732', 'Blue', 'Sedan', '2025-12-30 09:10:00'),
+('VH_692f13de62608', 'US_692f0e453c9dd', 'WXY123', 'Red', 'SUV', '2025-12-15 17:20:00');
 
 SET FOREIGN_KEY_CHECKS = 1;";
+// $sql = file_get_contents('carpooling_schema.sql');
 
 if (mysqli_multi_query($conn,$sql)){
     echo "Tables created successfully";
