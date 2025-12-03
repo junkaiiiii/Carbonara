@@ -36,8 +36,11 @@ button.addEventListener("click",(e)=>{
                 messageBox.style.color = "green";
                 messageBox.style.textAlign = 'center';
                 messageBox.textContent = "Account created successfully!";
-                // You can redirect after a short delay if you want
-                // setTimeout(() => window.location.href = "login.html", 1000);
+                
+                setTimeout(()=>{
+                    window.location.href = 'passenger.html';
+    
+                },500);
             }
         })
         .catch (error => console.error("Fetch error:", error));

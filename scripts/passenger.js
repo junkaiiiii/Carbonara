@@ -2,7 +2,7 @@ import { createAvailableRideCard, createRequestedRideCard } from "./app.js";
 
 let states = {
     available_rides: [],
-    requested_rides: []
+    requested_rides: [],
 };
 
 // DOM

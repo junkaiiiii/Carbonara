@@ -10,74 +10,149 @@ include "helpers.php";
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === "GET"){
+    $mode = $_GET['mode'] ?? 'available';
+    $sessionUserId = $_SESSION['user_id']; // or however you store session user ID
+    $sessionRole = $_SESSION['role'];
+    // get role also and return hosted if its driver
 
-    $user_id = $_SESSION['user_id']; // or however you store session user ID
+    if ($mode === 'available'){
+        $sql = "SELECT 
+            r.*, 
+            u.full_name, u.username, u.email, u.phone, u.profile_picture_url, u.role, u.status AS user_status, u.created_at AS user_created,
+            
+            -- Request status for this user
+            req.status AS user_request_status,
+            
+            -- Join check
+            rp.participant_id AS participant_exists
 
-    $sql = "SELECT 
-                r.*, 
-                u.full_name, u.username, u.email, u.phone, u.profile_picture_url, u.role, u.status AS user_status, u.created_at AS user_created,
-                
-                -- Request status for this user
-                req.status AS user_request_status,
-                
-                -- Join check
-                rp.participant_id AS participant_exists
+        FROM rides r
+        INNER JOIN users u ON r.driver_id = u.user_id
 
-            FROM rides r
-            INNER JOIN users u ON r.driver_id = u.user_id
+        -- check if current user requested this ride
+        LEFT JOIN requests req 
+            ON req.ride_id = r.ride_id 
+            AND req.passenger_id = '$sessionUserId'
 
-            -- check if current user requested this ride
-            LEFT JOIN requests req 
-                ON req.ride_id = r.ride_id 
-                AND req.passenger_id = '$sessionUserId'
+        -- check if current user already joined this ride
+        LEFT JOIN ride_participants rp 
+            ON rp.ride_id = r.ride_id 
+            AND rp.user_id = '$sessionUserId'
+        
+        WHERE u.user_id != '$sessionUserId'
+        ";
 
-            -- check if current user already joined this ride
-            LEFT JOIN ride_participants rp 
-                ON rp.ride_id = r.ride_id 
-                AND rp.user_id = '$sessionUserId'
-    ";
+        $result = mysqli_query($conn, $sql);
+        $response = [];
 
-    $result = mysqli_query($conn, $sql);
-    $response = [];
+        if ($result && mysqli_num_rows($result) > 0){
+            while ($row = mysqli_fetch_assoc($result)) {
 
-    if ($result && mysqli_num_rows($result) > 0){
-        while ($row = mysqli_fetch_assoc($result)) {
+                $ride = [
+                    "ride_id"           => $row["ride_id"],
+                    "origin_text"       => $row["origin_text"],
+                    "origin_lat"        => $row["origin_lat"],
+                    "origin_lon"        => $row["origin_lon"],
+                    "destination_text"  => $row["destination_text"],
+                    "destination_lat"   => $row["destination_lat"],
+                    "destination_lon"   => $row["destination_lon"],
+                    "route_geojson"     => json_decode($row["route_geojson"], true),
+                    "departure_datetime"=> $row["departure_datetime"],
+                    "available_seats"   => $row["available_seats"],
+                    "created_at"        => $row["created_at"],
+                    "room_code"         => $row["room_code"],
 
-            $ride = [
-                "ride_id"           => $row["ride_id"],
-                "origin_text"       => $row["origin_text"],
-                "origin_lat"        => $row["origin_lat"],
-                "origin_lon"        => $row["origin_lon"],
-                "destination_text"  => $row["destination_text"],
-                "destination_lat"   => $row["destination_lat"],
-                "destination_lon"   => $row["destination_lon"],
-                "route_geojson"     => json_decode($row["route_geojson"], true),
-                "departure_datetime"=> $row["departure_datetime"],
-                "available_seats"   => $row["available_seats"],
-                "created_at"        => $row["created_at"],
-                "room_code"         => $row["room_code"],
+                    // NEW FIELDS
+                    "request_status"    => $row["user_request_status"] ?? null,
+                    "joined"            => $row["participant_exists"] ? true : false,
 
-                // NEW FIELDS
-                "request_status"    => $row["user_request_status"] ?? null,
-                "joined"            => $row["participant_exists"] ? true : false,
+                    "driver" => [
+                        "user_id"            => $row["driver_id"],
+                        "name"               => $row["full_name"],
+                        "username"           => $row["username"],
+                        "email"              => $row["email"],
+                        "phone"              => $row["phone"],
+                        "profile_picture"    => $row["profile_picture_url"],
+                        "role"               => $row["role"],
+                        "created_at"         => $row["user_created"]
+                    ]
+                ];
 
-                "driver" => [
-                    "user_id"            => $row["driver_id"],
-                    "name"               => $row["full_name"],
-                    "username"           => $row["username"],
-                    "email"              => $row["email"],
-                    "phone"              => $row["phone"],
-                    "profile_picture"    => $row["profile_picture_url"],
-                    "role"               => $row["role"],
-                    "created_at"         => $row["user_created"]
-                ]
-            ];
-
-            $response[] = $ride;
+                $response[] = $ride;
+            }
         }
+        respond($response,200);
+    }
+    // get hosted rides for driver
+    elseif ($mode === 'hosted') {
+
+        $sql = "
+            SELECT r.*, re.passenger_id, u.full_name, u.username, u.email, u.role, u.status, 
+                   u.phone, u.profile_picture_url, u.created_at
+            FROM rides r
+            INNER JOIN requests re ON r.ride_id = re.ride_id
+            INNER JOIN users u ON re.passenger_id = u.user_id
+            WHERE re.status = 'requested' AND r.driver_id = ?
+        ";
+    
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $sessionUserId);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        
+        $route_geojson = '';
+        mysqli_stmt_bind_result($stmt,
+            $ride_id, $driver_id, $origin_text, $origin_lat, $origin_lon,
+            $destination_text, $destination_lat, $destination_lon,
+            $route_geojson, $departure_datetime, $available_seats,
+            $created_at, $room_code,
+            $passenger_id, $full_name, $username, $email, $role, $status,
+            $phone, $profile_picture_url, $user_created_at
+        );
+    
+        while (mysqli_stmt_fetch($stmt)) {
+    
+            // If ride not added yet, initialize it
+            if (!isset($response[$ride_id])) {
+
+                $response[$ride_id] = [
+                    'ride_id' => $ride_id,
+                    'driver_id' => $driver_id,
+                    'origin_text' => $origin_text,
+                    'origin_lat' => $origin_lat,
+                    'origin_lon' => $origin_lon,
+                    'destination_text' => $destination_text,
+                    'destination_lat' => $destination_lat,
+                    'destination_lon' => $destination_lon,
+                    'route_geojson' => json_decode($route_geojson, true),
+                    'departure_datetime' => $departure_datetime,
+                    'available_seats' => $available_seats,
+                    'created_at' => $created_at,
+                    'room_code' => $room_code,
+                    'passengers' => []  // create array
+                ];
+            }
+
+            // If passenger exists, push into list
+            if ($passenger_id !== null) {
+                $response[$ride_id]['passengers'][] = [
+                    'passenger_id' => $passenger_id,
+                    'full_name' => $full_name,
+                    'username' => $username,
+                    'email' => $email,
+                    'role' => $role_p,
+                    'status' => $status,
+                    'phone' => $phone,
+                    'profile_picture_url' => $profile_picture_url,
+                    'user_created_at' => $user_created_at
+                ];
+            }
+        }
+
+        respond($response,200);
     }
 
-    respond($response,200);
+    
 }
 
 elseif ($method === "POST") {
