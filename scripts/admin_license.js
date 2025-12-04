@@ -3,32 +3,7 @@ const reviewedGrid = document.querySelector('.reviewed-grid');
 
 
 states = {
-    licenses : [
-                {
-                    username : "Junkai",
-                    email : "junkainoob@gmail.com",
-                    pfpImgUrl : "./images/stableRonaldo.avif",
-                    status : "Pending",
-                    licenseNum: "SJK732",
-                    licenseUrl : "./images/PLUS ULTRA.jpg"
-                },
-                {
-                    username : "Jensen",
-                    email : "jenjennoob@gmail.com",
-                    pfpImgUrl : "./images/stableRonaldo.avif",
-                    status : "Pending",
-                    licenseNum: "WA3431X",
-                    licenseUrl : "./images/PLUS ULTRA.jpg"
-                },
-                {
-                    username : "Eng Hong Xuan",
-                    email : "iLoveTrainer@gmail.com",
-                    pfpImgUrl : "./images/stableRonaldo.avif",
-                    status : "Pending",
-                    licenseNum: "SJK732",
-                    licenseUrl : "./images/PLUS ULTRA.jpg"
-                }
-            ],
+    licenses : [],
     reviewed : [
                 {
                     username : "Eng Hong Xuan",
@@ -86,19 +61,22 @@ const createReviewedCard = (name, licenseNum, status) => {
     `
     return div.firstElementChild;
 }
-
-licenseGrid.innerHTML = ``;
-states.licenses.forEach(license => {
-
-
-    const card = createLicenseCard(license.username,
-                                   license.email,
-                                   license.pfpImgUrl,
-                                   license.status,
-                                   license.licenseNum,
-                                   license.licenseUrl);
-    licenseGrid.appendChild(card);
-})
+function render(){
+    console.log("Am i here???");
+    licenseGrid.innerHTML = ``;
+    console.log(states);
+    states.licenses.forEach(license => {
+        console.log("but im not here???");
+        const card = createLicenseCard(license.user.name,
+                                    license.user.email,
+                                    license.user.pfp,
+                                    license.license_status,
+                                    "SJK732",
+                                    license.license_img_url);
+        console.log(card);
+        licenseGrid.appendChild(card);
+    })
+}
 
 reviewedGrid.innerHTML = `
     <div class="column-header">
@@ -137,3 +115,24 @@ states.reviewed.forEach(review => {
 //         console.log(document.getElementsByClassName(".reviewed-status"));
 //     }
 // })
+
+
+const getAllPendLicens = () => {
+    fetch("api/license.php")
+        .then(response => response.json())
+        .then(data => {
+            states.license = [];
+
+            data.forEach(license => {
+                console.log(license);
+                if (license.license_status === "Pending"){
+                    console.log("HELLOWW??");
+                    states.licenses.push(license);
+                    console.log(states.license);
+                }
+            })
+            console.log("AM I HERE???");
+            render();
+        })
+}
+getAllPendLicens();

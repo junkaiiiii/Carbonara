@@ -58,8 +58,8 @@ const createUserCard = (reporterUsername, reporterUrl, reporterEmail, receipantU
                 <p>${description}</p>
             </div>
             <div class="options">
-                <div class="button"><button id="approve">Approve</button></div>
-                <div class="button"><button id="reject">Reject</button></div>
+                <div class="button"><button id="approve">Resolve</button></div>
+                <div class="button"><button id="reject">Ban</button></div>
             </div>
         </div>   
     `
