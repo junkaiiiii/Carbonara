@@ -38,7 +38,8 @@ hr{
 .user-card{
     display: flex;
     flex-direction: column;
-    border: solid 2px black;
+    border: solid 2px var(--primary-border-color);
+    box-shadow: var(--primary-box-shadow);
     padding: 2rem 1.5rem;
     border-radius: 10px;
 }
@@ -53,6 +54,11 @@ hr{
 }
 .username{
     flex: 11;
+    margin-top: -13px;
+
+    & p{
+        margin-top: -5px;
+    }
 }
 .status{
     flex: 1;
@@ -97,10 +103,11 @@ hr{
     border-radius: 5px;
     width: 17vw;
     height: 4vh;
+    border: none;
 }
 
 #approve{
-    background-color: rgb(98, 223, 98);
+    background-color: var(--button-green);
 }
 #reject{
     background-color: rgb(250, 60, 60);

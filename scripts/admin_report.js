@@ -103,6 +103,7 @@ states.users.forEach(user => {
         reportStatus.style.color = "red";
         reportStatus.style.borderColor = "red";
     }
+    reportCard.style.boxShadow = "var(--box-shadow)";
     count += 1;
 })
 

@@ -1,6 +1,6 @@
 <?php
 
-    include("./header.html");
+    include("admin_header.html");
 
 ?>
 
@@ -10,7 +10,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users</title>
-    <link rel="stylesheet" href="styles/users.css">    
+    <linK rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/admin_users.css">    
 </head>
 <body>
     <!-- HELLOWWW -->
@@ -125,7 +126,7 @@
         </div> -->
     </div>
 
-    <script src="scripts/users.js"></script>
+    <script src="scripts/admin_users.js"></script>
 </body>
 
 </html>

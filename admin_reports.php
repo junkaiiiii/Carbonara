@@ -1,5 +1,5 @@
 <?php
-    include("./header.html");
+    include("admin_header.html");
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="styles/report.css">
+    <linK rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/admin_report.css">
 </head>
 <body>
     <div class="reports-nav">
@@ -48,6 +49,6 @@
             </div>
         </div>
     </section>
-    <script src="scripts/report.js"></script>
+    <script src="scripts/admin_report.js"></script>
 </body>
 </html>
