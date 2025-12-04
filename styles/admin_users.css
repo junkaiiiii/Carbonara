@@ -1,0 +1,284 @@
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body{
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+.nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8ch;
+    background-color: aliceblue;
+    border-bottom: solid 1px black;
+    z-index: 1000;
+
+}
+
+.navBar{
+    display: flex;
+    padding: 0.5rem 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.logo-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px; 
+}
+
+.logo{
+    cursor: pointer;
+    font-size: 3ch;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+.logo-img{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+.user-info{
+    display: flex;
+    flex-direction: start;
+
+}
+.user-details{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-pfp{
+    flex: 1;
+    padding-right: 0.5rem;
+    cursor: pointer;
+}
+
+.user-name{
+    flex: 1;
+    padding-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+
+}
+
+.pfp-img{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.logout{
+    margin-left: 1rem;
+    margin-right: -1rem;
+}
+
+.logout-img{
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
+/* .admin-dashboard{
+    margin-top: 80px;
+    background-color: white;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 3ch 20ch;
+    flex-direction: column;
+    
+} 
+.admin-container p {
+    color: gray;
+}
+
+.choices{
+    margin-top: 4ch;
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    align-items: center;
+    margin-left: -9px;
+}
+.choices a {
+    display: inline;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 8px;
+ 
+}
+
+.choices a:hover{
+    color: rgb(1, 255, 77);
+    transform: translateY(-4px);
+    border-bottom: solid 2px rgb(1, 255, 77);
+} 
+
+hr{
+    margin-top: 38px;
+} */
+
+.search-bar{
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-top: 4vh;
+    height: 5ch;
+    width: 38vw;
+    border: solid gray 2px;
+    border-radius: 10px;
+    margin-left: 10vw;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.search-bar:focus-within{
+    border-color: black;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.2);
+    transform: translateY(0.9);
+}
+.search-icon{
+    position: absolute;
+    top: 9px;
+    left: 5px;
+
+}
+
+.search-bar img{
+    /* position: absolute; */
+    height: 20px;
+    width: 20px;
+    object-fit: cover;
+    margin-right: 10px;
+    left: 6px;
+
+}
+
+.search-placeholder{
+    position: absolute;
+    top: 9px;
+    left: 30px;
+    width: 100%;
+}
+.search-placeholder input{
+    width: 100%;
+    border: none;
+    outline: none;
+    
+}
+
+.user-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    margin-top: 4vh;
+    margin-left: 10vw;
+    width: 80vw;
+
+    gap: 50px;
+}
+
+
+.user-card{
+    display: flex;
+    flex-direction: column;
+    border: solid black 2px;
+    height: 33vh;
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+}
+
+.user-info{
+    display: flex;
+}
+.card-pfp{
+    flex: 2;
+}
+.card-name{
+    flex: 9;
+}
+.card-role{
+    flex:1;
+    justify-content: flex-end;
+}
+
+.card-role p{
+    background-color: rgb(185, 244, 185);
+    padding: 0.2em 0.5rem;
+    border-radius: 10px;
+}
+
+.card-name p{
+    font-size: 0.9em;
+}
+.pfp-card-img{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user-stats{
+    display: flex;
+    background-color: rgb(235, 232, 232);
+    padding: 0.5rem 1.5rem;
+    border-radius: 10px;
+    margin-top: 13px;
+    justify-content: space-around;
+}
+.user-stats p{
+    color: gray;
+}
+.user-stats-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-contacts{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2vh;
+    width: 100%;
+}
+
+.user-contacts-container{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & a{
+        margin-top: 35px;
+        text-decoration: none;
+        color: black;
+        border: solid 2px gray;
+        border-radius: 5px;
+        width: 140px;
+        padding: 0.1rem 1rem;
+    }
+}
+
+.user-contacts p{
+    color: gray;
+}
+
+
