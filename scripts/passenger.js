@@ -11,6 +11,7 @@ const availableRides = document.getElementById('availableRides');
 const requestedRides = document.getElementById('requestedRides');
 const messageBox = document.getElementById('messageBox');
 const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
+const stars = document.querySelectorAll('.stars i');
 
 // Fetch all rides
 const getAllRides = () => {
@@ -74,6 +75,15 @@ const handleCancelRequest = (rideId) => {
     render();
 };
 
+// highlight rating stars
+const highlightStars = (rating) => {
+    stars.forEach((star,index)=>{
+        if (index<rating){
+            star.classList.add('highlighted');
+        }
+    })
+}
+
 
 // Render all UI
 const render = () => {
@@ -99,3 +109,4 @@ const render = () => {
 roomCodeSubmitButton.addEventListener('click', ()=>requestRide(document.getElementById('roomCodeField').value,messageBox));
 getAllRides();
 console.log(states);
+highlightStars(3);

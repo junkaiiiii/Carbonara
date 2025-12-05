@@ -6,6 +6,7 @@
     <title>Carbonara Passenger</title>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/passenger.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 </head>
 </head>
@@ -25,7 +26,7 @@
                     <img class="environment-impact-logo" src="assets/img/leaf.png">
                     <p class="bold">Your Environmental Impact</p>
                 </div>
-                <p class="grey-text">CO2 saved through carpooling</p>
+                <p class="grey-text">CO₂ saved through carpooling</p>
                 <p class="bold-green-text environment-impact-stats">145.5kg</p>
                 <a href="leaderboard.html"><button class="view-leaderboard-button" >View Leaderboard</button></a>
             </div>
@@ -83,6 +84,50 @@
     <!-- Requested Ride Section -->
      <script type="module" src="scripts/qr.js"></script>
     <script type="module" src="scripts/passenger.js"></script>
+
+    <!-- Driver Profile Pop Up -->
+     <div class="driver-popup-container">
+        <div class="driver-popup">
+            <button class="close-driver-popup-button">
+                <img class="close-driver-popup-icon" src="assets/img/close.png">
+            </button>
+            <div class="driver-popup-row-1">
+                <h3>User Profile</h3>
+                <img class="popup-pfp" src="assets/img/leaf.png">
+                <h1>Demo User</h1>
+                <div class="popup-role">Driver</div>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
+            <div class="driver-popup-row-2">
+                <div>
+                    <p class="grey-text">Total Rides</p>
+                    <h1>42</h1>
+                </div>
+                <div>
+                    <p class="grey-text">CO₂ Saved</p>
+                    <h1>42</h1>
+                </div>
+            </div>
+            <div class="contact-container">
+                <p class="bold">Contact Information</p>
+                <p>demo@example.com</p>
+                <p>+12345678</p>
+            </div>
+            <div class="license-container">
+                <p class="bold">Driver License</p>
+                <div class="license-status-container">
+                    <p class="grey-text">status</p>
+                    <div>approved</div>
+                </div>
+            </div>
+        </div>
+     </div>
 </body>
 </html>
 
