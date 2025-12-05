@@ -94,5 +94,26 @@ const createRequestedRideCard = (ride, onCancel) => {
     return div.firstElementChild;
 }
 
+function requestRide(roomCode, messageBox) {
+    fetch(`api/request_api.php?room_code=${roomCode}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Requested ride:', data);
+            
+            if (data.success){
+                messageBox.innerHTML = data.success; 
+                messageBox.style.color = "green";
+            } else if (data.error){
+                messageBox.innerHTML = data.error;
+                messageBox.style.color = "red";
+            }
+        })
+        .catch(error => {
+            console.error('Error requesting ride:', error);
+        });
+    console.log(roomCode)
+}
+
 export {createAvailableRideCard};
 export {createRequestedRideCard};
+export {requestRide};

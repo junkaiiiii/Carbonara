@@ -1,4 +1,5 @@
-import { createAvailableRideCard, createRequestedRideCard } from "./app.js";
+
+import { createAvailableRideCard, createRequestedRideCard,requestRide } from "./app.js";
 
 let states = {
     available_rides: [],
@@ -8,6 +9,8 @@ let states = {
 // DOM
 const availableRides = document.getElementById('availableRides');
 const requestedRides = document.getElementById('requestedRides');
+const messageBox = document.getElementById('messageBox');
+const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
 
 // Fetch all rides
 const getAllRides = () => {
@@ -46,11 +49,9 @@ const handleRequestRide = (rideId) => {
     if (rideIndex !== -1) {
         const [requestedRide] = states.available_rides.splice(rideIndex, 1);
 
-        requestedRide.request_status = "pending"; 
-        states.requested_rides.push(requestedRide);
+        requestRide(requestedRide.room_code, messageBox);
     }
-
-    render();
+    getAllRides();
 };
 
 
@@ -94,5 +95,7 @@ const render = () => {
     });
 };
 
+// add evenlisteners
+roomCodeSubmitButton.addEventListener('click', ()=>requestRide(document.getElementById('roomCodeField').value,messageBox));
 getAllRides();
 console.log(states);

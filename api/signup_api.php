@@ -1,7 +1,5 @@
 <?php
-
-
-
+session_start();
 include "headers.php";
 include "helpers.php";
 include "../db_connect.php";
@@ -48,7 +46,7 @@ if ($method === "POST"){
         $full_name = $data['fullName'] ?? '';
         $email = $data['email'] ?? '';
         $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
-        $role = 'Passenger';
+        $role = $_SESSION['role'] ?? 'Passenger';
         $phone = $data['phoneNumber'] ?? '';
         $created_at = date('Y-m-d H:i:s');
 

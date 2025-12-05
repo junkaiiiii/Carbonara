@@ -17,9 +17,21 @@ CREATE TABLE users (
 );";
 
 $sql .= "
+CREATE TABLE vehicles (
+    vehicle_id VARCHAR(20) PRIMARY KEY,
+    driver_id VARCHAR(20),
+    car_plate_number VARCHAR(8),
+    color VARCHAR(30),
+    type VARCHAR(20),
+    registered_at DATETIME,
+    FOREIGN KEY (driver_id) REFERENCES users(user_id)
+);";
+
+$sql .= "
 CREATE TABLE rides (
     ride_id VARCHAR(20) PRIMARY KEY,
     driver_id VARCHAR(20),
+    vehicle_id VARCHAR(20),
     origin_text VARCHAR(100),
     origin_lat DECIMAL(10,6),
     origin_lon DECIMAL(10,6),
@@ -31,7 +43,8 @@ CREATE TABLE rides (
     available_seats INT,
     created_at DATETIME,
     room_code INT UNIQUE,
-    FOREIGN KEY (driver_id) REFERENCES users(user_id)
+    FOREIGN KEY (driver_id) REFERENCES users(user_id),
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id)
 );";
 
 
@@ -136,16 +149,7 @@ CREATE TABLE driving_license (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );";
 
-$sql .= "
-CREATE TABLE vehicles (
-    vehicle_id VARCHAR(20) PRIMARY KEY,
-    driver_id VARCHAR(20),
-    car_plate_number VARCHAR(8),
-    color VARCHAR(30),
-    type VARCHAR(20),
-    registered_at DATETIME,
-    FOREIGN KEY (driver_id) REFERENCES users(user_id)
-);";
+
 
 $sql .= "
 SET FOREIGN_KEY_CHECKS = 0;
@@ -158,22 +162,26 @@ INSERT INTO `users` (`user_id`, `full_name`, `username`, `email`, `password_hash
 ('US_692f0f042125d', 'Thum Zhi Jian', 'thumzijian', 'thum@example.com', '$2y$10\$m9Um9JgPOkGb.1ErBKkAn.JmSZRKQ.Iijl4j3nHsn4psFice7RL1C', 'Driver', 'Active', '0145678999', NULL, '2025-12-02 17:08:36'),
 ('US_692f0f2dd3648', 'Leong Zi Heng', 'leongziheng', 'leong@example.com', '$2y$10\$ninwsFSLga6vHnBAbTJrkeHaYkBvSluuo35mHdJ84EEzkgruJjbdS', 'Admin', 'Active', '0126673456', NULL, '2025-12-02 17:09:17');
 
+-- Vehicles
+INSERT INTO `vehicles` (`vehicle_id`, `driver_id`, `car_plate_number`, `color`, `type`, `registered_at`) VALUES
+('VH_692f13de625f8', 'US_692f0e453c9dd', 'SJK732', 'Blue', 'Sedan', '2025-12-30 09:10:00'),
+('VH_692f13de62608', 'US_692f0e453c9dd', 'WXY123', 'Red', 'SUV', '2025-12-15 17:20:00');
 
 
 -- Rides
-INSERT INTO `rides` (`ride_id`, `driver_id`, `origin_text`, `origin_lat`, `origin_lon`, `destination_text`, `destination_lat`, `destination_lon`, `route_geojson`, `departure_datetime`, `available_seats`, `created_at`, `room_code`) VALUES
-(' RD_692f17d1e7ebd', 'US_692f0e453c9dd', 'Sri Petaling', 3.068810, 101.689710, 'Asia Pacific University', 3.042300, 101.688800, '{ \"0\": [101.68971, 3.06881], \"1\": [101.6888, 3.0423] }', '2025-10-31 10:05:00', 3, '2025-10-25 09:00:00', 123456),
-('RD_692f17d1e7eda', 'US_692f0e453c9dd', 'Bukit Jalil', 3.054300, 101.690200, 'APU Campus', 3.052000, 101.689000, '{ \"0\": [101.6902, 3.0543], \"1\": [101.689, 3.052] }', '2025-11-01 08:30:00', 2, '2025-10-26 11:00:00', 654321),
-('RD_692f17d1e7edb', 'US_692f0e453c9dd', 'Puchong IOI Mall', 3.043210, 101.618400, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.6184, 3.04321], \"1\": [101.6892, 3.0521] }', '2025-11-02 09:15:00', 3, '2025-10-27 10:20:00', 223344),
-('RD_692f17d1e7edc', 'US_692f0e453c9dd', 'OUG Parklane', 3.066900, 101.658900, 'Bukit Jalil LRT', 3.056700, 101.692200, '{ \"0\": [101.6589, 3.0669], \"1\": [101.6922, 3.0567] }', '2025-11-03 07:45:00', 4, '2025-10-28 08:15:00', 998877),
-('RD_692f17d1e7edd', 'US_692f0e453c9dd', 'Cheras Leisure Mall', 3.084300, 101.742900, 'APU Campus', 3.052000, 101.689000, '{ \"0\": [101.7429, 3.0843], \"1\": [101.689, 3.052] }', '2025-11-04 08:00:00', 2, '2025-10-29 09:00:00', 121212),
-('RD_692f17d1e7ede', 'US_692f0e453c9dd', 'Kuchai Lama', 3.095500, 101.690300, 'Sri Petaling', 3.068800, 101.689700, '{ \"0\": [101.6903, 3.0955], \"1\": [101.6897, 3.0688] }', '2025-11-05 09:30:00', 3, '2025-10-30 11:10:00', 343434),
-('RD_692f17d1e7edf', 'US_692f0e453c9dd', 'KL Sentral', 3.134800, 101.686300, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.6863, 3.1348], \"1\": [101.6892, 3.0521] }', '2025-11-06 08:20:00', 1, '2025-11-01 13:00:00', 565656),
-('RD_692f17d1e7ee0', 'US_692f0e453c9dd', 'Mid Valley Megamall', 3.118500, 101.677000, 'Technology Park Malaysia', 3.049900, 101.702300, '{ \"0\": [101.6770, 3.1185], \"1\": [101.7023, 3.0499] }', '2025-11-07 09:40:00', 3, '2025-11-02 14:30:00', 787878),
-('RD_692f17d1e7ee1', 'US_692f0e453c9dd', 'Sunway Pyramid', 3.072200, 101.606900, 'Bukit Jalil Stadium', 3.056300, 101.689500, '{ \"0\": [101.6069, 3.0722], \"1\": [101.6895, 3.0563] }', '2025-11-08 10:00:00', 4, '2025-11-03 09:45:00', 909090),
-('RD_692f17d1e7ee2', 'US_692f0e453c9dd', 'Taman Connaught', 3.074800, 101.739800, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.7398, 3.0748], \"1\": [101.6892, 3.0521] }', '2025-11-09 07:55:00', 2, '2025-11-04 12:40:00', 454545),
-('RD_692f17d1e7ee3', 'US_692f0e453c9dd', 'Bandar Kinrara 5', 3.038600, 101.635000, 'Sri Petaling LRT', 3.074300, 101.690800, '{ \"0\": [101.6350, 3.0386], \"1\": [101.6908, 3.0743] }', '2025-11-10 08:25:00', 3, '2025-11-05 18:30:00', 112233),
-('RD_692f17d1e7ee4', 'US_692f0e453c9dd', 'Old Klang Road', 3.089200, 101.666600, 'Bukit Jalil', 3.054300, 101.690200, '{ \"0\": [101.6666, 3.0892], \"1\": [101.6902, 3.0543] }', '2025-11-11 09:05:00', 2, '2025-11-06 10:00:00', 889900);
+INSERT INTO `rides` (`ride_id`, `driver_id`,`vehicle_id`, `origin_text`, `origin_lat`, `origin_lon`, `destination_text`, `destination_lat`, `destination_lon`, `route_geojson`, `departure_datetime`, `available_seats`, `created_at`, `room_code`) VALUES
+(' RD_692f17d1e7ebd', 'US_692f0e453c9dd','VH_692f13de625f8', 'Sri Petaling', 3.068810, 101.689710, 'Asia Pacific University', 3.042300, 101.688800, '{ \"0\": [101.68971, 3.06881], \"1\": [101.6888, 3.0423] }', '2025-10-31 10:05:00', 3, '2025-10-25 09:00:00', 123456),
+('RD_692f17d1e7eda', 'US_692f0e453c9dd', 'VH_692f13de625f8', 'Bukit Jalil', 3.054300, 101.690200, 'APU Campus', 3.052000, 101.689000, '{ \"0\": [101.6902, 3.0543], \"1\": [101.689, 3.052] }', '2025-11-01 08:30:00', 2, '2025-10-26 11:00:00', 654321),
+('RD_692f17d1e7edb', 'US_692f0e453c9dd', 'VH_692f13de625f8', 'Puchong IOI Mall', 3.043210, 101.618400, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.6184, 3.04321], \"1\": [101.6892, 3.0521] }', '2025-11-02 09:15:00', 3, '2025-10-27 10:20:00', 223344),
+('RD_692f17d1e7edc', 'US_692f0e453c9dd', 'VH_692f13de625f8', 'OUG Parklane', 3.066900, 101.658900, 'Bukit Jalil LRT', 3.056700, 101.692200, '{ \"0\": [101.6589, 3.0669], \"1\": [101.6922, 3.0567] }', '2025-11-03 07:45:00', 4, '2025-10-28 08:15:00', 998877),
+('RD_692f17d1e7edd', 'US_692f0e453c9dd', 'VH_692f13de625f8', 'Cheras Leisure Mall', 3.084300, 101.742900, 'APU Campus', 3.052000, 101.689000, '{ \"0\": [101.7429, 3.0843], \"1\": [101.689, 3.052] }', '2025-11-04 08:00:00', 2, '2025-10-29 09:00:00', 121212),
+('RD_692f17d1e7ede', 'US_692f0e453c9dd', 'VH_692f13de625f8', 'Kuchai Lama', 3.095500, 101.690300, 'Sri Petaling', 3.068800, 101.689700, '{ \"0\": [101.6903, 3.0955], \"1\": [101.6897, 3.0688] }', '2025-11-05 09:30:00', 3, '2025-10-30 11:10:00', 343434),
+('RD_692f17d1e7edf', 'US_692f0e453c9dd', 'VH_692f13de625f8', 'KL Sentral', 3.134800, 101.686300, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.6863, 3.1348], \"1\": [101.6892, 3.0521] }', '2025-11-06 08:20:00', 1, '2025-11-01 13:00:00', 565656),
+('RD_692f17d1e7ee0', 'US_692f0e453c9dd', 'VH_692f13de625f8', 'Mid Valley Megamall', 3.118500, 101.677000, 'Technology Park Malaysia', 3.049900, 101.702300, '{ \"0\": [101.6770, 3.1185], \"1\": [101.7023, 3.0499] }', '2025-11-07 09:40:00', 3, '2025-11-02 14:30:00', 787878),
+('RD_692f17d1e7ee1', 'US_692f0e453c9dd', 'VH_692f13de62608', 'Sunway Pyramid', 3.072200, 101.606900, 'Bukit Jalil Stadium', 3.056300, 101.689500, '{ \"0\": [101.6069, 3.0722], \"1\": [101.6895, 3.0563] }', '2025-11-08 10:00:00', 4, '2025-11-03 09:45:00', 909090),
+('RD_692f17d1e7ee2', 'US_692f0e453c9dd', 'VH_692f13de62608','Taman Connaught', 3.074800, 101.739800, 'APU Campus', 3.052100, 101.689200, '{ \"0\": [101.7398, 3.0748], \"1\": [101.6892, 3.0521] }', '2025-11-09 07:55:00', 2, '2025-11-04 12:40:00', 454545),
+('RD_692f17d1e7ee3', 'US_692f0e453c9dd', 'VH_692f13de62608','Bandar Kinrara 5', 3.038600, 101.635000, 'Sri Petaling LRT', 3.074300, 101.690800, '{ \"0\": [101.6350, 3.0386], \"1\": [101.6908, 3.0743] }', '2025-11-10 08:25:00', 3, '2025-11-05 18:30:00', 112233),
+('RD_692f17d1e7ee4', 'US_692f0e453c9dd', 'VH_692f13de62608','Old Klang Road', 3.089200, 101.666600, 'Bukit Jalil', 3.054300, 101.690200, '{ \"0\": [101.6666, 3.0892], \"1\": [101.6902, 3.0543] }', '2025-11-11 09:05:00', 2, '2025-11-06 10:00:00', 889900);
 
 
 
@@ -242,10 +250,7 @@ INSERT INTO `driving_license` (`license_id`, `user_id`, `status`, `license_image
 
 
 
--- Vehicles
-INSERT INTO `vehicles` (`vehicle_id`, `driver_id`, `car_plate_number`, `color`, `type`, `registered_at`) VALUES
-('VH_692f13de625f8', 'US_692f0e453c9dd', 'SJK732', 'Blue', 'Sedan', '2025-12-30 09:10:00'),
-('VH_692f13de62608', 'US_692f0e453c9dd', 'WXY123', 'Red', 'SUV', '2025-12-15 17:20:00');
+
 
 SET FOREIGN_KEY_CHECKS = 1;";
 // $sql = file_get_contents('carpooling_schema.sql');

@@ -6,6 +6,9 @@
     <title>Carbonara Passenger</title>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/passenger.css">
+    <link rel="stylesheet" href="styles/qr.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+</head>
 </head>
 <body>
   <!-- Hellow World -->
@@ -28,16 +31,42 @@
                 <a href="leaderboard.html"><button class="view-leaderboard-button" >View Leaderboard</button></a>
             </div>
         </div>
-        
+
+        <!--  -->
     
         <!-- Search Section -->
         <div class="search-section">
+            <div class="message-box" id="messageBox"></div>
             <div class="search-container">
                 <input class="search-field field-1" type="text" placeholder="From (e.g., Sri Petaling)">
                 <input class="search-field" type="text" placeholder="To (e.g.,Sunway University)">
+                <div class="qr-room-code-row">
+                    <button class="start-scan-button" id="start-scan"">
+                        <img class="scanner-icon" src="assets/img/scan.png">
+                    </button>
+                    <button class="stop-scan-button" id="stop-scan" " style="display:none;">
+                        Stop scanning
+                    </button>
+                    <div>
+                        <input placeholder="Enter roomcode to request" class="roomcode-search-field" type="text" id="roomCodeField">
+                        <button class="roomcode-button" id="roomCodeSubmitButton">Request</button>
+                    </div>
+                </div>
+                
             </div>
         </div>
+
+        
     </div>
+
+    <!-- QR scanner section -->
+     <div class="scanner-container">
+        <div id="qr-reader" style="width: 400px ;display:none;">
+
+        </div>
+     </div>
+    
+    <div id="scan-result"></div>
     
     
 
@@ -53,6 +82,7 @@
     </div>
 
     <!-- Requested Ride Section -->
+     <script type="module" src="scripts/qr.js"></script>
     <script type="module" src="scripts/passenger.js"></script>
 </body>
 </html>

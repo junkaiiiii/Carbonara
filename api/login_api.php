@@ -32,15 +32,14 @@ if ($method === "POST") {
         
         mysqli_stmt_bind_param($stmt, 's', $username);
         mysqli_stmt_execute($stmt);
-        mysqli_stmt_store_result($stmt);
+        $db_user_id = '';
+        $db_username = '';
+        $db_password_hash = '';
+        $db_role = '';
+        mysqli_stmt_bind_result($stmt,$db_user_id, $db_username, $db_password_hash, $db_role);
         
-        if (mysqli_stmt_num_rows($stmt) > 0) {
-            $db_user_id = '';
-            $db_username = '';
-            $db_password_hash = '';
-            $db_role = '';
-            mysqli_stmt_bind_result($stmt,$db_user_id, $db_username, $db_password_hash, $db_role);
-            mysqli_stmt_fetch($stmt);
+        if (mysqli_stmt_fetch($stmt)) {
+            
             
             if (password_verify($password, $db_password_hash)) {
                 $_SESSION['user_id'] = $db_user_id;

@@ -64,44 +64,60 @@
 
 /* search section */
 .search-section{
+    position: relative;
+    height: 180px;
+    padding:  10px;
+
     display: flex;
     justify-content: center;
-}
-@media (max-width: 999px){
-    .search-container{
-        background-color: white;
-        padding: 30px 15px;
-        border: var(--primary-border-color);
-        box-shadow: var(--primary-box-shadow);
-        border-radius: 10px;
-        margin: 20px 10px 0px 10px;
-        width: 100%;
-    
-        display: flex;
-        flex-direction: column;
-    }
+    align-items: center;
+    flex-direction: column;
 }
 
-@media (min-width: 1000px){
+.message-box{
+    margin-bottom: 7px;
+    font-weight: 700px;
+}
+
+/* @media (max-width: 999px){ */
     .search-container{
-        background-color: red;
-        padding: 30px 15px;
+        background-color: white;
+        padding: 20px 15px;
+        border: var(--primary-border-color);
+        box-shadow: var(--primary-box-shadow);
+        border-radius: 10px;
+        width: 418px;
+        height: 100px;
+    
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+     }
+/* } */ 
+
+/* @media (min-width: 1000px){
+    .search-container{
+        background-color: white;
+        padding: 20px 15px;
         border: var(--primary-border-color);
         box-shadow: var(--primary-box-shadow);
         border-radius: 10px;
         margin: 20px 10px 0px 10px;
-        width: 100%;
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        height: 100px;
     
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
     }
-}
+} */
 
 
 
 
 .search-field{
-    margin-top:15px ;
     background-color: var(--grey-bg-color);
     border: 1px solid var(--primary-border-color);
     padding: 5px 10px;
@@ -114,10 +130,81 @@
     margin-top: 0px;
 }
 
+.scanner-container{
+    margin-top: 20px;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-scan-button{
+    width: 30px;
+    height: 30px ;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-scan-button:hover, .stop-scan-button:hover{
+    cursor: pointer;
+}
+
+.scanner-icon{
+    width: 25px;
+}
+
+.stop-scan-button{
+    width: 150px;
+    height: 25px ;
+
+}
+
+.start-scan-button, .stop-scan-button{
+    background-color: var(--grey-bg-color);
+    box-shadow: var(--primary-box-shadow);
+    border: 1px solid var(--primary-border-color);
+    border-radius: 3px;
+}
+
+.qr-room-code-row{
+    display: flex;
+    justify-content: space-between;
+}
+
+.roomcode-search-field{
+    background-color: var(--grey-bg-color);
+    border: 1px solid var(--primary-border-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: 170px;;
+}
+
+.roomcode-button{
+    background-color: var(--button-green);
+    color: white;
+    padding: 6px 5px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.5s;
+}
+
+.roomcode-button:hover{
+    background-color:rgb(25, 194, 138);
+    cursor: pointer;
+}
+
+
+
+
 @media (max-width:600px){
     .available-rides-section{
-        display: grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
         width: 480px;
     }
 
@@ -127,6 +214,7 @@
         border: 1px solid var(--primary-border-color);
         box-shadow: var(--primary-box-shadow);
         border-radius: 10px;
+        width: 418px;
 
         display: flex;
         flex-direction: column;
