@@ -24,7 +24,12 @@ if ($method === "GET"){
             req.status AS user_request_status,
             
             -- Join check
-            rp.participant_id AS participant_exists
+            rp.participant_id AS participant_exists,
+            
+            -- Driver statistics
+            COALESCE(driver_stats.total_rides, 0) AS driver_total_rides,
+            COALESCE(driver_stats.avg_rating, 0) AS driver_avg_rating,
+            COALESCE(driver_stats.total_co2_saved, 0) AS driver_total_co2_saved
 
         FROM rides r
         INNER JOIN users u ON r.driver_id = u.user_id
@@ -38,6 +43,19 @@ if ($method === "GET"){
         LEFT JOIN ride_participants rp 
             ON rp.ride_id = r.ride_id 
             AND rp.user_id = '$sessionUserId'
+        
+        -- Driver statistics subquery
+        LEFT JOIN (
+            SELECT 
+                driver_id,
+                COUNT(DISTINCT r2.ride_id) AS total_rides,
+                AVG(rat.score) AS avg_rating,
+                SUM(co2.co2_saved) AS total_co2_saved
+            FROM rides r2
+            LEFT JOIN ratings rat ON rat.ride_id = r2.ride_id AND rat.rated_id = r2.driver_id
+            LEFT JOIN co2_log co2 ON co2.ride_id = r2.ride_id AND co2.user_id = r2.driver_id
+            GROUP BY driver_id
+        ) AS driver_stats ON driver_stats.driver_id = u.user_id
         
         WHERE u.user_id != '$sessionUserId'
         ";
@@ -61,8 +79,6 @@ if ($method === "GET"){
                     "available_seats"   => $row["available_seats"],
                     "created_at"        => $row["created_at"],
                     "room_code"         => $row["room_code"],
-
-                    // NEW FIELDS
                     "request_status"    => $row["user_request_status"] ?? null,
                     "joined"            => $row["participant_exists"] ? true : false,
 
@@ -74,8 +90,13 @@ if ($method === "GET"){
                         "phone"              => $row["phone"],
                         "profile_picture"    => $row["profile_picture_url"],
                         "role"               => $row["role"],
-                        "created_at"         => $row["user_created"]
+                        "created_at"         => $row["user_created"],
+                        "total_rides"        => (int)$row["driver_total_rides"],
+                        "avg_rating"         => round((float)$row["driver_avg_rating"], 1),
+                        "total_co2_saved"    => round((float)$row["driver_total_co2_saved"], 2)
                     ]
+
+                    
                 ];
 
                 $response[] = $ride;
