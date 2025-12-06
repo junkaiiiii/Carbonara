@@ -1,44 +1,10 @@
 const userGrid = document.querySelector(".user-grid");
 let states = {
-    users : [
-                {
-                    username : "Rebooted",
-                    userRole : "driver",
-                    rating : 4.8,
-                    dateJoined : "Nov 10, 2025",
-                    co2Saved : "145.5kg",
-                    totalRides : 42,
-                    email : "jensen@gmail.com",
-                    phoneNum : "0123456789",
-                    pfpUrl : "./images/PLUS ULTRA.jpg"
-                },
-                {
-                    username : "LLENN",
-                    userRole : "passenger",
-                    rating : 4.1,
-                    dateJoined : "Oct 1, 2025",
-                    co2Saved : "35kg",
-                    totalRides : 39,
-                    email : "junkainoob@gmail.com",
-                    phoneNum : "0198358819",
-                    pfpUrl : "./images/PLUS ULTRA.jpg"
-                },    
-                {
-                    username : "ENG",
-                    userRole : "driver",
-                    rating : 1.3,
-                    dateJoined : "Jan 21, 2025",
-                    co2Saved : "90.5kg",
-                    totalRides : 60,
-                    email : "ENGG@gmail.com",
-                    phoneNum : "018748921",
-                    pfpUrl : "./images/PLUS ULTRA.jpg"
-                }
-        ]
+    users : []
 }
 
 
-const createUserCard = (username, userRole, rating, dateJoined, co2Saved, totalRides, email, phoneNum, pfp_img) => {
+const createUserCard = (username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum, pfp_img) => {
     const div = document.createElement('div');
     div.innerHTML = `
         <div class="user-card">
@@ -59,8 +25,8 @@ const createUserCard = (username, userRole, rating, dateJoined, co2Saved, totalR
                     <h3>${co2Saved}</h3>
                 </div>
                 <div class="user-stats-container">
-                    <p>Total Rides</p>
-                    <h3>${totalRides}</h3>                    
+                    <p>Total Distance Travelled</p>
+                    <h3>${totalDistance}</h3>                    
                 </div>
             </div>
             <div class="user-contacts-container">
@@ -76,20 +42,43 @@ const createUserCard = (username, userRole, rating, dateJoined, co2Saved, totalR
     return div.firstElementChild;
 }
 
-userGrid.innerHTML = "";
+function render(){
+    const defaultPfp = "assets/img/leaf.png"
+    userGrid.innerHTML = "";
+    states.users.forEach(user => {
+        let ratingScore = 0;
+        let rated = 0;
+        let avgRating = 0;
+        if (user.ratings){
+            user.ratings.forEach(rating => {
+                ratingScore += Number(rating.score);
+                rated += 1;
+                avgRating = Number(ratingScore / rated);   
+                // states.users.user.push(ratingScore); 
+            })
+        }
+        let co2Saved = 0;
+        let totalDistance = 0;
+        if (user.co2_logs){
+            user.co2_logs.forEach(co2 => {
+                co2Saved += Number(co2.co2_saved);
+                totalDistance += Number(co2.total_distance);
+            })
+        }
+        if (user.role === "Admin")return;
+        const card = createUserCard(user.username,
+                                    user.role,
+                                    avgRating,
+                                    user.created_at,
+                                    co2Saved,
+                                    totalDistance, 
+                                    user.email,
+                                    user.phone,
+                                    user.profile_picture ?? defaultPfp);
+        userGrid.appendChild(card)
+    })
+}
 
-states.users.forEach(user => {
-    const card = createUserCard(user.username,
-                                user.userRole,
-                                user.rating,
-                                user.dateJoined,
-                                user.co2Saved,
-                                user.totalRides, 
-                                user.email,
-                                user.phoneNum,
-                                user.pfpUrl);
-    userGrid.appendChild(card)
-})
 
 const cardUsers = document.querySelectorAll(".card-username");
 const searchText = document.getElementById("search-text");
@@ -101,24 +90,60 @@ searchText.addEventListener("keyup", () => {
     const filteredUsers = states.users.filter(user => {
         return user.username.toLowerCase().includes(currText)
     });
-    console.log(filteredUsers);
+    // console.log(filteredUsers);
 
     if (filteredUsers.length !==0){
         console.log("AM I HERE")
         filteredUsers.forEach(user => {
+            let ratingScore = 0;
+            let rated = 0;
+            let avgRating = 0;
+            if (user.ratings){
+                user.ratings.forEach(rating => {
+                    ratingScore += Number(rating.score);
+                    rated += 1;
+                    avgRating = Number(ratingScore / rated);   
+                    // states.users.user.push(ratingScore); 
+                })
+            }
+            let co2Saved = 0;
+            let totalDistance = 0;
+            if (user.co2_logs){
+                user.co2_logs.forEach(co2 => {
+                    co2Saved += Number(co2.co2_saved);
+                    totalDistance += Number(co2.total_distance);
+                })
+            }
             const card = createUserCard(user.username,
-                                        user.userRole,
-                                        user.rating,
-                                        user.dateJoined,
-                                        user.co2Saved,
-                                        user.totalRides, 
+                                        user.role,
+                                        avgRating,
+                                        user.created_at,
+                                        co2Saved,
+                                        totalDistance, 
                                         user.email,
-                                        user.phoneNum,
-                                        user.pfpUrl);
+                                        user.phone,
+                                        user.profile_picture);
             userGrid.appendChild(card);
         });
     }
     else{
-        console.log("GAY")
+        // console.log("GAY")
     }
 });
+
+function getAllUsers(){
+    fetch("api/users_api.php")
+        .then(response => response.json())
+        .then(data => {
+            states.users = [];
+            
+            data.forEach(user => {
+                states.users.push(user);
+                render();
+                console.log(states.users);
+            });
+        });
+}
+
+getAllUsers();
+// console.log(states.users);

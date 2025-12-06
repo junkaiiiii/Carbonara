@@ -104,7 +104,9 @@
 .status{
     /* flex: 1; */
     position: absolute;
-    left: 30vw;
+    margin-top: -10px;
+    top: 0vh;
+    left: 31.5vw;
 }
 .card-pfp-img{
     width: 50px;
@@ -137,10 +139,14 @@
     height: 4vh;
 }
 
-#approve{
+.approve{
     background-color: rgb(98, 223, 98);
 }
-#reject{
+.reject{
+    background-color: rgb(250, 60, 60);
+}
+.unban{
+    margin-right: -130px;
     background-color: rgb(250, 60, 60);
 }
 

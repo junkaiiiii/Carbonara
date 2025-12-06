@@ -16,14 +16,14 @@
         <!-- <ul> -->
         <button data-filter="all">All</button>
         <button data-filter="pending">Pending</button>
-        <button data-filter="resolved">Resolved</button>
-        <button data-filter="banned">Banned</button>
+        <button data-filter="approved">Resolved</button>
+        <button data-filter="rejected">Banned</button>
         <!-- </ul> -->
     </div> 
     <section id="rep-pending" class="section">
         <!-- <h2 class="section-title">Pending Reports</h2> -->
         <div class="user-grid">
-            <div class="user-card">
+            <!-- <div class="user-card">
                 <div class="user">
                     <div class="pfp"><img class="card-pfp-img" src="./images/stableRonaldo.avif"></div>
                     <div class="username">
@@ -46,7 +46,7 @@
                     <div class="button"><button id="approve">Approve</button></div>
                     <div class="button"><button id="reject">Reject</button></div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
     <script src="scripts/admin_report.js"></script>
