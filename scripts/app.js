@@ -1,7 +1,7 @@
 
 
 // create html components
-const createAvailableRideCard = (ride,onRequest) => {
+const createAvailableRideCard = (ride,onRequest,onCloseDriverPopUp, onHighlightStars) => {
     const div = document.createElement('div');
     div.innerHTML = `
         <div class="ride-card" id="ride-${ride.ride_id}">
@@ -21,7 +21,7 @@ const createAvailableRideCard = (ride,onRequest) => {
                 </div>
                 
                 <div class="view-button-container">
-                    <button class="view-profile-button">
+                    <button class="view-profile-button" id="viewProfileButton">
                         <img class="user-logo" src="assets/img/user.svg">
                          View Profile
                     </button>
@@ -48,6 +48,17 @@ const createAvailableRideCard = (ride,onRequest) => {
 
     // attach event listener here instead of onclick=""
     el.querySelector(".request-ride-button").addEventListener("click", () => onRequest(ride.ride_id));
+    
+
+    const viewProfileButton = el.querySelector(".view-profile-button");
+
+    viewProfileButton.addEventListener("click", () => {
+        const popUp = createDriverPopUp(ride.driver, onCloseDriverPopUp, onHighlightStars);
+
+        document.body.appendChild(popUp);
+
+    });
+
     return div.firstElementChild;
 }
 
@@ -94,6 +105,77 @@ const createRequestedRideCard = (ride, onCancel) => {
     return div.firstElementChild;
 }
 
+
+// driver pop up
+const createDriverPopUp = (user, onHighlightStars) => {
+
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div class="driver-popup-container" id="driverPopUpContainer">
+            <div class="driver-popup">
+                <button class="close-driver-popup-button">
+                    <img class="close-driver-popup-icon" src="assets/img/close.png">
+                </button>
+
+                <div class="driver-popup-row-1">
+                    <h3>User Profile</h3>
+                    <img class="popup-pfp" src="assets/img/leaf.png">
+                    <h1>${user.name}</h1>
+                    <div class="popup-role">${user.role}</div>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="driver-popup-row-2">
+                    <div>
+                        <p class="grey-text">Total Rides</p>
+                        <h1>${user.total_rides ?? 0}</h1>
+                    </div>
+                    <div>
+                        <p class="grey-text">CO₂ Saved</p>
+                        <h1>${user.total_co2_saved ?? 0}</h1>
+                    </div>
+                </div>
+
+                <div class="contact-container">
+                    <p class="bold">Contact Information</p>
+                    <p>${user.email}</p>
+                    <p>${user.phone}</p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const popUp = wrapper.firstElementChild;
+
+    if (user.license_status){
+        popUp.querySelector('.driver-popup').innerHTML += `
+            <div class="license-container">
+                <p class="bold">Driver License</p>
+                <div class="license-status-container">
+                    <p class="grey-text">status</p>
+                    <div>${user.license_status}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    popUp.querySelector(".close-driver-popup-button").addEventListener("click", () => {
+        popUp.remove();
+    });
+
+    onHighlightStars(String(user.avg_rating), popUp.querySelectorAll(".stars i"));
+
+    return popUp;
+}
+
+
+
 function requestRide(roomCode, messageBox) {
     fetch(`api/request_api.php?room_code=${roomCode}`)
         .then(response => response.json())
@@ -117,3 +199,4 @@ function requestRide(roomCode, messageBox) {
 export {createAvailableRideCard};
 export {createRequestedRideCard};
 export {requestRide};
+export {createDriverPopUp};

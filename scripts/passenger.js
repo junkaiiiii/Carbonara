@@ -1,5 +1,5 @@
 
-import { createAvailableRideCard, createRequestedRideCard,requestRide } from "./app.js";
+import { createAvailableRideCard, createRequestedRideCard,requestRide, createDriverPopUp } from "./app.js";
 
 let states = {
     available_rides: [],
@@ -11,7 +11,6 @@ const availableRides = document.getElementById('availableRides');
 const requestedRides = document.getElementById('requestedRides');
 const messageBox = document.getElementById('messageBox');
 const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
-const stars = document.querySelectorAll('.stars i');
 
 // Fetch all rides
 const getAllRides = () => {
@@ -75,8 +74,8 @@ const handleCancelRequest = (rideId) => {
     render();
 };
 
-// highlight rating stars
-const highlightStars = (rating) => {
+// highlight profile star
+const highlightStars = (rating,stars) => {
     stars.forEach((star,index)=>{
         if (index+1<=rating){
             star.classList.add('highlighted');
@@ -85,11 +84,14 @@ const highlightStars = (rating) => {
 }
 
 
+
 // Render all UI
 const render = () => {
+    
+
     availableRides.innerHTML = '';
     states.available_rides.forEach(ride => {
-        const rideCard = createAvailableRideCard(ride, handleRequestRide);
+        const rideCard = createAvailableRideCard(ride, handleRequestRide, highlightStars);
         availableRides.appendChild(rideCard);
     });
 
@@ -107,6 +109,7 @@ const render = () => {
 
 // add evenlisteners
 roomCodeSubmitButton.addEventListener('click', ()=>requestRide(document.getElementById('roomCodeField').value,messageBox));
+
+
 getAllRides();
 console.log(states);
-highlightStars(4.3);

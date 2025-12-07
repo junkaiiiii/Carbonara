@@ -20,13 +20,12 @@ if ($method === "GET"){
             r.*, 
             u.full_name, u.username, u.email, u.phone, u.profile_picture_url, u.role, u.status AS user_status, u.created_at AS user_created,
             
-            -- Request status for this user
             req.status AS user_request_status,
             
-            -- Join check
             rp.participant_id AS participant_exists,
+
+            dl.status AS license_status,
             
-            -- Driver statistics
             COALESCE(driver_stats.total_rides, 0) AS driver_total_rides,
             COALESCE(driver_stats.avg_rating, 0) AS driver_avg_rating,
             COALESCE(driver_stats.total_co2_saved, 0) AS driver_total_co2_saved
@@ -43,6 +42,10 @@ if ($method === "GET"){
         LEFT JOIN ride_participants rp 
             ON rp.ride_id = r.ride_id 
             AND rp.user_id = '$sessionUserId'
+
+        -- check driver license status
+        LEFT JOIN driving_license dl
+            ON r.driver_id = dl.user_id
         
         -- Driver statistics subquery
         LEFT JOIN (
@@ -93,7 +96,8 @@ if ($method === "GET"){
                         "created_at"         => $row["user_created"],
                         "total_rides"        => (int)$row["driver_total_rides"],
                         "avg_rating"         => round((float)$row["driver_avg_rating"], 1),
-                        "total_co2_saved"    => round((float)$row["driver_total_co2_saved"], 2)
+                        "total_co2_saved"    => round((float)$row["driver_total_co2_saved"], 2),
+                        "license_status"     => $row['license_status']
                     ]
 
                     
