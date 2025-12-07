@@ -78,7 +78,7 @@ const handleCancelRequest = (rideId) => {
 // highlight rating stars
 const highlightStars = (rating) => {
     stars.forEach((star,index)=>{
-        if (index<rating){
+        if (index+1<=rating){
             star.classList.add('highlighted');
         }
     })
@@ -109,4 +109,4 @@ const render = () => {
 roomCodeSubmitButton.addEventListener('click', ()=>requestRide(document.getElementById('roomCodeField').value,messageBox));
 getAllRides();
 console.log(states);
-highlightStars(3);
+highlightStars(4.3);
