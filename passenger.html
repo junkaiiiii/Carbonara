@@ -76,16 +76,49 @@
 
 
     
-    <!-- Requested -->
-    
+    <!-- Requested Ride Section -->
+    <p class="requested-rides-title">Requested Rides</p>
     <div class="requested-rides-section" id="requestedRides">
+        <div class="ride-card" id="ride-${ride.ride_id}">
+            <div class="ride-card-row-1">
+                <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
+                <div class="ride-status grey-text">
+                    Requested
+                </div>
+            </div>
+            <div class="ride-card-row-2">
+                <div class="driver-details">
+                    <img class="driver-pfp" src="assets/img/leaf.png">
+                    <div>
+                        <p>${ride.driver.name}</p>
+                        <p class="grey-text">★ ${ride.driver.average_rating}</p>
+                    </div>
+                </div>
+                
+                <div class="view-button-container">
+                    <button class="view-profile-button">
+                        <img class="user-logo" src="assets/img/user.svg">
+                            View Profile
+                    </button>
+                </div>
+            </div>
+            <div class="ride-card-row-3 grey-text">
+                <img class="clock-logo" src="assets/img/clock.svg">
+                <p>${ride.departure_datetime}</p>
+            </div>
+            
+            <div class="accepted-info-container">
+                <p class="bold">Request Accepted!</p>
+                <p class="grey-text">Contact driver: +1234565789</p>
+                <button>View Ride Details</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Requested Ride Section -->
+    
      <script type="module" src="scripts/qr.js"></script>
     <script type="module" src="scripts/passenger.js"></script>
 
-    <!-- Driver Profile Pop Up -->
     
 </body>
 </html>

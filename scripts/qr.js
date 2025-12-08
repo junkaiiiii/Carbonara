@@ -3,7 +3,7 @@ import { requestRide } from "./app.js";
 let html5QrCode;
 let isScanning = false;
 const generateQr = (roomCode) =>{
-    let qrDisplay = document.getElementById('qr_popup');
+    let qrDisplay = document.getElementById('qrPopUp');
     // fetch(`api/qr_api.php?room_code=${roomCode}`)
     //     .then (response => response.json())
     //     .then (data => {
@@ -69,13 +69,6 @@ function onScanSuccess(decodedText, decodedResult) {
         roomCode = decodedText;
     }
 
-    resultDiv.innerHTML = `
-        <div class="result">
-            <h3>✓ QR Code Scanned!</h3>
-            <p><strong>Room Code:</strong> ${roomCode}</p>
-            <p><strong>Full URL:</strong> ${decodedText}</p>
-        </div>
-    `;
 
     requestRide(roomCode,document.getElementById('messageBox'));
     
@@ -92,3 +85,5 @@ function onScanError(errorMessage) {
 
 document.getElementById('start-scan').addEventListener('click', startScanning);
 document.getElementById('stop-scan').addEventListener('click', stopScanning);
+
+export {generateQr};

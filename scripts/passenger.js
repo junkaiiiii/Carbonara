@@ -1,5 +1,5 @@
 
-import { createAvailableRideCard, createRequestedRideCard,requestRide, createDriverPopUp } from "./app.js";
+import { createAvailableRideCard, createRequestedRideCard,requestRide, createDriverPopUp, createJoinedRideCard } from "./app.js";
 
 let states = {
     available_rides: [],
@@ -84,6 +84,10 @@ const highlightStars = (rating,stars) => {
     })
 }
 
+// view ride Details
+const viewRideDetails = (ride) =>{
+    console.log(ride);
+}
 
 
 // Render all UI
@@ -97,14 +101,16 @@ const render = () => {
     });
 
     requestedRides.innerHTML = '';
-    //add title to the section if requested rides exist
-    if (states.requested_rides.length > 0){
-        requestedRides.innerHTML = '<p class="requested-rides-title">Requested Rides</p>'; 
-    }
-    
+
     states.requested_rides.forEach(ride => {
-        const requestedCard = createRequestedRideCard(ride, handleCancelRequest);
-        requestedRides.appendChild(requestedCard);
+        if (ride.joined){
+            const joinedCard = createJoinedRideCard(ride, viewRideDetails);
+            requestedRides.appendChild(joinedCard);
+        }else {
+            const requestedCard = createRequestedRideCard(ride, handleCancelRequest);
+            requestedRides.appendChild(requestedCard);
+        }
+        
     });
 };
 

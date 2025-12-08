@@ -105,6 +105,55 @@ const createRequestedRideCard = (ride, onCancel) => {
     return div.firstElementChild;
 }
 
+// joined ride card
+const createJoinedRideCard = (ride,onViewRideDetails) =>{
+    const div = document.createElement('div');
+    div.innerHTML = `
+    <div class="ride-card" id="ride-${ride.ride_id}">
+            <div class="ride-card-row-1">
+                <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
+                <div class="ride-status grey-text">
+                    Requested
+                </div>
+            </div>
+            <div class="ride-card-row-2">
+                <div class="driver-details">
+                    <img class="driver-pfp" src="assets/img/leaf.png">
+                    <div>
+                        <p>${ride.driver.name}</p>
+                        <p class="grey-text">★ ${ride.driver.average_rating}</p>
+                    </div>
+                </div>
+                
+                <div class="view-button-container">
+                    <button class="view-profile-button">
+                        <img class="user-logo" src="assets/img/user.svg">
+                            View Profile
+                    </button>
+                </div>
+            </div>
+            <div class="ride-card-row-3 grey-text">
+                <img class="clock-logo" src="assets/img/clock.svg">
+                <p>${ride.departure_datetime}</p>
+            </div>
+            
+            <div class="accepted-info-container">
+                <p class="bold">Request Accepted!</p>
+                <p class="grey-text">Contact driver: +1234565789</p>
+                <button id='viewRideDetailsButton'>View Ride Details</button>
+            </div>
+        </div>
+    `
+
+    const el = div.firstElementChild;
+    el.querySelector('#viewRideDetailsButton').addEventListener('click',()=>{
+        onViewRideDetails()
+    });
+
+    return div.firstElementChild;
+
+}
+
 
 // driver pop up
 const createDriverPopUp = (user, onHighlightStars) => {
@@ -200,3 +249,4 @@ export {createAvailableRideCard};
 export {createRequestedRideCard};
 export {requestRide};
 export {createDriverPopUp};
+export {createJoinedRideCard};
