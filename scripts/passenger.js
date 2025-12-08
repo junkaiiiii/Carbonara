@@ -50,6 +50,7 @@ const handleRequestRide = (rideId) => {
         const [requestedRide] = states.available_rides.splice(rideIndex, 1);
 
         requestRide(requestedRide.room_code, messageBox);
+        
     }
     getAllRides();
 };
