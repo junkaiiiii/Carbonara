@@ -122,7 +122,7 @@ searchText.addEventListener("keyup", () => {
                                         totalDistance, 
                                         user.email,
                                         user.phone,
-                                        user.profile_picture);
+                                        user.profile_picture ?? defaultPfp);
             userGrid.appendChild(card);
         });
     }
