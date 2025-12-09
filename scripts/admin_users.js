@@ -41,9 +41,9 @@ const createUserCard = (username, userRole, rating, dateJoined, co2Saved, totalD
 
     return div.firstElementChild;
 }
-
+const defaultPfp = "assets/img/leaf.png"
 function render(){
-    const defaultPfp = "assets/img/leaf.png"
+
     userGrid.innerHTML = "";
     states.users.forEach(user => {
         let ratingScore = 0;
