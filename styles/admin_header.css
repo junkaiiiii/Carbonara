@@ -134,7 +134,7 @@ html{
     text-decoration: none;
     color: black;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
     /* border: solid 2px black; */
     padding: 8px;
  
