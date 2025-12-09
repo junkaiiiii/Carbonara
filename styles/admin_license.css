@@ -1,0 +1,231 @@
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body{
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+hr{
+    margin-top: 38px;
+} */
+
+/* html{
+    scroll-behavior: smooth;
+} */
+
+.section{
+    margin-bottom: 50px;
+}
+
+.section-title{
+    margin-top: 4vh;
+    margin-left: 10vw;
+}
+
+.user-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 3vh;
+    margin-left: 10vw;
+    width: 80vw;
+    gap: 50px;
+}
+
+.user-card{
+    display: flex;
+    flex-direction: column;
+    border: solid 2px var(--primary-border-color);
+    box-shadow: var(--primary-box-shadow);
+    padding: 2rem 1.5rem;
+    border-radius: 10px;
+}
+
+.user{
+    display: flex;
+    padding-bottom: 1rem;
+}
+
+.pfp{
+    flex: 2;
+}
+.username{
+    flex: 11;
+    margin-top: -13px;
+
+    & p{
+        margin-top: -5px;
+    }
+}
+.status{
+    flex: 1;
+}
+.card-pfp-img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.license h3{
+    margin-bottom: 10px;
+}
+
+.status p{
+    margin-top: 0.5vh;
+    border: solid 2px orange;
+    padding: 0.2em 0.5rem;
+    border-radius: 10px;
+    color: orange;
+}
+
+.license-img img{
+    width: 35vw;
+    height: 50vh;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 2vh;
+}
+
+.options{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 13px;
+
+}
+
+.button button{
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 5px;
+    width: 17vw;
+    height: 4vh;
+    border: none;
+}
+
+.approve{
+    background-color: var(--button-green);
+}
+.reject{
+    background-color: rgb(250, 60, 60);
+}
+
+.licenses-nav{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 3vh;
+    margin-left: 10vw;
+    align-items: center;
+    gap: 20px;
+    /* & ul{
+        display: flex;
+        padding-top: 2rem;
+        list-style: none;
+        gap: 30px;
+    
+        & li{
+            border: solid 2px gray;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        & li:hover{
+            background-color: blue;
+        }
+    } */
+
+    & a{
+        border: solid 2px black;
+        text-align: center;
+        padding: 0.5rem 1rem;
+        width: 14vw;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 2.5ch; 
+        text-decoration: none;
+        color: black;
+        transition: all 0.3s ease;
+    }
+
+    & a:hover{
+        transform: translateY(-3px);
+        background-color: rgb(206, 253, 226);
+    }
+
+}
+
+#reviewed-lic{
+
+    & .reviewed-container{
+        margin-top: 4ch;
+        display: flex;
+        justify-content: center;
+    }
+
+    & .reviewed-card{
+        padding: 0.5rem 1rem;
+        position: relative;
+        /* margin-left: 10vw; */
+        border: solid 3px black;
+        border-radius: 10px;
+        min-height: 30vh;
+        width: 60vw;
+        overflow: hidden;
+    }
+
+    & .reviewed-grid{
+        display: grid;
+        grid-template-columns: 1fr;
+
+    }
+
+    & .column-header{
+
+        padding: 1rem 1.3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 2px rgb(230, 226, 226);
+        background-color: rgb(223, 223, 223);
+
+
+    }
+    & .reviewed-user{
+        flex: 9;
+    }
+
+    /* & .reviewed-num{
+        flex: 3;
+    } */
+
+    & .reviewed-status{
+        flex: 1;
+    }
+
+    & .reviewed-row{
+        padding: 1rem 1.3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 2px gray;
+        border-left: solid 4px black;
+        border-radius: 5px;
+        & .reviewed-num{
+            margin-left: 30px;
+        }
+
+        & .reviewed-status{
+            /* min-width: 3vw; */
+            text-align: center;
+            max-width: 6vw;
+            padding: 0.1rem 1rem;
+            /* color: rgb(40, 94, 40);
+            border: solid 2px rgb(38, 221, 38); */
+            border-radius: 8px;
+        }
+    }
+}

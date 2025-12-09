@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <linK rel="stylesheet" href="styles/style.css"> -->
+    <link rel="stylesheet" href="styles/admin_header.css">
+</head>
+<body>
+    <!-- Navigation Section -->
+    <nav  class="nav">
+        <div class="navBar">
+            <div class="logo-container">
+                <img class="logo-img" src="./images/PLUS ULTRA.jpg">
+                <a href="#admin-dashboard" class="logo">CarboNara Admin</a>            
+            </div>
+            <div class="user-info">
+                <div class="user-details">
+                    <div class="nav-pfp"><img class="pfp-img" src="./images/stableRonaldo.avif" alt="ronaldo"></div>
+                    <div class="user-name">
+                        <h4 class="user-username">Demo User</h4>
+                        <p class="user-email">admin@gmail.com</p>
+                    </div>
+                </div>
+                <div class="logout"><img class="logout-img" src="./images/logout.png"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <section class="admin-dashboard" id="admin-dashboard">
+        <div class="admin-container">
+            <h1>Admin Dashboard</h1>
+            <p>Manage rides, users, and review driving license</p>
+        </div>
+
+
+        <ul class="choices">
+            <li><a href="">Overview</a></li>
+            <li><a href="">Rides</a></li>
+            <li><a href="./admin_users.php" onclick="">Users</a></li>
+            <li><a href="./admin_license.php">Licenses</a></li>
+            <li><a href="./admin_reports.php">Reports</a></li>
+        </ul>
+    </section>
+    <hr>
+    <script>
+
+        const navLinks = document.querySelectorAll(".choices a");
+
+        let currentPage = window.location.pathname.split("/").pop();
+
+        navLinks.forEach(link => {
+            const linkPage = link.getAttribute('href'); //get href value
+            
+            if (linkPage === `./${currentPage}`){
+                link.classList.add('active');
+            }
+        })
+
+    </script>
+</body>
+</html>
