@@ -42,6 +42,7 @@ hr{
     box-shadow: var(--primary-box-shadow);
     padding: 2rem 1.5rem;
     border-radius: 10px;
+    background-color: white;
 }
 
 .user{
