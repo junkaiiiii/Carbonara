@@ -1,10 +1,13 @@
 const userGrid = document.querySelector(".user-grid");
 let states = {
-    users : []
+    users : [],
+    licenses: [],
+    reports: [],
+    rides: []
 }
 
 
-const createUserCard = (username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum, pfp_img) => {
+const createUserCard = (userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum, pfp_img, onHighlightStars) => {
     const div = document.createElement('div');
     div.innerHTML = `
         <div class="user-card">
@@ -34,13 +37,33 @@ const createUserCard = (username, userRole, rating, dateJoined, co2Saved, totalD
                     <p>${email}</p>
                     <p>${phoneNum}</p>
                 </div>
-                <a href="">View Profile</a>            
+                <button class='view-profile-btn'>View Profile</button>            
             </div>
         </div>
     `
 
+    const el = div.firstElementChild;
+    const viewProfileBtn = el.querySelector(".view-profile-btn")
+    viewProfileBtn.addEventListener("click", () => {
+        const popUp = createProfilePopUp(userId, username, userRole, dateJoined, co2Saved, totalDistance, email, phoneNum);
+        
+        document.body.appendChild(popUp);
+        onHighlightStars(Number(rating), popUp.querySelectorAll(".stars i"));
+    })
+
     return div.firstElementChild;
 }
+
+// highlight profile star
+const highlightStars = (rating,stars) => {
+    stars.forEach((star,index)=>{
+        if (index+1<=rating){
+            console.log("test test am i in stars");
+            star.classList.add('highlighted');
+        }
+    })
+}
+
 const defaultPfp = "assets/img/leaf.png"
 function render(){
 
@@ -66,7 +89,8 @@ function render(){
             })
         }
         if (user.role === "Admin")return;
-        const card = createUserCard(user.username,
+        const card = createUserCard(user.user_id,
+                                    user.username,
                                     user.role,
                                     avgRating,
                                     user.created_at,
@@ -74,7 +98,8 @@ function render(){
                                     totalDistance, 
                                     user.email,
                                     user.phone,
-                                    user.profile_picture ?? defaultPfp);
+                                    user.profile_picture ?? defaultPfp,
+                                    highlightStars);
         userGrid.appendChild(card)
     })
 }
@@ -114,7 +139,8 @@ searchText.addEventListener("keyup", () => {
                     totalDistance += Number(co2.total_distance);
                 })
             }
-            const card = createUserCard(user.username,
+            const card = createUserCard(user.user_id,
+                                        user.username,
                                         user.role,
                                         avgRating,
                                         user.created_at,
@@ -122,7 +148,8 @@ searchText.addEventListener("keyup", () => {
                                         totalDistance, 
                                         user.email,
                                         user.phone,
-                                        user.profile_picture ?? defaultPfp);
+                                        user.profile_picture ?? defaultPfp,
+                                        highlightStars);
             userGrid.appendChild(card);
         });
     }
@@ -143,6 +170,103 @@ function getAllUsers(){
                 console.log(states.users);
             });
         });
+    fetch("api/license_api.php")
+        .then(response => response.json())
+        .then(data => {
+            states.licenses = [];
+            data.forEach(license => {
+                states.licenses.push(license);
+                console.log(states.licenses);
+            });
+        });
+    fetch("api/ride_api.php")
+        .then(res => res.json())
+        .then(data => {
+            states.rides = [];
+            data.forEach(ride => {
+                states.rides.push(ride);
+                console.log(states);
+            })
+        })
+}
+
+
+// driver pop up
+const createProfilePopUp = (userId, username, userRole, dateJoined, co2Saved, totalDistance, email, phone) => {
+
+    const userLicense = states.licenses.find(license => license.user.user_id === userId);
+
+    const userRides = states.rides.filter(ride => ride.driver.user_id === userId);
+    let totalRides = userRides.length;
+    console.log(totalRides);
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div class="driver-popup-container" id="driverPopUpContainer">
+            <div class="driver-popup">
+                <button class="close-driver-popup-button">
+                    <img class="close-driver-popup-icon" src="assets/img/close.png">
+                </button>
+
+                <div class="driver-popup-row-1">
+                    <h3>User Profile</h3>
+                    <img class="popup-pfp" src="assets/img/leaf.png">
+                    <h1>${username}</h1>
+                    <p>Joined at ${dateJoined.split(" ")[0]}</p>
+                    <div class="popup-role">${userRole}</div>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="driver-popup-row-2">
+                    <div>
+                        <p class="grey-text">CO₂ Saved</p>
+                        <h1>${co2Saved ?? 0}</h1>
+                    </div>
+                    <div>
+                        <p class="grey-text">Total Distance</p>
+                        <h1>${totalDistance ?? 0}</h1>
+                    </div>
+                    <div>
+                        <p class="grey-text">Total Rides</p>
+                        <h1>${totalRides ?? 0}</h1>
+                    </div>
+                </div>
+
+                <div class="contact-container">
+                    <p class="bold">Contact Information</p>
+                    <p>${email}</p>
+                    <p>${phone}</p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const popUp = wrapper.firstElementChild;
+
+    if (userLicense){
+        popUp.querySelector('.driver-popup').innerHTML += `
+            <div class="license-container">
+                <p class="bold">Driver License</p>
+                <div class="license-status-container">
+                    <p class="grey-text">status</p>
+                    <div>${userLicense.license_status}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    popUp.querySelector(".close-driver-popup-button").addEventListener("click", () => {
+        popUp.remove();
+    });
+
+    
+
+    return popUp;
 }
 
 getAllUsers();

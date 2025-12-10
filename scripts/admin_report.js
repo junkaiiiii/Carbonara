@@ -82,6 +82,8 @@ function render(){
     })
 }
 
+//Remember to make sure to change the status in users table
+
 function resolveReport(id){
     fetch("api/reports_api.php", {
         method: "POST",
