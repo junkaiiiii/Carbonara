@@ -246,7 +246,7 @@
 }
 
 @media (min-width:1000px){
-    .available-rides-section{
+    .available-rides-section, .requested-rides-section{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         width: 100%;
