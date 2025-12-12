@@ -3,7 +3,8 @@ let states = {
     users : [],
     licenses: [],
     reports: [],
-    rides: []
+    rides: [],
+    ratings: []
 }
 
 
@@ -45,7 +46,7 @@ const createUserCard = (userId, username, userRole, rating, dateJoined, co2Saved
     const el = div.firstElementChild;
     const viewProfileBtn = el.querySelector(".view-profile-btn")
     viewProfileBtn.addEventListener("click", () => {
-        const popUp = createProfilePopUp(userId, username, userRole, dateJoined, co2Saved, totalDistance, email, phoneNum);
+        const popUp = createProfilePopUp(userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum);
         
         document.body.appendChild(popUp);
         onHighlightStars(Number(rating), popUp.querySelectorAll(".stars i"));
@@ -88,7 +89,7 @@ function render(){
                 totalDistance += Number(co2.total_distance);
             })
         }
-        if (user.role === "Admin")return;
+        if (user.role === "Admin" || user.status === "Banned")return;
         const card = createUserCard(user.user_id,
                                     user.username,
                                     user.role,
@@ -108,6 +109,8 @@ function render(){
 const cardUsers = document.querySelectorAll(".card-username");
 const searchText = document.getElementById("search-text");
 
+
+//FILTERRR
 searchText.addEventListener("keyup", () => {
     let currText = (searchText.value.toLowerCase());
     userGrid.innerHTML = '';
@@ -139,6 +142,7 @@ searchText.addEventListener("keyup", () => {
                     totalDistance += Number(co2.total_distance);
                 })
             }
+            if (user.role === "Admin" || user.status === "Banned")return;
             const card = createUserCard(user.user_id,
                                         user.username,
                                         user.role,
@@ -168,6 +172,11 @@ function getAllUsers(){
                 states.users.push(user);
                 render();
                 console.log(states.users);
+                // states.users.forEach(user => {
+                //     user.ratings.forEach(rater=> {
+                //         console.log(rater.rater.rater_username);
+                //     });
+                // })
             });
         });
     fetch("api/license_api.php")
@@ -176,7 +185,6 @@ function getAllUsers(){
             states.licenses = [];
             data.forEach(license => {
                 states.licenses.push(license);
-                console.log(states.licenses);
             });
         });
     fetch("api/ride_api.php")
@@ -185,14 +193,13 @@ function getAllUsers(){
             states.rides = [];
             data.forEach(ride => {
                 states.rides.push(ride);
-                console.log(states);
-            })
-        })
+            });
+        });
 }
 
 
-// driver pop up
-const createProfilePopUp = (userId, username, userRole, dateJoined, co2Saved, totalDistance, email, phone) => {
+// profile pop up
+const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phone) => {
 
     const userLicense = states.licenses.find(license => license.user.user_id === userId);
 
@@ -220,6 +227,7 @@ const createProfilePopUp = (userId, username, userRole, dateJoined, co2Saved, to
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                     </div>
+                    <button class='view-rating-btn'>View Ratings</button>
                 </div>
 
                 <div class="driver-popup-row-2">
@@ -264,10 +272,93 @@ const createProfilePopUp = (userId, username, userRole, dateJoined, co2Saved, to
         popUp.remove();
     });
 
-    
+    const viewRatingBtn = popUp.querySelector(".view-rating-btn");
+    viewRatingBtn.addEventListener("click", () => {
+        if (rating === 0)return;
+        const ratingPopUp = createRatingPopUp(userId)
+
+        popUp.querySelector(".driver-popup").classList.add("shifted");
+
+        document.body.appendChild(ratingPopUp);
+    })
+
 
     return popUp;
 }
 
+
+function createRatingPopUp(userId){
+
+    const targetUser = states.users.find(u => u.user_id === userId);
+    console.log(targetUser);
+    // const user   Rat   
+
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `
+        <div class='rating-popup-container'>
+            <div class='rating-popup'>
+                <button class="close-rating-popup-button">
+                    <img class="close-rating-popup-icon" src="assets/img/close.png">
+                </button>
+                <div class='rating-row'>
+                    <h3>Ratings</h3>
+                    <div class='rating-grid'>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    `
+
+
+
+    const popUp = wrapper.firstElementChild;
+    const ratingGrid = popUp.querySelector(".rating-grid");
+
+    if (targetUser && targetUser.ratings){
+        targetUser.ratings.forEach(rating => {
+            const ratingCard = createRatingCards(rating);
+            console.log(ratingCard)
+            ratingGrid.appendChild(ratingCard);
+        })          
+    }
+    else{
+        ratingGrid.innerHTML = `
+            <p>No rating found for this user</p>
+        `
+    }
+
+    popUp.querySelector(".close-rating-popup-button").addEventListener("click", () => {
+        
+        popUp.remove();
+
+        document.querySelector(".driver-popup").classList.remove("shifted");
+    });
+    return popUp;
+}
+
+function createRatingCards(rating){
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <div class='rating-card'>
+            <div class='rating-header'>
+                <img class="rater-pfp" src="${rating.rater.profile_picture ?? defaultPfp}">
+                <h4>${rating.rater.rater_username}</h4>
+            </div>
+            <div class='rating-info'>
+                <h4>Rating Score</h4>
+                <p>${rating.score} stars</p>
+                <h4>Reason:</h4>
+                <p>${rating.description} ASDVAJHGDVASVDSAJHGDVSADGHASVDJHGASDVJASGDCVSAHJGDVCSAHGDFCSAHGJDCASJGD</p>
+            </div>
+        </div>
+    `;
+    
+    return div.firstElementChild;
+}
+// states.users.forEach(user => {
+//     console.log(user);
+// })
 getAllUsers();
 // console.log(states.users);

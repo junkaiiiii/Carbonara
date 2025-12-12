@@ -8,10 +8,16 @@
     $method = $_SERVER["REQUEST_METHOD"];
 
     if ($method === "GET"){
-        $sql = "SELECT u.*, rt.rating_id, rt.rated_id, rt.score, co2.co2_id, co2.co2_saved, co2.distance_km 
+        $sql = "SELECT u.*, rt.rating_id, rt.rated_id, rt.score, rt.description, co2.co2_id, co2.co2_saved, co2.distance_km, 
+                rater.user_id AS rater_user_id,
+                rater.username AS rater_username,
+                rater.full_name AS rater_full_name,
+                rater.profile_picture_url AS rater_profile_picture 
                 FROM users u
                 LEFT JOIN ratings rt
                 ON u.user_id = rt.rated_id
+                LEFT JOIN users rater
+                ON rt.rater_id = rater.user_id
                 LEFT JOIN co2_log co2
                 ON u.user_id = co2.user_id";
 
@@ -46,7 +52,14 @@
                 if ($row["rating_id"] !== null){
                     $response[$uid]["ratings"][] = [
                         "rating_id" => $row["rating_id"],
-                        "score" => $row["score"]
+                        "score" => $row["score"],
+                        "description" => $row['description'],
+                        "rater" => [
+                            "rater_id" => $row['rater_user_id'],
+                            "rater_username" => $row["rater_username"],
+                            "rater_full_name" => $row['rater_full_name'],
+                            "rater_profile_picture" => $row['rater_profile_picture']
+                        ]
                     ];
                 }
 
@@ -62,6 +75,52 @@
         $response = array_values($response);
 
         respond($response, 200);
+    }
+    elseif($method === "POST"){
+        $data = getJsonInput();
+        //check if data is not empty
+        if (!$data){
+            respond(["error" => "Invalid or empty JSON"], 400);
+        }   
+        // check if action and report id is not empty / is set
+        if (!isset($data["action"], $data["reported_email"])){
+            respond(["error" => "Missing required fields"], 400);
+        }
+
+        $action = $data["action"]; // status
+        $user_email = $data["reported_email"];
+
+        if ($action === "Active"){
+            $newStatus = "Active";
+        }
+        elseif($action === "Banned"){
+            $newStatus = "Banned";
+        }
+        else{
+            respond(["error" => "Invalid action"], 400);
+        }
+
+        $sql = "UPDATE users
+                SET status = ?
+                WHERE email = ?";
+        $stmt = mysqli_prepare($conn,$sql);
+
+        if (!$stmt){
+            respond(['error' => 'Database error: '. mysqli_error($conn)], 500);
+        }
+
+        mysqli_stmt_bind_param($stmt, "ss", $newStatus, $user_email);
+        mysqli_stmt_execute($stmt);
+
+        if (mysqli_stmt_affected_rows($stmt) > 0){ //if row is affected
+            respond(["message" => "Report Updated", "status" => $newStatus], 200);
+        }
+        else{ // no rows effected
+            respond(["error" => "No rows updated"], 400);
+        }
+
+
+
     }
 
 ?>

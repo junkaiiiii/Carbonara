@@ -29,7 +29,7 @@ const createUserCard = (reporterUsername, reporterUrl, reporterEmail, receipantU
             <div class="options">
                 <div class="button"><button class="approve" data-id='${reportId}'>Resolve</button></div>
                 <div class="button">
-                    ${status === "Rejected" ? `<button class="unban" data-id='${reportId}'>Unban</button>` : `<button class="reject" data-id='${reportId}'>Ban</button>`}
+                    ${status === "Rejected" ? `<button class="unban" data-id='${reportId}' data-email='${receipantEmail}'>Unban</button>` : `<button class="reject" data-id='${reportId}' data-email='${receipantEmail}'>Ban</button>`}
                 </div>
             </div>
         </div>   
@@ -111,11 +111,12 @@ function resolveReport(id){
         states.reports.splice(index,1);
 
         render();
-    })
+    });
+
 
 }
 
-function banReport(id){
+function banReport(id, reportedEmail){
     fetch("api/reports_api.php", {
         method: "POST",
         headers: {
@@ -143,10 +144,20 @@ function banReport(id){
 
         render();
     })
+    fetch("api/users_api.php", {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            action: "Banned",
+            reported_email: reportedEmail
+        })
+    })
 
 }
 
-function unbanReport(id){
+function unbanReport(id, reportedEmail){
     fetch("api/reports_api.php", {
         method: "POST",
         headers: {
@@ -173,10 +184,19 @@ function unbanReport(id){
         states.reports.splice(index,1);
 
         render();
+    });
+    fetch("api/users_api.php", {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            action: "Active",
+            reported_email: reportedEmail
+        })
     })
 
 }
-
 
 
 function getAllReports(){
@@ -223,14 +243,17 @@ buttons.forEach(btn => {
 reportGrid.addEventListener("click", (e) => {
     if (e.target.classList.contains("approve")){
         const reportId = e.target.dataset.id;
+        const reportedEmail = e.target.dataset.email;
         resolveReport(reportId);
     }
     if(e.target.classList.contains("reject")){
         const reportId = e.target.dataset.id;
-        banReport(reportId);
+        const reportedEmail = e.target.dataset.email;
+        banReport(reportId, reportedEmail);
     }
     if (e.target.classList.contains("unban")){
         const reportId = e.target.dataset.id;
-        unbanReport(reportId);
+        const reportedEmail = e.target.dataset.email;
+        unbanReport(reportId, reportedEmail);
     }   
 })
