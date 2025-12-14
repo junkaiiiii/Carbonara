@@ -16,8 +16,8 @@
         <!-- <ul> -->
         <button data-filter="all">All</button>
         <button data-filter="pending">Pending</button>
-        <button data-filter="approved">Resolved</button>
-        <button data-filter="rejected">Banned</button>
+        <button data-filter="approved">Approved</button>
+        <button data-filter="rejected">Rejected</button>
         <!-- </ul> -->
     </div> 
     <section id="rep-pending" class="section">

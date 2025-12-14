@@ -147,17 +147,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 
     & button{
         margin-top: 35px;
+        /* margin-left: 30px; */
         text-decoration: none;
         color: black;
         border: solid 2px gray;
         border-radius: 5px;
-        width: 130px;
+        min-width: 120px;
         padding: 0.2rem 1rem;
         background-color: white;
         cursor: pointer;
+    }
+
+    & .unban-btn{
+        background-color: rgb(181, 255, 171);
     }
 }
 
@@ -256,10 +262,33 @@
 }
 
 .popup-role{
-    background-color: var(--green-bg-color);
-    padding: 3px 8px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    /* border: solid 2px gray; */
+    gap: 20px;
+    
+    /* padding: 3px 8px; */
     border-radius: 5px;
-    margin: 1rem 0rem;
+    margin: 0.5rem 0rem;
+
+    & .user-role{
+        /* border: solid 2px black; */
+        border-radius: 5px;
+        padding: 0.3rem 0.5rem;
+        color: black;
+        background-color: var(--green-bg-color);
+    }
+
+    & .user-status{
+        border-radius: 5px;
+        /* border: solid 2px black; */
+        padding: 0.3rem 0.5rem;
+        color: var(--dark-green);
+        background-color: var(--green-bg-color);
+        
+    }
+    
 }
 
 .stars i{
@@ -439,3 +468,10 @@
         margin: 0.3rem 0rem;
     }
 }
+
+/* .user-status{
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    color: var(--dark-green);
+    background-color: var(--green-bg-color);
+} */

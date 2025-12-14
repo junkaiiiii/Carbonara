@@ -31,6 +31,7 @@
                     "reporter_name" => $row["reporter_name"],
                     "reporter_email" => $row["reporter_email"],
                     "reporter_pfp" => $row["reporter_pfp"],
+                    "reported_user_id" => $row["reported_user_id"],
                     "reported_name" => $row["reported_name"],
                     "reported_email" => $row["reported_email"],
                     "reported_pfp" => $row["reported_pfp"],
@@ -56,10 +57,10 @@
         $action = $data["action"]; // status
         $report_id = $data["report_id"];
 
-        if ($action === "approve"){ // resolved
+        if ($action === "approve"){ // if 3 approve === ban
             $newStatus = "Approved";
         }
-        elseif ($action === "reject"){ //ban
+        elseif ($action === "reject"){ // rejects the report
             $newStatus = "Rejected";
         }
         elseif ($action === "unban"){

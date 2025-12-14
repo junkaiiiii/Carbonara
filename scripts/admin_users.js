@@ -8,7 +8,7 @@ let states = {
 }
 
 
-const createUserCard = (userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum, pfp_img, onHighlightStars) => {
+const createUserCard = (userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum, pfp_img, onHighlightStars, status) => {
     const div = document.createElement('div');
     div.innerHTML = `
         <div class="user-card">
@@ -38,19 +38,31 @@ const createUserCard = (userId, username, userRole, rating, dateJoined, co2Saved
                     <p>${email}</p>
                     <p>${phoneNum}</p>
                 </div>
-                <button class='view-profile-btn'>View Profile</button>            
+                ${status === "Banned" ? `<button class='unban-btn'>Unban</button>` : ``} 
+                <button class='view-profile-btn'>View Profile</button>   
+                         
             </div>
         </div>
     `
 
     const el = div.firstElementChild;
-    const viewProfileBtn = el.querySelector(".view-profile-btn")
+    const viewProfileBtn = el.querySelector(".view-profile-btn");
     viewProfileBtn.addEventListener("click", () => {
-        const popUp = createProfilePopUp(userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum);
+        const popUp = createProfilePopUp(userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum, status);
         
         document.body.appendChild(popUp);
         onHighlightStars(Number(rating), popUp.querySelectorAll(".stars i"));
     })
+
+    const unbanBtn = el.querySelector(".unban-btn");
+    // console.log(unbanBtn);
+    if (unbanBtn){
+        unbanBtn.addEventListener("click", () => {
+            console.log("HELLOWWW");
+            unbanReport(userId, email);
+        });
+    }
+
 
     return div.firstElementChild;
 }
@@ -89,7 +101,7 @@ function render(){
                 totalDistance += Number(co2.total_distance);
             })
         }
-        if (user.role === "Admin" || user.status === "Banned")return;
+        if (user.role === "Admin")return;
         const card = createUserCard(user.user_id,
                                     user.username,
                                     user.role,
@@ -100,7 +112,8 @@ function render(){
                                     user.email,
                                     user.phone,
                                     user.profile_picture ?? defaultPfp,
-                                    highlightStars);
+                                    highlightStars,
+                                    user.status);
         userGrid.appendChild(card)
     })
 }
@@ -153,7 +166,8 @@ searchText.addEventListener("keyup", () => {
                                         user.email,
                                         user.phone,
                                         user.profile_picture ?? defaultPfp,
-                                        highlightStars);
+                                        highlightStars,
+                                        user.status);
             userGrid.appendChild(card);
         });
     }
@@ -197,9 +211,47 @@ function getAllUsers(){
         });
 }
 
+function unbanReport(id, reportedEmail){
+    fetch("api/users_api.php", {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            action: "Active",
+            reported_email : reportedEmail
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        let index = states.users.findIndex(user => user.user_id === id);
+        if (index === -1)return;
+
+        user = states.users[index];
+        user.status = "Active";
+        states.users.push(user);
+        states.users.splice(index, 1);
+
+        render();
+        // let index = states.reports.findIndex(report => report.report_id === id);
+        // if (index === -1)return;
+
+        // const report = states.reports[index];
+        // console.log(report);
+        // report.status = "Pending";
+        // states.reports.forEach(report => {
+        //     console.log(report.status);
+        // })
+        // console.log(states.reports);
+        // states.reports.push(report);
+        // states.reports.splice(index,1);
+
+        // render();
+    });
+}
 
 // profile pop up
-const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phone) => {
+const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phone, status) => {
 
     const userLicense = states.licenses.find(license => license.user.user_id === userId);
 
@@ -219,7 +271,10 @@ const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2S
                     <img class="popup-pfp" src="assets/img/leaf.png">
                     <h1>${username}</h1>
                     <p>Joined at ${dateJoined.split(" ")[0]}</p>
-                    <div class="popup-role">${userRole}</div>
+                    <div class="popup-role">
+                        <p class='user-role'>${userRole}</p>
+                        <p class='user-status'>${status}</p>
+                    </div>
                     <div class="stars">
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>

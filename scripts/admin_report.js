@@ -27,9 +27,9 @@ const createUserCard = (reporterUsername, reporterUrl, reporterEmail, receipantU
                 <p>${description}</p>
             </div>
             <div class="options">
-                <div class="button"><button class="approve" data-id='${reportId}'>Resolve</button></div>
+                <div class="button"><button class="approve" data-id='${reportId}' data-email='${receipantEmail}'>Approve</button></div>
                 <div class="button">
-                    ${status === "Rejected" ? `<button class="unban" data-id='${reportId}' data-email='${receipantEmail}'>Unban</button>` : `<button class="reject" data-id='${reportId}' data-email='${receipantEmail}'>Ban</button>`}
+                    <button class="reject" data-id='${reportId}' data-email='${receipantEmail}'>Reject</button>
                 </div>
             </div>
         </div>   
@@ -72,8 +72,8 @@ function render(){
         else{
             reportCard.style.border = "solid 2px";
             reportCard.style.borderColor = 'red';  
-            card.querySelector(".approve").style.display = "none";
-            // reportOptions.style.display = "none";
+            // card.querySelector(".approve").style.display = "none";
+            reportOptions.style.display = "none";
             reportStatus.style.color = "red";
             reportStatus.style.borderColor = "red";
         }
@@ -84,7 +84,7 @@ function render(){
 
 //Remember to make sure to change the status in users table
 
-function resolveReport(id){
+function approveReport(id, reportedEmail){
     fetch("api/reports_api.php", {
         method: "POST",
         headers: {
@@ -103,20 +103,39 @@ function resolveReport(id){
         const report = states.reports[index];
         // console.log(report);
         report.status = "Approved";
-        states.reports.forEach(report => {
-            console.log(report.status);
-        })
-        console.log(states.reports);
+        // states.reports.forEach(report => {
+        //     console.log(report.status);
+        // })
+        // console.log(states.reports);
         states.reports.push(report);
         states.reports.splice(index,1);
 
         render();
+
+        const approvedReports = states.reports.filter(report => {
+            return report.reported_email === reportedEmail && 
+            report.status === "Approved";
+        })
+        console.log(approvedReports);
+        if (approvedReports.length > 2){
+            console.log("am i here???");
+            fetch("api/users_api.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({
+                    action: "Banned",
+                    reported_email: reportedEmail
+                })
+            })
+        }
     });
 
 
 }
 
-function banReport(id, reportedEmail){
+function rejectReport(id){
     fetch("api/reports_api.php", {
         method: "POST",
         headers: {
@@ -135,24 +154,14 @@ function banReport(id, reportedEmail){
         const report = states.reports[index];
         console.log(report);
         report.status = "Rejected";
-        states.reports.forEach(report => {
-            console.log(report.status);
-        })
-        console.log(states.reports);
+        // states.reports.forEach(report => {
+        //     console.log(report.status);
+        // })
+        // console.log(states.reports);
         states.reports.push(report);
         states.reports.splice(index,1);
 
         render();
-    })
-    fetch("api/users_api.php", {
-        method: "POST",
-        headers: {
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify({
-            action: "Banned",
-            reported_email: reportedEmail
-        })
     })
 
 }
@@ -185,16 +194,16 @@ function unbanReport(id, reportedEmail){
 
         render();
     });
-    fetch("api/users_api.php", {
-        method: "POST",
-        headers: {
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify({
-            action: "Active",
-            reported_email: reportedEmail
-        })
-    })
+    // fetch("api/users_api.php", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type":"application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         action: "Active",
+    //         reported_email: reportedEmail
+    //     })
+    // })
 
 }
 
@@ -208,6 +217,7 @@ function getAllReports(){
             data.forEach(report => {
                 states.reports.push(report);
             })
+            // console.log(states.reports);
             render();
         })
 }
@@ -215,7 +225,7 @@ function getAllReports(){
 getAllReports();
 
 
-
+//FILTERSSSS
 const buttons = document.querySelectorAll("[data-filter]");
 buttons.forEach(btn => {
     // getAllReports();
@@ -244,16 +254,11 @@ reportGrid.addEventListener("click", (e) => {
     if (e.target.classList.contains("approve")){
         const reportId = e.target.dataset.id;
         const reportedEmail = e.target.dataset.email;
-        resolveReport(reportId);
+        approveReport(reportId, reportedEmail);
     }
     if(e.target.classList.contains("reject")){
         const reportId = e.target.dataset.id;
         const reportedEmail = e.target.dataset.email;
-        banReport(reportId, reportedEmail);
-    }
-    if (e.target.classList.contains("unban")){
-        const reportId = e.target.dataset.id;
-        const reportedEmail = e.target.dataset.email;
-        unbanReport(reportId, reportedEmail);
-    }   
+        rejectReport(reportId, reportedEmail);
+    } 
 })
