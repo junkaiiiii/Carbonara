@@ -22,12 +22,12 @@ async function initApp(){
     const keys = await getGoogleAPI();
     orsKey = keys.orsApi;
     googleKey = keys.googleApi;
-    geoCodeAddress("Kuala Lumpur").then(result => {
-        console.log(result);
-    });  
+    console.log(googleKey);
+    const res = await geoCodeAddress("Kuala Lumpur");
+    const res2 = await geoCodeAddress("Petaling Jaya");
+    console.log(res);
+    console.log(res2);  
     initMap(); 
-
-
 }
 
 // initialize the map on the "map" div with a given center and zoom
@@ -56,45 +56,48 @@ initApp();
 let routeLayer, startMarker, endMarker;
 async function geoCodeAddress(address) {
     try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${googleKey}`
-      );
+        console.log(googleKey);
+        const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${googleKey}`
+        );
 
-      const data = await response.json();
-      if (data.results && data.results.length > 0) {
-        const result = data.results[0];
-        console.log(result);
-        const { lat, lng } = result.geometry.location;
+        const data = await response.json();
+        console.log("Full API response:", data); 
+        console.log("Status:", data.status);  
+        if (data.results && data.results.length > 0) {
+            const result = data.results[0];
+            console.log(result);
+            const { lat, lng } = result.geometry.location;
         
-        // Extract city, state from address components
-        const addressComponents = result.address_components;
-        let geocodeCity = '';
-        let state = '';
-        
-        addressComponents.forEach((component) => {
-          if (component.types.includes('locality')) {
-            geocodeCity = component.long_name;
-          }
-          if (component.types.includes('administrative_area_level_1')) {
-            state = component.short_name;
-          }
-        });
-        
-        // Create clean address format
-        const formattedAddress = geocodeCity && state ? `${geocodeCity}, ${state}` : result.formatted_address;
-        
-        return { 
-          lat, 
-          lng,
-          formattedAddress
-        };
-      }
-      return null;
+            // Extract city, state from address components
+            const addressComponents = result.address_components;
+            let geocodeCity = '';
+            let state = '';
+            
+            addressComponents.forEach((component) => {
+                if (component.types.includes('locality')) {
+                    geocodeCity = component.long_name;
+                }
+                if (component.types.includes('administrative_area_level_1')) {
+                    state = component.short_name;
+                }
+            });
+            
+            // Create clean address format
+            const formattedAddress = geocodeCity && state ? `${geocodeCity}, ${state}` : result.formatted_address;
+            
+            return { 
+                lat, 
+                lng,
+                formattedAddress
+            };
+        }
+        return null;
     } catch (error) {
-      console.error('Geocoding error:', error);
-      return null;
+        console.error('Geocoding error:', error);
+        return null;
     }
-  }
+}
 
 
 async function submitForm(event){
@@ -107,53 +110,30 @@ async function submitForm(event){
     if(!start || !end) return alert("Enter a proper location please!");
     //nominatim api
     try{
-        let resStart = await fetch(`proxy.php?search=${start}`);
-        let dataStart = await resStart.json();
-        console.log(dataStart);
-        if (dataStart.length === 0){
+        let resStart = await geoCodeAddress(start);
+        // let dataStart = await resStart.json();
+        console.log(resStart);
+        if (resStart.length === 0){
             alert("Location Not Found!");
             return;
         }
-        let resEnd = await fetch(`proxy.php?search=${end}`);
-        dataEnd = await resEnd.json();
-        console.log(dataEnd);
-        if (dataEnd.length === 0){
+        let resEnd = await geoCodeAddress(end);
+        // dataEnd = await resEnd.json();
+        console.log(resEnd);
+        if (resEnd.length === 0){
             alert("Location Not Found!");
             return;
         }
 
 
 
-        let latStart = parseFloat(dataStart[0].lat);
-        let lonStart = parseFloat(dataStart[0].lon);
-        let latEnd = parseFloat(dataEnd[0].lat);
-        let lonEnd = parseFloat(dataEnd[0].lon);
+        let latStart = parseFloat(resStart.lat);
+        let lonStart = parseFloat(resStart.lng);
+        let latEnd = parseFloat(resEnd.lat);
+        let lonEnd = parseFloat(resEnd.lng);
 
-
-        // if (marker){
-        //     map.removeLayer(marker);
-        // }
         map.setView([latStart,lonStart],17)
         getRoute([lonStart, latStart],[lonEnd,latEnd]);
-
-        //     .then(res => res.json())
-        //     .then(data=>{ 
-        //         console.log(data)
-        //         if(data.length ===0){
-        //             alert("LOcation not found");
-        //             return;
-        //         }
-
-        //         let lat = parseFloat(data[0]["lat"]);
-        //         let lon = parseFloat(data[0].lon);
-                
-        //         if (marker){
-        //             map.removeLayer(marker);
-        //         }
-
-        //         marker = L.marker([lat,lon]).addTo(map);
-        //         map.setView([lat,lon],15)
-        //     });
     }
     catch(err){
         console.error(`Error fetching location: ${err}`)
@@ -252,20 +232,21 @@ function clearRoute() {
 async function getRoute(start,end){
     //let info = document.getElementById("info");
     try{
+        console.log(orsKey);
         let res =  await fetch(`${ORS_URL}start=${start.join(',')}&end=${end.join(',')}&radiuses=[5000]`,{
             headers: {
-                "Authorization" : API_KEY
+                "Authorization" : orsKey
             }
         });
-
+        console.log(res);   
         const data = await res.json();
         console.log(data);
 
         //Extract route coordinates
         if (data.error) {
-        console.error(data.error.message);
-        alert(`Routing Error: ${data.error.message}`);
-        return;
+            console.error(data.error.message);
+            alert(`Routing Error: ${data.error.message}`);
+            return;
         }
 
         if (!data.features || data.features.length === 0) {
