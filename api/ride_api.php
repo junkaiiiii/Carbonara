@@ -10,10 +10,15 @@ include "helpers.php";
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === "GET"){
+    $id = $_GET['id'] ?? '';
     $mode = $_GET['mode'] ?? 'available';
     $sessionUserId = $_SESSION['user_id']; // or however you store session user ID
     $sessionRole = $_SESSION['role'];
     // get role also and return hosted if its driver
+
+    if (!empty($id)){
+        
+    }
 
     if ($mode === 'available'){
         $sql = "SELECT 
