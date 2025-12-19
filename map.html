@@ -11,16 +11,39 @@
 <body>
     <div id="map"></div>
     <div class="formBlock">
-    <form id="form">
-        <input type="text" id="start" placeholder="Origin" >
-        <!-- <div id="start-suggestions" class="suggestions"></div> -->
-        <input type="text" id="end" placeholder="Destination">
-        <br><br>
-        <button type="submit" id="searchButton">Search</button>
-        <button type="reset" id="resetButton">Clear</button>
-    </form>
+        <form id="form">
+            <input type="text" id="start" placeholder="Origin" >
+            <!-- <div id="start-suggestions" class="suggestions"></div> -->
+            <input type="text" id="end" placeholder="Destination">
+            <br><br>
+            <button type="submit" id="searchButton">Search</button>
+            <button type="reset" id="resetButton">Clear</button>
+        </form>
     </div>
     <!-- <div id="info"></div> -->
+    <!-- select type of car??? and one more i forgot -->
+    <div class="big-container">
+        <!-- <h4>Information Block</h4> -->
+    </div>
+    <div class="rideInfoContainer">
+        <div class="rideInfoBlock">
+            <span class="selected-text" id="numPlate">Select an Option</span>
+            <div class="vehicle-options">
+                <!-- <div data-value="1">meowww</div>
+                <div data-value="2">blehhh</div>
+                <div data-value="3">woof</div> -->
+            </div>
+        </div>
+        <div class="seatsBlock">
+            <input type="number" id="seatsInput" placeholder="Seats" min="1" max="10">
+        </div>   
+    </div>
+    <div class="departureContainer">
+        <div class="departureBlock">
+            <input type="datetime-local" id="departureInput" >
+        </div>
+    </div>
+
     <div class="infoContainer">
         <div class="infoBlock">
         <div id="distance">Distance</div>
@@ -29,7 +52,10 @@
         <div class="infoBlock">
         <div id="eta">ETA</div>
         </div>
+        <button>Create Ride</button>
     </div>
+    
+
 
 
 

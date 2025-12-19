@@ -6,6 +6,13 @@ const ORS_URL = `https://api.openrouteservice.org/v2/directions/driving-car?`;
 let orsKey;
 let googleKey;
 let map;
+let startMarkerChose = false;
+let endMarkerChose = false;
+let states = {
+    vehicles : [],
+    rides : [],
+}
+let selectedVehicleId = null;
 
 async function getGoogleAPI(){
     try{
@@ -22,12 +29,12 @@ async function initApp(){
     const keys = await getGoogleAPI();
     orsKey = keys.orsApi;
     googleKey = keys.googleApi;
-    console.log(googleKey);
-    const res = await geoCodeAddress("Kuala Lumpur");
-    const res2 = await geoCodeAddress("Petaling Jaya");
-    console.log(res);
-    console.log(res2);  
     initMap(); 
+    setupEventListeners();
+    
+    getVehicles();
+    setupCreateRideButton();
+    
 }
 
 // initialize the map on the "map" div with a given center and zoom
@@ -52,7 +59,7 @@ async function initMap(){
 // let marker = L.marker([3.139, 101.6869]).addTo(map);
 // let circle = L.circle([3.139, 101.6869], {radius: 50}).addTo(map);
 // marker.bindPopup("FUCK YUOUUUUU").openPopup();
-initApp();
+
 let routeLayer, startMarker, endMarker;
 async function geoCodeAddress(address) {
     try {
@@ -62,8 +69,9 @@ async function geoCodeAddress(address) {
         );
 
         const data = await response.json();
-        console.log("Full API response:", data); 
-        console.log("Status:", data.status);  
+        console.log(data);
+        // console.log("Full API response:", data); 
+        // console.log("Status:", data.status);  
         if (data.results && data.results.length > 0) {
             const result = data.results[0];
             console.log(result);
@@ -166,43 +174,50 @@ function getPosition(pos){
     map.setView([lat,lon],15);
 }
 
-// let clickCount = 0;
-// let startcoords, endcoords;
-// //clickable markers
-// map.on("click", async function(e){
-//     // nominatim api again but the reverse end-point
-//     //reverse (from coords to locations)
-//     // latlng is a leaflet object
-//     // const NOMINATIM_CONFIG = {
-//     //     headers: {
-//     //         'User-Agent' : 'MyMapApp/1.0',
-//     //     }
-//     // }
+async function setupEventListeners(){
+    let clickCount = 0;
+    let startcoords, endcoords;
+    //clickable markers
+    map.on("click", async function(e){
+        // nominatim api again but the reverse end-point
+        //reverse (from coords to locations)
+        // latlng is a leaflet object
+        // const NOMINATIM_CONFIG = {
+        //     headers: {
+        //         'User-Agent' : 'MyMapApp/1.0',
+        //     }
+        // }
 
-//     let res = await fetch(`proxy.php?reverse=${e.latlng.lat},${e.latlng.lng}`);
-//     data = await res.json();
-//     if(routeLayer)map.removeLayer(routeLayer);
-//     console.log(data)
-//     if (clickCount ===0){
-//         document.getElementById("start").value = data.display_name;
-//         if(startMarker) map.removeLayer(startMarker);
-//         startMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-//         startcoords = [e.latlng.lng, e.latlng.lat]
-//         clickCount = 1;
-//     }
-//     else{
-//         document.getElementById("end").value = data.display_name;
-//         if(endMarker)map.removeLayer(endMarker);
-//         endMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-//         endcoords = [e.latlng.lng, e.latlng.lat]
-//         clickCount = 0;
-//     }
-//     if (startMarker && endMarker){
-//         console.log(startcoords) ;
-//         console.log(endcoords);
-//         getRoute(startcoords,endcoords);
-//     }
-// })
+        let res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${e.latlng.lat},${e.latlng.lng}&key=${googleKey}`);
+        data = await res.json();
+        if(routeLayer)map.removeLayer(routeLayer);
+        console.log(data)
+        if (!startMarker && !endMarker)return;
+        if (startMarkerChose){
+            // document.getElementById("start").value = data.display_name;
+            if(startMarker) map.removeLayer(startMarker);
+            startMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+            startcoords = [e.latlng.lng, e.latlng.lat]
+            endcoords = [endMarker.getLatLng().lng, endMarker.getLatLng().lat];
+        }
+        else{
+            // document.getElementById("end").value = data.display_name;
+            if(endMarker)map.removeLayer(endMarker);
+            endMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+            endcoords = [e.latlng.lng, e.latlng.lat]
+            startcoords = [startMarker.getLatLng().lng, startMarker.getLatLng().lat];
+        }
+        if (startMarker && endMarker){
+            console.log(startcoords) ;
+            console.log(endcoords);
+            getRoute(startcoords,endcoords);
+        }
+    })
+
+
+}
+
+
 
 function clearRoute() {
     if (routeLayer) {
@@ -270,10 +285,19 @@ async function getRoute(start,end){
         
         if (startMarker) map.removeLayer(startMarker);
         if (endMarker) map.removeLayer(endMarker);
-        startMarker = L.marker([start[1], start[0]]).addTo(map);
-        endMarker = L.marker([end[1], end[0]]).addTo(map);
+        startMarker = L.marker([start[1], start[0]], { draggable : true }).addTo(map);
+        endMarker = L.marker([end[1], end[0]], { draggable : true }).addTo(map);
         startMarker.bindPopup("Origin").openPopup();
         endMarker.bindPopup("Destination").openPopup();
+        startMarker.on("click", () => {
+            startMarkerChose = true;
+            endMarkerChose = false;
+        })
+        endMarker.on("click", () => {
+            endMarkerChose = true;
+            startMarkerChose = false;
+        })
+
 
         const distance = parseFloat(data.features[0].properties.summary.distance /1000).toFixed(2);
         const eta = Math.round(data.features[0].properties.summary.duration /60);
@@ -285,100 +309,177 @@ async function getRoute(start,end){
         //     <strong>Route Found!</strong><br>
         //     Distance: ${distance} km | ETA: ${eta} minutes
         // </div>`;
+        states.rides = {
+            origin_text : document.getElementById("start").value,
+            origin_lat : start[1],
+            origin_lng : start[0],
+            destination_text : document.getElementById("end").value,
+            destination_lat : end[1],
+            destination_lng : end[0],
+            route_geojson : data.features[0].geometry,
+            distance : distance,
+            eta : eta
+        }
     }
     catch(error){
         console.error(error);
     }
 }
 
-// async function autocomplete(inputId, suggestionBoxId) {
-//     const input = document.getElementById(inputId);
-//     const suggestionBox = document.getElementById(suggestionBoxId);
-//     let typingTimer;
-//     input.addEventListener("input", ()=> {
-//         clearTimeout(typingTimer);
-//         typingTimer = setTimeout( 400)
-//     })
+async function handleCreateRide() {
+    try {
+        console.log("Inside handleCreateRide function");
+        console.log("Current states.rides:", states.rides);
+        console.log(states.vehicles);
+        // 1. Validate route exists
+        if (!states.rides || !states.rides.origin_lat) {
+            alert("Please search for a route on the map first!");
+            return;
+        }
 
+        // 2. Validate Vehicle Selection
+        if (!selectedVehicleId) {
+            alert("Please select a vehicle from the dropdown!");
+            return;
+        }
 
-//     input.addEventListener("input", async function () {
-//         clearTimeout(typingTimer);
-//         typingTimer = setTimeout(5000);
-//         const query = input.value.trim();
-//         if (query.length < 2) {
-//             suggestionBox.style.display = "none";
-//             return;
-//         }
+        const seats = document.getElementById("seatsInput").value;
+        const departure = document.getElementById("departureInput").value;
 
-//         
+        if (!seats || !departure) {
+            alert("Please fill in the number of seats and departure time.");
+            return;
+        }
 
-//         const res = await fetch(url)
+        // REMINDER JENSEN U NEED THE OBJECT *FIND* THE VEHICLE FROM THE ID OR THE NUMBER PLATE
+        console.log("Selected Vehicle ID:", selectedVehicleId);
+        const selectedVehicle = states.vehicles.find(vehicle => vehicle.vehicle_id === selectedVehicleId);
+        
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
 
-//         const data = await res.json();
-//         console.log(data);
-//         suggestionBox.innerHTML = "";
+        // Format as YYYY-MM-DD HH:MM:SS
+        const formatted = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        console.log(formatted);
+        const rideData = {
+            driver_id: selectedVehicle.driver_id,
+            vehicle_id: selectedVehicleId,
+            origin_text: states.rides.origin_text,
+            origin_lat: states.rides.origin_lat,
+            origin_lon: states.rides.origin_lng,
+            destination_text: states.rides.destination_text,
+            destination_lat: states.rides.destination_lat,
+            destination_lon: states.rides.destination_lng,
+            route_geojson: states.rides.route_geojson,
+            departure_datetime: departure,
+            available_seats: seats,
+            created_at: formatted
+        };
 
-//         if (data.length === 0) {
-//             suggestionBox.style.display = "none";
-//             return;
-//         }
+        console.log(rideData);
+        const response = await fetch('api/ride_api.php', {
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(rideData)
+        });
+        // console.log(response.json());
+        const result = await response.json();
+        console.log("SERVER RESPONSE:", result);
+        // if (response.ok) {
+        //     alert("Ride Created Successfully!");
+        //     window.location.reload(); 
+        // } else {
+        //     alert("Error: " + (result.error || "Unknown error"));
+        // }
 
-//         data.forEach(place => {
-//             const div = document.createElement("div");
-//             div.textContent = place.display_name;
+        // console.log("Payload being sent:", rideData);
 
-//             div.addEventListener("click", () => {
-//                 input.value = place.display_name; // autofill
-//                 suggestionBox.style.display = "none";
-//             });
+        // // 5. POST to API
+        // const response = await fetch('api/ride_api.php', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(rideData)
+        // });
 
-//             suggestionBox.appendChild(div);
-//         });
+        // const result = await response.json();
+        // if (response.ok) {
+        //     alert("Ride Created Successfully!");
+        //     window.location.reload(); 
+        // } else {
+        //     alert("Error: " + (result.error || "Unknown error"));
+        // }
 
-//         suggestionBox.style.display = "block";
-//     });
+    } catch (error) {
+        console.error("Critical error in handleCreateRide:", error);
+    }
+}
 
-//     // Hide when clicking outside
-//     document.addEventListener("click", (e) => {
-//         if (!suggestionBox.contains(e.target) && e.target !== input) {
-//             suggestionBox.style.display = "none";
-//         }
-//     });
-// }
+function getVehicles(){
+    fetch("api/vehicle_api.php")
+        .then(res => res.json())
+        .then(data => {
+            states.vehicles = [];
 
+            data.forEach(vehicle => {
+                states.vehicles.push(vehicle);
+                
+            })
+            console.log(states.vehicles);
+            render();
+            const selected = document.querySelector(".rideInfoBlock");
+            const optionsContainer = document.querySelector(".vehicle-options");
+            const selectedText= document.querySelector(".selected-text");
+            
+            selected.addEventListener("click", () => {
+                vehicleOptions.style.display = vehicleOptions.style.display === "block" ? "none" : "block";
+            });
 
-// autocomplete("start", "start-suggestions");
+            document.querySelectorAll(".vehicle-options div").forEach(option => {
+                option.addEventListener("click", () => {
+                    console.log(option.textContent);
+                    selectedVehicleId = option.getAttribute("data-id");
+                    selectedText.textContent = option.textContent;
 
-
-// getRoute([101.712, 3.1579],[101.7103, 3.1478]);
-
-
-//broken code
-// navigator.geolocation.watchPosition(success, error)
-
-// function success(pos){
-
+                });
+                vehicleOptions.style.display = "none";
+            });
+        });
     
 
-//     const lat = pos.coords.latitude;
-//     const lng = pos.coords.longitude;
-//     const accuracy = pos.coords.accuracy;
 
+}
+const vehicleOptions = document.querySelector(".vehicle-options");
+const fillVehicles = (vehicle) => {
+    
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <div data-id='${vehicle.vehicle_id}'>${vehicle.car_plate_number}</div>
+    `
+    return div.firstElementChild;
+}
 
-//     let marker = L.marker([lat, lng]).addTo(map);
-//     let circle = L.circle([lat, lng], {radius: accuracy}).addTo(map);
+function render(){
+    vehicleOptions.innerHTML = "";
+    states.vehicles.forEach(vehicle => {
+        const vehicleDiv = fillVehicles(vehicle);
+        vehicleOptions.appendChild(vehicleDiv);
+    });
 
-//     marker.bindPopup("FUCK YUOUUUUU").openPopup();
+}
 
-//     map.setView([lat, lng], 15);
+function setupCreateRideButton() {
+    const createRideBtn = document.querySelector(".infoContainer button");
+    
+    if (createRideBtn) {
+        createRideBtn.addEventListener("click", handleCreateRide);
+    } else {
+        console.error("error");
+    }
+}
 
-// }
-
-// function error(err){
-//     if (err.code === 1){
-//         alert("Please allow location access");
-//     }
-//     else{
-//         alert(err.code)
-//     }
-// }
+initApp();

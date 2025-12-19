@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 include "headers.php";
 include "../db_connect.php";
 include "helpers.php";
@@ -190,9 +194,9 @@ elseif ($method === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
     
     // validate required fields
-    $required = ["driver_id", "origin_text", "origin_lat", "origin_lon", 
+    $required = ["driver_id", "vehicle_id", "origin_text", "origin_lat", "origin_lon", 
                  "destination_text", "destination_lat", "destination_lon","route_geojson", 
-                 "departure_datetime", "available_seats","status",];
+                 "departure_datetime", "available_seats", "created_at"];
     
     foreach ($required as $field) {
         if (!isset($data[$field]) || empty($data[$field])) {
@@ -202,73 +206,95 @@ elseif ($method === "POST") {
     }
     
     // generate unique room code
-    $room_code = strtoupper(substr(md5(uniqid(rand(), true)), 0, 6));
+    $room_code = rand(100000, 999999);
     
     // prepare data
+
     $ride_id = generateId("RD_");
     $driver_id = mysqli_real_escape_string($conn, $data["driver_id"]);
+    $vehicle_id = mysqli_real_escape_string($conn, $data["vehicle_id"]);
     $origin_text = mysqli_real_escape_string($conn, $data["origin_text"]);
     $origin_lat = floatval($data["origin_lat"]);
     $origin_lon = floatval($data["origin_lon"]);
     $destination_text = mysqli_real_escape_string($conn, $data["destination_text"]);
     $destination_lat = floatval($data["destination_lat"]);
     $destination_lon = floatval($data["destination_lon"]);
-    $route_geojson = isset($data["route_geojson"]) ? mysqli_real_escape_string($conn, json_encode($data["route_geojson"])) : null;
-    $departure_datetime = mysqli_real_escape_string($conn, $data["departure_datetime"]);
+    $route_geojson = json_encode($data["route_geojson"]);
+    $departure_datetime = str_replace('T',' ',$data["departure_datetime"]); 
     $available_seats = intval($data["available_seats"]);
-    $status = isset($data["status"]) ? mysqli_real_escape_string($conn, $data["status"]) : "active";
+    $created_at = date('Y-m-d H:i:s');
+
+
+    // $created_at = isset($data["created_at"]);
+
+
+    respond(["created_at" => $created_at, "departure"=> $departure_datetime], 200);
     
     // insert ride
-    $sql = "INSERT INTO rides (driver_id, origin_text, origin_lat, origin_lon, 
+    $sql = "INSERT INTO rides (ride_id, driver_id, vehicle_id, origin_text, origin_lat, origin_lon, 
             destination_text, destination_lat, destination_lon, route_geojson, 
-            departure_datetime, available_seats, status, room_code) 
-            VALUES ('$driver_id', '$origin_text', $origin_lat, $origin_lon, 
-            '$destination_text', $destination_lat, $destination_lon, '$route_geojson', 
-            '$departure_datetime', $available_seats, '$status', '$room_code')";
+            departure_datetime, available_seats, created_at, room_code) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
-    if (mysqli_query($conn, $sql)) {
-        
-        // fetch created ride with driver info
-        $sql = "SELECT r.*, u.* FROM rides r
-                INNER JOIN users u on r.driver_id = u.user_id
-                WHERE r.ride_id = $ride_id";
-        
-        $result = mysqli_query($conn, $sql);
-        
-        if ($result && mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $response = [
-                "ride_id"           => $row["ride_id"],
-                "origin_text"       => $row["origin_text"],
-                "origin_lat"        => $row["origin_lat"],
-                "origin_lon"        => $row["origin_lon"],
-                "destination_text"  => $row["destination_text"],
-                "destination_lat"   => $row["destination_lat"],
-                "destination_lon"   => $row["destination_lon"],
-                "route_geojson"     => json_decode($row["route_geojson"], true),
-                "departure_datetime"=> $row["departure_datetime"],
-                "available_seats"   => $row["available_seats"],
-                "status"            => $row["status"],
-                "created_at"        => $row["created_at"],
-                "room_code"         => $row["room_code"],
-                "driver" => [
-                    "user_id"            => $row["user_id"],
-                    "name"               => $row["full_name"],
-                    "username"           => $row["username"],
-                    "email"              => $row["email"],
-                    "phone"              => $row["phone"],
-                    "profile_picture"    => $row["profile_picture_url"],
-                    "role"               => $row["role"],
-                    "created_at"         => $row["created_at"]
-                ]
-            ];
-            http_response_code(201);
-            respond($response);
-        }
-    } else {
-        http_response_code(500);
-        respond(["error" => "Failed to create ride: " . mysqli_error($conn)]);
+    $stmt = mysqli_prepare($conn, $sql);
+    if (!$stmt) {   
+        respond(["error" => "Database error: " . mysqli_error($conn)], 500);
+        exit;
     }
+    mysqli_stmt_bind_param($stmt, "ssssddsddssisi",
+        $ride_id, $driver_id, $vehicle_id, $origin_text, $origin_lat, $origin_lon,
+        $destination_text, $destination_lat, $destination_lon, $route_geojson,
+        $departure_datetime, $available_seats, $created_at, $room_code
+    );
+    if(!mysqli_stmt_execute($stmt)) {
+        respond(["error" => "Failed to create ride: " . mysqli_stmt_error($stmt)], 500);
+        exit;
+    }
+    respond(["message" => "Ride created successfully", "ride_id" => $ride_id], 201);
+
+    
+    // if (mysqli_query($conn, $sql)) {
+        
+    //     // fetch created ride with driver info
+    //     $sql = "SELECT r.*, u.* FROM rides r
+    //             INNER JOIN users u on r.driver_id = u.user_id
+    //             WHERE r.ride_id = $ride_id";
+        
+    //     $result = mysqli_query($conn, $sql);
+        
+    //     if ($result && mysqli_num_rows($result) > 0) {
+    //         $row = mysqli_fetch_assoc($result);
+    //         $response = [
+    //             "ride_id"           => $row["ride_id"],
+    //             "origin_text"       => $row["origin_text"],
+    //             "origin_lat"        => $row["origin_lat"],
+    //             "origin_lon"        => $row["origin_lon"],
+    //             "destination_text"  => $row["destination_text"],
+    //             "destination_lat"   => $row["destination_lat"],
+    //             "destination_lon"   => $row["destination_lon"],
+    //             "route_geojson"     => json_decode($row["route_geojson"], true),
+    //             "departure_datetime"=> $row["departure_datetime"],
+    //             "available_seats"   => $row["available_seats"],
+    //             "created_at"        => $row["created_at"],
+    //             "room_code"         => $row["room_code"],
+    //             "driver" => [
+    //                 "user_id"            => $row["user_id"],
+    //                 "name"               => $row["full_name"],
+    //                 "username"           => $row["username"],
+    //                 "email"              => $row["email"],
+    //                 "phone"              => $row["phone"],
+    //                 "profile_picture"    => $row["profile_picture_url"],
+    //                 "role"               => $row["role"],
+    //                 "created_at"         => $row["created_at"]
+    //             ]
+    //         ];
+    //         http_response_code(201);
+    //         respond($response);
+    //     }
+    // } else {
+    //     http_response_code(500);
+    //     respond(["error" => "Failed to create ride: " . mysqli_error($conn)]);
+    // }
 }
 elseif ($method === "DELETE") {
     // delete ride by ride_id
