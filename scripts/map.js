@@ -378,7 +378,6 @@ async function handleCreateRide() {
             route_geojson: states.rides.route_geojson,
             departure_datetime: departure,
             available_seats: seats,
-            created_at: formatted
         };
 
         console.log(rideData);

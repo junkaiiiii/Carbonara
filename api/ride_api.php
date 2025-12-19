@@ -196,7 +196,7 @@ elseif ($method === "POST") {
     // validate required fields
     $required = ["driver_id", "vehicle_id", "origin_text", "origin_lat", "origin_lon", 
                  "destination_text", "destination_lat", "destination_lon","route_geojson", 
-                 "departure_datetime", "available_seats", "created_at"];
+                 "departure_datetime", "available_seats"];
     
     foreach ($required as $field) {
         if (!isset($data[$field]) || empty($data[$field])) {
@@ -228,7 +228,6 @@ elseif ($method === "POST") {
     // $created_at = isset($data["created_at"]);
 
 
-    respond(["created_at" => $created_at, "departure"=> $departure_datetime], 200);
     
     // insert ride
     $sql = "INSERT INTO rides (ride_id, driver_id, vehicle_id, origin_text, origin_lat, origin_lon, 
