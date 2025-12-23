@@ -11,10 +11,24 @@ h1, h2, h3, h4, h5, h6 {
 
 body{
     background-color: rgb(241, 245, 249);
-    font-family: Arial, Helvetica, sans-serif
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 103px;
+    padding-bottom: 73px;
+}
+
+#header-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 103px;
+    background-color: rgb(241, 245, 249);
+    z-index: 1000;
 }
 
 #header{
+    position: absolute;
+    top: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -24,6 +38,7 @@ body{
     background-color: rgb(255, 255, 255);
     border: 1px solid rgb(229, 241, 250);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
 #logo-container{
@@ -34,7 +49,7 @@ body{
 }
 
 #logo{
-    width: 150px;
+    width: 120px;
     height: auto;
     margin-left: 20px;
     margin-bottom: 5px;
@@ -80,8 +95,13 @@ body{
     margin: 0;
 }
 
+#user-contianer h2{
+    font-size: 12px;
+}
+
 #user-container p{
-    color: rgb(127, 127, 127)
+    color: rgb(127, 127, 127);
+    font-size: 10px;
 }
 
 #account-container:hover{
@@ -115,8 +135,8 @@ body{
 }
 
 #header .profile-picture{
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
 }
 
 #logout{
@@ -714,8 +734,8 @@ hr{
 }
 
 #driver-pic{
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
 }
 
 #left-section{
@@ -1286,4 +1306,51 @@ sup{
 
 .content-font{
     font-size: 14px;
+}
+
+#bottom-navigation-container{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(241, 245, 249);
+    width: 100%;
+    height: 73px;
+}
+
+#bottom-navigation-bar{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 241, 250);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1); 
+    width: 100%;
+    height: 70px;
+}
+
+.bottom-container-icons{
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+}
+
+#bottom-navigation-bar button{
+    border: none;
+    cursor: pointer;
+    height:fit-content;
+    width: 65px;
+    padding: 5px 0px;
+    border-radius: 5px;
+    background: none;
+}
+
+#bottom-navigation-bar button:hover{
+    background:rgba(0, 0, 0, 0.1);
+}
+
+.green-font{
+    color: rgb(16, 185, 129);
 }
