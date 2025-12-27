@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles/driver.css">
     <link rel="stylesheet" href="styles/prizes.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <div id="header-container">

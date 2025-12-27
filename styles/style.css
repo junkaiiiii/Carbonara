@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -11,7 +12,7 @@ h1, h2, h3, h4, h5, h6 {
 
 body{
   background-color: rgb(241, 245, 249);
-  font-family: Arial, Helvetica, sans-serif;
+  
   padding-top: 103px;
   padding-bottom: 73px;
 }
