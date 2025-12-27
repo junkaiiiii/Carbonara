@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles/driver.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <!-- header -->
     <?php 
     include("user_header.html");
     ?>
-
-    <div id="profile-dropdown">
-        <div class="dropdown-item" onclick="window.location.href='profile.html'">View Profile</div>
-        <div class="dropdown-item">Settings</div>
-        <div class="dropdown-item">FAQ</div>
-        <div class="dropdown-item logout">Log Out</div>
-    </div>
 
     <div id="welcome-container">
         <div id="content">
@@ -32,6 +26,7 @@
         </div>
     </div>
 
+    <!-- impact section -->
     <div id="impact-container">
         <div id="content">
             <div id="title">
@@ -39,7 +34,7 @@
             </div>
             <div>
                 <p>Co2 saved through carpooling</p>
-                <h1>145.5kg CO<sup>2</sup></h1>
+                <h1 id="stats">145.5kg CO<sup>2</sup></h1>
             </div>
             <div id="leaderboard-container">
                 <button id="leaderboard-button">
@@ -325,5 +320,6 @@
             }
         });
     </script>
+    <script type="module" src="scripts/available_rides.js"></script>
 </body>
 </html>

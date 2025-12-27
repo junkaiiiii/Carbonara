@@ -223,7 +223,16 @@ const createDriverPopUp = (user, onHighlightStars) => {
     return popUp;
 }
 
+function writeImpactStats(){
+    fetch("api/co2_api.php?mode=total")
+        .then(response => response.json())
+        .then(weight => {
+            let stats = document.getElementById("stats");
+            stats.innerHTML = `${weight} CO<sup>2</sup>`;
+        })
 
+    
+}
 
 function requestRide(roomCode, messageBox) {
     fetch(`api/request_api.php?room_code=${roomCode}`)
@@ -250,3 +259,4 @@ export {createRequestedRideCard};
 export {requestRide};
 export {createDriverPopUp};
 export {createJoinedRideCard};
+export {writeImpactStats};

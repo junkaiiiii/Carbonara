@@ -38,7 +38,7 @@
             </div>
             <div>
                 <p>Co2 saved through carpooling</p>
-                <h1>145.5kg CO<sup>2</sup></h1>
+                <h1 id="stats">145.5kg CO<sup>2</sup></h1>
             </div>
             <div id="leaderboard-container">
                 <button id="leaderboard-button">
@@ -190,6 +190,6 @@
             }
         });
     </script>
-
+    <script src="scripts/driver_hosted.js" type="module"></script>
 </body>
 </html> 
