@@ -8,25 +8,9 @@
 </head>
 <body>
     <!-- header -->
-    <div id="header-container">
-        <div id="header">
-            <div id="logo-container" onclick="window.location.href='profile.html'">
-                <img id="logo" src="images/carbonara-logo.png">
-            </div>
-            <div id="header-right-section">
-                <div id="account-container" onclick="window.location.href='profile.html'" style="cursor: pointer;">
-                    <img class="profile-picture" src="images/man.png">
-                    <div id="user-container">
-                        <h2>Demo User</h2>
-                        <p>driver@gmail.com</p>
-                    </div>
-                </div>
-                <svg id="dropdown-trigger" class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="6 9 12 15 18 9"></polyline> 
-                </svg>
-            </div>
-        </div>
-    </div>
+    <?php 
+    include("user_header.html");
+    ?>
 
     <div id="profile-dropdown">
         <div class="dropdown-item" onclick="window.location.href='profile.html'">View Profile</div>
@@ -66,10 +50,10 @@
      </div>
 
     <div id="container-3">
-        <div id="hostedrides-container2" onclick="window.location.href='driverMainPage.html'" style="cursor: pointer;">
+        <div id="hostedrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
             <p>My Hosted rides</p>
         </div>
-        <div id="findrides-container2" onclick="window.location.href='driverJoinRide.html'" style="cursor: pointer;">
+        <div id="findrides-container2" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
             <p>Find Rides</p>
         </div>
     </div>
@@ -322,27 +306,10 @@
         </div>
     </div>
 
-    <div id="bottom-navigation-container">
-        <div id="bottom-navigation-bar">
-            <button class="btm-column" onclick="window.location.href='driverMainPage.html'">
-                <img class="bottom-container-icons" src="images/btm-home-green.png" alt="">
-                <p class="green-font">Home</p>
-            </button>
-            <button class="btm-column" onclick="window.location.href='prizes.html'">
-                <img class="bottom-container-icons" src="images/btm-prizes-black.png" alt="">
-                <p>Rewards</p>
-            </button>
-            <button class="btm-column" onclick="window.location.href='inventory.html'">
-                <img class="bottom-container-icons" src="images/btm-inventory-black.png" alt="">
-                <p>Inventory</p>
-            </button>
-            <button class="btm-column"  onclick="window.location.href='profile.html'">
-                <img class="bottom-container-icons" src="images/btm-user-black.png" alt="">
-                <p>Profile</p>
-            </button>
-        </div>
-    </div>
-
+    <?php 
+        include("user_navbar.html");
+    ?>
+    
     <script>
         const dropdownTrigger = document.getElementById('dropdown-trigger');
         const profileDropdown = document.getElementById('profile-dropdown');

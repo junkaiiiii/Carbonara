@@ -149,26 +149,7 @@
         </button>
     </div>
 
-    <div id="bottom-navigation-container">
-        <div id="bottom-navigation-bar">
-            <button class="btm-column" onclick="window.location.href='driverMainPage.html'">
-                <img class="bottom-container-icons" src="images/btm-home-black.png" alt="">
-                <p>Home</p>
-            </button>
-            <button class="btm-column" onclick="window.location.href='prizes.html'">
-                <img class="bottom-container-icons" src="images/btm-prizes-green.png" alt="">
-                <p class="green-font">Rewards</p>
-            </button>
-            <button class="btm-column" onclick="window.location.href='inventory.html'">
-                <img class="bottom-container-icons" src="images/btm-inventory-black.png" alt="">
-                <p>Inventory</p>
-            </button>
-            <button class="btm-column"  onclick="window.location.href='profile.html'">
-                <img class="bottom-container-icons" src="images/btm-user-black.png" alt="">
-                <p>Profile</p>
-            </button>
-        </div>
-    </div>
+    
 
     <div class="center">
         <button class="load-more-button">
@@ -179,6 +160,10 @@
     <div class="margin">
         <!-- empty space -->
     </div>
+
+    <?php 
+        include("user_navbar.html");
+    ?>
 
     <script>
         const dropdownTrigger = document.getElementById('dropdown-trigger');
