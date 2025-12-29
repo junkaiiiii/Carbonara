@@ -223,15 +223,76 @@ const createDriverPopUp = (user, onHighlightStars) => {
     return popUp;
 }
 
-function writeImpactStats(){
-    fetch("api/co2_api.php?mode=total")
-        .then(response => response.json())
-        .then(weight => {
-            let stats = document.getElementById("stats");
-            stats.innerHTML = `${weight} CO<sup>2</sup>`;
-        })
+function createPassengerWelcomeContainer(){
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+    <div class="passenger-greeting-section">
+        <p class="bold">Welcome Passenger!</p>
+        <p class="grey-text greeting-desc">Find and join rides to your destination</p>
+    </div>
+    `
+    return wrapper.firstElementChild;
+   
+}
 
-    
+function createDriverWelcomeContainer(){
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="welcome-container">
+            <div id="content">
+                <h2 class="bolded-title">Welcome back, Driver!</h2>
+                <p class="grey-content">Host rides or find rides to join</p>
+            </div>
+            <img src="images/car.png" alt="" id="car-absolute">
+            <div id="button-container">
+                <button id="createRide-button">
+                    Create New Ride
+                </button>
+            </div>
+        </div>
+    `;
+    return wrapper.firstElementChild;
+}
+
+function createImpactStats(weight){
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="impact-container">
+            <div id="content">
+                <div id="title">
+                    <h2>Enviromental Impact</h2>
+                </div>
+                <div>
+                    <p>Co2 saved through carpooling</p>
+                    <h1 id="stats">${weight}kg CO<sup>2</sup></h1>
+                </div>
+                <div id="leaderboard-container">
+                    <a href="leaderboard.php">
+                        <button id="leaderboard-button">
+                            View leaderboard
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+    return wrapper.firstElementChild;
+}
+
+function createDriverMenu(){
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="container-3">
+            <div id="hostedrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
+                <p>My Hosted rides</p>
+            </div>
+            <div id="findrides-container2" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
+                <p>Find Rides</p>
+            </div>
+        </div>
+    `
+
+    return wrapper.firstElementChild;
 }
 
 function requestRide(roomCode, messageBox) {
@@ -254,9 +315,14 @@ function requestRide(roomCode, messageBox) {
     console.log(roomCode)
 }
 
+
+
 export {createAvailableRideCard};
 export {createRequestedRideCard};
 export {requestRide};
 export {createDriverPopUp};
 export {createJoinedRideCard};
-export {writeImpactStats};
+export {createDriverWelcomeContainer};
+export {createPassengerWelcomeContainer};
+export {createImpactStats};
+export {createDriverMenu};

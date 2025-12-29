@@ -50,7 +50,7 @@ const createTopThreeCard = ({username}) =>{
 
 //fetch function
 const getAllUsers = () => {
-  fetch('api/ranking_api.php')
+  fetch('api/co2_api.php?mode=ranking')
     .then (response => response.json())
     .then (data => {
       states.users = data;

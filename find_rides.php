@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles/driver.css">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/passenger.css">
 </head>
 <body>
     <!-- header -->
@@ -13,45 +14,28 @@
     include("user_header.html");
     ?>
 
-    <div id="welcome-container">
-        <div id="content">
-            <h2 class="bolded-title">Welcome back, Driver!</h2>
-            <p class="grey-content">Host rides or find rides to join</p>
-        </div>
-        <img src="images/car.png" alt="" id="car-absolute">
-        <div id="button-container">
-            <button id="createRide-button">
-                Create New Ride
-            </button>
-        </div>
+    <div id="welcome-section">
+    
+    </div>
+   
+
+   <!-- impact section  -->
+   <div id="impact-section">
+        
     </div>
 
-    <!-- impact section -->
-    <div id="impact-container">
-        <div id="content">
-            <div id="title">
-                <h2>Enviromental Impact</h2>
+    <!-- driver menu section -->
+     <div id="driver-menu-section">
+        <div id="container-3">
+            <div id="hostedrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
+                <p>My Hosted rides</p>
             </div>
-            <div>
-                <p>Co2 saved through carpooling</p>
-                <h1 id="stats">145.5kg CO<sup>2</sup></h1>
-            </div>
-            <div id="leaderboard-container">
-                <button id="leaderboard-button">
-                    View leaderboard
-                </button>
+            <div id="findrides-container2" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
+                <p>Find Rides</p>
             </div>
         </div>
      </div>
-
-    <div id="container-3">
-        <div id="hostedrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
-            <p>My Hosted rides</p>
-        </div>
-        <div id="findrides-container2" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
-            <p>Find Rides</p>
-        </div>
-    </div>
+    
 
     <div id="find-ride-title">
         <h1>Find Rides</h1>

@@ -29,9 +29,7 @@ button.addEventListener("click",(e)=>{
                 return;
             }
 
-            // ------------------------------
-            //   🎉 SHOW SUCCESS
-            // ------------------------------
+
             if (result.success) {
                 messageBox.style.color = "green";
                 messageBox.style.textAlign = 'center';

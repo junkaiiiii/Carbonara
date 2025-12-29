@@ -43,8 +43,6 @@ if ($method === "POST") {
             
             if (password_verify($password, $db_password_hash)) {
                 $_SESSION['user_id'] = $db_user_id;
-                $_SESSION['username'] = $db_username;
-                $_SESSION['role'] = $db_role;
 
                 respond(["success" => "Welcome back " . $db_username]);
             } else {

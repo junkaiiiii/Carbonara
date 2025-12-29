@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles/driver.css">
     <link rel="stylesheet" href="styles/style.css">
+
 <body>
     <!-- header -->
-    <?php 
+    <?php
     include("user_header.html");
     ?>
 
@@ -19,44 +21,21 @@
         <div class="dropdown-item logout">Log Out</div>
     </div>
 
-    <div id="welcome-container">
-        <div id="content">
-            <h2 class="bolded-title">Welcome back, Driver!</h2>
-            <p class="grey-content">Host rides or find rides to join</p>
-        </div>
-        <img src="images/car.png" alt="" id="car-absolute">
-        <div id="button-container">
-            <button id="createRide-button">
-                Create New Ride
-            </button>
-        </div>
+    <!-- welcome section -->
+    <div id="welcome-section">
+        
+    </div>
+   
+
+    <!-- impact section  -->
+    <div id="impact-section">
+
     </div>
 
-    <div id="impact-container">
-        <div id="content">
-            <div id="title">
-                <h2>Enviromental Impact</h2>
-            </div>
-            <div>
-                <p>Co2 saved through carpooling</p>
-                <h1 id="stats">145.5kg CO<sup>2</sup></h1>
-            </div>
-            <div id="leaderboard-container">
-                <button id="leaderboard-button">
-                    View leaderboard
-                </button>
-            </div>
-        </div>
-     </div>
-
-     <div id="container-3">
-        <div id="hostedrides-container" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
-            <p>My Hosted rides</p>
-        </div>
-        <div id="findrides-container" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
-            <p>Find Rides</p>
-        </div>
-     </div>
+    <!-- driver menu section -->
+    <div id="driver-menu-section">
+        
+    </div>
 
     <div id="hostedride-title">
         <h1 class="bolded-title">My Hosted Rides</h1>
@@ -102,7 +81,7 @@
                             <p>⭐4.7</p>
                         </div>
                     </div>
-                    
+
                     <div id="right-section">
                         <button>
                             <img class="content-icons" id="user-pic" src="images/user.png" alt="">
@@ -110,7 +89,7 @@
                         </button>
                     </div>
                 </div>
-    
+
                 <div id="buttons-container">
                     <button id="accept-btn">Accept</button>
                     <button id="reject-btn">Reject</button>
@@ -130,7 +109,7 @@
                             </p>
                         </div>
                     </div>
-                    
+
                     <div id="right-section">
                         <button>
                             <img class="content-icons" id="user-pic" src="images/user.png" alt="">
@@ -138,7 +117,7 @@
                         </button>
                     </div>
                 </div>
-        
+
                 <div id="buttons-container">
                     <button id="accept-btn">Accept</button>
                     <button id="reject-btn">Reject</button>
@@ -171,11 +150,11 @@
             </div>
         </div>
     </div>
-        
-    <?php 
-        include("user_navbar.html");
+
+    <?php
+    include("user_navbar.html");
     ?>
-    
+
     <script>
         const dropdownTrigger = document.getElementById('dropdown-trigger');
         const profileDropdown = document.getElementById('profile-dropdown');
@@ -193,4 +172,5 @@
     </script>
     <script src="scripts/driver_hosted.js" type="module"></script>
 </body>
-</html> 
+
+</html>
