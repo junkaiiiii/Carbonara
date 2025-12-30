@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +14,7 @@
 <body>
     <!-- header -->
     <?php 
-    include("user_header.html");
+    include("user_header.php");
     ?>
 
     <div id="welcome-section">
@@ -43,7 +46,7 @@
 
     <div id="origin-to-destination-container">
         <div id="filter-container">
-            <img id="filter-img" src="images/calendar.png" alt="">
+            <img id="filter-img" src="assets/img/calendar.png" alt="">
         </div>
         <div id="origin-container">
             From (e.g. San Francisco)
@@ -56,7 +59,7 @@
     <div id="qr-container">
         <button id="qr-button">
         Scan Ride QR 
-        <img id="qr-img" src="images/qr-code.png" alt="">
+        <img id="qr-img" src="assets/img/qr-code.png" alt="">
     </button>
     </div>
 
@@ -70,7 +73,7 @@
 
         <div id="driver-info">
             <div id="left-section">
-                <img id="driver-pic" src="images/man.png" alt="">
+                <img id="driver-pic" src="assets/img/man.png" alt="">
                 <div id="column">
                     <h3>John Smith</h3>
                     <p>⭐4.8</p>
@@ -79,7 +82,7 @@
 
             <div id="right-section">
                 <button>
-                    <img id="user-pic" src="images/user.png" alt="">
+                    <img id="user-pic" src="assets/img/user.png" alt="">
                     View Profile
                 </button>
             </div>
@@ -112,7 +115,7 @@
 
         <div id="driver-info">
             <div id="left-section">
-                <img id="driver-pic" src="images/man.png" alt="">
+                <img id="driver-pic" src="assets/img/man.png" alt="">
                 <div id="column">
                     <h3>Sarah Johnson</h3>
                     <p>⭐4.9</p>
@@ -121,7 +124,7 @@
 
             <div id="right-section">
                 <button>
-                    <img id="user-pic" src="images/user.png" alt="">
+                    <img id="user-pic" src="assets/img/user.png" alt="">
                     View Profile
                 </button>
             </div>
@@ -154,7 +157,7 @@
 
         <div id="driver-info">
             <div id="left-section">
-                <img id="driver-pic" src="images/man.png" alt="">
+                <img id="driver-pic" src="assets/img/man.png" alt="">
                 <div id="column">
                     <h3>John Smith</h3>
                     <p>⭐4.8</p>
@@ -163,7 +166,7 @@
 
             <div id="right-section">
                 <button>
-                    <img id="user-pic" src="images/user.png" alt="">
+                    <img id="user-pic" src="assets/img/user.png" alt="">
                     View Profile
                 </button>
             </div>
@@ -196,7 +199,7 @@
 
         <div id="driver-info">
             <div id="left-section">
-                <img id="driver-pic" src="images/man.png" alt="">
+                <img id="driver-pic" src="assets/img/man.png" alt="">
                 <div id="column">
                     <h3>Mike Wilson</h3>
                     <p>⭐4.6</p>
@@ -205,7 +208,7 @@
 
             <div id="right-section">
                 <button>
-                    <img id="user-pic" src="images/user.png" alt="">
+                    <img id="user-pic" src="assets/img/user.png" alt="">
                     View Profile
                 </button>
             </div>

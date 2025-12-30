@@ -1,12 +1,16 @@
-import { createImpactStats, createDriverMenu } from "./app.js";
+import { createImpactStats, createDriverMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, createHostedRideCard  } from "./app.js";
 
 let states = {
     co2: null,
-    session: null
+    session: null,
+    hostedRides: null
 };
 
+//DOM
+const welcomeSection = document.getElementById("welcome-section");
 const impactSection = document.getElementById("impact-section");
 const driverMenuSection = document.getElementById("driver-menu-section");
+const hostedRidesSection = document.getElementById('hosted-rides-section');
 
 // Fetch functions - now properly return promises
 const fetchTotalCo2 = () => {
@@ -32,6 +36,33 @@ const fetchSession = () => {
             console.error("Error fetching session:", error);
         });
 }
+
+const fetchHostedRides = () => {
+    return fetch('api/ride_api.php?mode=hosted')
+        .then(response => response.json())
+        .then(data => {
+            states.hostedRides = data;
+        })
+}
+
+//render functions
+
+const renderWelcome = () => {
+    console.log("Rendering welcome, role:", states.session.role);
+    if (!states.session) {
+        console.log("Session is null, skipping render");
+        return;
+    }
+    welcomeSection.innerHTML = '';
+
+    if (states.session.role === "Driver"){
+        const welcomeContainer = createDriverWelcomeContainer();
+        welcomeSection.appendChild(welcomeContainer);
+    } else if (states.session.role === "Passenger"){
+        const welcomeContainer = createPassengerWelcomeContainer();
+        welcomeSection.appendChild(welcomeContainer);
+    }
+};
 
 const renderImpact = () => {
     console.log("Rendering impact, co2 value:", states.co2);
@@ -65,18 +96,32 @@ const renderDriverMenu = () => {
     }
 };
 
+const renderHostedRides = () => {
+    console.log("Rendering Hosted Rides")
+    hostedRidesSection.innerHTML = '';
+
+    for (const [key, value] of Object.entries(states.hostedRides)){
+        const hostedRide = createHostedRideCard(value);
+
+        hostedRidesSection.appendChild(hostedRide);
+    }
+}
+
 const init = async () => {
     console.log("Initializing...");
     
     await Promise.all([
         fetchTotalCo2(),
         fetchSession(),
+        fetchHostedRides()
     ]);
 
     console.log("All data fetched, states:", states);
     
+    renderWelcome();
     renderImpact();
     renderDriverMenu();
+    renderHostedRides();
 };
 
 init();
