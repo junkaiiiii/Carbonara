@@ -1,15 +1,302 @@
-/* Header */
-.landing-header{
-    width: 100%;
-    height: 50px;
-    background-color: rgb(255, 255, 255);
-  
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* general styles */
+h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
+.btn {
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+/* header */
 .logo{
     width: 30px;
     margin-right: 20px;
   }
+
+.nav-links{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.nav-links a {
+    color: #333;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.header-btn {
+    white-space: nowrap;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.btn-login {
+    color: #333;
+    text-decoration: none;
+    padding: 8px 15px;
+}
+
+.btn-signup {
+    background-color:var(--button-green);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+/* main section */
+.main-section {
+    padding: 80px 20px 100px 20px;
+    text-align: center;
+}
+
+.main-title {
+    font-size: 56px;
+    margin-bottom: 20px;
+}
+
+.main-section h1 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-subtext {
+    font-size: 20px;
+    color: var(--grey);
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+}
+
+.btn-primary {
+    background-color:var(--button-green); /* Main Green */
+    color: white;
+    margin-right: 10px;
+    font-size: 13px;
+    padding: 15px 40px;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--button-green);
+    border: 2px solid var(--button-green);
+    font-size: 13px;
+    padding: 15px 40px;
+}
+
+/* why choose section */
+.why-choose-section {
+    padding: 60px 0;
+    background-color: white;
+}
+
+.section-subtext {
+    text-align: center;
+    color: var(--grey);
+    margin-bottom: 40px;
+}
+
+.benefits-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.benefit-card {
+    background: #fcfcfc;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow:var(--primary-box-shadow);
+    width: 350px;
+    text-align: center;
+}
+
+.benefit-card h3 {
+    margin: 15px 0 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.benefit-card p {
+    color: #666;
+}
+
+.icon-circle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.icon-green {
+    background-color: #e6f3e8; /* Light green background */
+    color: #28a745; /* Green icon color */
+}
+
+.icon {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+}
+
+
+/* how it works section */
+.how-it-works-section {
+    padding: 60px 0;
+    text-align: center;
+}
+
+.role-instructions {
+    max-width: 450px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.role-instructions h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.step-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.step-list li {
+    position: relative;
+    padding-left: 55px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    font-size: 13px;
+}
+
+.step-number {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* green circle */
+    width: 40px;
+    height: 40px;
+    background-color:var(--button-green); 
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+/* policies section */
+.policies-section {
+    padding: 60px 20px;
+    background-color: white;
+    text-align: center;
+}
+
+.policy-group {
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: left;
+}
+
+.policy-group h3 {
+    font-size: 18px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.policy-group ul {
+    list-style: none;
+    padding: 0;
+}
+
+.policy-item {
+    padding-left: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.✓{
+    font-weight: 700;
+    color: #28a745;
+    margin-right: 8px;
+}
+
+/* faq section */
+.faq-section {
+    padding: 60px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.faq-item h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin: 0 0 5px 0;
+}
+
+/* get started section */
+.get-started-section {
+    background-color:var(--button-green); /* Main Green Background */
+    color: white;
+    text-align: center;
+    padding: 36px 0;
+}
+
+.get-started-section h2 {
+    color: white;
+    font-size: 24px;
+    margin: 0 0 10px 0;
+}
+
+.get-started-section p {
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.btn-get-started {
+    background-color: white;
+    color: var(--button-green);
+    padding: 15px 40px;
+    font-weight: 700;
+}
+
+/* --- 7. Footer --- */
+.footer {
+    padding: 20px 0;
+    text-align: center;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+}
+
+.title-footer {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--button-green);
+    margin-bottom: 5px;
+}
