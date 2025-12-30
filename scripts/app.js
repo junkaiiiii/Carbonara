@@ -213,10 +213,19 @@ const createHostedRideCard = (ride) => {
                     </button>
                 </div>
             </div>
+            
+            
             <div id="status">
                 <p id="statusbox">active</p>
-                <p id="pendingbox">1 pending request</p>
+                ${ ride.passengers.length > 0 ? ( `
+                    <p id="pendingbox">${ride.passengers.length} pending request${ride.passengers.length > 1 ? 's' : ''}</p>
+                `
+
+                ) :
+                (`<div></div>`)
+                }
             </div>
+           
             <div id="ride-status">
                 <div id="time">
                     ${ride.departure_datetime}
