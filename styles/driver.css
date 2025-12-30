@@ -1422,4 +1422,33 @@ sup{
     justify-content: center;
 }
 
+@media (min-width: 1024px){
+    body{
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 
+    #logo{
+        width: 150px;
+        margin-left: 40px;
+    }
+
+    #header-right-section{
+        margin-right: 40px;
+    }
+
+    #accept-btn,
+    #reject-btn{
+        height: 30px;
+    }
+
+    button{
+        transition: all 0.3s ease;
+    }
+
+    button:hover{
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+    

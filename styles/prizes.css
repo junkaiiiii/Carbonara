@@ -49,8 +49,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: calc(100% - 40px);
-    height: 30px;
+    /* width: calc(100% - 40px);
+    height: 30px; */
     gap: 10px;
 }
 
@@ -76,6 +76,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    width: calc(100% - 40px);
 }
 
 #rewards-filter-container{
@@ -83,7 +84,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 5px;
+    padding: 8px;
     border-radius: 5px;
 }
 
@@ -102,19 +103,22 @@
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 440px;
+    max-width: 485px;
     overflow: hidden;
 }
 
 .badge-container{
-    width: calc(50%-20px);
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 40px);
     height: 360px;
     background-color: white;
     margin: 20px;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 440px;
+    max-width: 485px;
+    overflow: hidden;
 }
 
 .voucher-img-size{
@@ -126,8 +130,8 @@
 }
 
 .badge-img-size{
-    width: 60%;
-    height: 50%;
+    width: 50%;
+    height: 200px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     margin: 15px;
@@ -302,3 +306,46 @@
     cursor: pointer;
 }
 
+@media (min-width: 1024px){
+
+    body{
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    #logo{
+        width: 150px;
+        margin-left: 40px;
+    }
+
+    #header-right-section{
+        margin-right: 40px;
+    }
+
+    .voucher-container,
+    .badge-container{
+        width: calc(50% - 30px);
+        margin: 10px;
+        display: inline-block; /*make the container side by side*/
+        vertical-align: top; /*ensures the containers are on the same height just in case, but all are same height bah*/
+        max-width: 485px;
+    }
+
+    .center{
+        max-width: 1000px;
+        clear: both;
+    }
+
+    .load-more-button{
+        margin: 10px;
+    }
+
+    button{
+        transition: all 0.3s ease;
+    }
+
+    button:hover{
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
