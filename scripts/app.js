@@ -1,7 +1,7 @@
 
 
 // create html components
-const createAvailableRideCard = (ride,onRequest,onCloseDriverPopUp, onHighlightStars) => {
+const createAvailableRideCard = (ride, onRequest, onCloseDriverPopUp, onHighlightStars) => {
     const div = document.createElement('div');
     div.innerHTML = `
         <div class="ride-card" id="ride-${ride.ride_id}">
@@ -42,13 +42,13 @@ const createAvailableRideCard = (ride,onRequest,onCloseDriverPopUp, onHighlightS
             </button>
         </div>
     `
-// remember to add this ${ride.driver.average_rating}
+    // remember to add this ${ride.driver.average_rating}
 
     const el = div.firstElementChild;
 
     // attach event listener here instead of onclick=""
     el.querySelector(".request-ride-button").addEventListener("click", () => onRequest(ride.ride_id));
-    
+
 
     const viewProfileButton = el.querySelector(".view-profile-button");
 
@@ -100,13 +100,13 @@ const createRequestedRideCard = (ride, onCancel) => {
     `
 
     const el = div.firstElementChild;
-    el.querySelector('.cancel-request-button').addEventListener('click', ()=> onCancel(ride.ride_id));
+    el.querySelector('.cancel-request-button').addEventListener('click', () => onCancel(ride.ride_id));
 
     return div.firstElementChild;
 }
 
 // joined ride card
-const createJoinedRideCard = (ride,onViewRideDetails) =>{
+const createJoinedRideCard = (ride, onViewRideDetails) => {
     const div = document.createElement('div');
     div.innerHTML = `
     <div class="ride-card" id="ride-${ride.ride_id}">
@@ -146,12 +146,101 @@ const createJoinedRideCard = (ride,onViewRideDetails) =>{
     `
 
     const el = div.firstElementChild;
-    el.querySelector('#viewRideDetailsButton').addEventListener('click',()=>{
+    el.querySelector('#viewRideDetailsButton').addEventListener('click', () => {
         onViewRideDetails()
     });
 
     return div.firstElementChild;
 
+}
+
+const createHostedRideCard = (ride) => {
+    let passengerHTML = ``;
+
+    if (ride.passengers && ride.passengers.length > 0) {
+        passengerHTML = `
+            <hr>
+            <div>
+                <h4>Pending Requests: </h4>
+            </div>
+            <div id="request-passengers-container">
+            
+        `;
+
+
+        ride.passengers.forEach(passenger => {
+            passengerHTML += `
+                <div id="userbox">
+                    <div id="top-row">
+                        <div id="left-section">
+                            <img class="passenger-profile-picture" id="profilePic-2" src="assets/img/man.png">
+                            <div id="user-info">
+                                <h3>${passenger.username}</h3>
+                                <p>⭐${passenger.avg_rating}</p>
+                            </div>
+                        </div>
+
+                        <div id="right-section">
+                            <button>
+                                <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
+                                View Profile
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="buttons-container">
+                        <button id="accept-btn">Accept</button>
+                        <button id="reject-btn">Reject</button>
+                    </div>
+                </div>
+                `
+        });
+        passengerHTML += '</div>';
+    }
+
+
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="container-4">
+            <div id="hosted-rides-destination">
+                <h2 class="content-font">${ride.origin_text} → ${ride.destination_text}</h2>
+                <div id="right-section">
+                    <button class="buttons">
+                        <img src="assets/img/view.png" alt="" onclick="window.location.href='ride_details.html'">
+                    </button>
+                    <button class="buttons">
+                        <img src="assets/img/delete.png" alt="">
+                    </button>
+                </div>
+            </div>
+            
+            
+            <div id="status">
+                <p id="statusbox">active</p>
+                ${ ride.passengers.length > 0 ? ( `
+                    <p id="pendingbox">${ride.passengers.length} pending request${ride.passengers.length > 1 ? 's' : ''}</p>
+                `
+
+                ) :
+                (`<div></div>`)
+                }
+            </div>
+           
+            <div id="ride-status">
+                <div id="time">
+                    ${ride.departure_datetime}
+                </div>
+                <div id="seatsavailable">
+                    ${ride.available_seats}
+                </div>
+            </div>
+            ${passengerHTML}
+        </div>
+    `;
+
+    
+
+    return wrapper.firstElementChild;
 }
 
 
@@ -202,7 +291,7 @@ const createDriverPopUp = (user, onHighlightStars) => {
 
     const popUp = wrapper.firstElementChild;
 
-    if (user.license_status){
+    if (user.license_status) {
         popUp.querySelector('.driver-popup').innerHTML += `
             <div class="license-container">
                 <p class="bold">Driver License</p>
@@ -223,18 +312,88 @@ const createDriverPopUp = (user, onHighlightStars) => {
     return popUp;
 }
 
+function createPassengerWelcomeContainer() {
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+    <div class="passenger-greeting-section">
+        <p class="bold">Welcome Passenger!</p>
+        <p class="grey-text greeting-desc">Find and join rides to your destination</p>
+    </div>
+    `
+    return wrapper.firstElementChild;
 
+}
+
+function createDriverWelcomeContainer() {
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="welcome-container">
+            <div id="content">
+                <h2 class="bolded-title">Welcome back, Driver!</h2>
+                <p class="grey-content">Host rides or find rides to join</p>
+            </div>
+            <img src="assets/img/car.png" alt="" id="car-absolute">
+            <div id="button-container">
+                <button id="createRide-button">
+                    Create New Ride
+                </button>
+            </div>
+        </div>
+    `;
+    return wrapper.firstElementChild;
+}
+
+function createImpactStats(weight) {
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="impact-container">
+            <div id="content">
+                <div id="title">
+                    <h2>Enviromental Impact</h2>
+                </div>
+                <div>
+                    <p>Co2 saved through carpooling</p>
+                    <h1 id="stats">${weight}kg CO<sup>2</sup></h1>
+                </div>
+                <div id="leaderboard-container">
+                    <a href="leaderboard.php">
+                        <button id="leaderboard-button">
+                            View leaderboard
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+    return wrapper.firstElementChild;
+}
+
+function createDriverMenu() {
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="container-3">
+            <div id="hostedrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
+                <p>My Hosted rides</p>
+            </div>
+            <div id="findrides-container2" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
+                <p>Find Rides</p>
+            </div>
+        </div>
+    `
+
+    return wrapper.firstElementChild;
+}
 
 function requestRide(roomCode, messageBox) {
     fetch(`api/request_api.php?room_code=${roomCode}`)
         .then(response => response.json())
         .then(data => {
             console.log('Requested ride:', data);
-            
-            if (data.success){
-                messageBox.innerHTML = data.success; 
+
+            if (data.success) {
+                messageBox.innerHTML = data.success;
                 messageBox.style.color = "green";
-            } else if (data.error){
+            } else if (data.error) {
                 messageBox.innerHTML = data.error;
                 messageBox.style.color = "red";
             }
@@ -245,8 +404,15 @@ function requestRide(roomCode, messageBox) {
     console.log(roomCode)
 }
 
-export {createAvailableRideCard};
-export {createRequestedRideCard};
-export {requestRide};
-export {createDriverPopUp};
-export {createJoinedRideCard};
+
+
+export { createAvailableRideCard };
+export { createRequestedRideCard };
+export { requestRide };
+export { createDriverPopUp };
+export { createJoinedRideCard };
+export { createHostedRideCard };
+export { createDriverWelcomeContainer };
+export { createPassengerWelcomeContainer };
+export { createImpactStats };
+export { createDriverMenu };

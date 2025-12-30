@@ -22,7 +22,7 @@ if ($method === "POST") {
         $password = $data['password'];
 
         
-        $sql = "SELECT user_id, username, password_hash, role FROM users WHERE username = ?";
+        $sql = "SELECT user_id, username, password_hash, role, email FROM users WHERE username = ?";
         $stmt = mysqli_prepare($conn, $sql);
         
         if (!$stmt) {
@@ -36,7 +36,8 @@ if ($method === "POST") {
         $db_username = '';
         $db_password_hash = '';
         $db_role = '';
-        mysqli_stmt_bind_result($stmt,$db_user_id, $db_username, $db_password_hash, $db_role);
+        $db_email = '';
+        mysqli_stmt_bind_result($stmt,$db_user_id, $db_username, $db_password_hash, $db_role,$db_email);
         
         if (mysqli_stmt_fetch($stmt)) {
             
@@ -45,6 +46,7 @@ if ($method === "POST") {
                 $_SESSION['user_id'] = $db_user_id;
                 $_SESSION['username'] = $db_username;
                 $_SESSION['role'] = $db_role;
+                $_SESSION['email'] = $db_email;
 
                 respond(["success" => "Welcome back " . $db_username]);
             } else {

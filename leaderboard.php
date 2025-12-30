@@ -5,22 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RideGreen Carbonara</title>
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/driver.css">
     <link rel="stylesheet" href="styles/leaderboard.css">
 
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div class="header-title">
-            <img class="logo" src="assets/img/logo.svg">
-            <p>Carbonara Leaderboard</p>
-        </div>
-      
-        <div class="go-back">
-          <img class="go-back-logo" src="assets/img/arrow.svg">
-          <p>Back</p>
-        </div>
-    </div>
+    <?php include("user_header.html") ?>
 
     <!-- Leaderboard Intro -->
     <div class="intro-section">

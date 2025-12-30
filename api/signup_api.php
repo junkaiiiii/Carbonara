@@ -46,7 +46,7 @@ if ($method === "POST"){
         $full_name = $data['fullName'] ?? '';
         $email = $data['email'] ?? '';
         $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
-        $role = $_SESSION['role'] ?? 'Passenger';
+        $role = 'Passenger';
         $phone = $data['phoneNumber'] ?? '';
         $created_at = date('Y-m-d H:i:s');
 
@@ -59,6 +59,8 @@ if ($method === "POST"){
         if (!mysqli_stmt_execute($stmt)) {
             die("Execute failed: " . mysqli_stmt_error($stmt));
         }
+
+        $_SESSION['user_id'] = $user_id;
 
         respond(["success" => true, "user_id" => $user_id]);
     }
