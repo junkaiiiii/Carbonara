@@ -3,21 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Carbonara</title>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- ZIHENG -->
-     <!-- header -->
+    <!-- header -->
     <div class="header">
         <div class="header-title">
-          <img class="logo" src="assets/img/logo.svg">
-          <p>Carbonara</p>
+            <img class="logo" src="assets/img/logo.svg">
+            <p>Carbonara</p>
         </div>
-        
+        <nav class="nav-links">
+            <a href="#how-it-works">How it works</a>
+            <a href="#policies">Policies</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <div class="header-btn">
+            <a href="#" class="btn btn-login">Login</a>
+            <a href="#" class="btn btn-signup">Sign Up</a>
+        </div>
     </div>
 
-    <!-- blablabla -->
+    <!-- main section -->
+    <div class="main-section">
+        <h1 class="main-title">Share Rides, Save Money, Help the Planet</h1>
+        <p class="main-subtext">Join thousands of drivers and passengers connecting for safe, affordable, and eco-friendly carpooling. Travel smarter together.</p>
+        <div class="main-buttons">
+            <a href="#" class="btn btn-primary">Find a Ride</a>
+            <a href="#" class="btn btn-secondary">Offer a Ride</a>
+         </div>
+    </div>
+
+    <!-- why choose section -->
+    <div class="why-choose-section">
+        <h2>Why Choose Carbonara?</h2>
+        <p class="section-subtext">Experience the benefits of modern carpooling</p>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="icon-circle icon-green">
+                    <img class="icon" src="assets/img/leaves-landing.svg">
+                </div>
+                <h3>Reduce Emissions</h3>
+                <p>Help protect the environment by sharing rides and reducing carbon footprint</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="icon-circle icon-green">
+                    <img class="icon" src="assets/img/shield-landing.svg">
+                </div>
+                <h3>Safe & Verified</h3>
+                <p>All users are verified with secure profiles and ratings</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="icon-circle icon-green">
+                    <img class="icon" src="assets/img/community-landing.svg">
+                </div>
+                <h3>Build Community</h3>
+                <p>Meet new people and build connections in your community</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="icon-circle icon-green">
+                    <img class="icon" src="assets/img/clock-landing.svg">
+                </div>
+                <h3>Flexible Scheduling</h3>
+                <p>Find rides that match your schedule and route preferences</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="icon-circle icon-green">
+                    <img class="icon" src="assets/img/location-landing.svg">
+                </div>
+                <h3>Easy Navigation</h3>
+                <p>Simple interface to find and book rides along your route</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- how it works section -->
+    <div id="how-it-works" class="how-it-works-section">
+        <h2>How It Works</h2>
+        <div class="role-instructions">
+            <h3>For Passengers</h3>
+            <ol class="step-list">
+                <li><span class="step-number">1</span><span class="bold">Search for Rides</span><br>Enter your starting point and destination to find available rides</li>
+                <li><span class="step-number">2</span><span class="bold">Request to Join</span><br>Send a request to the driver and wait for approval</li>
+                <li><span class="step-number">3</span><span class="bold">Travel Together</span><br>Meet at the pickup point and enjoy your shared ride</li>
+            </ol>
+        </div>
+
+        <div class="role-instructions">
+            <h3>For Drivers</h3>
+            <ol class="step-list">
+                <li><span class="step-number">1</span><span class="bold">Post Your Ride</span><br>Share your route, time, and available seats</li>
+                <li><span class="step-number">2</span><span class="bold">Review Requests</span><br>Check passenger profiles and approve ride requests</li>
+                <li><span class="step-number">3</span><span class="bold">Share the Journey</span><br>Connect with passengers and enjoy a shared travel experience</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- policies section -->
+    <div id="policies" class="policies-section">
+        <h2>Our Policies</h2>  
+        <div class="policy-group">
+            <h3>Safety First</h3>
+            <ul>
+                <li class="policy-item"><span class="✓">✓</span>All users must verify their identity with valid ID and phone number</li>
+                <li class="policy-item"><span class="✓">✓</span>Both drivers and passengers can rate each other after trips</li>
+                <li class="policy-item"><span class="✓">✓</span>Report system for any safety concerns or inappropriate behavior</li>
+            </ul>
+        </div>
+
+        <div class="policy-group">
+            <h3>Cancellation Policy</h3>
+            <ul>
+                <li class="policy-item"><span class="✓">✓</span>Passengers can cancel up to 24 hours before departure for free</li>
+                <li class="policy-item"><span class="✓">✓</span>Drivers must provide 48 hours notice for ride cancellations</li>
+                <li class="policy-item"><span class="✓">✓</span>Frequent cancellations may affect user ratings and account status</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- faq section -->
+    <div id="faq" class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+            
+        <div class="faq-item">
+            <h4>How do I become a driver?</h4>
+            <p class="grey-text">Sign up with a driver account, complete your profile verification, and you can start posting rides immediately. We'll verify your driver's license and vehicle information.</p>
+        </div>
+            
+        <div class="faq-item">
+            <h4>Is Carbonara safe?</h4>
+            <p class="grey-text">Yes. All users are verified with government-issued ID and phone numbers. We have a rating system and 24/7 support team. You can also share your trip details with trusted contacts.</p>
+        </div>
+            
+        <div class="faq-item">
+            <h4>What if I need to cancel?</h4>
+            <p class="grey-text">You can cancel through the app. Passengers should cancel at least 24 hours before departure, and drivers should give 48 hours notice. This helps everyone plan better.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Can I bring luggage?</h4>
+            <p class="grey-text">Yes, but please coordinate with your driver. Mention your luggage requirements when requesting a ride, and drivers will let you know if they have space.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>What if there's an issue during the ride?</h4>
+            <p class="grey-text">Contact our 24/7 support team immediately through the app. We take all safety concerns seriously and will take appropriate action to ensure your wellbeing.</p>
+        </div>
+    </div>
+
+    <!-- get started section -->
+    <div class="get-started-section">
+        <h2>Ready to Start Sharing Rides?</h2>
+        <p>Join our community today and experience smarter, greener travel</p>
+        <a href="#" class="btn btn-get-started">Get Started Now</a>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+        <div class="title-footer">Carbonara</div>
+        <p>© 2025 Carbonara. All rights reserved.</p>
+    </div>
 </body>
 </html>
