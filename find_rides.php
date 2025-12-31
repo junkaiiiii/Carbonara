@@ -3,32 +3,33 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles/driver.css">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/passenger.css">
 </head>
+
 <body>
     <!-- header -->
-    <?php 
+    <?php
     include("user_header.php");
     ?>
 
     <div id="welcome-section">
-    
-    </div>
-   
 
-   <!-- impact section  -->
-   <div id="impact-section">
-        
+    </div>
+
+
+    <!-- impact section  -->
+    <div id="impact-section">
+
     </div>
 
     <!-- driver menu section -->
-     <div id="driver-menu-section">
+    <div id="driver-menu-section">
         <div id="container-3">
             <div id="hostedrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
                 <p>My Hosted rides</p>
@@ -37,30 +38,40 @@ session_start();
                 <p>Find Rides</p>
             </div>
         </div>
-     </div>
-    
+    </div>
+
 
     <div id="find-ride-title">
         <h1>Find Rides</h1>
     </div>
 
-    <div id="origin-to-destination-container">
-        <div id="filter-container">
-            <img id="filter-img" src="assets/img/calendar.png" alt="">
-        </div>
-        <div id="origin-container">
-            From (e.g. San Francisco)
-        </div>
-        <div id="destination-container">
-            To (e.g. Los Angeles)
+    <!-- Search Section -->
+    <div class="search-section">
+        <div class="message-box" id="messageBox"></div>
+        <div class="search-container">
+            <input class="search-field field-1" type="text" placeholder="From (e.g., Sri Petaling)">
+            <input class="search-field" type="text" placeholder="To (e.g.,Sunway University)">
+            <div class="qr-room-code-row">
+                <button class="start-scan-button" id="start-scan"">
+                        <img class=" scanner-icon" src="assets/img/scan.png">
+                </button>
+                <button class="stop-scan-button" id="stop-scan" " style=" display:none;">
+                    Stop scanning
+                </button>
+                <div>
+                    <input placeholder="Enter roomcode to request" class="roomcode-search-field" type="text" id="roomCodeField">
+                    <button class="roomcode-button" id="roomCodeSubmitButton">Request</button>
+                </div>
+            </div>
+
         </div>
     </div>
-    
+
     <div id="qr-container">
         <button id="qr-button">
-        Scan Ride QR 
-        <img id="qr-img" src="assets/img/qr-code.png" alt="">
-    </button>
+            Scan Ride QR
+            <img id="qr-img" src="assets/img/qr-code.png" alt="">
+        </button>
     </div>
 
     <div id="request-to-join-container">
@@ -140,7 +151,7 @@ session_start();
                 </div>
             </div>
         </div>
-        
+
         <button id="request-to-join-button">
             Request To Join
         </button>
@@ -288,10 +299,10 @@ session_start();
         </div>
     </div>
 
-    <?php 
-        include("user_navbar.html");
+    <?php
+    include("user_navbar.html");
     ?>
-    
+
     <script>
         const dropdownTrigger = document.getElementById('dropdown-trigger');
         const profileDropdown = document.getElementById('profile-dropdown');
@@ -309,4 +320,5 @@ session_start();
     </script>
     <script type="module" src="scripts/available_rides.js"></script>
 </body>
+
 </html>
