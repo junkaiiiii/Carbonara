@@ -1,4 +1,4 @@
-import { createImpactStats, createDriverMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer } from "./app.js";
+import { createImpactStats, createDriverFindRideMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer } from "./app.js";
 
 let states = {
     co2: null,
@@ -161,7 +161,7 @@ const renderDriverMenu = () => {
     }
 
     if (states.session.role === "Driver") {
-        const driverMenu = createDriverMenu();
+        const driverMenu = createDriverFindRideMenu();
         driverMenuSection.appendChild(driverMenu);
         console.log("Driver menu rendered successfully");
     }

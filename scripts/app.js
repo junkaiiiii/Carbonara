@@ -218,7 +218,7 @@ const createHostedRideCard = (ride) => {
             <div id="status">
                 <p id="statusbox">active</p>
                 ${ ride.passengers.length > 0 ? ( `
-                    <p id="pendingbox">${ride.passengers.length} pending request${ride.passengers.length > 1 ? 's' : ''}</p>
+                    <p id="pendingbox">${ride.passengers.length} pending request ${ride.passengers.length > 1 ? 's' : ''}</p>
                 `
 
                 ) :
@@ -368,7 +368,23 @@ function createImpactStats(weight) {
     return wrapper.firstElementChild;
 }
 
-function createDriverMenu() {
+function createDriverHostedMenu() {
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="container-3">
+            <div id="findrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
+                <p>My Hosted rides</p>
+            </div>
+            <div id="hostedrides-container2" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
+                <p>Find Rides</p>
+            </div>
+        </div>
+    `
+
+    return wrapper.firstElementChild;
+}
+
+function createDriverFindRideMenu() {
     let wrapper = document.createElement('div');
     wrapper.innerHTML = `
         <div id="container-3">
@@ -415,4 +431,5 @@ export { createHostedRideCard };
 export { createDriverWelcomeContainer };
 export { createPassengerWelcomeContainer };
 export { createImpactStats };
-export { createDriverMenu };
+export { createDriverHostedMenu };
+export { createDriverFindRideMenu}
