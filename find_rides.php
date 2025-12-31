@@ -10,6 +10,7 @@ session_start();
     <title>Document</title>
     <link rel="stylesheet" href="styles/driver.css">
     <link rel="stylesheet" href="styles/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 </head>
 
 <body>
@@ -67,12 +68,14 @@ session_start();
         </div>
     </div>
 
-    <div id="qr-container">
-        <button id="qr-button">
-            Scan Ride QR
-            <img id="qr-img" src="assets/img/qr-code.png" alt="">
-        </button>
-    </div>
+     <!-- QR scanner section -->
+     <div class="scanner-container">
+        <div id="qr-reader" style="width: 400px ;display:none;">
+
+        </div>
+     </div>
+    
+    <div id="scan-result"></div>
 
     <div id="request-to-join-container">
         <div id="join-ride-content">
@@ -319,6 +322,7 @@ session_start();
         });
     </script>
     <script type="module" src="scripts/available_rides.js"></script>
+    <script type="module" src="scripts/qr.js"></script>
 </body>
 
 </html>

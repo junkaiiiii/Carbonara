@@ -1,4 +1,4 @@
-import { createImpactStats, createDriverFindRideMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer } from "./app.js";
+import { createImpactStats, createDriverFindRideMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, requestRide } from "./app.js";
 
 let states = {
     co2: null,
@@ -11,8 +11,8 @@ const impactSection = document.getElementById("impact-section");
 const driverMenuSection = document.getElementById("driver-menu-section");
 // const availableRides = document.getElementById('availableRides');
 // const requestedRides = document.getElementById('requestedRides');
-// const messageBox = document.getElementById('messageBox');
-// const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
+const messageBox = document.getElementById('messageBox');
+const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
 
 
 // // Fetch all rides
@@ -189,8 +189,7 @@ const renderDriverMenu = () => {
 //     });
 // };
 
-// // add evenlisteners
-// roomCodeSubmitButton.addEventListener('click', ()=>requestRide(document.getElementById('roomCodeField').value,messageBox));
+
 
 
 // getAllRides();
@@ -209,6 +208,9 @@ const init = async () => {
     renderWelcome();
     renderImpact();
     renderDriverMenu();
+
+    // // add evenlisteners
+    roomCodeSubmitButton.addEventListener('click', ()=>requestRide(document.getElementById('roomCodeField').value,messageBox));
 };
 
 init();
