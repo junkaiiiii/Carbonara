@@ -19,7 +19,6 @@
     width: 100%;
     height: 100px;
     background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(229, 241, 250);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
@@ -143,6 +142,20 @@
 
 #logout-btn:hover{
     background-color: rgb(242, 242, 242);
+}
+
+.passenger-greeting-section{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid var(--primary-border-color);
+    box-shadow: var(--primary-box-shadow);
+    border-radius: 10px;
+    margin: 20px 10px;
+    margin-bottom: 0px;
+    padding: 15px 20px;
+}
+
+.greeting-desc{
+    margin-top: 5px;
 }
 
 #welcome-container{
@@ -721,6 +734,7 @@ hr{
 }
 
 #request-to-join-container{
+    background-color: white;
     display: flex;
     flex-direction: column;
     width: calc(100% - 40px);
@@ -823,7 +837,23 @@ hr{
     padding: 20px;
 }
 
+.show-more-section{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.show-more-button{
+    background-color: #0da273;
+    padding: 10px 15px;
+    color: white;
+    font: 600;
+    border-radius: 10px;
+    border: none;
+}
+
 #join-request-container{
+    background-color: white;
     width: calc(100% - 40px);
     height: 180px;
     border: 1px solid rgb(210, 220, 227, 0.8);

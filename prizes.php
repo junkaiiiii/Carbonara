@@ -181,5 +181,6 @@
             }
         });
     </script>
+    <script type="module" src="scripts/rewards.js"></script>
 </body>
 </html>

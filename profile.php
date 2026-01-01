@@ -55,5 +55,6 @@
             }
         });
     </script>
+    <script type="module" src="scripts/profile.js"></script>
 </body>
 </html>

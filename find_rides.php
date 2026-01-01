@@ -10,6 +10,8 @@ session_start();
     <title>Document</title>
     <link rel="stylesheet" href="styles/driver.css">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 </head>
 
@@ -50,8 +52,8 @@ session_start();
     <div class="search-section">
         <div class="message-box" id="messageBox"></div>
         <div class="search-container">
-            <input class="search-field field-1" type="text" placeholder="From (e.g., Sri Petaling)">
-            <input class="search-field" type="text" placeholder="To (e.g.,Sunway University)">
+            <input class="search-field field-1" id="originInputField" type="text" placeholder="From (e.g., Sri Petaling)">
+            <input class="search-field" id="destinationInputField" type="text" placeholder="To (e.g.,Sunway University)">
             <div class="qr-room-code-row">
                 <button class="start-scan-button" id="start-scan"">
                         <img class=" scanner-icon" src="assets/img/scan.png">
@@ -68,239 +70,86 @@ session_start();
         </div>
     </div>
 
-     <!-- QR scanner section -->
-     <div class="scanner-container">
+    <!-- QR scanner section -->
+    <div class="scanner-container">
         <div id="qr-reader" style="width: 400px ;display:none;">
 
         </div>
-     </div>
-    
+    </div>
+
     <div id="scan-result"></div>
 
-    <div id="request-to-join-container">
-        <div id="join-ride-content">
-            <h2>San Francisco → Los Angeles</h2>
-            <div id="available-status">
-                <p>Available</p>
-            </div>
-        </div>
-
-        <div id="driver-info">
-            <div id="left-section">
-                <img id="driver-pic" src="assets/img/man.png" alt="">
-                <div id="column">
-                    <h3>John Smith</h3>
-                    <p>⭐4.8</p>
-                </div>
-            </div>
-
-            <div id="right-section">
-                <button>
-                    <img id="user-pic" src="assets/img/user.png" alt="">
-                    View Profile
-                </button>
-            </div>
-        </div>
-
-        <div id="request-join-button-container">
-            <div id="ride-status">
-                <div id="time">
-                    Nov 17, 2025, 11:46 PM
-                </div>
-                <div id="seatsavailable">
-                    3 seats available
-                </div>
-            </div>
-        </div>
-
-        <button id="request-to-join-button">
-            Request To Join
-        </button>
+    <div id="availableRides">
 
     </div>
 
-    <div id="request-to-join-container">
-        <div id="join-ride-content">
-            <h2>New York → Boston</h2>
-            <div id="available-status">
-                <p>Available</p>
-            </div>
-        </div>
-
-        <div id="driver-info">
-            <div id="left-section">
-                <img id="driver-pic" src="assets/img/man.png" alt="">
-                <div id="column">
-                    <h3>Sarah Johnson</h3>
-                    <p>⭐4.9</p>
-                </div>
-            </div>
-
-            <div id="right-section">
-                <button>
-                    <img id="user-pic" src="assets/img/user.png" alt="">
-                    View Profile
-                </button>
-            </div>
-        </div>
-
-        <div id="request-join-button-container">
-            <div id="ride-status">
-                <div id="time">
-                    Nov 16, 2025, 11:46 PM
-                </div>
-                <div id="seatsavailable">
-                    2 seats available
-                </div>
-            </div>
-        </div>
-
-        <button id="request-to-join-button">
-            Request To Join
+    <div class="show-more-section">
+        <button class="show-more-button" id="showMoreBtn" hidden>
+            Show more
         </button>
-
     </div>
+    
 
-    <div id="request-to-join-container">
-        <div id="join-ride-content">
-            <h2>Seatle → Portland</h2>
-            <div id="available-status">
-                <p>Available</p>
-            </div>
-        </div>
-
-        <div id="driver-info">
-            <div id="left-section">
-                <img id="driver-pic" src="assets/img/man.png" alt="">
-                <div id="column">
-                    <h3>John Smith</h3>
-                    <p>⭐4.8</p>
-                </div>
-            </div>
-
-            <div id="right-section">
-                <button>
-                    <img id="user-pic" src="assets/img/user.png" alt="">
-                    View Profile
-                </button>
-            </div>
-        </div>
-
-        <div id="request-join-button-container">
-            <div id="ride-status">
-                <div id="time">
-                    Nov 18, 2025, 11:46 PM
-                </div>
-                <div id="seatsavailable">
-                    1 seats available
-                </div>
-            </div>
-        </div>
-
-        <button id="request-to-join-button">
-            Request To Join
-        </button>
-
-    </div>
-
-    <div id="request-to-join-container">
-        <div id="join-ride-content">
-            <h2>Chicago → Detroit</h2>
-            <div id="available-status">
-                <p>Available</p>
-            </div>
-        </div>
-
-        <div id="driver-info">
-            <div id="left-section">
-                <img id="driver-pic" src="assets/img/man.png" alt="">
-                <div id="column">
-                    <h3>Mike Wilson</h3>
-                    <p>⭐4.6</p>
-                </div>
-            </div>
-
-            <div id="right-section">
-                <button>
-                    <img id="user-pic" src="assets/img/user.png" alt="">
-                    View Profile
-                </button>
-            </div>
-        </div>
-
-        <div id="request-join-button-container">
-            <div id="ride-status">
-                <div id="time">
-                    Nov 19, 2025, 11:46 PM
-                </div>
-                <div id="seatsavailable">
-                    4 seats available
-                </div>
-            </div>
-        </div>
-
-        <button id="request-to-join-button">
-            Request To Join
-        </button>
-
-    </div>
 
     <div id="join-request-title">
         <h1>My Join Requests</h1>
     </div>
 
-    <div id="join-request-container">
-        <div id="join-ride-content">
-            <h2>San Francisco → Los Angeles</h2>
-            <div id="available-status">
-                <p>Pending</p>
-            </div>
-        </div>
-
-        <div id="driver-info">
-            <h3>Driver: John Smith</h3>
-        </div>
-
-        <div id="ride-status">
-            <div id="time">
-                Nov 17, 2025, 11:46 PM
-            </div>
-        </div>
-
-        <button id="cancel-request-button">
-            Cancel Request
-        </button>
-    </div>
-
-    <div id="request-accepted-container">
-        <div id="join-ride-content">
-            <h2>San Francisco → Los Angeles</h2>
-            <div id="accepted-status">
-                <p>accepted</p>
-            </div>
-        </div>
-
-        <div id="driver-info">
-            <h3>Driver: John Smith</h3>
-        </div>
-
-        <div id="ride-status">
-            <div id="time">
-                Nov 17, 2025, 11:46 PM
-            </div>
-        </div>
-
-        <div id="request-accepted-notice">
-            <div id="accepted-info">
-                <h3 id="green-bold">Request Accepted!</h3>
-                <p id="grey-color">Contact driver: +1234567890</p>
+    <div id="requestedRides">
+        <div id="join-request-container">
+            <div id="join-ride-content">
+                <h2>San Francisco → Los Angeles</h2>
+                <div id="available-status">
+                    <p>Pending</p>
+                </div>
             </div>
 
-            <button id="view-ride-details-button">
-                View Ride Details
+            <div id="driver-info">
+                <h3>Driver: John Smith</h3>
+            </div>
+
+            <div id="ride-status">
+                <div id="time">
+                    Nov 17, 2025, 11:46 PM
+                </div>
+            </div>
+
+            <button id="cancel-request-button">
+                Cancel Request
             </button>
         </div>
+
+        <div id="request-accepted-container">
+            <div id="join-ride-content">
+                <h2>San Francisco → Los Angeles</h2>
+                <div id="accepted-status">
+                    <p>accepted</p>
+                </div>
+            </div>
+
+            <div id="driver-info">
+                <h3>Driver: John Smith</h3>
+            </div>
+
+            <div id="ride-status">
+                <div id="time">
+                    Nov 17, 2025, 11:46 PM
+                </div>
+            </div>
+
+            <div id="request-accepted-notice">
+                <div id="accepted-info">
+                    <h3 id="green-bold">Request Accepted!</h3>
+                    <p id="grey-color">Contact driver: +1234567890</p>
+                </div>
+
+                <button id="view-ride-details-button">
+                    View Ride Details
+                </button>
+            </div>
+        </div>
     </div>
+
 
     <?php
     include("user_navbar.html");

@@ -130,7 +130,7 @@
   display: none;
 }
 
-@media (max-width: 480px ){
+@media (max-width: 500px ){
   .leaderboard-section{
     margin: 20px 10px;
   
@@ -139,7 +139,7 @@
   }
 }
 
-@media (min-width: 481px){
+@media (min-width: 501px){
   
 
   .leaderboard-section{

@@ -1,106 +1,202 @@
 
 
-// create html components
-const createAvailableRideCard = (ride, onRequest, onCloseDriverPopUp, onHighlightStars) => {
-    const div = document.createElement('div');
-    div.innerHTML = `
-        <div class="ride-card" id="ride-${ride.ride_id}">
-            <div class="ride-card-row-1">
-                <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
-                <div class="ride-status grey-text">
-                    Available
+// // create html components
+// const createAvailableRideCard1 = (ride, onRequest, onCloseDriverPopUp, onHighlightStars) => {
+//     const div = document.createElement('div');
+//     div.innerHTML = `
+//         <div class="ride-card" id="ride-${ride.ride_id}">
+//             <div class="ride-card-row-1">
+//                 <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
+//                 <div class="ride-status grey-text">
+//                     Available
+//                 </div>
+//             </div>
+//             <div class="ride-card-row-2">
+//                 <div class="driver-details">
+//                     <img class="driver-pfp" src="assets/img/leaf.png">
+//                     <div>
+//                         <p>${ride.driver.name || "Unknown Driver"}</p>
+//                         <p class="grey-text">★ </p>
+//                     </div>
+//                 </div>
+                
+//                 <div class="view-button-container">
+//                     <button class="view-profile-button" id="viewProfileButton">
+//                         <img class="user-logo" src="assets/img/user.svg">
+//                          View Profile
+//                     </button>
+//                 </div>
+//             </div>
+//             <div class="ride-card-row-3 grey-text">
+//                 <img class="clock-logo" src="assets/img/clock.svg">
+//                 <p>${ride.departure_datetime}</p>
+//             </div>
+
+//             <div class="ride-card-row-4 grey-text">
+//                 <img class="users-logo" src="assets/img/users.svg">
+//                 <p>${ride.available_seats} seat available</p>
+//             </div>
+ 
+//             <button class="request-ride-button"">
+//                 Request to Join
+//             </button>
+//         </div>
+//     `
+    
+
+//     const el = div.firstElementChild;
+
+//     // attach event listener here instead of onclick=""
+//     el.querySelector(".request-ride-button").addEventListener("click", () => onRequest(ride.ride_id));
+
+
+//     const viewProfileButton = el.querySelector(".view-profile-button");
+
+//     viewProfileButton.addEventListener("click", () => {
+//         const popUp = createDriverPopUp(ride.driver, onCloseDriverPopUp, onHighlightStars);
+
+//         document.body.appendChild(popUp);
+
+//     });
+
+//     return div.firstElementChild;
+// }
+
+const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div id="request-to-join-container">
+            <div id="join-ride-content">
+                <h2>${ride.origin_text} → ${ride.destination_text}</h2>
+                <div id="available-status">
+                    <p>Available</p>
                 </div>
             </div>
-            <div class="ride-card-row-2">
-                <div class="driver-details">
-                    <img class="driver-pfp" src="assets/img/leaf.png">
-                    <div>
-                        <p>${ride.driver.name || "Unknown Driver"}</p>
-                        <p class="grey-text">★ </p>
+
+            <div id="driver-info">
+                <div id="left-section">
+                    <img id="driver-pic" src="assets/img/man.png" alt="">
+                    <div id="column">
+                        <h3>${ride.driver.name || "Unknown Driver"}</h3>
+                        <p>⭐ ${ride.driver.avg_rating}</p>
                     </div>
                 </div>
-                
-                <div class="view-button-container">
-                    <button class="view-profile-button" id="viewProfileButton">
-                        <img class="user-logo" src="assets/img/user.svg">
-                         View Profile
+
+                <div id="right-section">
+                    <button id="viewProfileButton">
+                        <img id="user-pic" src="assets/img/user.png" alt="">
+                        View Profile
                     </button>
                 </div>
             </div>
-            <div class="ride-card-row-3 grey-text">
-                <img class="clock-logo" src="assets/img/clock.svg">
-                <p>${ride.departure_datetime}</p>
+
+            <div id="request-join-button-container">
+                <div id="ride-status">
+                    <div id="time">
+                        ${ride.departure_datetime}
+                    </div>
+                    <div id="seatsavailable" style="margin-top:5px;">
+                        Available Seats: ${ride.available_seats}
+                    </div>
+                </div>
             </div>
 
-            <div class="ride-card-row-4 grey-text">
-                <img class="users-logo" src="assets/img/users.svg">
-                <p>${ride.available_seats} seat available</p>
-            </div>
- 
-            <button class="request-ride-button"">
-                Request to Join
+            <button id="request-to-join-button">
+                Request To Join
             </button>
+
         </div>
-    `
-    // remember to add this ${ride.driver.average_rating}
+    `;
 
-    const el = div.firstElementChild;
+    const el = wrapper.firstElementChild;
 
-    // attach event listener here instead of onclick=""
-    el.querySelector(".request-ride-button").addEventListener("click", () => onRequest(ride.ride_id));
+    el.querySelector("#request-to-join-button").addEventListener("click", () => onRequest(ride.ride_id));
 
-
-    const viewProfileButton = el.querySelector(".view-profile-button");
+    const viewProfileButton = el.querySelector("#viewProfileButton");
 
     viewProfileButton.addEventListener("click", () => {
-        const popUp = createDriverPopUp(ride.driver, onCloseDriverPopUp, onHighlightStars);
+        const popUp = createDriverPopUp(ride.driver, onHighlightStars);
+   
 
         document.body.appendChild(popUp);
 
     });
 
-    return div.firstElementChild;
+    return wrapper.firstElementChild;
 }
+
+// const createRequestedRideCard1 = (ride, onCancel) => {
+//     const div = document.createElement('div');
+//     div.innerHTML = `
+//     <div class="ride-card" id="ride-${ride.ride_id}">
+//         <div class="ride-card-row-1">
+//             <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
+//             <div class="ride-status grey-text">
+//                 Requested
+//             </div>
+//         </div>
+//         <div class="ride-card-row-2">
+//             <div class="driver-details">
+//                 <img class="driver-pfp" src="assets/img/leaf.png">
+//                 <div>
+//                     <p>${ride.driver.name}</p>
+//                     <p class="grey-text">★ ${ride.driver.average_rating}</p>
+//                 </div>
+//             </div>
+            
+//             <div class="view-button-container">
+//                 <button class="view-profile-button">
+//                     <img class="user-logo" src="assets/img/user.svg">
+//                         View Profile
+//                 </button>
+//             </div>
+//         </div>
+//         <div class="ride-card-row-3 grey-text">
+//             <img class="clock-logo" src="assets/img/clock.svg">
+//             <p>${ride.departure_datetime}</p>
+//         </div>
+        
+//         <button class="cancel-request-button">
+//             &#10006; Cancel Request
+//         </button>
+//     </div>
+//     `
+
+//     const el = div.firstElementChild;
+//     el.querySelector('.cancel-request-button').addEventListener('click', () => onCancel(ride.ride_id));
+
+//     return div.firstElementChild;
+// }
 
 const createRequestedRideCard = (ride, onCancel) => {
     const div = document.createElement('div');
-    div.innerHTML = `
-    <div class="ride-card" id="ride-${ride.ride_id}">
-        <div class="ride-card-row-1">
-            <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
-            <div class="ride-status grey-text">
-                Requested
-            </div>
-        </div>
-        <div class="ride-card-row-2">
-            <div class="driver-details">
-                <img class="driver-pfp" src="assets/img/leaf.png">
-                <div>
-                    <p>${ride.driver.name}</p>
-                    <p class="grey-text">★ ${ride.driver.average_rating}</p>
+    div.innerHTML =    `
+    <div id="join-request-container">
+            <div id="join-ride-content">
+                <h2>${ride.origin_text} → ${ride.destination_text}</h2>
+                <div id="available-status">
+                    <p>Pending</p>
                 </div>
             </div>
-            
-            <div class="view-button-container">
-                <button class="view-profile-button">
-                    <img class="user-logo" src="assets/img/user.svg">
-                        View Profile
-                </button>
+
+            <div id="driver-info">
+                <h3>Driver: ${ride.driver.username}</h3>
             </div>
+
+            <div id="ride-status">
+                <div id="time">
+                    ${ride.departure_datetime}
+                </div>
+            </div>
+
+            <button id="cancel-request-button">
+                Cancel Request
+            </button>
         </div>
-        <div class="ride-card-row-3 grey-text">
-            <img class="clock-logo" src="assets/img/clock.svg">
-            <p>${ride.departure_datetime}</p>
-        </div>
-        
-        <button class="cancel-request-button">
-            &#10006; Cancel Request
-        </button>
-    </div>
     `
 
     const el = div.firstElementChild;
-    el.querySelector('.cancel-request-button').addEventListener('click', () => onCancel(ride.ride_id));
+    el.querySelector('#cancel-request-button').addEventListener('click', () => onCancel(ride.ride_id));
 
     return div.firstElementChild;
 }
@@ -249,7 +345,7 @@ const createDriverPopUp = (user, onHighlightStars) => {
 
     const wrapper = document.createElement('div');
     wrapper.innerHTML = `
-        <div class="driver-popup-container" id="driverPopUpContainer">
+        <div class="driver-popup-container" id="PopUpContainer">
             <div class="driver-popup">
                 <button class="close-driver-popup-button">
                     <img class="close-driver-popup-icon" src="assets/img/close.png">
@@ -420,11 +516,35 @@ function requestRide(roomCode, messageBox) {
     console.log(roomCode)
 }
 
+function cancelRequestRide(roomCode){
+    console.log("cancelled", roomCode);
+}
+
+function highlightNavBar(page){
+    if (page === "home"){
+        document.getElementById("homeIcon").src = "assets/img/btm-home-green.png";
+
+        document.getElementById('home').classList.add("green-font");
+    } else if (page === "rewards"){
+        document.getElementById("rewardsIcon").src = "assets/img/btm-prizes-green.png";
+
+        document.getElementById('rewards').classList.add("green-font");
+    }  else if (page === "inventory"){
+        document.getElementById("inventoryIcon").src = "assets/img/btm-inventory-green.png";
+
+        document.getElementById('inventory').classList.add("green-font");
+    } else if (page === "profile"){
+        document.getElementById("profileIcon").src = "assets/img/btm-user-green.png";
+
+        document.getElementById('profile').classList.add("green-font");
+    }
+}
 
 
 export { createAvailableRideCard };
 export { createRequestedRideCard };
 export { requestRide };
+export { cancelRequestRide }
 export { createDriverPopUp };
 export { createJoinedRideCard };
 export { createHostedRideCard };
@@ -432,4 +552,5 @@ export { createDriverWelcomeContainer };
 export { createPassengerWelcomeContainer };
 export { createImpactStats };
 export { createDriverHostedMenu };
-export { createDriverFindRideMenu}
+export { createDriverFindRideMenu};
+export { highlightNavBar };

@@ -200,5 +200,6 @@
             }
         });
     </script>
+    <script type="module" src="scripts/inventory.js"></script>
 </body>
 </html>

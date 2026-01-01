@@ -77,18 +77,19 @@ if ($method === "GET") {
             while ($row = mysqli_fetch_assoc($result)) {
 
                 $ride = [
-                    "ride_id"           => $row["ride_id"],
-                    "origin_text"       => $row["origin_text"],
-                    "origin_lat"        => $row["origin_lat"],
-                    "origin_lon"        => $row["origin_lon"],
-                    "destination_text"  => $row["destination_text"],
-                    "destination_lat"   => $row["destination_lat"],
-                    "destination_lon"   => $row["destination_lon"],
-                    "route_geojson"     => json_decode($row["route_geojson"], true),
-                    "departure_datetime" => $row["departure_datetime"],
-                    "available_seats"   => $row["available_seats"],
-                    "created_at"        => $row["created_at"],
-                    "room_code"         => $row["room_code"],
+                    'ride_id' => $row['ride_id'],
+                    'origin_text' => $row['origin_text'],
+                    'origin_lat' => $row['origin_lat'],
+                    'origin_lon' => $row['origin_lon'],
+                    'destination_text' => $row['destination_text'],
+                    'destination_lat' => $row['destination_lat'],
+                    'destination_lon' => $row['destination_lon'],
+                    'departure_datetime' => $row['departure_datetime'],
+                    'available_seats' => $row['available_seats'],
+                    'ride_distance' => $row['ride_distance'],
+                    'ride_status' => $row['ride_status'],
+                    'created_at' => $row['created_at'],
+                    'room_code' => $row['room_code'],
                     "request_status"    => $row["user_request_status"] ?? null,
                     "joined"            => $row["participant_exists"] ? true : false,
 
@@ -109,7 +110,6 @@ if ($method === "GET") {
 
 
                 ];
-
                 $response[] = $ride;
             }
         }
