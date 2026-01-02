@@ -48,7 +48,7 @@ if ($method === "POST") {
                 $_SESSION['role'] = $db_role;
                 $_SESSION['email'] = $db_email;
 
-                respond(["success" => "Welcome back " . $db_username]);
+                respond(["success" => "Welcome back " . $db_username, "role"=> $db_role]);
             } else {
                 respond(["error" => "Invalid credentials"], 401);
             }

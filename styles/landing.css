@@ -12,12 +12,38 @@ h2 {
     text-align: center;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    padding-bottom: 0px;
+}
+
 
 /* header */
+.header{
+    position: fixed;
+    top:0px;
+    left:0px;
+    right: 0px;
+    padding: 0px 20px;
+    box-shadow: var(--primary-box-shadow);
+    background-color: white;
+    z-index: 1000;
+}
+
 .logo{
-    width: 30px;
-    margin-right: 20px;
-  }
+    width: 70px;
+    margin: 0px;
+}
+
+@media (min-width:700px){
+
+    .logo{
+        width: 100px;
+    }
+}
 
 .nav-links{
     display: flex;
@@ -292,6 +318,8 @@ h2 {
     text-align: center;
     background-color: #fff;
     border-top: 1px solid #eee;
+    margin-bottom: 0px;
+    height: 100%;
 }
 
 .title-footer {

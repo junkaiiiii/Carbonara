@@ -8,7 +8,7 @@
     $method = $_SERVER["REQUEST_METHOD"];
 
     if ($method === "GET"){
-        $sql = "SELECT u.*, rt.rating_id, rt.rated_id, rt.score, rt.description, co2.co2_id, co2.co2_saved, co2.distance_km, 
+        $sql = "SELECT u.*, rt.rating_id, rt.rated_id, rt.score, co2.co2_id, co2.co2_saved, co2.distance_km, 
                 rater.user_id AS rater_user_id,
                 rater.username AS rater_username,
                 rater.full_name AS rater_full_name,
@@ -53,7 +53,6 @@
                     $response[$uid]["ratings"][] = [
                         "rating_id" => $row["rating_id"],
                         "score" => $row["score"],
-                        "description" => $row['description'],
                         "rater" => [
                             "rater_id" => $row['rater_user_id'],
                             "rater_username" => $row["rater_username"],

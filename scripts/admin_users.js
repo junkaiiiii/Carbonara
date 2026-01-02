@@ -191,8 +191,9 @@ function getAllUsers(){
                 //         console.log(rater.rater.rater_username);
                 //     });
                 // })
-            });
-        });
+            })
+        })
+        .catch(error => console.error());;
     fetch("api/license_api.php")
         .then(response => response.json())
         .then(data => {
@@ -404,8 +405,6 @@ function createRatingCards(rating){
             <div class='rating-info'>
                 <h4>Rating Score</h4>
                 <p>${rating.score} stars</p>
-                <h4>Reason:</h4>
-                <p>${rating.description} ASDVAJHGDVASVDSAJHGDVSADGHASVDJHGASDVJASGDCVSAHJGDVCSAHGDFCSAHGJDCASJGD</p>
             </div>
         </div>
     `;

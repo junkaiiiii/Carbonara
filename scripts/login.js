@@ -38,7 +38,13 @@ button.addEventListener('click',(e)=>{
             messageBox.textContent = "Logged In successfully! Redirecting to user's dashboard";
 
             setTimeout(()=>{
-                window.location.href = 'passenger.html';
+
+                if (result.role === "Admin"){
+                    window.location.href = 'admin_users.php';
+                } else {
+                    window.location.href = 'find_rides.php';
+                }
+                
 
             },500);
         }
