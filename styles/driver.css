@@ -850,6 +850,7 @@ hr{
     font: 600;
     border-radius: 10px;
     border: none;
+    cursor: pointer;
 }
 
 #join-request-container{
@@ -889,6 +890,7 @@ hr{
     border: 1px solid rgb(210, 220, 227, 0.8);
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 #accepted-status{

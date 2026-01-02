@@ -1,4 +1,4 @@
-import { createImpactStats, createDriverFindRideMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, requestRide, cancelRequestRide, createAvailableRideCard, createRequestedRideCard, highlightNavBar } from "./app.js";
+import { createImpactStats, createDriverFindRideMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, requestRide, cancelRequestRide, createAvailableRideCard, createRequestedRideCard, createJoinedRideCard, highlightNavBar } from "./app.js";
 
 let states = {
     filtered_available_rides: null,
@@ -65,7 +65,7 @@ const fetchRides = () => {
                 if (ride.joined === true) {
                     states.requested_rides.push(ride);
 
-                } else if (ride.request_status) {
+                } else if (ride.request_status === "requested") {
                     states.requested_rides.push(ride);
 
                 } else {
@@ -134,7 +134,7 @@ const handleCancelRequest = (rideId) => {
     if (rideIndex !== -1) {
         const [cancelledRide] = states.requested_rides.splice(rideIndex, 1);
 
-        cancelRequestRide(cancelledRide.room_code);
+        cancelRequestRide(cancelledRide.ride_id, states.session.username);
         cancelledRide.request_status = null;
         states.available_rides.push(cancelledRide);
 
@@ -258,7 +258,8 @@ const renderRequestedRides = () => {
     requestedRides.innerHTML = '';
 
     states.requested_rides.forEach(ride => {
-        const rideCard = createRequestedRideCard(ride,handleCancelRequest);
+
+        const rideCard = ride.joined ? createJoinedRideCard(ride) : createRequestedRideCard(ride,handleCancelRequest);
         requestedRides.appendChild(rideCard);
     });
 }

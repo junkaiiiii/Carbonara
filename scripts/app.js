@@ -202,52 +202,91 @@ const createRequestedRideCard = (ride, onCancel) => {
 }
 
 // joined ride card
-const createJoinedRideCard = (ride, onViewRideDetails) => {
+// const createJoinedRideCard1 = (ride, onViewRideDetails) => {
+//     const div = document.createElement('div');
+//     div.innerHTML = `
+//     <div class="ride-card" id="ride-${ride.ride_id}">
+//             <div class="ride-card-row-1">
+//                 <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
+//                 <div class="ride-status grey-text">
+//                     Requested
+//                 </div>
+//             </div>
+//             <div class="ride-card-row-2">
+//                 <div class="driver-details">
+//                     <img class="driver-pfp" src="assets/img/leaf.png">
+//                     <div>
+//                         <p>${ride.driver.name}</p>
+//                         <p class="grey-text">★ ${ride.driver.average_rating}</p>
+//                     </div>
+//                 </div>
+                
+//                 <div class="view-button-container">
+//                     <button class="view-profile-button">
+//                         <img class="user-logo" src="assets/img/user.svg">
+//                             View Profile
+//                     </button>
+//                 </div>
+//             </div>
+//             <div class="ride-card-row-3 grey-text">
+//                 <img class="clock-logo" src="assets/img/clock.svg">
+//                 <p>${ride.departure_datetime}</p>
+//             </div>
+            
+//             <div class="accepted-info-container">
+//                 <p class="bold">Request Accepted!</p>
+//                 <p class="grey-text">Contact driver: +1234565789</p>
+//                 <button id='viewRideDetailsButton'>View Ride Details</button>
+//             </div>
+//         </div>
+//     `
+
+//     const el = div.firstElementChild;
+//     el.querySelector('#viewRideDetailsButton').addEventListener('click', () => {
+//         onViewRideDetails()
+//     });
+
+//     return div.firstElementChild;
+
+// }
+
+const createJoinedRideCard = (ride) => {
     const div = document.createElement('div');
     div.innerHTML = `
-    <div class="ride-card" id="ride-${ride.ride_id}">
-            <div class="ride-card-row-1">
-                <p class="locations semi-bold">${ride.origin_text} &#8594 ${ride.destination_text}</p>
-                <div class="ride-status grey-text">
-                    Requested
+        <div id="request-accepted-container">
+            <div id="join-ride-content">
+                <h2>${ride.origin_text} → ${ride.destination_text}</h2>
+                <div id="accepted-status">
+                    <p>Joined</p>
                 </div>
             </div>
-            <div class="ride-card-row-2">
-                <div class="driver-details">
-                    <img class="driver-pfp" src="assets/img/leaf.png">
-                    <div>
-                        <p>${ride.driver.name}</p>
-                        <p class="grey-text">★ ${ride.driver.average_rating}</p>
-                    </div>
+
+            <div id="driver-info">
+                <h3>Driver: ${ride.driver.username}</h3>
+            </div>
+
+            <div id="ride-status">
+                <div id="time">
+                    ${ride.departure_datetime}
                 </div>
-                
-                <div class="view-button-container">
-                    <button class="view-profile-button">
-                        <img class="user-logo" src="assets/img/user.svg">
-                            View Profile
+            </div>
+
+            <div id="request-accepted-notice">
+                <div id="accepted-info">
+                    <h3 id="green-bold">Request Accepted!</h3>
+                    <p id="grey-color">Contact driver: ${ride.driver.phone}</p>
+                </div>
+
+                <a href="ride_details.php?id=${ride.ride_id}" style="text-decoration:none;">
+                    <button id="view-ride-details-button">
+                        View Ride Details
                     </button>
-                </div>
-            </div>
-            <div class="ride-card-row-3 grey-text">
-                <img class="clock-logo" src="assets/img/clock.svg">
-                <p>${ride.departure_datetime}</p>
-            </div>
-            
-            <div class="accepted-info-container">
-                <p class="bold">Request Accepted!</p>
-                <p class="grey-text">Contact driver: +1234565789</p>
-                <button id='viewRideDetailsButton'>View Ride Details</button>
+                </a>  
             </div>
         </div>
-    `
-
-    const el = div.firstElementChild;
-    el.querySelector('#viewRideDetailsButton').addEventListener('click', () => {
-        onViewRideDetails()
-    });
+    `;
 
     return div.firstElementChild;
-
 }
 
 const createHostedRideCard = (ride) => {
@@ -468,12 +507,13 @@ function createDriverHostedMenu() {
     let wrapper = document.createElement('div');
     wrapper.innerHTML = `
         <div id="container-3">
-            <div id="findrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
-                <p>My Hosted rides</p>
-            </div>
             <div id="hostedrides-container2" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
                 <p>Find Rides</p>
             </div>
+            <div id="findrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
+                <p>My Hosted rides</p>
+            </div>
+            
         </div>
     `
 
@@ -484,11 +524,11 @@ function createDriverFindRideMenu() {
     let wrapper = document.createElement('div');
     wrapper.innerHTML = `
         <div id="container-3">
-            <div id="hostedrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
-                <p>My Hosted rides</p>
-            </div>
             <div id="findrides-container2" onclick="window.location.href='find_rides.php'" style="cursor: pointer;">
                 <p>Find Rides</p>
+            </div>
+            <div id="hostedrides-container2" onclick="window.location.href='hosted_rides.php'" style="cursor: pointer;">
+                <p>My Hosted rides</p>
             </div>
         </div>
     `
@@ -516,8 +556,23 @@ function requestRide(roomCode, messageBox) {
     console.log(roomCode)
 }
 
-function cancelRequestRide(roomCode){
-    console.log("cancelled", roomCode);
+function cancelRequestRide(rideId, passengerUsername) {
+    console.log("cancelled", rideId, passengerUsername);
+
+    fetch("api/request_api.php", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ride_id: rideId,
+            passenger_username: passengerUsername,
+            status: "cancelled"
+        })
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
 }
 
 function highlightNavBar(page){

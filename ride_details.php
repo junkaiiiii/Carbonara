@@ -10,7 +10,7 @@
     <div id="header-container">
         <div id="view-ride-header">
             <div class="button-container">
-                <img src="images/left-arrow.png" alt="" onclick="history.go(-1)">
+                <img src="assets/img/left-arrow.png" alt="" onclick="history.go(-1)">
             </div>
         <div id="header-details">
             <h3>Ride Details</h3>
@@ -21,12 +21,12 @@
     
     <div id="ride-details-container">
         <div id="route-header">
-            <img class="icons" src="images/destination.png" alt="">
+            <img class="icons" src="assets/img/destination.png" alt="">
             <p>Route</p>
         </div>
 
         <div id="map">
-            <img id="route-image" src="images/map.png" alt="">
+            <img id="route-image" src="assets/img/map.png" alt="">
         </div>
         <div id="row">
             <svg width="16" height="24" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@
         </div>
 
         <button id="open-in-map-button">
-            <img class="icons" src="images/search.png" alt="">
+            <img class="icons" src="assets/img/search.png" alt="">
             Open in Maps
         </button>
 
@@ -64,7 +64,7 @@
 
         <div id="departure-container">
             <div id="departure-content">
-                <img class="content-icons" src="images/clock.png" alt="">
+                <img class="content-icons" src="assets/img/clock.png" alt="">
                 <h3 .bolded-title>Departure : </h3>
                 <p class="grey-content">Nov 17, 2025, 4:43 PM</p>
             </div>
@@ -80,12 +80,12 @@
         <div id="driver-content">
             <div id="driver-info">
                 <div id="left-section">
-                    <img class="driver-profile-picture" src="images/man.png" alt="">
+                    <img class="driver-profile-picture" src="assets/img/man.png" alt="">
                     <div id="column">
                         <h3>Demo User</h3>
                         <p>⭐ 4.8 | 42 rides</p>
                             <div id="phone-number-row">
-                                <img class="content-icons" src="images/telephone.png" alt="">
+                                <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>+1234567890</p>
                             </div>
                     </div>
@@ -93,7 +93,7 @@
 
                 <div id="right-section">
                     <button>
-                        <img class="content-icons" id="user-pic" src="images/user.png" alt="">
+                        <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
                         View Profile
                     </button>
                 </div>
@@ -103,7 +103,7 @@
 
     <div id="seats-container">
         <div id="seats-header">
-            <!-- <img class="icons" src="images/participants.png" alt=""> -->
+            <!-- <img class="icons" src="assets/img/participants.png" alt=""> -->
             <h3>Seats</h3>
         </div>
         <h4>1 seat available</h4>
@@ -115,12 +115,12 @@
 
         <div id="passenger-container">
             <div id="left-section">
-                    <img class="passenger-profile-picture" src="images/man.png" alt="">
+                    <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
                     <div id="column">
                         <h3>Passenger 1</h3>
                         <p>⭐ 4.8</p>
                             <div id="phone-number-row">
-                                <img class="content-icons" src="images/telephone.png" alt="">
+                                <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>+1234567890</p>
                             </div>
                     </div>
@@ -128,7 +128,7 @@
 
                 <div id="right-section">
                     <button>
-                        <img class="content-icons" id="user-pic" src="images/user.png" alt="">
+                        <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
                         View Profile
                     </button>
                 </div>
@@ -136,12 +136,12 @@
 
         <div id="passenger-container">
             <div id="left-section">
-                    <img class="passenger-profile-picture" src="images/man.png" alt="">
+                    <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
                     <div id="column">
                         <h3>Passenger 2</h3>
                         <p>⭐ 4.8</p>
                             <div id="phone-number-row">
-                                <img class="content-icons" src="images/telephone.png" alt="">
+                                <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>+1234567890</p>
                             </div>
                     </div>
@@ -149,7 +149,7 @@
 
                 <div id="right-section">
                     <button>
-                        <img class="content-icons" id="user-pic" src="images/user.png" alt="">
+                        <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
                         View Profile
                     </button>
                 </div>
@@ -157,12 +157,12 @@
 
         <div id="passenger-container">
             <div id="left-section">
-                    <img class="passenger-profile-picture" src="images/man.png" alt="">
+                    <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
                     <div id="column">
                         <h3>Passenger 3</h3>
                         <p>⭐ 4.8</p>
                             <div id="phone-number-row">
-                                <img class="content-icons" src="images/telephone.png" alt="">
+                                <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>+1234567890</p>
                             </div>
                     </div>
@@ -170,7 +170,7 @@
 
                 <div id="right-section">
                     <button>
-                        <img class="content-icons" id="user-pic" src="images/user.png" alt="">
+                        <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
                         View Profile
                     </button>
                 </div>
@@ -204,19 +204,19 @@
     <div id="bottom-navigation-container">
         <div id="bottom-navigation-bar">
             <button class="btm-column" onclick="window.location.href='driverMainPage.html'">
-                <img class="bottom-container-icons" src="images/btm-home-green.png" alt="">
+                <img class="bottom-container-icons" src="assets/img/btm-home-green.png" alt="">
                 <p class="green-font">Home</p>
             </button>
             <button class="btm-column" onclick="window.location.href='prizes.html'">
-                <img class="bottom-container-icons" src="images/btm-prizes-black.png" alt="">
+                <img class="bottom-container-icons" src="assets/img/btm-prizes-black.png" alt="">
                 <p>Rewards</p>
             </button>
             <button class="btm-column" onclick="window.location.href='inventory.html'">
-                <img class="bottom-container-icons" src="images/btm-inventory-black.png" alt="">
+                <img class="bottom-container-icons" src="assets/img/btm-inventory-black.png" alt="">
                 <p>Inventory</p>
             </button>
             <button class="btm-column"  onclick="window.location.href='profile.html'">
-                <img class="bottom-container-icons" src="images/btm-user-black.png" alt="">
+                <img class="bottom-container-icons" src="assets/img/btm-user-black.png" alt="">
                 <p>Profile</p>
             </button>
         </div>
