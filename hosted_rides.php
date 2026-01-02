@@ -47,31 +47,6 @@ session_start();
     </div>
 
     <div id="hosted-rides-section">
-        
-        <div id="container-4">
-            <div id="hosted-rides-destination">
-                <h2 class="content-font">Seatle → Portland</h2>
-                <div id="right-section">
-                    <button class="buttons">
-                        <img src="assets/img/view.png" alt="">
-                    </button>
-                    <button class="buttons">
-                        <img src="assets/img/delete.png" alt="">
-                    </button>
-                </div>
-            </div>
-            <div id="status">
-                <p id="statusbox">active</p>
-            </div>
-            <div id="ride-status">
-                <div id="time">
-                    Nov 18, 2025, 11:46 PM
-                </div>
-                <div id="seatsavailable">
-                    1 seats available
-                </div>
-            </div>
-        </div>
     </div>
 
 

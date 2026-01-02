@@ -340,9 +340,12 @@ const createHostedRideCard = (ride) => {
             <div id="hosted-rides-destination">
                 <h2 class="content-font">${ride.origin_text} → ${ride.destination_text}</h2>
                 <div id="right-section">
-                    <button class="buttons">
-                        <img src="assets/img/view.png" alt="" onclick="window.location.href='ride_details.html'">
-                    </button>
+                    <a href="ride_details.php?id=${ride.ride_id}">
+                        <button class="buttons">
+                            <img src="assets/img/view.png" alt=""">
+                        </button>
+                    </a>
+                    
                     <button class="buttons">
                         <img src="assets/img/delete.png" alt="">
                     </button>

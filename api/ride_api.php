@@ -17,9 +17,186 @@ if ($method === "GET") {
     $id = $_GET['id'] ?? '';
     $mode = $_GET['mode'] ?? 'available';
     $sessionUserId = $_SESSION['user_id'];
-    // get role also and return hosted if its driver
 
+    // return data for a single rie (ride details page)
     if (!empty($id)) {
+        $sql =
+            "SELECT
+            r.ride_id,
+            r.driver_id,
+            r.origin_text,
+            r.origin_lat,
+            r.origin_lon,
+            r.destination_text,
+            r.destination_lat,
+            r.destination_lon,
+            r.departure_datetime,
+            r.available_seats,
+            r.ride_distance,
+            r.ride_status,
+            r.created_at,
+            r.room_code,
+
+            re.passenger_id,
+            u.full_name,
+            u.username,
+            u.role,
+            u.profile_picture_url,
+            u.email,
+            u.phone,
+            COALESCE(passenger_stats.total_rides, 0) AS passenger_total_rides,
+            COALESCE(passenger_stats.avg_rating, 0) AS passenger_avg_rating,
+            COALESCE(passenger_stats.total_co2_saved, 0) AS passenger_total_co2_saved,
+            dl.status,
+
+            d.full_name,
+            d.username,
+            d.role,
+            d.profile_picture_url,
+            d.email,
+            d.phone,
+            COALESCE(driver_stats.total_rides, 0) AS driver_total_rides,
+            COALESCE(driver_stats.avg_rating, 0) AS driver_avg_rating,
+            COALESCE(driver_stats.total_co2_saved, 0) AS driver_total_co2_saved,
+            dl2.status
+
+        FROM rides r
+        LEFT JOIN requests re ON r.ride_id = re.ride_id AND re.status = 'approved'
+        LEFT JOIN users u ON re.passenger_id = u.user_id
+        LEFT JOIN (
+            SELECT
+                u2.user_id,
+                COUNT(DISTINCT rp.ride_id) AS total_rides,
+                AVG(rat.score) AS avg_rating,
+                SUM(co2.co2_saved) AS total_co2_saved
+            FROM users u2
+            LEFT JOIN ride_participants rp ON rp.user_id = u2.user_id
+            LEFT JOIN ratings rat ON rat.rated_id = u2.user_id
+            LEFT JOIN co2_log co2 ON co2.user_id = u2.user_id
+            GROUP BY u2.user_id
+        ) AS passenger_stats ON passenger_stats.user_id = re.passenger_id
+        LEFT JOIN driving_license dl ON dl.user_id = re.passenger_id
+
+        LEFT JOIN users d ON r.driver_id = d.user_id
+        LEFT JOIN (
+            SELECT
+                d2.user_id,
+                COUNT(DISTINCT rp.ride_id) AS total_rides,
+                AVG(rat.score) AS avg_rating,
+                SUM(co2.co2_saved) AS total_co2_saved
+            FROM users d2
+            LEFT JOIN ride_participants rp ON rp.user_id = d2.user_id
+            LEFT JOIN ratings rat ON rat.rated_id = d2.user_id
+            LEFT JOIN co2_log co2 ON co2.user_id = d2.user_id
+            GROUP BY d2.user_id
+        ) AS driver_stats ON driver_stats.user_id = r.driver_id
+        LEFT JOIN driving_license dl2 ON dl2.user_id = r.driver_id
+
+        WHERE r.ride_id = ? ;
+        ";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+
+        $route_geojson = '';
+        mysqli_stmt_bind_result(
+            $stmt,
+            $ride_id,
+            $driver_id,
+            $origin_text,
+            $origin_lat,
+            $origin_lon,
+            $destination_text,
+            $destination_lat,
+            $destination_lon,
+            $departure_datetime,
+            $available_seats,
+            $ride_distance,
+            $ride_status,
+            $created_at,
+            $room_code,
+
+            $passenger_id,
+            $passenger_full_name,
+            $passenger_username,
+            $passenger_role,
+            $passenger_profile_picture_url,
+            $passenger_email,
+            $passenger_phone,
+            $passenger_total_rides,
+            $passenger_avg_rating,
+            $passenger_total_co2_saved,
+            $passenger_license_status,
+
+            $driver_full_name,
+            $driver_username,
+            $driver_role,
+            $driver_profile_picture_url,
+            $driver_email,
+            $driver_phone,
+            $driver_total_rides,
+            $driver_avg_rating,
+            $driver_total_co2_saved,
+            $driver_license_status
+        );
+        while (mysqli_stmt_fetch($stmt)) {
+
+            // If ride not added yet, initialize it
+            if (!isset($response)) {
+
+                $response = [
+                    'ride_id' => $ride_id,
+                    'driver' => [
+                        'name' => $driver_full_name,
+                        'username' => $driver_username,
+                        'role' => $driver_role,
+                        'profile_picture_url' => $driver_profile_picture_url,
+                        'email' => $driver_email,
+                        'phone' => $driver_phone,
+                        'total_rides' => $driver_total_rides,
+                        'avg_rating' => $driver_avg_rating,
+                        'total_co2_saved' => $driver_total_co2_saved,
+                        'license_status' => $driver_license_status ?? null
+                    ],
+                    'origin_text' => $origin_text,
+                    'origin_lat' => $origin_lat,
+                    'origin_lon' => $origin_lon,
+                    'destination_text' => $destination_text,
+                    'destination_lat' => $destination_lat,
+                    'destination_lon' => $destination_lon,
+                    'departure_datetime' => $departure_datetime,
+                    'available_seats' => $available_seats,
+                    'ride_distance' =>
+                    $ride_distance,
+                    'ride_status' =>
+                    $ride_status,
+                    'created_at' => $created_at,
+                    'room_code' => $room_code,
+                    'passengers' => []  // create array
+                ];
+            }
+
+            // If passenger exists, push into list
+            if ($passenger_id !== null) {
+                $response['passengers'][] = [
+                    'passenger_id' => $passenger_id,
+                    'name' => $passenger_full_name,
+                    'username' => $passenger_username,
+                    'role' => $passenger_role,
+                    'profile_picture_url' => $passenger_profile_picture_url,
+                    'email' => $passenger_email,
+                    'phone' => $passenger_phone,
+                    'total_rides' => $passenger_total_rides,
+                    'avg_rating' => $passenger_avg_rating,
+                    'total_co2_saved' => $passenger_total_co2_saved,
+                    'license_status' => $passenger_license_status ?? null
+                ];
+            }
+        }
+
+        respond($response, 200);
     }
 
     if ($mode === 'available') {
@@ -118,7 +295,7 @@ if ($method === "GET") {
     // get hosted rides for driver
     elseif ($mode === 'hosted') {
 
-        $sql = 
+        $sql =
             "SELECT
             r.ride_id,
             r.driver_id,

@@ -1,181 +1,143 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles/driver.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <div id="header-container">
         <div id="view-ride-header">
             <div class="button-container">
                 <img src="assets/img/left-arrow.png" alt="" onclick="history.go(-1)">
             </div>
-        <div id="header-details">
-            <h3>Ride Details</h3>
-            <p>Rides you joined</p>
-        </div>
-    </div>
-    </div>
-    
-    <div id="ride-details-container">
-        <div id="route-header">
-            <img class="icons" src="assets/img/destination.png" alt="">
-            <p>Route</p>
-        </div>
-
-        <div id="map">
-            <img id="route-image" src="assets/img/map.png" alt="">
-        </div>
-        <div id="row">
-            <svg width="16" height="24" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" fill="rgb(5, 150 ,105)"/>
-            </svg>
-            <div id="starting-point">
-                <h3>San Francisco</h3>
-                <p>Starting point</p>
+            <div id="header-details">
+                <h3>Ride Details</h3>
+                <p>Rides you joined</p>
             </div>
         </div>
-
-        <div id="vertical-line">
-            <svg width="30" height="30">
-                <line x1="8" y1="1" x2="8" y2="30" stroke="rgb(223, 223, 223)" stroke-width="1"/>
-            </svg>
-        </div>
-
-        <div id="row">
-            <svg width="16" height="24" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" fill="rgb(5, 150 ,105)"/>
-            </svg>
-
-            <div id="destination">
-                <h3>Los Angeles</h3>
-                <p>Destination</p>
-            </div>
-        </div>
-
-        <button id="open-in-map-button">
-            <img class="icons" src="assets/img/search.png" alt="">
-            Open in Maps
-        </button>
-
-        <hr>
-
-        <div id="departure-container">
-            <div id="departure-content">
-                <img class="content-icons" src="assets/img/clock.png" alt="">
-                <h3 .bolded-title>Departure : </h3>
-                <p class="grey-content">Nov 17, 2025, 4:43 PM</p>
-            </div>
-        </div>
-        
     </div>
 
-    <div id="driver-container">
-        <div id="driver-header">
-            <h2 class="bolded-title">Driver</h2>
-        </div>
+    <div class="route-section" id="routeSection">
+    </div>
 
-        <div id="driver-content">
-            <div id="driver-info">
-                <div id="left-section">
-                    <img class="driver-profile-picture" src="assets/img/man.png" alt="">
-                    <div id="column">
-                        <h3>Demo User</h3>
-                        <p>⭐ 4.8 | 42 rides</p>
+    <div class="driver-section" id="driverSection">
+        <div id="driver-container">
+            <div id="driver-header">
+                <h2 class="bolded-title">Driver</h2>
+            </div>
+
+            <div id="driver-content">
+                <div id="driver-info">
+                    <div id="left-section">
+                        <img class="driver-profile-picture" src="assets/img/man.png" alt="">
+                        <div id="column">
+                            <h3>Demo User</h3>
+                            <p>⭐ 4.8 | 42 rides</p>
                             <div id="phone-number-row">
                                 <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>+1234567890</p>
                             </div>
+                        </div>
                     </div>
-                </div>
 
-                <div id="right-section">
-                    <button>
-                        <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
-                        View Profile
-                    </button>
+                    <div id="right-section">
+                        <button>
+                            <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
+                            View Profile
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="seats-container">
-        <div id="seats-header">
-            <!-- <img class="icons" src="assets/img/participants.png" alt=""> -->
-            <h3>Seats</h3>
-        </div>
-        <h4>1 seat available</h4>
-        <p>3 passenger confirmed</p>
+    <div class="passengers-section" id="passengersSection">
+        <div id="seats-container">
+            <div id="seats-header">
+                <img class="icons" src="assets/img/participants.png" alt="">
+                <h3>Seats</h3>
+            </div>
+            <h4>1 seat available</h4>
+            <p>3 passenger confirmed</p>
 
-        <hr>
+            <hr>
 
-        <h3>List of Passengers</h3>
-
-        <div id="passenger-container">
-            <div id="left-section">
-                    <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
-                    <div id="column">
-                        <h3>Passenger 1</h3>
-                        <p>⭐ 4.8</p>
+            <h3>List of Passengers</h3>
+            <div id="passengersList">
+                <div id="passenger-container">
+                    <div id="left-section">
+                        <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
+                        <div id="column">
+                            <h3>Passenger 1</h3>
+                            <p>⭐ 4.8</p>
                             <div id="phone-number-row">
                                 <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>+1234567890</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div id="right-section">
+                        <button>
+                            <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
+                            View Profile
+                        </button>
                     </div>
                 </div>
 
-                <div id="right-section">
-                    <button>
-                        <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
-                        View Profile
-                    </button>
-                </div>
-        </div>
-
-        <div id="passenger-container">
-            <div id="left-section">
-                    <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
-                    <div id="column">
-                        <h3>Passenger 2</h3>
-                        <p>⭐ 4.8</p>
+                <div id="passenger-container">
+                    <div id="left-section">
+                        <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
+                        <div id="column">
+                            <h3>Passenger 2</h3>
+                            <p>⭐ 4.8</p>
                             <div id="phone-number-row">
                                 <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>+1234567890</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div id="right-section">
+                        <button>
+                            <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
+                            View Profile
+                        </button>
                     </div>
                 </div>
 
-                <div id="right-section">
-                    <button>
-                        <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
-                        View Profile
-                    </button>
-                </div>
-        </div>
-
-        <div id="passenger-container">
-            <div id="left-section">
-                    <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
-                    <div id="column">
-                        <h3>Passenger 3</h3>
-                        <p>⭐ 4.8</p>
+                <div id="passenger-container">
+                    <div id="left-section">
+                        <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
+                        <div id="column">
+                            <h3>Passenger 3</h3>
+                            <p>⭐ 4.8</p>
                             <div id="phone-number-row">
                                 <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>+1234567890</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div id="right-section">
+                        <button>
+                            <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
+                            View Profile
+                        </button>
                     </div>
                 </div>
+            </div>
 
-                <div id="right-section">
-                    <button>
-                        <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
-                        View Profile
-                    </button>
-                </div>
         </div>
     </div>
+
 
     <!-- <div id="ride-impact-container">
         <div id="content">
@@ -189,38 +151,24 @@
         </div>
      </div> -->
 
-     <div id="impact-container">
-        <div id="content">
-            <div id="title">
-                <h2>Enviromental Impact</h2>
-            </div>
+    <div id="impactSection">
+        <div id="impact-container">
             <div id="content">
-                <h1>145.5kg CO<sup>2</sup></h1>
-                <p>Estimated savings for this trip</p>
+                <div id="title">
+                    <h2>Enviromental Impact</h2>
+                </div>
+                <div id="content">
+                    <h1>145.5kg CO<sup>2</sup></h1>
+                    <p>Estimated savings for this trip</p>
+                </div>
             </div>
-        </div>
-     </div>
-
-    <div id="bottom-navigation-container">
-        <div id="bottom-navigation-bar">
-            <button class="btm-column" onclick="window.location.href='driverMainPage.html'">
-                <img class="bottom-container-icons" src="assets/img/btm-home-green.png" alt="">
-                <p class="green-font">Home</p>
-            </button>
-            <button class="btm-column" onclick="window.location.href='prizes.html'">
-                <img class="bottom-container-icons" src="assets/img/btm-prizes-black.png" alt="">
-                <p>Rewards</p>
-            </button>
-            <button class="btm-column" onclick="window.location.href='inventory.html'">
-                <img class="bottom-container-icons" src="assets/img/btm-inventory-black.png" alt="">
-                <p>Inventory</p>
-            </button>
-            <button class="btm-column"  onclick="window.location.href='profile.html'">
-                <img class="bottom-container-icons" src="assets/img/btm-user-black.png" alt="">
-                <p>Profile</p>
-            </button>
         </div>
     </div>
 
+
+    <?php include("user_navbar.html") ?>
+
+    <script type="module" src="scripts/ride_details.js"></script>
 </body>
+
 </html>

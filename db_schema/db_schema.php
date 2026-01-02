@@ -279,14 +279,14 @@ INSERT INTO rides (
 
 -- Points Log
 INSERT INTO `points_log` (`point_id`, `ride_id`, `user_id`, `points_earned`, `log_at`) VALUES
-('PO_692f1407c294e', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 20, '2025-10-31 10:05:00'),
+('PO_692f1407c294e', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 20, '2025-10-31 10:05:00'),
 ('PO_692f1407c3bcb', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 15, '2025-11-01 08:35:00');
 
 
 
 -- CO2 Log
 INSERT INTO `co2_log` (`co2_id`, `ride_id`, `user_id`, `co2_saved`, `distance_km`, `log_at`) VALUES
-('CO_692f14271e3fe', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 1.50, 5.10, '2025-10-31 10:05:00'),
+('CO_692f14271e3fe', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 1.50, 5.10, '2025-10-31 10:05:00'),
 ('CO_692f14271e40f', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 2.20, 10.20, '2025-11-01 08:35:00');
 
 
@@ -301,23 +301,23 @@ INSERT INTO `ride_participants` (`participant_id`, `ride_id`, `user_id`, `joined
 
 -- Requests
 INSERT INTO `requests` (`request_id`, `ride_id`, `passenger_id`, `status`, `requested_at`) VALUES
-('RQ_692f1479d6ca1', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'approved', '2025-10-30 20:00:00'),
-('RQ_692f1479d6cb3', ' RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'approved', '2025-10-30 20:10:00'),
+('RQ_692f1479d6ca1', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'approved', '2025-10-30 20:00:00'),
+('RQ_692f1479d6cb3', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'approved', '2025-10-30 20:10:00'),
 ('RQ_692f1479d6cb4', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'requested', '2025-10-31 14:00:00');
 
 
 
 -- Ratings
 INSERT INTO `ratings` (`rating_id`, `ride_id`, `rater_id`, `rated_id`, `score`, `created_at`) VALUES
-('RT_692f14ac09ceb', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0e453c9dd', 5.0, '2025-10-31 12:00:00'),
-('RT_692f14ac09f38', ' RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 4.5, '2025-10-31 12:10:00');
+('RT_692f14ac09ceb', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0e453c9dd', 5.0, '2025-10-31 12:00:00'),
+('RT_692f14ac09f38', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 4.5, '2025-10-31 12:10:00');
 
 
 
 -- Reports
 INSERT INTO `reports` (`report_id`, `ride_id`, `reporter_id`, `reported_user_id`, `description`, `status`, `created_at`) VALUES
 ('RE_692f14ebc30eb', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 'Driver was late', 'Pending', '2025-11-01 09:00:00'),
-('RE_692f14ebc319e', ' RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0ebbe9265', 'Passenger was rude', 'Approved', '2025-10-31 13:20:00');
+('RE_692f14ebc319e', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0ebbe9265', 'Passenger was rude', 'Approved', '2025-10-31 13:20:00');
 
 
 
