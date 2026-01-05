@@ -289,7 +289,7 @@ const createJoinedRideCard = (ride) => {
     return div.firstElementChild;
 }
 
-const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, onRejectRequest) => {
+const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, onRejectRequest, onCancelRide) => {
     let passengerHTML = ``;
 
     if (ride.passengers && ride.passengers.length > 0) {
@@ -346,7 +346,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
                         </button>
                     </a>
                     
-                    <button class="buttons">
+                    <button class="buttons" id="cancelRideButton">
                         <img src="assets/img/delete.png" alt="">
                     </button>
                 </div>
@@ -407,6 +407,15 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
             onRejectRequest(ride.ride_id, ride.passengers[index].username);
         })
     });
+
+    // cancel ride button
+    const cancelRideButton = el.querySelector("#cancelRideButton");
+
+    if (cancelRideButton){
+        cancelRideButton.addEventListener("click", () => {
+            onCancelRide(ride.ride_id);
+        })
+    }
 
     
 

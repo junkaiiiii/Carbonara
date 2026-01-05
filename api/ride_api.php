@@ -407,7 +407,7 @@ if ($method === "GET") {
                 $response[$ride_id]['passengers'][] = [
                     'passenger_id' => $passenger_id,
                     'username' => $username,
-                    'name'=> $full_name,
+                    'name' => $full_name,
                     'role' => $role,
                     'email' => $email,
                     'phone' => $phone,
@@ -551,50 +551,38 @@ if ($method === "GET") {
     //     http_response_code(500);
     //     respond(["error" => "Failed to create ride: " . mysqli_error($conn)]);
     // }
-} elseif ($method === "DELETE") {
-    // delete ride by ride_id
+} elseif ($method === "PUT") {
     $data = json_decode(file_get_contents("php://input"), true);
+    $valid_status = array('Cancelled', 'Complete', 'Incomplete');
 
-    if (!isset($data["ride_id"]) || empty($data["ride_id"])) {
-        http_response_code(400);
-        respond(["error" => "Missing ride_id"]);
-        exit;
+    $ride_id = $data['ride_id'] ?? "";
+    $status = in_array($data['status'], $valid_status) ? $data['status'] : "";
+
+    if (empty($status)) {
+        respond(["error" => "invalid request method"], 400);
     }
 
-    $ride_id = $data["ride_id"];
+    $sql = "UPDATE rides SET ride_status = ?
+            WHERE ride_id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ss", $status, $ride_id);
+    $executed = mysqli_stmt_execute($stmt);
 
-    // optionally verify driver_id matches (authorization)
-    if (isset($data["driver_id"])) {
-        $driver_id = $data["driver_id"];
-        $check_sql = "SELECT driver_id FROM rides WHERE ride_id = $ride_id";
-        $check_result = mysqli_query($conn, $check_sql);
-
-        if ($check_result && mysqli_num_rows($check_result) > 0) {
-            $ride = mysqli_fetch_assoc($check_result);
-            if ($ride["driver_id"] != $driver_id) {
-                http_response_code(403);
-                respond(["error" => "Unauthorized: You can only delete your own rides"]);
-                exit;
-            }
-        } else {
-            http_response_code(404);
-            respond(["error" => "Ride not found"]);
-            exit;
-        }
+    if (!$executed) {
+        respond([
+            "error" => "Database execution failed",
+            "details" => mysqli_stmt_error($stmt)
+        ], 500);
     }
 
-    // delete ride
-    $sql = "DELETE FROM rides WHERE ride_id = $ride_id";
-
-    if (mysqli_query($conn, $sql)) {
-        if (mysqli_affected_rows($conn) > 0) {
-            respond(["message" => "Ride deleted successfully", "ride_id" => $ride_id], 200);
-        } else {
-            respond(["error" => "Ride not found"], 404);
-        }
-    } else {
-        respond(["error" => "Failed to delete ride: " . mysqli_error($conn)], 500);
+    if (mysqli_stmt_affected_rows($stmt) === 0) {
+        respond([
+            "error" => "No rides updated"
+        ], 404);
     }
+
+    respond(["success"=>"Successfully $status the ride"]);
+
 } else {
     respond(["error" => "Method not allowed"], 405);
 }

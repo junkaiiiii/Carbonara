@@ -60,25 +60,43 @@ const rejectRequest = (rideId, passengerUsername) => {
         .catch(error => console.error(error));
 }
 
+// cancel ride
+const cancelRide = (rideId) => {
+    fetch("api/ride_api.php", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ride_id: rideId,
+            status: "Cancelled"
+        })
+    })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+}
+
+
 // handle accept request
 const handleAcceptRequest = (rideId, passengerUsername) => {
 
     console.log(rideId);
     const selectedRide = states.hostedRides[rideId];
 
-    if (selectedRide){
+    if (selectedRide) {
         acceptRequest(rideId, passengerUsername);
 
         // find passenger from ride.passengers 
         const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username = passengerUsername);
-    
+
         if (passengerIndex !== -1) {
             selectedRide.passengers.splice(passengerIndex, 1);
         }
-    
+
     }
     console.log(states.hostedRides);
-   
+
     renderHostedRides();
 }
 
@@ -88,19 +106,30 @@ const handleRejectRequest = (rideId, passengerUsername) => {
     console.log(rideId);
     const selectedRide = states.hostedRides[rideId];
 
-    if (selectedRide){
+    if (selectedRide) {
         rejectRequest(rideId, passengerUsername);
 
         // find passenger from ride.passengers 
         const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username = passengerUsername);
-    
+
         if (passengerIndex !== -1) {
             selectedRide.passengers.splice(passengerIndex, 1);
         }
-    
+
     }
     console.log(states.hostedRides);
-   
+
+    renderHostedRides();
+}
+
+const handleCancelRide = (rideId) => {
+    const selectedRide = states.hostedRides[rideId];
+
+    if (selectedRide) {
+        cancelRide(rideId);
+
+        delete states.hostedRides[rideId];
+    }
     renderHostedRides();
 }
 
@@ -194,7 +223,7 @@ const renderHostedRides = () => {
     hostedRidesSection.innerHTML = '';
 
     for (const [key, value] of Object.entries(states.hostedRides)) {
-        const hostedRide = createHostedRideCard(value, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest);
+        const hostedRide = createHostedRideCard(value, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest, handleCancelRide);
 
         hostedRidesSection.appendChild(hostedRide);
     }
