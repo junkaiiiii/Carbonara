@@ -313,6 +313,10 @@ if ($method === "GET") {
             r.room_code,
             re.passenger_id,
             u.username,
+            u.full_name,
+            u.role,
+            u.email,
+            u.phone,
             u.profile_picture_url,
             COALESCE(passenger_stats.total_rides, 0) AS passenger_total_rides,
             COALESCE(passenger_stats.avg_rating, 0) AS passenger_avg_rating,
@@ -362,6 +366,10 @@ if ($method === "GET") {
             $passenger_id,
 
             $username,
+            $full_name,
+            $role,
+            $email,
+            $phone,
             $profile_picture_url,
             $passenger_total_rides,
             $passenger_avg_rating,
@@ -399,6 +407,10 @@ if ($method === "GET") {
                 $response[$ride_id]['passengers'][] = [
                     'passenger_id' => $passenger_id,
                     'username' => $username,
+                    'name'=> $full_name,
+                    'role' => $role,
+                    'email' => $email,
+                    'phone' => $phone,
                     'profile_picture_url' => $profile_picture_url,
                     'total_rides' => $passenger_total_rides,
                     'avg_rating' => $passenger_avg_rating,
@@ -423,7 +435,7 @@ if ($method === "GET") {
         "destination_text",
         "destination_lat",
         "destination_lon",
-        "route_geojson",
+        "ride_distance",
         "departure_datetime",
         "available_seats"
     ];
@@ -449,9 +461,10 @@ if ($method === "GET") {
     $destination_text = mysqli_real_escape_string($conn, $data["destination_text"]);
     $destination_lat = floatval($data["destination_lat"]);
     $destination_lon = floatval($data["destination_lon"]);
-    $route_geojson = json_encode($data["route_geojson"]);
     $departure_datetime = str_replace('T', ' ', $data["departure_datetime"]);
     $available_seats = intval($data["available_seats"]);
+    $ride_distance = floatval($data["ride_distance"]);
+    $ride_status = "Incomplete";
     $created_at = date('Y-m-d H:i:s');
 
 
@@ -461,9 +474,9 @@ if ($method === "GET") {
 
     // insert ride
     $sql = "INSERT INTO rides (ride_id, driver_id, vehicle_id, origin_text, origin_lat, origin_lon, 
-            destination_text, destination_lat, destination_lon, route_geojson, 
-            departure_datetime, available_seats, created_at, room_code) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            destination_text, destination_lat, destination_lon, 
+            departure_datetime, available_seats, ride_distance, ride_status, created_at, room_code) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($conn, $sql);
     if (!$stmt) {
@@ -472,7 +485,7 @@ if ($method === "GET") {
     }
     mysqli_stmt_bind_param(
         $stmt,
-        "ssssddsddssisi",
+        "ssssddsddsidssi",
         $ride_id,
         $driver_id,
         $vehicle_id,
@@ -482,9 +495,10 @@ if ($method === "GET") {
         $destination_text,
         $destination_lat,
         $destination_lon,
-        $route_geojson,
         $departure_datetime,
         $available_seats,
+        $ride_distance,
+        $ride_status,
         $created_at,
         $room_code
     );

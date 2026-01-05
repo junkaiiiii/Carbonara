@@ -1089,6 +1089,7 @@ hr{
     font-weight: 550;
     border: none;
     border-radius: 5px;
+    width: 100%;
 }
 
 #open-in-map-button:hover{

@@ -289,7 +289,7 @@ const createJoinedRideCard = (ride) => {
     return div.firstElementChild;
 }
 
-const createHostedRideCard = (ride) => {
+const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, onRejectRequest) => {
     let passengerHTML = ``;
 
     if (ride.passengers && ride.passengers.length > 0) {
@@ -316,7 +316,7 @@ const createHostedRideCard = (ride) => {
                         </div>
 
                         <div id="right-section">
-                            <button>
+                            <button id="viewProfileButton">
                                 <img class="content-icons" id="user-pic" src="assets/img/user.png" alt="">
                                 View Profile
                             </button>
@@ -375,6 +375,38 @@ const createHostedRideCard = (ride) => {
             ${passengerHTML}
         </div>
     `;
+
+
+    let el = wrapper.firstElementChild;
+
+    // view profile functions
+    const viewProfileButtons = el.querySelectorAll("#viewProfileButton");
+
+    viewProfileButtons.forEach((button, index) => {
+        button.addEventListener("click", ()=>{
+            console.log(ride.passengers[index]);
+            const popUp = onPopUp(ride.passengers[index], onHighlightStars);
+            document.body.appendChild(popUp);
+        })
+    });
+
+    // accept request buttom
+    const acceptRequestButtons = el.querySelectorAll("#accept-btn");
+
+    acceptRequestButtons.forEach((button, index) => {
+        button.addEventListener("click", ()=>{
+            onAcceptRequest(ride.ride_id, ride.passengers[index].username);
+        })
+    });
+
+    // accept request buttom
+    const rejectRequestButtons = el.querySelectorAll("#reject-btn");
+
+    rejectRequestButtons.forEach((button, index) => {
+        button.addEventListener("click", ()=>{
+            onRejectRequest(ride.ride_id, ride.passengers[index].username);
+        })
+    });
 
     
 
@@ -472,9 +504,11 @@ function createDriverWelcomeContainer() {
             </div>
             <img src="assets/img/car.png" alt="" id="car-absolute">
             <div id="button-container">
-                <button id="createRide-button">
-                    Create New Ride
-                </button>
+                <a href="map.html">
+                    <button id="createRide-button">
+                        Create New Ride
+                    </button>
+                </a>      
             </div>
         </div>
     `;

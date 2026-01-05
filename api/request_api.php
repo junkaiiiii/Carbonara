@@ -85,7 +85,6 @@ if ($method === "GET") {
         respond(["error" => "invalid request method"], 400);
     }
 
-
     $sql = "UPDATE requests AS r
             LEFT JOIN users AS u ON r.passenger_id = u.user_id
             SET r.status = ? 

@@ -43,7 +43,7 @@ CREATE TABLE rides (
     departure_datetime DATETIME,
     available_seats INT,
     ride_distance DECIMAL(6,2),
-    ride_status ENUM('Incomplete', 'Completed') DEFAULT 'Incomplete',
+    ride_status ENUM('Cancelled','Incomplete', 'Completed') DEFAULT 'Incomplete',
     created_at DATETIME,
     room_code INT UNIQUE,
     FOREIGN KEY (driver_id) REFERENCES users(user_id),

@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,37 +11,12 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <div id="header-container">
-        <div id="header">
-            <div id="logo-container" onclick="window.location.href='profile.html'">
-                <img id="logo" src="images/carbonara-logo.png">
-            </div>
-            <div id="header-right-section">
-                <div id="account-container" onclick="window.location.href='profile.html'" style="cursor: pointer;">
-                    <img class="profile-picture" src="images/man.png">
-                    <div id="user-container">
-                        <h2>Demo User</h2>
-                        <p>driver@gmail.com</p>
-                    </div>
-                </div>
-                <svg id="dropdown-trigger" class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="6 9 12 15 18 9"></polyline> 
-                </svg>
-            </div>
-        </div>
-    </div>
-
-    <div id="profile-dropdown">
-        <div class="dropdown-item" onclick="window.location.href='profile.html'">View Profile</div>
-        <div class="dropdown-item">Settings</div>
-        <div class="dropdown-item">FAQ</div>
-        <div class="dropdown-item logout">Log Out</div>
-    </div>
+    <?php include("user_header.php"); ?>
 
     <div id="title-and-points-container">
         <h2>Inventory</h2>
         <div id="points-container">
-            <img class="small-icons" src="images/coin.png" alt="">
+            <img class="small-icons" src="assets/img/coin.png" alt="">
             <p class="green-font">7000 points</p>
         </div>
     </div>
@@ -47,19 +24,19 @@
     <div class="spaced-between-container">
         <div id="voucher-title-container">
             <div id="icon-container">
-                <img class="small-icons" src="images/voucher.png" alt="">
+                <img class="small-icons" src="assets/img/voucher.png" alt="">
             </div>
 
             <h3>My Vouchers</h3>
         </div>
 
         <div id="rewards-filter-container">
-                <img class="small-icons" src="images/filter.png" alt="">
+                <img class="small-icons" src="assets/img/filter.png" alt="">
         </div>
     </div>
 
     <div class="voucher-container">
-        <img class="voucher-img-size" src="images/tng-pic.jpg" alt="">
+        <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
 
         <div class="tng-voucher-content">
             <div class="spaced-between">
@@ -78,7 +55,7 @@
     </div>
 
     <div class="voucher-container">
-        <img class="voucher-img-size" src="images/tng-pic.jpg" alt="">
+        <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
 
         <div class="tng-voucher-content">
             <div class="spaced-between">
@@ -97,7 +74,7 @@
     </div>
 
     <div class="voucher-container">
-        <img class="voucher-img-size" src="images/tng-pic.jpg" alt="">
+        <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
 
         <div class="tng-voucher-content">
             <div class="spaced-between">
@@ -124,20 +101,20 @@
     <div class="spaced-between-container">
         <div id="voucher-title-container">
             <div id="icon-container">
-                <img class="small-icons" src="images/voucher.png" alt="">
+                <img class="small-icons" src="assets/img/voucher.png" alt="">
             </div>
 
             <h3>Badges</h3>
         </div>
 
         <div id="rewards-filter-container">
-                <img class="small-icons" src="images/filter.png" alt="">
+                <img class="small-icons" src="assets/img/filter.png" alt="">
         </div>
     </div>
 
     <div class="badge-container">
         <div class="center">
-            <img class="badge-img-size" src="images/badge1.png" alt="">
+            <img class="badge-img-size" src="assets/img/badge1.png" alt="">
         </div>
 
         <div class="badge-content">
@@ -155,7 +132,7 @@
 
     <div class="badge-container">
         <div class="center">
-            <img class="badge-img-size" src="images/badge1.png" alt="">
+            <img class="badge-img-size" src="assets/img/badge1.png" alt="">
         </div>
 
         <div class="badge-content">

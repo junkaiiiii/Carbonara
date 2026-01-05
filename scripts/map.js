@@ -375,7 +375,7 @@ async function handleCreateRide() {
             destination_text: states.rides.destination_text,
             destination_lat: states.rides.destination_lat,
             destination_lon: states.rides.destination_lng,
-            route_geojson: states.rides.route_geojson,
+            ride_distance: states.rides.distance,
             departure_datetime: departure,
             available_seats: seats,
         };

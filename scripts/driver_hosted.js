@@ -1,4 +1,4 @@
-import { createImpactStats, createDriverHostedMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, createHostedRideCard  } from "./app.js";
+import { createImpactStats, createDriverHostedMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, createHostedRideCard, createDriverPopUp, highlightNavBar } from "./app.js";
 
 let states = {
     co2: null,
@@ -12,7 +12,100 @@ const impactSection = document.getElementById("impact-section");
 const driverMenuSection = document.getElementById("driver-menu-section");
 const hostedRidesSection = document.getElementById('hosted-rides-section');
 
-// Fetch functions - now properly return promises
+// General Functions
+// highlight profile star
+const highlightStars = (rating, stars) => {
+    stars.forEach((star, index) => {
+        if (index + 1 <= rating) {
+            star.classList.add('highlighted');
+        }
+    })
+}
+
+// accept request
+const acceptRequest = (rideId, passengerUsername) => {
+
+    fetch("api/request_api.php", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ride_id: rideId,
+            passenger_username: passengerUsername,
+            status: "approved"
+        })
+    })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+}
+
+// accept request
+const rejectRequest = (rideId, passengerUsername) => {
+
+    fetch("api/request_api.php", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ride_id: rideId,
+            passenger_username: passengerUsername,
+            status: "rejected"
+        })
+    })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+}
+
+// handle accept request
+const handleAcceptRequest = (rideId, passengerUsername) => {
+
+    console.log(rideId);
+    const selectedRide = states.hostedRides[rideId];
+
+    if (selectedRide){
+        acceptRequest(rideId, passengerUsername);
+
+        // find passenger from ride.passengers 
+        const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username = passengerUsername);
+    
+        if (passengerIndex !== -1) {
+            selectedRide.passengers.splice(passengerIndex, 1);
+        }
+    
+    }
+    console.log(states.hostedRides);
+   
+    renderHostedRides();
+}
+
+// handle reject request
+const handleRejectRequest = (rideId, passengerUsername) => {
+
+    console.log(rideId);
+    const selectedRide = states.hostedRides[rideId];
+
+    if (selectedRide){
+        rejectRequest(rideId, passengerUsername);
+
+        // find passenger from ride.passengers 
+        const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username = passengerUsername);
+    
+        if (passengerIndex !== -1) {
+            selectedRide.passengers.splice(passengerIndex, 1);
+        }
+    
+    }
+    console.log(states.hostedRides);
+   
+    renderHostedRides();
+}
+
+
+// Fetch functions 
 const fetchTotalCo2 = () => {
     return fetch("api/co2_api.php?mode=total")
         .then(response => response.json())
@@ -55,10 +148,10 @@ const renderWelcome = () => {
     }
     welcomeSection.innerHTML = '';
 
-    if (states.session.role === "Driver"){
+    if (states.session.role === "Driver") {
         const welcomeContainer = createDriverWelcomeContainer();
         welcomeSection.appendChild(welcomeContainer);
-    } else if (states.session.role === "Passenger"){
+    } else if (states.session.role === "Passenger") {
         const welcomeContainer = createPassengerWelcomeContainer();
         welcomeSection.appendChild(welcomeContainer);
     }
@@ -100,8 +193,8 @@ const renderHostedRides = () => {
     console.log("Rendering Hosted Rides")
     hostedRidesSection.innerHTML = '';
 
-    for (const [key, value] of Object.entries(states.hostedRides)){
-        const hostedRide = createHostedRideCard(value);
+    for (const [key, value] of Object.entries(states.hostedRides)) {
+        const hostedRide = createHostedRideCard(value, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest);
 
         hostedRidesSection.appendChild(hostedRide);
     }
@@ -109,7 +202,7 @@ const renderHostedRides = () => {
 
 const init = async () => {
     console.log("Initializing...");
-    
+
     await Promise.all([
         fetchTotalCo2(),
         fetchSession(),
@@ -117,11 +210,12 @@ const init = async () => {
     ]);
 
     console.log("All data fetched, states:", states);
-    
+
     renderWelcome();
     renderImpact();
     renderDriverMenu();
     renderHostedRides();
+    highlightNavBar("home");
 };
 
 init();

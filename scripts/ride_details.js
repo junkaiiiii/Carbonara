@@ -49,7 +49,7 @@ function createRouteContainer(ride) {
             </div>
 
             <div id="map">
-                <img id="route-image" src="assets/img/map.png" alt="">
+                // map here
             </div>
             <div id="row">
                 <svg width="16" height="24" viewBox="0 0 24 24">
@@ -77,11 +77,14 @@ function createRouteContainer(ride) {
                     <p>Destination</p>
                 </div>
             </div>
-
-            <button id="open-in-map-button">
-                <img class="icons" src="assets/img/search.png" alt="">
-                Open in Maps
-            </button>
+            
+            <a style="text-decoration:none;" href="https://www.google.com/maps/dir/${ride.origin_lat},${ride.origin_lon}/${ride.destination_lat},${ride.destination_lon}" target="_blank">
+                <button id="open-in-map-button">
+                    <img class="icons" src="assets/img/search.png" alt="">
+                    Open in Maps
+                </button>
+            </a>
+            
 
             <hr>
 
