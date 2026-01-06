@@ -1,4 +1,5 @@
 import { createImpactStats, createDriverHostedMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, createHostedRideCard, createDriverPopUp, highlightNavBar } from "./app.js";
+import { createQrPopUp } from "./qr.js";
 
 let states = {
     co2: null,
@@ -223,7 +224,7 @@ const renderHostedRides = () => {
     hostedRidesSection.innerHTML = '';
 
     for (const [key, value] of Object.entries(states.hostedRides)) {
-        const hostedRide = createHostedRideCard(value, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest, handleCancelRide);
+        const hostedRide = createHostedRideCard(value, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest, handleCancelRide, createQrPopUp);
 
         hostedRidesSection.appendChild(hostedRide);
     }

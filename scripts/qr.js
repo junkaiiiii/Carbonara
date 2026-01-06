@@ -5,12 +5,24 @@ let isScanning = false;
 const createQrPopUp = (roomCode) =>{
     let wrapper = document.createElement('div');
     wrapper.innerHTML = `
-    
+    <div class="qr-popup-background">
+        <div class="qr-popup-container">
+            <div class="qr-popup-cancel">
+                <button id="cancelPopUpButton">
+                </button>
+            </div>
+            <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=api/request_api.php?room_code=${roomCode}">
+        </div>
+    </div>
     `;
 
-    let qrDisplay = document.getElementById('qrPopUp');
+    let el = wrapper.firstElementChild;
+    const cancelPopUpBtn = el.querySelector("#cancelPopUpButton");
+    cancelPopUpBtn.addEventListener("click", ()=> {
+        el.remove();
+    })
 
-    qrDisplay.innerHTML = `<img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=api/request_api.php?room_code=${roomCode}">`
+    return wrapper.firstElementChild;
 }
 
 // Start QR Code Scanner
@@ -82,7 +94,7 @@ function onScanError(errorMessage) {
 
 
 
-document.getElementById('start-scan').addEventListener('click', startScanning);
-document.getElementById('stop-scan').addEventListener('click', stopScanning);
 
-export {generateQr};
+export {startScanning};
+export {stopScanning};
+export {createQrPopUp};

@@ -1,9 +1,11 @@
 import { createImpactStats, createDriverFindRideMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, requestRide, cancelRequestRide, createAvailableRideCard, createRequestedRideCard, createJoinedRideCard, highlightNavBar } from "./app.js";
 
+import { startScanning, stopScanning } from "./qr.js";
+
 let states = {
     filtered_available_rides: null,
     available_rides: null,
-    visible_ride_count : 5,
+    visible_ride_count: 5,
     requested_rides: null,
     co2: null,
     session: null
@@ -114,6 +116,11 @@ const handleRequestRide = (rideId) => {
     if (rideIndex !== -1) {
         const [requestedRide] = states.available_rides.splice(rideIndex, 1);
 
+        let filteredRideIndex = states.filtered_available_rides.findIndex(ride => ride.ride_id === rideId);
+        if (filteredRideIndex !== -1){
+            states.filtered_available_rides.splice(rideIndex,1);
+        }
+
         requestRide(requestedRide.room_code, messageBox);
         requestedRide.request_status = 'requested';
         states.requested_rides.push(requestedRide);
@@ -148,9 +155,9 @@ const handleCancelRequest = (rideId) => {
 };
 
 // highlight profile star
-const highlightStars = (rating,stars) => {
-    stars.forEach((star,index)=>{
-        if (index+1<=rating){
+const highlightStars = (rating, stars) => {
+    stars.forEach((star, index) => {
+        if (index + 1 <= rating) {
             star.classList.add('highlighted');
         }
     })
@@ -172,10 +179,10 @@ const searchRides = () => {
         return originMatch && destinationMatch;
     });
 
-    
+
 
     states.visible_ride_count = 5;
-    console.log(states.filtered_available_rides,originKeyword,destinationKeyword);
+    console.log(states.filtered_available_rides, originKeyword, destinationKeyword);
     renderAvailableRides();
 }
 
@@ -242,14 +249,14 @@ const renderAvailableRides = () => {
     console.log("Rendering available rides: ", states.available_rides);
 
     availableRides.innerHTML = '';
-    const ridesToShow = states.filtered_available_rides.slice(0,states.visible_ride_count);
+    const ridesToShow = states.filtered_available_rides.slice(0, states.visible_ride_count);
 
     ridesToShow.forEach(ride => {
-        const rideCard = createAvailableRideCard(ride,handleRequestRide, highlightStars);
+        const rideCard = createAvailableRideCard(ride, handleRequestRide, highlightStars);
         availableRides.appendChild(rideCard);
     });
 
-    showMoreButton.hidden = states.visible_ride_count >=  states.filtered_available_rides.length;
+    showMoreButton.hidden = states.visible_ride_count >= states.filtered_available_rides.length;
 }
 
 const renderRequestedRides = () => {
@@ -259,7 +266,7 @@ const renderRequestedRides = () => {
 
     states.requested_rides.forEach(ride => {
 
-        const rideCard = ride.joined ? createJoinedRideCard(ride) : createRequestedRideCard(ride,handleCancelRequest);
+        const rideCard = ride.joined ? createJoinedRideCard(ride) : createRequestedRideCard(ride, handleCancelRequest);
         requestedRides.appendChild(rideCard);
     });
 }
@@ -312,9 +319,11 @@ const init = async () => {
 
     // // add evenlisteners
     roomCodeSubmitButton.addEventListener('click', () => requestRide(document.getElementById('roomCodeField').value, messageBox));
-    originInput.addEventListener("keyup",() => searchRides());
-    destinationInput.addEventListener("keyup",() => searchRides());
+    originInput.addEventListener("keyup", () => searchRides());
+    destinationInput.addEventListener("keyup", () => searchRides());
     showMoreButton.addEventListener("click", () => showMore());
+    document.getElementById('start-scan').addEventListener('click', ()=> startScanning);
+    document.getElementById('stop-scan').addEventListener('click',()=> stopScanning);
 };
 
 init();

@@ -17,7 +17,9 @@
 //                         <p class="grey-text">★ </p>
 //                     </div>
 //                 </div>
-                
+
+
+
 //                 <div class="view-button-container">
 //                     <button class="view-profile-button" id="viewProfileButton">
 //                         <img class="user-logo" src="assets/img/user.svg">
@@ -34,13 +36,13 @@
 //                 <img class="users-logo" src="assets/img/users.svg">
 //                 <p>${ride.available_seats} seat available</p>
 //             </div>
- 
+
 //             <button class="request-ride-button"">
 //                 Request to Join
 //             </button>
 //         </div>
 //     `
-    
+
 
 //     const el = div.firstElementChild;
 
@@ -114,7 +116,7 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
 
     viewProfileButton.addEventListener("click", () => {
         const popUp = createDriverPopUp(ride.driver, onHighlightStars);
-   
+
 
         document.body.appendChild(popUp);
 
@@ -141,7 +143,7 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
 //                     <p class="grey-text">★ ${ride.driver.average_rating}</p>
 //                 </div>
 //             </div>
-            
+
 //             <div class="view-button-container">
 //                 <button class="view-profile-button">
 //                     <img class="user-logo" src="assets/img/user.svg">
@@ -153,7 +155,7 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
 //             <img class="clock-logo" src="assets/img/clock.svg">
 //             <p>${ride.departure_datetime}</p>
 //         </div>
-        
+
 //         <button class="cancel-request-button">
 //             &#10006; Cancel Request
 //         </button>
@@ -168,7 +170,7 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
 
 const createRequestedRideCard = (ride, onCancel) => {
     const div = document.createElement('div');
-    div.innerHTML =    `
+    div.innerHTML = `
     <div id="join-request-container">
             <div id="join-ride-content">
                 <h2>${ride.origin_text} → ${ride.destination_text}</h2>
@@ -218,7 +220,7 @@ const createRequestedRideCard = (ride, onCancel) => {
 //                         <p class="grey-text">★ ${ride.driver.average_rating}</p>
 //                     </div>
 //                 </div>
-                
+
 //                 <div class="view-button-container">
 //                     <button class="view-profile-button">
 //                         <img class="user-logo" src="assets/img/user.svg">
@@ -230,7 +232,7 @@ const createRequestedRideCard = (ride, onCancel) => {
 //                 <img class="clock-logo" src="assets/img/clock.svg">
 //                 <p>${ride.departure_datetime}</p>
 //             </div>
-            
+
 //             <div class="accepted-info-container">
 //                 <p class="bold">Request Accepted!</p>
 //                 <p class="grey-text">Contact driver: +1234565789</p>
@@ -287,7 +289,7 @@ const createJoinedRideCard = (ride) => {
     return div.firstElementChild;
 }
 
-const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, onRejectRequest, onCancelRide) => {
+const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, onRejectRequest, onCancelRide, onQrPopUp) => {
     let passengerHTML = ``;
 
     if (ride.passengers && ride.passengers.length > 0) {
@@ -356,13 +358,13 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
             
             <div id="status">
                 <p id="statusbox">active</p>
-                ${ ride.passengers.length > 0 ? ( `
+                ${ride.passengers.length > 0 ? (`
                     <p id="pendingbox">${ride.passengers.length} pending request ${ride.passengers.length > 1 ? 's' : ''}</p>
                 `
 
-                ) :
-                (`<div></div>`)
-                }
+        ) :
+            (`<div></div>`)
+        }
             </div>
            
             <div id="ride-status">
@@ -384,7 +386,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
     const viewProfileButtons = el.querySelectorAll("#viewProfileButton");
 
     viewProfileButtons.forEach((button, index) => {
-        button.addEventListener("click", ()=>{
+        button.addEventListener("click", () => {
             console.log(ride.passengers[index]);
             const popUp = onPopUp(ride.passengers[index], onHighlightStars);
             document.body.appendChild(popUp);
@@ -395,7 +397,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
     const acceptRequestButtons = el.querySelectorAll("#accept-btn");
 
     acceptRequestButtons.forEach((button, index) => {
-        button.addEventListener("click", ()=>{
+        button.addEventListener("click", () => {
             onAcceptRequest(ride.ride_id, ride.passengers[index].username);
         })
     });
@@ -404,7 +406,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
     const rejectRequestButtons = el.querySelectorAll("#reject-btn");
 
     rejectRequestButtons.forEach((button, index) => {
-        button.addEventListener("click", ()=>{
+        button.addEventListener("click", () => {
             onRejectRequest(ride.ride_id, ride.passengers[index].username);
         })
     });
@@ -412,13 +414,23 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
     // cancel ride button
     const cancelRideButton = el.querySelector("#cancelRideButton");
 
-    if (cancelRideButton){
+    if (cancelRideButton) {
         cancelRideButton.addEventListener("click", () => {
             onCancelRide(ride.ride_id);
         })
     }
 
-    
+    // create qr popup
+    const showQrButton = el.querySelector("#showQrButton");
+
+    if (showQrButton) {
+        showQrButton.addEventListener("click", () => {
+            const qrPopUp = onQrPopUp(ride.room_code);
+            document.body.appendChild(qrPopUp);
+        })
+
+    }
+
 
     return wrapper.firstElementChild;
 }
@@ -617,25 +629,25 @@ function cancelRequestRide(rideId, passengerUsername) {
             status: "cancelled"
         })
     })
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
 }
 
-function highlightNavBar(page){
-    if (page === "home"){
+function highlightNavBar(page) {
+    if (page === "home") {
         document.getElementById("homeIcon").src = "assets/img/btm-home-green.png";
 
         document.getElementById('home').classList.add("green-font");
-    } else if (page === "rewards"){
+    } else if (page === "rewards") {
         document.getElementById("rewardsIcon").src = "assets/img/btm-prizes-green.png";
 
         document.getElementById('rewards').classList.add("green-font");
-    }  else if (page === "inventory"){
+    } else if (page === "inventory") {
         document.getElementById("inventoryIcon").src = "assets/img/btm-inventory-green.png";
 
         document.getElementById('inventory').classList.add("green-font");
-    } else if (page === "profile"){
+    } else if (page === "profile") {
         document.getElementById("profileIcon").src = "assets/img/btm-user-green.png";
 
         document.getElementById('profile').classList.add("green-font");
@@ -654,5 +666,5 @@ export { createDriverWelcomeContainer };
 export { createPassengerWelcomeContainer };
 export { createImpactStats };
 export { createDriverHostedMenu };
-export { createDriverFindRideMenu};
+export { createDriverFindRideMenu };
 export { highlightNavBar };
