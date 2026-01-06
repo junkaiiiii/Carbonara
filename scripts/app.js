@@ -1,5 +1,3 @@
-
-
 // // create html components
 // const createAvailableRideCard1 = (ride, onRequest, onCloseDriverPopUp, onHighlightStars) => {
 //     const div = document.createElement('div');

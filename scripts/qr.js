@@ -2,15 +2,14 @@ import { requestRide } from "./app.js";
 
 let html5QrCode;
 let isScanning = false;
-const generateQr = (roomCode) =>{
+const createQrPopUp = (roomCode) =>{
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+    
+    `;
+
     let qrDisplay = document.getElementById('qrPopUp');
-    // fetch(`api/qr_api.php?room_code=${roomCode}`)
-    //     .then (response => response.json())
-    //     .then (data => {
-    //         console.log(data);
-    //         qrDisplay.innerHTML = `<img class="qr-img" src="${data.qr_image}">`;
-    //     })
-    //     .catch (error => console.error("Fetch error:", error));
+
     qrDisplay.innerHTML = `<img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=api/request_api.php?room_code=${roomCode}">`
 }
 
