@@ -46,21 +46,6 @@
         <p class="explanation-desc">Every shared ride reduces the number of vehicles on the road. We calculate CO₂ savings based in average vehicle emissions (0.187kg CO₂ per km) multiplied by the distance saved through carpooling. Keep sharing rides to climb the leaderboard and help our planet!</p>
     </div>
 
-    <script>
-        const dropdownTrigger = document.getElementById('dropdown-trigger');
-        const profileDropdown = document.getElementById('profile-dropdown');
-
-        dropdownTrigger.addEventListener('click', function(event) {
-            event.stopPropagation();
-            profileDropdown.classList.toggle('active');
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!profileDropdown.contains(event.target)) {
-                profileDropdown.classList.remove('active');
-            }
-        });
-    </script>
     <script src="scripts/leaderboard.js"></script>
 </body>
 

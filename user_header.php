@@ -29,3 +29,5 @@
         <div class="dropdown-item logout">Log Out</div>
     </a>
 </div>
+
+<script src="scripts/header.js"></script>
