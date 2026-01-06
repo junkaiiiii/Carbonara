@@ -1,3 +1,8 @@
+<?php
+    if (!empty($_SESSION['user_id'])){
+        session_abort();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

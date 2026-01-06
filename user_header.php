@@ -25,5 +25,7 @@
     <div class="dropdown-item" onclick="window.location.href='profile.php'">View Profile</div>
     <div class="dropdown-item">Settings</div>
     <div class="dropdown-item">FAQ</div>
-    <div class="dropdown-item logout">Log Out</div>
+    <a href="landing_page.php">
+        <div class="dropdown-item logout">Log Out</div>
+    </a>
 </div>
