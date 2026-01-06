@@ -1,4 +1,5 @@
 <?php
+    include("user_header.php");    
     include("admin_header.html");
 ?>
 
@@ -8,8 +9,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <linK rel="stylesheet" href="styles/style.css">
+    <linK rel="stylesheet" href="styles/admin_style.css">
     <link rel="stylesheet" href="styles/admin_report.css">
+    <link rel="stylesheet" href="styles/driver.css">
 </head>
 <body>
     <div class="reports-nav">

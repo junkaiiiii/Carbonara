@@ -1,6 +1,4 @@
-<?php
-    include("admin_header.html");
-?>
+<?php session_start() ?>
 
 
 <!DOCTYPE html>
@@ -9,10 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Licence</title>
-    <linK rel="stylesheet" href="styles/style.css">
+    <linK rel="stylesheet" href="styles/admin_style.css">
     <link rel="stylesheet" href="styles/admin_license.css">
+    <!-- <link rel="stylesheet" href="styles/driver.css"> -->
 </head>
 <body>
+    <?php
+    include("user_header.php");
+    include("admin_header.html");
+    ?>
     <div class="licenses-nav">
         <!-- <ul> -->
         <a href="#pending-rev">Pending Reviews</a>
@@ -107,6 +110,21 @@
             </div>
         </div>
     </section>
+    <script>
+        const dropdownTrigger = document.getElementById('dropdown-trigger');
+        const profileDropdown = document.getElementById('profile-dropdown');
+
+        dropdownTrigger.addEventListener('click', function(event) {
+            event.stopPropagation();
+            profileDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!profileDropdown.contains(event.target)) {
+                profileDropdown.classList.remove('active');
+            }
+        });
+    </script>
     <script src="scripts/admin_license.js"></script>
 </body>
 </html>
