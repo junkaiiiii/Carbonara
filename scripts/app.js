@@ -341,7 +341,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
                 <h2 class="content-font">${ride.origin_text} → ${ride.destination_text}</h2>
                 <div id="right-section">
                     <button class="buttons" id="showQrButton">
-                        <img src="assets/img/qr.png">
+                        <img src="assets/img/qr1.png" style="opacity:0.5;">
                     </button>
                     <a href="ride_details.php?id=${ride.ride_id}">
                         <button class="buttons">
