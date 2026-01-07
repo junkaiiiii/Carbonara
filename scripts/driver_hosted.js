@@ -89,7 +89,7 @@ const handleAcceptRequest = (rideId, passengerUsername) => {
         acceptRequest(rideId, passengerUsername);
 
         // find passenger from ride.passengers 
-        const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username = passengerUsername);
+        const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username === passengerUsername);
 
         if (passengerIndex !== -1) {
             selectedRide.passengers.splice(passengerIndex, 1);
@@ -111,7 +111,7 @@ const handleRejectRequest = (rideId, passengerUsername) => {
         rejectRequest(rideId, passengerUsername);
 
         // find passenger from ride.passengers 
-        const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username = passengerUsername);
+        const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username === passengerUsername);
 
         if (passengerIndex !== -1) {
             selectedRide.passengers.splice(passengerIndex, 1);

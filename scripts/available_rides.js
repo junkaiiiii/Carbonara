@@ -56,25 +56,30 @@ const fetchRides = () => {
     return fetch("api/ride_api.php?mode=available")
         .then(response => response.json())
         .then(data => {
-            // Reset states
+            // 1. Reset all state arrays to be empty
             states.available_rides = [];
             states.requested_rides = [];
-            states.filtered_available_rides = [];
-            console.log(data);
+            states.filtered_available_rides = []; 
 
             data.forEach(ride => {
-
-                if (ride.joined === true) {
+                // Check both joined and requested status
+                if (ride.joined === true || ride.request_status === "requested") {
                     states.requested_rides.push(ride);
-
-                } else if (ride.request_status === "requested") {
-                    states.requested_rides.push(ride);
-
                 } else {
                     states.available_rides.push(ride);
-                    states.filtered_available_rides.push(ride);
                 }
             });
+
+            // 2. Sync filtered rides with the new data
+            // If the user isn't searching, this shows all. 
+            // If they are searching, call searchRides() instead.
+            if (originInput.value || destinationInput.value) {
+                searchRides(); 
+            } else {
+                states.filtered_available_rides = [...states.available_rides];
+            }
+            
+            console.log("Data synced. Available:", states.available_rides.length, "Requested:", states.requested_rides.length);
         })
         .catch(error => console.error("Fetch error:", error));
 }
@@ -108,51 +113,30 @@ const fetchRides = () => {
 // General Functions
 
 // Request to join ride
-const handleRequestRide = (rideId) => {
-    rideId = String(rideId);
-
-    const rideIndex = states.available_rides.findIndex(ride => ride.ride_id === rideId);
-
-    if (rideIndex !== -1) {
-        const [requestedRide] = states.available_rides.splice(rideIndex, 1);
-
-        let filteredRideIndex = states.filtered_available_rides.findIndex(ride => ride.ride_id === rideId);
-        if (filteredRideIndex !== -1){
-            states.filtered_available_rides.splice(rideIndex,1);
-        }
-
-        requestRide(requestedRide.room_code, messageBox);
-        requestedRide.request_status = 'requested';
-        states.requested_rides.push(requestedRide);
+const handleRequestRide = async (rideId) => {
+    // Use loose equality (==) or ensure types match
+    const ride = states.available_rides.find(r => String(r.ride_id) === String(rideId));
+    
+    if (ride) {
+        await requestRide(ride.room_code, messageBox);
+        await fetchRides(); 
+        renderAvailableRides();
+        renderRequestedRides();
     }
+};
 
-    renderAvailableRides();
-    renderRequestedRides();
+const handleCancelRequest = async (rideId) => {
+    const ride = states.requested_rides.find(r => String(r.ride_id) === String(rideId));
+    
+    if (ride) {
+        await cancelRequestRide(ride.ride_id, states.session.username);
+        await fetchRides();
+        renderAvailableRides();
+        renderRequestedRides();
+    }
 };
 
 
-
-// Cancel request
-const handleCancelRequest = (rideId) => {
-    rideId = String(rideId);
-
-    const rideIndex = states.requested_rides.findIndex(ride => ride.ride_id === rideId);
-
-    if (rideIndex !== -1) {
-        const [cancelledRide] = states.requested_rides.splice(rideIndex, 1);
-
-        cancelRequestRide(cancelledRide.ride_id, states.session.username);
-        cancelledRide.request_status = null;
-        states.available_rides.push(cancelledRide);
-
-    }
-
-    console.log(states.available_rides)
-    console.log(states.requested_rides)
-
-    renderAvailableRides();
-    renderRequestedRides();
-};
 
 // highlight profile star
 const highlightStars = (rating, stars) => {

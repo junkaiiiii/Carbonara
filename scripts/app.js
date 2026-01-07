@@ -596,7 +596,7 @@ function createDriverFindRideMenu() {
 }
 
 function requestRide(roomCode, messageBox) {
-    fetch(`api/request_api.php?room_code=${roomCode}`)
+    return fetch(`api/request_api.php?room_code=${roomCode}`)
         .then(response => response.json())
         .then(data => {
             console.log('Requested ride:', data);
@@ -618,7 +618,7 @@ function requestRide(roomCode, messageBox) {
 function cancelRequestRide(rideId, passengerUsername) {
     console.log("cancelled", rideId, passengerUsername);
 
-    fetch("api/request_api.php", {
+    return fetch("api/request_api.php", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
