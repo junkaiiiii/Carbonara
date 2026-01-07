@@ -2,7 +2,7 @@ body{
   margin: 0px;
   font-family: Roboto, Bitcount Prop Single,  Arial;
   font-size: 13px;
-  background-color: rgb(244, 244, 244);
+  background-color: rgb(241, 245, 249);
 }
 
 p{
@@ -177,7 +177,7 @@ h1{
 #header-right-section{
     display: flex;
     align-items: center;
-    margin-right: 40px
+    margin-right: 20px
 }
 
 #right-section{

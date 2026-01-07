@@ -102,14 +102,16 @@ html{
 }
 
 .admin-dashboard{
-    margin-top: 80px;
-    background-color: var(--grey-bg-color);
+    z-index: 999;
+    margin-top: 100px;
+    background-color: rgb(241,244,250);
     height: 100px;
     width: 100%;
     display: flex;
     justify-content: flex-start;
     /* align-items: center; */
-    padding: 3ch 20ch;
+    padding: 3ch 0ch;
+    margin-left: 10vw;
     flex-direction: column;    
 }
 
@@ -118,6 +120,7 @@ html{
 
     & p{
         color: gray;
+        /* font-size: 30; */
     }
 }
 
@@ -134,6 +137,7 @@ html{
     text-decoration: none;
     color: black;
     cursor: pointer;
+    font-size: 20px;
     transition: color 0.2s ease;
     /* border: solid 2px black; */
     padding: 8px;
@@ -153,4 +157,19 @@ html{
 
 hr{
     margin-top: -1px;
+}
+
+@media (max-width: 500px){
+    .admin-dashboard{
+        z-index: 999;
+        margin-top: 100px;
+        background-color: rgb(241,244,250);
+        height: 100px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        /* align-items: center; */
+        padding: 3ch 0;
+        flex-direction: column;    
+    }
 }

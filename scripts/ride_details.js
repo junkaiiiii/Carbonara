@@ -1,9 +1,11 @@
 import { createDriverPopUp } from "./app.js";
+import { getGoogleAPI, initMap, getRoute, drawRoute} from "./map_utils.js";  
 
 let states = {
     ride_id: null,
     ride_details: null
 }
+let rideMap = null;
 
 // DOM
 const routeSection = document.getElementById("routeSection");
@@ -100,6 +102,20 @@ function createRouteContainer(ride) {
 
     return div.firstElementChild;
 }
+
+async function initRouteMap(ride){
+    setTimeout(async () => {
+        const mapElement = document.getElementById("map");
+        if (mapElement && !rideMap){
+            rideMap = await initMap('map', [ride.origin_lat, ride.origin_lon],13);
+            const routeData = await getRoute([ride.origin_lon, ride.origin_lat], [ride.destination_lon, ride.destination_lat]);
+            const drawObj = await drawRoute(rideMap, routeData, [ride.origin_lon, ride.origin_lat], [ride.destination_lon, ride.destination_lat]);
+        }
+    }, 100);
+
+
+}
+
 
 function createDriverContainer(driver) {
     let div = document.createElement('div');
@@ -237,6 +253,8 @@ function renderRoute() {
 
     const routeContainer = createRouteContainer(states.ride_details)
     routeSection.appendChild(routeContainer);
+
+    initRouteMap(states.ride_details);
 }
 
 function renderDriverContainer() {
@@ -275,6 +293,7 @@ async function init() {
         alert("Please Fill The Ride Id");
     }
 
+    await getGoogleAPI();
     await Promise.all([
         fetchRideDetails(rideId)
     ]);

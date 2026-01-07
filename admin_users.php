@@ -1,7 +1,5 @@
 <?php
-    include("user_header.php");
-    include("admin_header.html");
-
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -12,10 +10,14 @@
     <title>Users</title>
     <linK rel="stylesheet" href="styles/admin_style.css">
     <link rel="stylesheet" href="styles/admin_users.css">   
-    <link rel="stylesheet" href="styles/driver.css"> 
+    <!-- <link rel="stylesheet" href="styles/driver.css">  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <?php
+    include("user_header.php");
+    include("admin_header.html");
+    ?>
     <!-- HELLOWWW -->
     <!-- Navigation Section -->
     <!-- <nav class="nav">

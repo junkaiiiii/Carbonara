@@ -14,6 +14,9 @@
 <body>
     <div id="map"></div>
     <div class="formBlock">
+        <div class="button-container">
+            <img src="assets/img/left-arrow.png" alt="" onclick="history.go(-1)">
+        </div>
         <form id="form">
             <input type="text" id="start" placeholder="Origin">
             <!-- <div id="start-suggestions" class="suggestions"></div> -->
@@ -26,38 +29,38 @@
     <!-- <div id="info"></div> -->
     <!-- select type of car??? and one more i forgot -->
     <div class="big-container">
-        
-    </div>
-    <!-- <h4>Information Block</h4> -->
-    <div class="rideInfoContainer">
-        <div class="rideInfoBlock">
-            <span class="selected-text" id="numPlate">Select an Option</span>
-            <div class="vehicle-options">
-                <!-- <div data-value="1">meowww</div>
-                <div data-value="2">blehhh</div>
-                <div data-value="3">woof</div> -->
+        <div class="rideInfoContainer">
+            <div class="rideInfoBlock">
+                <span class="selected-text" id="numPlate">Select an Option</span>
+                <div class="vehicle-options">
+                    <!-- <div data-value="1">meowww</div>
+                    <div data-value="2">blehhh</div>
+                    <div data-value="3">woof</div> -->
+                </div>
+            </div>
+            <div class="seatsBlock">
+                <input type="number" id="seatsInput" placeholder="Seats" min="1" max="10">
             </div>
         </div>
-        <div class="seatsBlock">
-            <input type="number" id="seatsInput" placeholder="Seats" min="1" max="10">
-        </div>
-    </div>
-    <div class="departureContainer">
-        <div class="departureBlock">
-            <input type="datetime-local" id="departureInput">
-        </div>
-    </div>
-
-    <div class="infoContainer">
-        <div class="infoBlock">
-            <div id="distance">Distance</div>
+        <div class="departureContainer">
+            <div class="departureBlock">
+                <input type="datetime-local" id="departureInput">
+            </div>
         </div>
 
-        <div class="infoBlock">
-            <div id="eta">ETA</div>
-        </div>
-        <button>Create Ride</button>
+        <div class="infoContainer">
+            <div class="infoBlock">
+                <div id="distance">Distance</div>
+            </div>
+
+            <div class="infoBlock">
+                <div id="eta">ETA</div>
+            </div>
+            <button>Create Ride</button>
+        </div>    
     </div>
+    <!-- <h4>Information Block</h4> -->
+
 
 
 
@@ -70,7 +73,7 @@
     <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
     <!-- Skins for map-->
     <script src="https://unpkg.com/leaflet-providers@latest/leaflet-providers.js"></script>
-    <script src="scripts/map.js"></script>
+    <script type="module" src="scripts/map.js"></script>
 
 
 </body>

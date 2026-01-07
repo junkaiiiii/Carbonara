@@ -1,6 +1,5 @@
 <?php
-    include("user_header.php");    
-    include("admin_header.html");
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -11,9 +10,14 @@
     <title>Document</title>
     <linK rel="stylesheet" href="styles/admin_style.css">
     <link rel="stylesheet" href="styles/admin_report.css">
-    <link rel="stylesheet" href="styles/driver.css">
+    <!-- <link rel="stylesheet" href="styles/driver.css"> -->
 </head>
 <body>
+
+    <?php
+    include("user_header.php");
+    include("admin_header.html");
+    ?>
     <div class="reports-nav">
         <!-- <ul> -->
         <button data-filter="all">All</button>
