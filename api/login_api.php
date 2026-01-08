@@ -22,7 +22,7 @@ if ($method === "POST") {
         $password = $data['password'];
 
         
-        $sql = "SELECT user_id, username, password_hash, role, email FROM users WHERE username = ?";
+        $sql = "SELECT user_id, username, password_hash, role, email FROM users WHERE username = ? OR email = ?";
         $stmt = mysqli_prepare($conn, $sql);
         
         if (!$stmt) {
@@ -30,7 +30,7 @@ if ($method === "POST") {
         }
 
         
-        mysqli_stmt_bind_param($stmt, 's', $username);
+        mysqli_stmt_bind_param($stmt, 'ss', $username, $username);
         mysqli_stmt_execute($stmt);
         $db_user_id = '';
         $db_username = '';
