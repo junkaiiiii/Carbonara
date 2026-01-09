@@ -1,6 +1,6 @@
 import { createImpactStats, createDriverFindRideMenu, createPassengerWelcomeContainer, createDriverWelcomeContainer, requestRide, cancelRequestRide, createAvailableRideCard, createRequestedRideCard, createJoinedRideCard, highlightNavBar } from "./app.js";
 
-import { startScanning, stopScanning } from "./qr.js";
+import { startScanning, stopScanning, onScanSuccess } from "./qr.js";
 
 let states = {
     filtered_available_rides: null,
@@ -306,8 +306,8 @@ const init = async () => {
     originInput.addEventListener("keyup", () => searchRides());
     destinationInput.addEventListener("keyup", () => searchRides());
     showMoreButton.addEventListener("click", () => showMore());
-    document.getElementById('start-scan').addEventListener('click', ()=> startScanning);
-    document.getElementById('stop-scan').addEventListener('click',()=> stopScanning);
+    document.getElementById('start-scan').addEventListener('click', ()=> startScanning(onScanSuccess));
+    document.getElementById('stop-scan').addEventListener('click',()=> stopScanning());
 };
 
 init();

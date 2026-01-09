@@ -26,7 +26,7 @@ const createQrPopUp = (roomCode) =>{
 }
 
 // Start QR Code Scanner
-function startScanning() {
+function startScanning(onScanSuccess) {
     const reader = document.getElementById('qr-reader');
     const startBtn = document.getElementById('start-scan');
     const stopBtn = document.getElementById('stop-scan');
@@ -97,4 +97,5 @@ function onScanError(errorMessage) {
 
 export {startScanning};
 export {stopScanning};
+export {onScanSuccess}
 export {createQrPopUp};
