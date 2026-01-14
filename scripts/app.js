@@ -1,3 +1,5 @@
+import { getGoogleAPI, initMap, getRoute, drawRoute } from "./map_utils.js";
+
 // // create html components
 // const createAvailableRideCard1 = (ride, onRequest, onCloseDriverPopUp, onHighlightStars) => {
 //     const div = document.createElement('div');
@@ -110,8 +112,8 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
 
     const el = wrapper.firstElementChild;
 
-    el.querySelector("#request-to-join-button").addEventListener("click", () => onRequest(ride.ride_id));
-
+    const viewMapButton = el.querySelector("#request-to-join-button");
+    // const confirmButton = el.querySelector("#confirm-ride-button");
     const viewProfileButton = el.querySelector("#viewProfileButton");
 
     viewProfileButton.addEventListener("click", () => {
@@ -120,6 +122,13 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
 
         document.body.appendChild(popUp);
 
+    });
+
+    viewMapButton.addEventListener("click", () => {
+        const popUpMap = createMapPopUp(ride, onRequest);
+        
+        // confirmButton.addEventListener("click", onRequest(ride.ride_id));
+        document.body.appendChild(popUpMap);
     });
 
     return wrapper.firstElementChild;
@@ -435,6 +444,68 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
     return wrapper.firstElementChild;
 }
 
+//map pop up
+const createMapPopUp = (ride, onRequest) => {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div class="map-popup-container" id="MapPopUpContainer">
+            <div class="map-popup">
+                <button class="close-map-popup-button">
+                    <img class="close-map-popup-icon" src="assets/img/close.png">
+                </button>
+                <div class="map-popup-content">
+                    <h3>Ride Route</h3>
+                    <div id="map" style="height: 400px; width: 100%;"></div>
+                    <div style="margin-top: 15px; padding: 10px; background-color: #f3f4f6; border-radius: 5px;">
+                        <p style="margin: 5px 0;"><strong>From:</strong> ${ride.origin_text}</p>
+                        <p style="margin: 5px 0;"><strong>To:</strong> ${ride.destination_text}</p>
+                        <p style="margin: 5px 0;"><strong>Departure:</strong> ${ride.departure_datetime}</p>
+                        <p style="margin: 5px 0;"><strong>Distance:</strong> ${ride.ride_distance} km</p>
+                    </div>
+                </div>
+                <div class="confirm-btn-container">
+                    <button id="confirm-ride-button">Confirm Ride</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const popUp = wrapper.firstElementChild;
+
+    popUp.querySelector(".close-map-popup-button").addEventListener("click", () => {
+        popUp.remove();
+    });
+
+    //init map
+    setTimeout(async() => {
+        try{
+            await getGoogleAPI();
+
+            const map = await initMap("map");
+            console.log("map created: ", map);
+
+            const routeData = await getRoute(
+                [ride.origin_lon, ride.origin_lat],
+                [ride.destination_lon, ride.destination_lat]
+            ); 
+
+            await drawRoute(map, routeData,[ride.origin_lon, ride.origin_lat],[ride.destination_lon, ride.destination_lat]);
+        
+            const confirmBtn = popUp.querySelector("#confirm-ride-button");
+            confirmBtn.addEventListener("click", () => {
+                onRequest(ride.ride_id);
+                console.log("Ride confirmed!");
+            });
+        }
+        catch(error){
+            console.error("Error initializing map:", error);
+        }
+    })
+
+    return popUp;
+}
+
+
 
 // driver pop up
 const createDriverPopUp = (user, onHighlightStars) => {
@@ -654,7 +725,7 @@ function highlightNavBar(page) {
     }
 }
 
-
+export { createMapPopUp };
 export { createAvailableRideCard };
 export { createRequestedRideCard };
 export { requestRide };
