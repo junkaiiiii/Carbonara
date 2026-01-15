@@ -324,14 +324,43 @@ INSERT INTO `reports` (`report_id`, `ride_id`, `reporter_id`, `reported_user_id`
 -- Prizes
 INSERT INTO `prizes` (`prize_id`, `prize_name`, `points_required`, `stock`, `prize_image_url`) VALUES
 ('PR_692f18730aefd', 'BadgeA', 100, 50, 'badgeA.png'),
-('PR_692f18730b37e', 'BadgeB', 150, 40, 'badgeB.png');
+('PR_692f18730b37e', 'BadgeB', 150, 40, 'badgeB.png'),
+('PR_692f18730c123', 'RM5 Ride Voucher', 200, 200, 'voucher_rm5.png'),
+('PR_692f18730d456', 'RM10 Ride Voucher', 350, 150, 'voucher_rm10.png'),
+('PR_692f18730e789', 'Exclusive T-Shirt', 1200, 30, 'merch_tshirt.png'),
+('PR_692f18730f012', 'Stainless Steel Tumbler', 1500, 20, 'merch_tumbler.png'),
+('PR_692f18731a345', 'Free Ride Pass (1 Trip)', 800, 50, 'pass_freeride.png'),
+('PR_692f18731b678', 'Touch n Go RM20 Credit', 900, 40, 'ewallet_tng20.png');
 
 
 
 -- Redemption
 INSERT INTO `redemption` (`redemption_id`, `prize_id`, `user_id`, `cost`, `redeemed_at`) VALUES
 ('RED_692f135fd2663', 'PR_692f18730aefd', 'US_692f0e82a7fb7', 100, '2025-11-10 14:00:00'),
-('RED_692f135fd2dcc', 'PR_692f18730b37e', 'US_692f0ebbe9265', 150, '2025-11-12 16:00:00');
+('RED_692f135fd2dcc', 'PR_692f18730b37e', 'US_692f0ebbe9265', 150, '2025-11-12 16:00:00'),
+-- Tan Jian Shen (Passenger) redeeming a small voucher
+('RED_692f2001a1111', 'PR_692f18730c123', 'US_692f0e82a7fb7', 200, '2025-12-05 09:30:00'),
+
+-- Eng Hong Xuan (Driver) redeeming a large merch item
+('RED_692f2001b2222', 'PR_692f18730f012', 'US_692f0e453c9dd', 1500, '2025-12-10 18:45:15'),
+
+-- Sho Jun Kai (Passenger) redeeming a Free Ride Pass
+('RED_692f2001c3333', 'PR_692f18731a345', 'US_692f0ebbe9265', 800, '2025-12-15 12:20:00'),
+
+-- Thum Zhi Jian (Driver) redeeming TnG Credit
+('RED_692f2001d4444', 'PR_692f18731b678', 'US_692f0f042125d', 900, '2025-12-20 14:10:00'),
+
+-- Leong Zi Heng (Admin) testing a redemption (Badge A)
+('RED_692f2001e5555', 'PR_692f18730aefd', 'US_692f0f2dd3648', 100, '2025-12-22 10:05:00'),
+
+-- Eng Hong Xuan (Driver) redeeming another voucher later
+('RED_692f2001f6666', 'PR_692f18730d456', 'US_692f0e453c9dd', 350, '2026-01-02 08:00:00'),
+
+-- Sho Jun Kai (Passenger) redeeming a T-Shirt
+('RED_692f2001g7777', 'PR_692f18730e789', 'US_692f0ebbe9265', 1200, '2026-01-05 16:30:45'),
+
+-- Tan Jian Shen (Passenger) redeeming Badge B
+('RED_692f2001h8888', 'PR_692f18730b37e', 'US_692f0e82a7fb7', 150, '2026-01-10 11:15:20');
 
 
 
