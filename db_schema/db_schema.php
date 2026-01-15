@@ -128,6 +128,7 @@ CREATE TABLE prizes (
     prize_name VARCHAR(50),
     points_required INT,
     stock INT,
+    prize_type ENUM('voucher','badge'),
     prize_image_url VARCHAR(17)
 );";
 
@@ -322,15 +323,15 @@ INSERT INTO `reports` (`report_id`, `ride_id`, `reporter_id`, `reported_user_id`
 
 
 -- Prizes
-INSERT INTO `prizes` (`prize_id`, `prize_name`, `points_required`, `stock`, `prize_image_url`) VALUES
-('PR_692f18730aefd', 'BadgeA', 100, 50, 'badgeA.png'),
-('PR_692f18730b37e', 'BadgeB', 150, 40, 'badgeB.png'),
-('PR_692f18730c123', 'RM5 Ride Voucher', 200, 200, 'voucher_rm5.png'),
-('PR_692f18730d456', 'RM10 Ride Voucher', 350, 150, 'voucher_rm10.png'),
-('PR_692f18730e789', 'Exclusive T-Shirt', 1200, 30, 'merch_tshirt.png'),
-('PR_692f18730f012', 'Stainless Steel Tumbler', 1500, 20, 'merch_tumbler.png'),
-('PR_692f18731a345', 'Free Ride Pass (1 Trip)', 800, 50, 'pass_freeride.png'),
-('PR_692f18731b678', 'Touch n Go RM20 Credit', 900, 40, 'ewallet_tng20.png');
+INSERT INTO `prizes` (`prize_id`, `prize_name`, `points_required`, `stock`, `prize_type`, `prize_image_url`) VALUES
+('PR_692f18730aefd', 'BadgeA', 100, 50, 'badge', 'badgeA.png'),
+('PR_692f18730b37e', 'BadgeB', 150, 40, 'badge', 'badgeB.png'),
+('PR_692f18730c123', 'RM5 Ride Voucher', 200, 200, 'voucher', 'voucher_rm5.png'),
+('PR_692f18730d456', 'RM10 Ride Voucher', 350, 150, 'voucher', 'voucher_rm10.png'),
+('PR_692f18730e789', 'Exclusive T-Shirt', 1200, 30, 'voucher', 'merch_tshirt.png'),
+('PR_692f18730f012', 'Stainless Steel Tumbler', 1500, 20, 'voucher', 'merch_tumbler.png'),
+('PR_692f18731a345', 'Free Ride Pass (1 Trip)', 800, 50, 'badge', 'pass_freeride.png'),
+('PR_692f18731b678', 'Touch n Go RM20 Credit', 900, 40, 'voucher', 'ewallet_tng20.png');
 
 
 

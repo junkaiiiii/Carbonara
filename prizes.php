@@ -18,7 +18,7 @@
         <h2>Rewards</h2>
         <div id="points-container">
             <img class="small-icons" src="assets/img/coin.png" alt="">
-            <p class="green-font">7000 points</p>
+            <p  id="point" class="green-font">7000 points</p>
         </div>
     </div>
 
@@ -31,9 +31,7 @@
             <h3>Vouchers</h3>
         </div>
 
-        <div id="rewards-filter-container">
-            <img class="small-icons" src="assets/img/filter.png" alt="">
-        </div>
+
     </div>
 
     <!-- VOUCHER SECTION -->
@@ -72,11 +70,12 @@
             </button>
         </div>
 
-        <div class="center">
-            <button class="load-more-button">
-                Load more
-            </button>
-        </div>
+    </div>
+
+    <div class="center" id="loadVoucherBtn" hidden>
+        <button class="load-more-button">
+            Load more
+        </button>
     </div>
 
 
@@ -91,53 +90,16 @@
             <h3>Badges</h3>
         </div>
 
-        <div id="rewards-filter-container">
-            <img class="small-icons" src="assets/img/filter.png" alt="">
-        </div>
-    </div>
 
-    <div class="badge-container">
-        <div class="center">
-            <img class="badge-img-size" src="assets/img/badge1.png" alt="">
-        </div>
-
-        <div class="badge-content">
-            <p>Bronze CO2 Reducer Badge</p>
-
-            <div class="group">
-                <img class="small-icons" src="assets/img/coin.png" alt="">
-                <p class="green-font">5000 points</p>
-            </div>
-        </div>
-
-        <button class="button">
-            Redeem Badge
-        </button>
-    </div>
-
-    <div class="badge-container">
-        <div class="center">
-            <img class="badge-img-size" src="assets/img/badge1.png" alt="">
-        </div>
-
-        <div class="badge-content">
-            <p>Bronze CO2 Reducer Badge</p>
-
-            <div class="group">
-                <img class="small-icons" src="assets/img/coin.png" alt="">
-                <p class="green-font">5000 points</p>
-            </div>
-        </div>
-
-        <button class="button">
-            Redeem Badge
-        </button>
     </div>
 
 
+    <div class="badge-section" id="badgeSection">
+
+    </div>
 
     <div class="center">
-        <button class="load-more-button">
+        <button class="load-more-button" id="loadBadgeBtn">
             Load more
         </button>
     </div>
