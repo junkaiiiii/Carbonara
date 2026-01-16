@@ -349,3 +349,74 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 }
+
+/* The dark background overlay */
+.confirm-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it stays on top of everything */
+}
+
+/* The modal container */
+.confirm-container {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.confirm-container p {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* General button styling */
+.button {
+    border: none;
+    padding: 12px;
+    margin: 5px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.2s;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+/* Specific colors */
+#confirmBtn {
+    background-color: #4CAF50; /* Green */
+}
+
+/* Note: Your JS already sets background-color: red inline for rejectBtn, 
+   but we can add extra styles here */
+#rejectBtn {
+    color: white;
+}
+
+/* Simple entrance animation */
+@keyframes fadeIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
