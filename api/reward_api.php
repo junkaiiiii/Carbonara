@@ -54,6 +54,21 @@ if ($method === "GET") {
             ];
         }
     }
+    else if($mode === "admin_all"){
+        $sql = "SELECT prize_id, prize_name, points_required, stock, prize_type, prize_image_url FROM prizes;";
+        $result = mysqli_query($conn, $sql);
+        $response = [];
+        while ($row = mysqli_fetch_assoc($result)){
+            $response[] = [
+                "prize_id"        => $row['prize_id'],
+                "prize_name"      => $row['prize_name'],
+                "points_required" => (int)$row['points_required'],
+                "stock"           => (int)$row['stock'],
+                "prize_type"      => $row['prize_type'],
+                "prize_image_url" => $row['prize_image_url']
+            ];
+        }
+    }
 
     respond($response);
 }
