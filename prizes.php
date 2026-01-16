@@ -36,40 +36,6 @@
 
     <!-- VOUCHER SECTION -->
     <div class="voucher-section" id="voucherSection">
-        <div class="voucher-container">
-            <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
-
-            <div class="tng-voucher-content">
-                <p>Touch 'n Go RM5 Voucher</p>
-
-                <div class="group">
-                    <img class="small-icons" src="assets/img/coin.png" alt="">
-                    <p class="green-font">5000 points</p>
-                </div>
-            </div>
-
-            <button class="button">
-                Redeem Voucher
-            </button>
-        </div>
-
-        <div class="voucher-container">
-            <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
-
-            <div class="tng-voucher-content">
-                <p>Touch 'n Go RM5 Voucher</p>
-
-                <div class="group">
-                    <img class="small-icons" src="assets/img/coin.png" alt="">
-                    <p class="green-font">5000 points</p>
-                </div>
-            </div>
-
-            <button class="button">
-                Redeem Voucher
-            </button>
-        </div>
-
     </div>
 
     <div class="center" id="loadVoucherBtn" hidden>
