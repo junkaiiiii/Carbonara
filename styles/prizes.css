@@ -364,7 +364,6 @@
     z-index: 1000; /* Ensure it stays on top of everything */
 }
 
-/* The modal container */
 .confirm-container {
     background-color: white;
     padding: 20px 30px;
@@ -404,13 +403,11 @@
     transform: scale(0.98);
 }
 
-/* Specific colors */
 #confirmBtn {
     background-color: #4CAF50; /* Green */
 }
 
-/* Note: Your JS already sets background-color: red inline for rejectBtn, 
-   but we can add extra styles here */
+
 #rejectBtn {
     color: white;
 }
