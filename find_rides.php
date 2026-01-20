@@ -97,58 +97,7 @@ session_start();
     </div>
 
     <div id="requestedRides">
-        <div id="join-request-container">
-            <div id="join-ride-content">
-                <h2>San Francisco → Los Angeles</h2>
-                <div id="available-status">
-                    <p>Pending</p>
-                </div>
-            </div>
-
-            <div id="driver-info">
-                <h3>Driver: John Smith</h3>
-            </div>
-
-            <div id="ride-status">
-                <div id="time">
-                    Nov 17, 2025, 11:46 PM
-                </div>
-            </div>
-
-            <button id="cancel-request-button">
-                Cancel Request
-            </button>
-        </div>
-
-        <div id="request-accepted-container">
-            <div id="join-ride-content">
-                <h2>San Francisco → Los Angeles</h2>
-                <div id="accepted-status">
-                    <p>accepted</p>
-                </div>
-            </div>
-
-            <div id="driver-info">
-                <h3>Driver: John Smith</h3>
-            </div>
-
-            <div id="ride-status">
-                <div id="time">
-                    Nov 17, 2025, 11:46 PM
-                </div>
-            </div>
-
-            <div id="request-accepted-notice">
-                <div id="accepted-info">
-                    <h3 id="green-bold">Request Accepted!</h3>
-                    <p id="grey-color">Contact driver: +1234567890</p>
-                </div>
-
-                <button id="view-ride-details-button">
-                    View Ride Details
-                </button>
-            </div>
-        </div>
+        
     </div>
 
 
