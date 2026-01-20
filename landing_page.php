@@ -1,6 +1,8 @@
 <?php
     if (!empty($_SESSION['user_id'])){
-        session_abort();
+        session_start();
+        session_unset();
+        session_destroy();
     }
 ?>
 <!DOCTYPE html>

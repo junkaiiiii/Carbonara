@@ -23,9 +23,9 @@ if ($method === "GET") {
     }
 
     // 1. Get ride_id and check if it exists
-    $ride_sql = "SELECT ride_id FROM rides WHERE room_code = ?";
+    $ride_sql = "SELECT ride_id FROM rides WHERE room_code = ? AND driver_id != ?";
     $ride_stmt = mysqli_prepare($conn, $ride_sql);
-    mysqli_stmt_bind_param($ride_stmt, "s", $room_code);
+    mysqli_stmt_bind_param($ride_stmt, "ss", $room_code, $session_user_id);
     mysqli_stmt_execute($ride_stmt);
     $result = mysqli_stmt_get_result($ride_stmt);
     $ride = mysqli_fetch_assoc($result);
@@ -35,7 +35,7 @@ if ($method === "GET") {
     }
     $ride_id = $ride['ride_id'];
 
-    // 2. Check for an EXISTING request (including cancelled or rejected)
+    // 2. Check for an existing request (including cancelled or rejected)
     $check_sql = "SELECT request_id, status FROM requests WHERE passenger_id = ? AND ride_id = ?";
     $check_stmt = mysqli_prepare($conn, $check_sql);
     mysqli_stmt_bind_param($check_stmt, "ss", $session_user_id, $ride_id);

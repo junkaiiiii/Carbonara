@@ -506,7 +506,7 @@ if ($method === "GET") {
         respond(["error" => "Failed to create ride: " . mysqli_stmt_error($stmt)], 500);
         exit;
     }
-    respond(["message" => "Ride created successfully", "ride_id" => $ride_id], 201);
+    respond(["success" => "Ride created successfully", "ride_id" => $ride_id], 201);
 
 
     // if (mysqli_query($conn, $sql)) {
