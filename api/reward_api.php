@@ -72,3 +72,72 @@ if ($method === "GET") {
 
     respond($response);
 }
+else if($method === "POST") {
+    // Admin Adding New Prize
+    // $data = json_decode(file_get_contents("php://input"), true);
+
+    $required = [
+        'prize_name',
+        'points_required',
+        'stock',
+        'prize_type',
+        'prize_image_url'
+    ];
+    if(!isset($_FILES['prize_image_url'])){
+        respond(['error' => 'Prize Image URL is required', 400]);
+    }
+
+    $file = $_FILES['prize_image_url'] ?? null;
+
+    $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!in_array($file['type'], $allowed_types)) {
+        respond(['error' => 'Invalid image type. Allowed types: JPEG, JPG, PNG, GIF, WEBP', 400]);
+    }
+
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $filename = uniqid('prize_', true) . '.' . $extension;
+
+    $upload_dir = '../assets/img/';
+    $target_file = $upload_dir . $filename;
+
+    //moves file from temp storage to folder
+
+    if (!move_uploaded_file($file['tmp_name'], $target_file)) {
+        respond(['error' => 'Failed to move uploaded file', 500]);
+    }
+
+    $prize_image_url = $filename;
+
+    $prize_id = generateId("PR_");
+    $prize_name      = mysqli_real_escape_string($conn, $_POST['prize_name']);
+    $points_required = intval($_POST['points_required']);
+    $stock           = intval($_POST['stock']);
+    $prize_type      = $_POST['prize_type'];
+    // $prize_image_url = $_POST['prize_image_url'];
+
+    if (empty($prize_name)){
+        respond(['error' => 'Prize Image URL is required', 400]);
+    }
+
+    if (empty($prize_name) || empty($points_required) || empty($stock) || empty($prize_type) || empty($prize_image_url)) {
+        respond(['error' => 'Missing Required Fields', 400]);
+    }
+
+    $sql = "INSERT INTO prizes (prize_id, prize_name, points_required, stock, prize_type, prize_image_url)
+            VALUES (?, ?, ?, ?, ?, ?);";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, 'ssiiss', $prize_id, $prize_name, $points_required, $stock, $prize_type, $prize_image_url);
+
+    if (mysqli_stmt_execute($stmt)) {
+        respond(['message' => 'Prize Added Successfully', 'prize_id' => $prize_id, 'image_url' => $prize_image_url], 201);
+    } else {
+        // Delete uploaded file if database insertion fails
+        if (file_exists($upload_path)) {
+            unlink($upload_path);
+        }
+
+        respond(['error' => 'Database Insertion Failed', 500]);
+    }
+} else {
+    respond(['error' => 'Invalid Request Method', 405]);
+}
