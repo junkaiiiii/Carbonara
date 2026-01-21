@@ -23,7 +23,7 @@
             <div class="stat-card">
                 <div class="stat-header">
                     <h3>Total Users</h3>
-                    <i class="fa-solid fa-users"></i>
+                    <img class="stat-icon" src="assets/img/users-icon.png" alt="Users">
                 </div>
                 <div class="stat-value" id="totalUsers">0</div>
             </div>
@@ -31,7 +31,7 @@
             <div class="stat-card">
                 <div class="stat-header">
                     <h3>Total Rides</h3>
-                    <i class="fa-solid fa-car"></i>
+                    <img class="stat-icon" src="assets/img/car-icon.png" alt="Car">
                 </div>
                 <div class="stat-value" id="totalRides">0</div>
             </div>
@@ -39,7 +39,7 @@
             <div class="stat-card">
                 <div class="stat-header">
                     <h3>Active Rides</h3>
-                    <i class="fa-solid fa-circle-check"></i>
+                    <img class="stat-icon" src="assets/img/active-icon.png" alt="Active">
                 </div>
                 <div class="stat-value" id="activeRides">0</div>
             </div>
@@ -47,7 +47,7 @@
             <div class="stat-card">
                 <div class="stat-header">
                     <h3>Pending Requests</h3>
-                    <i class="fa-solid fa-clock"></i>
+                    <img class="stat-icon" src="assets/img/pending-icon.png" alt="Pending">
                 </div>
                 <div class="stat-value" id="pendingRequests">0</div>
             </div>

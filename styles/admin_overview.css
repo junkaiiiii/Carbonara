@@ -43,6 +43,12 @@
     color: #999;
 }
 
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
 .stat-value {
     font-size: 3rem;
     font-weight: 700;
