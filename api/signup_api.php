@@ -14,7 +14,7 @@ if ($method === "POST"){
 
     if ($data){
         // validate if received all required inputs  
-        $required = ['fullName', 'username', 'email', 'password', 'phoneNumber'];
+        $required = ['fullName', 'username', 'email', 'password', 'phoneNumber', 'gender', 'dateOfBirth'];
         foreach ($required as $field){
             if (!isset($data[$field]) || empty($data[$field])){
                 respond(["error" => "Missing required field"],400);
@@ -37,8 +37,8 @@ if ($method === "POST"){
 
 
 
-        $sql = "INSERT INTO users (user_id, full_name, username, email, password_hash, role, phone, created_at)
-                VALUES (?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO users (user_id, full_name, username, email, password_hash, role, gender, date_of_birth, phone, created_at)
+                VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         $stmt = mysqli_prepare($conn, $sql);
         $username = $data['username'] ?? '';
@@ -46,14 +46,16 @@ if ($method === "POST"){
         $full_name = $data['fullName'] ?? '';
         $email = $data['email'] ?? '';
         $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
-        $role = 'Passenger';
+        $role = $data['role'];
+        $gender = $data['gender'] ?? '';
+        $date_of_birth = $data['dateOfBirth'] ?? '';
         $phone = $data['phoneNumber'] ?? '';
         $created_at = date('Y-m-d H:i:s');
 
 
         mysqli_stmt_bind_param(
-            $stmt, "ssssssss",
-            $user_id,$full_name,$username,$email,$password_hash,$role,$phone,$created_at
+            $stmt, "ssssssssss",
+            $user_id,$full_name,$username,$email,$password_hash,$role,$gender,$date_of_birth,$phone,$created_at
         );
 
         if (!mysqli_stmt_execute($stmt)) {

@@ -411,6 +411,124 @@ function createRatingCards(rating){
     
     return div.firstElementChild;
 }
+
+function createSignUpPopup(){
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `
+        <div class="signup-popup-section">
+            <div class="signup-popup-container">
+                <button class="close-popup-button">
+                    <img class="close-popup-icon" src="assets/img/close.png">
+                </button>
+                <form class="sign-up-form" id="signUpForm">
+                    <div>
+                        <label>
+                            Full Name
+                        </label>
+                        <input type="text" name="fullName" placeholder="John Doe">
+                    </div>
+                    
+                    <div>
+                        <label>
+                            Username
+                        </label>
+                        <input type="text" name="username" placeholder="johndoe_123">
+                    </div>
+                    
+        
+                    <div>
+                        <label>
+                            Email
+                        </label>
+                        <input type="email" name="email" placeholder="your@email.com">
+                    </div>
+
+                    <div>
+                        <label>
+                            Phone Number
+                        </label>
+                        <input type="text" name="phoneNumber" placeholder="+123456789">
+                    </div>
+                    <p id="gender">Gender</p>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="Male"> Male</label>
+                        <label><input type="radio" name="gender" value="Female"> Female</label>
+                    </div>
+
+                    <div>
+                        <label>
+                            Date of Birth
+                        </label>
+                        <input type="date" name="dateOfBirth" > 
+                    </div>
+
+                    <div>
+                        <label>
+                            Password
+                        </label>
+                        <input type="password" name="password" >
+                    </div>
+
+                    <input type="hidden" name="role" value="Admin">
+
+                    <button type="submit" id="signUpBtn" >Create Account</button>
+                </form>
+            </div>    
+        </div>
+    `
+    const el = wrapper.firstElementChild;
+    const signUpBtn = el.querySelector("#signUpBtn");
+
+    const closeBtn = el.querySelector(".close-popup-button");
+    closeBtn.addEventListener("click", () => {
+        el.remove();
+    });
+
+    el.addEventListener("click", (e) => {
+        if (e.target === el) {
+            el.remove();
+        }
+    });
+
+    const form = el.querySelector("#signUpForm");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        let plainData = {};
+        formData.forEach((value,key) => {
+            plainData[key] = value;
+        });
+        
+        try{
+            const response = await fetch('api/signup_api.php', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(plainData),
+            });
+            const data = await response.json();
+            // console.log("Admin user created:", data);
+
+            if (response.ok){
+                // alert("Admin user created successfully!");
+                getAllUsers();
+                el.remove();
+            }
+        }
+        catch(err){
+            console.error("Error creating admin user:", err);
+        }
+    });
+
+
+    return wrapper.firstElementChild;
+}
+
+const addAdminBtn = document.getElementById("add-admin-user-btn");
+addAdminBtn.addEventListener("click", () => {
+    const signUpPopUp = createSignUpPopup();
+    document.body.appendChild(signUpPopUp);
+});
 // states.users.forEach(user => {
 //     console.log(user);
 // })

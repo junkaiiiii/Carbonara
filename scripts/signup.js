@@ -17,7 +17,8 @@ button.addEventListener("click",(e)=>{
     fetch('api/signup_api.php', {
         method : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        role: "Passenger"
     })
         .then(response => response.json())
         .then(result => {
@@ -34,9 +35,8 @@ button.addEventListener("click",(e)=>{
                 messageBox.style.color = "green";
                 messageBox.style.textAlign = 'center';
                 messageBox.textContent = "Account created successfully!";
-                
                 setTimeout(()=>{
-                    window.location.href = 'passenger.html';
+                    window.location.href = 'login.html';
     
                 },500);
             }

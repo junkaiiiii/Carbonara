@@ -56,13 +56,18 @@
     </section>
     <hr> -->
     <!-- Search Bar -->
-
-    <div class="search-bar">
-        <div class="search-icon"><img src="./images/adc.jpg"></div>
-        <div class="search-placeholder">
-            <input id="search-text" placeholder="Search by name, email, or role...">
+    <div class="search-row">
+        <div class="search-bar">
+            <div class="search-icon"><img src="./images/adc.jpg"></div>
+            <div class="search-placeholder">
+                <input id="search-text" placeholder="Search by name, email, or role...">
+            </div>
+        </div>
+        <div class=add-admin-user>
+            <button id="add-admin-user-btn">Add Admin User</button>
         </div>
     </div>
+
 
     <!-- User Card -->
     <div class="user-grid">
