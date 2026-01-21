@@ -11,7 +11,7 @@ CREATE TABLE users (
     password_hash VARCHAR(255),
     role ENUM('Driver','Passenger','Admin'),
     status ENUM('Active', 'Banned') DEFAULT 'Active',
-    gender ENUM('Male', 'Female', 'Other'),
+    gender ENUM('Male', 'Female'),
     date_of_birth DATE,
     phone VARCHAR(15),
     profile_picture_url VARCHAR(255),
@@ -129,7 +129,7 @@ CREATE TABLE prizes (
     points_required INT,
     stock INT,
     prize_type ENUM('voucher','badge'),
-    prize_image_url VARCHAR(17)
+    prize_image_url VARCHAR(255)
 );";
 
 $sql .= "
@@ -148,7 +148,7 @@ CREATE TABLE driving_license (
     license_id VARCHAR(20) PRIMARY KEY,
     user_id VARCHAR(20),
     status ENUM('Pending','Approved','Rejected'),
-    license_image_url VARCHAR(20),
+    license_image_url VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );";
 
