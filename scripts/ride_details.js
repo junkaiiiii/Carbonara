@@ -368,15 +368,28 @@ function createRatingPopup(riders) {
 
         // Prepare ratings data
         const ratingsData = riders.map((rider, index) => ({
-            user_id: rider.user_id,
+            rater_id: states.session.user_id,
+            rated_id: rider.user_id,
             ride_id: states.ride_id,
-            rating: ratings[index].rating,
-            comment: ratings[index].comment
+            score: ratings[index].rating
         }));
 
         console.log(ratingsData);
 
-        
+        // submit ratings
+        fetch("api/rating_api.php", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ratings: ratingsData
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
     });
 
     return overlay;
@@ -405,6 +418,7 @@ function selectStars(stars, value) {
         }
     });
 }
+
 
 
 
@@ -448,9 +462,15 @@ function renderImpactContainer() {
 }
 
 function renderCompleteRideBtn() {
-    completeRideBtn.hidden = states.session.role.toLowerCase() !== "driver" && Date.parse(states.ride_details.departure_datetime) > Date.now;
+    let hidden = (states.session.role.toLowerCase() !== "driver") || (Date.parse(states.ride_details.departure_datetime) > Date.now) || (states.ride_details.ride_status.toLowerCase() !== 'incomplete');
+    // hide button if (user not driver OR departure date is in future OR ride status is incomplete)
+    completeRideBtn.style.display = hidden ? "none" : "block";
+
     console.log(states.session.role.toLowerCase() !== "driver");
     console.log(Date.parse(states.ride_details.departure_datetime) > Date.now);
+    console.log(states.ride_details.ride_status.toLowerCase() !== 'incomplete')
+
+    console.log((states.session.role.toLowerCase() !== "driver") || (Date.parse(states.ride_details.departure_datetime) > Date.now) || (states.ride_details.ride_status.toLowerCase() !== 'incomplete'));
 }
 
 
