@@ -5,16 +5,6 @@
     animation: fadeIn 0.5s ease-in;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 /* Stats Grid */
 .stats-grid {
@@ -28,7 +18,6 @@
     background: white;
     border-radius: 16px;
     padding: 1.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
     display: flex;
     align-items: center;
     gap: 1.25rem;
@@ -42,15 +31,14 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 4px;
+    width: 0;
     height: 100%;
     background: linear-gradient(180deg, #4caf50, #45a049);
-    transition: width 0.3s ease;
+    transition: none;
 }
 
 .stat-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .stat-card:hover::before {
@@ -58,20 +46,20 @@
     opacity: 0.05;
 }
 
-/* Different card colors */
-.users-card::before {
-    background: linear-gradient(180deg, #5C6BC0, #3F51B5);
+
+.total-users-card::before {
+    background: linear-gradient(180deg, #2196F3, #2196F3);
 }
 
-.rides-card::before {
-    background: linear-gradient(180deg, #42A5F5, #2196F3);
+.total-rides-card::before {
+    background: linear-gradient(180deg, #ff1717, #ff1717);
 }
 
-.active-card::before {
-    background: linear-gradient(180deg, #66BB6A, #4CAF50);
+.pending-licenses-card::before {
+    background: linear-gradient(180deg, #f7ff12, #f7ff12);
 }
 
-.pending-card::before {
+.pending-reports-card::before {
     background: linear-gradient(180deg, #FFA726, #FF9800);
 }
 
@@ -97,7 +85,7 @@
 }
 
 .stat-label {
-    font-size: 0.875rem;
+    font-size: 16px;
     color: #6b7280;
     margin: 0 0 0.5rem 0;
     font-weight: 500;
@@ -111,39 +99,7 @@
     line-height: 1;
 }
 
-.stat-trend {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
 
-.trend-indicator {
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.5rem;
-    border-radius: 6px;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.trend-indicator.positive {
-    color: #059669;
-    background: #d1fae5;
-}
-
-.trend-indicator.negative {
-    color: #dc2626;
-    background: #fee2e2;
-}
-
-.trend-text {
-    font-size: 0.75rem;
-    color: #9ca3af;
-}
-
-/* Info Grid */
 .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -154,13 +110,9 @@
     background: white;
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
     transition: all 0.3s ease;
 }
 
-.info-card:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
 
 .card-header {
     display: flex;
@@ -193,7 +145,7 @@
     text-decoration: underline;
 }
 
-/* Activity List */
+
 .activity-list {
     display: flex;
     flex-direction: column;
@@ -243,7 +195,8 @@
     margin: 0;
 }
 
-/* Quick Actions */
+
+/* Quick Actions - Updated with images and colors */
 .quick-actions {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -254,35 +207,65 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    padding: 1.25rem;
+    gap: 0.75rem;
+    padding: 1.5rem 1.25rem;
     border-radius: 12px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    background: white;
     text-decoration: none;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
+    border: 2px solid #e5e7eb;
+    position: relative;
+    overflow: hidden;
 }
 
-.action-btn:hover {
-    background: white;
-    border-color: #4caf50;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.action-btn i {
-    font-size: 1.5rem;
-    color: #4caf50;
+.action-users {
+    border-color: #2196F3;
+}
+
+.action-rides {
+    border-color: #ff1717;
+}
+
+.action-licenses {
+    border-color: #f7ff12;
+}
+
+.action-reports {
+    border-color: #FFA726;
+}
+
+.action-icon {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.action-btn:hover .action-icon {
+    transform: scale(1.1);
 }
 
 .action-btn span {
     font-size: 0.875rem;
-    font-weight: 500;
-    color: #4b5563;
+    font-weight: 600;
+    color: #374151;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
-/* Breakdown List */
+
 .breakdown-list {
     display: flex;
     flex-direction: column;
@@ -307,23 +290,6 @@
     font-weight: 500;
 }
 
-.color-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
-.color-dot.driver {
-    background: #42A5F5;
-}
-
-.color-dot.passenger {
-    background: #66BB6A;
-}
-
-.color-dot.banned {
-    background: #EF5350;
-}
 
 .breakdown-value {
     font-size: 1.125rem;
@@ -331,7 +297,7 @@
     color: #1a1a1a;
 }
 
-/* Responsive Design */
+
 @media (max-width: 1024px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -362,5 +328,9 @@
 
     .quick-actions {
         grid-template-columns: 1fr;
+    }
+    
+    .action-btn {
+        padding: 1.25rem;
     }
 }

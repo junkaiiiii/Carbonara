@@ -27,7 +27,9 @@
         </div>
 
         <div class="rides-grid" id="ridesGrid">
-            <!-- Ride cards will be inserted here -->
+
+
+        
         </div>
     </div>
 
