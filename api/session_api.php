@@ -15,14 +15,14 @@ if ($method === "GET"){
     }
 
     if (empty($_SESSION['user_id'])){
-        respond(["error"=>"Please Login First"],400);
+        respond(["error"=>"Please Login First"]);
     }
 
     $user_id = $_SESSION['user_id'];
 
     // general =>(username, email, role),  detailed => (edit profile page data)
     if ($mode === "general"){
-        $sql = "SELECT username, email, role FROM users 
+        $sql = "SELECT user_id, username, email, role FROM users 
                 WHERE user_id = '$user_id'";
 
         $result = mysqli_query($conn,$sql);

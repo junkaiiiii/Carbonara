@@ -49,6 +49,7 @@ if ($method === "GET") {
             COALESCE(passenger_stats.total_co2_saved, 0) AS passenger_total_co2_saved,
             dl.status,
 
+            d.user_id,
             d.full_name,
             d.username,
             d.role,
@@ -130,6 +131,7 @@ if ($method === "GET") {
             $passenger_total_co2_saved,
             $passenger_license_status,
 
+            $driver_id,
             $driver_full_name,
             $driver_username,
             $driver_role,
@@ -149,6 +151,7 @@ if ($method === "GET") {
                 $response = [
                     'ride_id' => $ride_id,
                     'driver' => [
+                        'user_id' => $driver_id,
                         'name' => $driver_full_name,
                         'username' => $driver_username,
                         'role' => $driver_role,
@@ -181,7 +184,7 @@ if ($method === "GET") {
             // If passenger exists, push into list
             if ($passenger_id !== null) {
                 $response['passengers'][] = [
-                    'passenger_id' => $passenger_id,
+                    'user_id' => $passenger_id,
                     'name' => $passenger_full_name,
                     'username' => $passenger_username,
                     'role' => $passenger_role,

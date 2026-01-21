@@ -1,9 +1,10 @@
 import { createDriverPopUp } from "./app.js";
-import { getGoogleAPI, initMap, getRoute, drawRoute} from "./map_utils.js";  
+import { getGoogleAPI, initMap, getRoute, drawRoute } from "./map_utils.js";
 
 let states = {
     ride_id: null,
-    ride_details: null
+    ride_details: null,
+    session: null
 }
 let rideMap = null;
 
@@ -12,6 +13,7 @@ const routeSection = document.getElementById("routeSection");
 const driverSection = document.getElementById("driverSection");
 const passengersSection = document.getElementById("passengersSection");
 const impactSection = document.getElementById("impactSection");
+const completeRideBtn = document.getElementById('completeRideBtn');
 
 // general functions
 function getRideId() {
@@ -31,23 +33,41 @@ const highlightStars = (rating, stars) => {
 }
 
 // fetch ride details functions
+const fetchSession = () => {
+    return fetch('api/session_api.php?mode=general')
+        .then(response => response.json())
+        .then(data => {
+            states.session = data;
+            console.log("Session fetched:", data);
+        })
+        .catch(error => {
+            console.error("Error fetching session:", error);
+        });
+}
+
 function fetchRideDetails(id) {
     return fetch(`api/ride_api.php?id=${id}`)
         .then(res => res.json())
         .then(data => {
             console.log(data);
             states.ride_details = data;
+            states.ride_id = data.ride_id;
         })
+        .catch(error => {
+            console.error("Error fetching rides:", error);
+        });
 }
 
 // components
 function createRouteContainer(ride) {
+
+
     let div = document.createElement('div');
     div.innerHTML = `
         <div id="ride-details-container">
             <div id="route-header">
                 <img class="icons" src="assets/img/destination.png" alt="">
-                <p>Route</p>
+                <p>Route</p>         
             </div>
 
             <div id="map">
@@ -96,18 +116,18 @@ function createRouteContainer(ride) {
                     <h3 .bolded-title>Departure : </h3>
                     <p class="grey-content">${ride.departure_datetime}</p>
                 </div>
-            </div>
+            </div>    
         </div>
     `
 
     return div.firstElementChild;
 }
 
-async function initRouteMap(ride){
+async function initRouteMap(ride) {
     setTimeout(async () => {
         const mapElement = document.getElementById("map");
-        if (mapElement && !rideMap){
-            rideMap = await initMap('map', [ride.origin_lat, ride.origin_lon],13);
+        if (mapElement && !rideMap) {
+            rideMap = await initMap('map', [ride.origin_lat, ride.origin_lon], 13);
             const routeData = await getRoute([ride.origin_lon, ride.origin_lat], [ride.destination_lon, ride.destination_lat]);
             const drawObj = await drawRoute(rideMap, routeData, [ride.origin_lon, ride.origin_lat], [ride.destination_lon, ride.destination_lat]);
         }
@@ -163,7 +183,7 @@ function createDriverContainer(driver) {
 function createPassengersContainer(ride_details) {
     let passengersHTML = '<div id="passengersList">';
     if (ride_details.passengers.length > 0) {
-        ride_details.passengers.forEach((passenger,index) => {
+        ride_details.passengers.forEach((passenger, index) => {
             passengersHTML += `
             <div id="passenger-container">
                 <div id="left-section">
@@ -216,9 +236,9 @@ function createPassengersContainer(ride_details) {
     let el = div.firstElementChild;
 
     let viewProfileButtons = el.querySelectorAll("#viewProfileBtn");
-    viewProfileButtons.forEach((btn,index) => {
-        btn.addEventListener("click", ()=>{
-            const popUp = createDriverPopUp(ride_details.passengers[index],highlightStars);
+    viewProfileButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            const popUp = createDriverPopUp(ride_details.passengers[index], highlightStars);
             document.body.appendChild(popUp);
         })
     });
@@ -244,6 +264,148 @@ function createImpactStats(weight) {
     return wrapper.firstElementChild;
 }
 
+// Create rating popup function
+function createRatingPopup(riders) {
+    const overlay = document.createElement('div');
+    overlay.className = 'rating-overlay';
+
+    let ridersHTML = '';
+    riders.forEach((rider, index) => {
+        ridersHTML += `
+            <div class="rider-rating-card" data-rider-id="${rider.user_id}">
+                <div class="rider-info">
+                    <img class="rider-avatar" src="assets/img/man.png" alt="">
+                    <div class="rider-details">
+                        <h3>${rider.username}</h3>
+                        <p class="rider-role">${rider.role || 'Passenger'}</p>
+                    </div>
+                </div>
+                <div class="rating-stars" data-rider-index="${index}">
+                    ${[1, 2, 3, 4, 5].map(star => `
+                        <span class="star" data-value="${star}">★</span>
+                    `).join('')}
+                </div>
+                <textarea 
+                    class="rating-comment" 
+                    placeholder="Add a comment (optional)" 
+                    rows="2"
+                    data-rider-index="${index}"
+                ></textarea>
+            </div>
+        `;
+    });
+
+    overlay.innerHTML = `
+        <div class="rating-popup">
+            <div class="rating-header">
+                <h2>Rate Your Co-Riders</h2>
+                <button class="close-popup" id="closeRatingPopup">×</button>
+            </div>
+            <div class="rating-content">
+                <p class="rating-instruction">Please rate your experience with each rider</p>
+                ${ridersHTML}
+            </div>
+            <div class="rating-footer">
+                <button class="cancel-btn" id="cancelRating">Cancel</button>
+                <button class="submit-btn" id="submitRatings">Submit Ratings</button>
+            </div>
+        </div>
+    `;
+
+    // Store ratings
+    const ratings = riders.map(() => ({ rating: 0, comment: '' }));
+
+    // Add star rating functionality
+    const starContainers = overlay.querySelectorAll('.rating-stars');
+    starContainers.forEach(container => {
+        const stars = container.querySelectorAll('.star');
+        const riderIndex = parseInt(container.dataset.riderIndex);
+
+        stars.forEach(star => {
+            star.addEventListener('mouseenter', () => {
+                const value = parseInt(star.dataset.value);
+                highlightStarsTemp(stars, value);
+            });
+
+            star.addEventListener('click', () => {
+                const value = parseInt(star.dataset.value);
+                ratings[riderIndex].rating = value;
+                selectStars(stars, value);
+            });
+        });
+
+        container.addEventListener('mouseleave', () => {
+            const currentRating = ratings[riderIndex].rating;
+            selectStars(stars, currentRating);
+        });
+    });
+
+    // Add comment functionality
+    const commentBoxes = overlay.querySelectorAll('.rating-comment');
+    commentBoxes.forEach(box => {
+        const riderIndex = parseInt(box.dataset.riderIndex);
+        box.addEventListener('input', (e) => {
+            ratings[riderIndex].comment = e.target.value;
+        });
+    });
+
+    // Close popup
+    const closePopup = () => {
+        overlay.remove();
+    };
+
+    overlay.querySelector('#closeRatingPopup').addEventListener('click', closePopup);
+    overlay.querySelector('#cancelRating').addEventListener('click', closePopup);
+
+    // Submit ratings
+    overlay.querySelector('#submitRatings').addEventListener('click', async () => {
+        // Validate that all riders have been rated
+        const unratedRiders = ratings.filter(r => r.rating === 0);
+        if (unratedRiders.length > 0) {
+            alert('Please rate all co-riders before submitting');
+            return;
+        }
+
+        // Prepare ratings data
+        const ratingsData = riders.map((rider, index) => ({
+            user_id: rider.user_id,
+            ride_id: states.ride_id,
+            rating: ratings[index].rating,
+            comment: ratings[index].comment
+        }));
+
+        console.log(ratingsData);
+
+        
+    });
+
+    return overlay;
+}
+
+// Helper function to highlight stars temporarily on hover
+function highlightStarsTemp(stars, value) {
+    stars.forEach((star, index) => {
+        if (index < value) {
+            star.classList.add('highlighted-temp');
+            star.classList.remove('selected');
+        } else {
+            star.classList.remove('highlighted-temp', 'selected');
+        }
+    });
+}
+
+// Helper function to select stars permanently on click
+function selectStars(stars, value) {
+    stars.forEach((star, index) => {
+        star.classList.remove('highlighted-temp');
+        if (index < value) {
+            star.classList.add('selected');
+        } else {
+            star.classList.remove('selected');
+        }
+    });
+}
+
 
 
 // render functions
@@ -265,7 +427,7 @@ function renderDriverContainer() {
     driverSection.appendChild(driverContainer)
 }
 
-function renderPassengersContainer(){
+function renderPassengersContainer() {
     console.log("Rendering Passenger Container...");
     passengersSection.innerHTML = "";
 
@@ -273,16 +435,22 @@ function renderPassengersContainer(){
     passengersSection.appendChild(passengersContainer);
 }
 
-function renderImpactContainer(){
+function renderImpactContainer() {
     console.log("Rendering Impact Container...");
     impactSection.innerHTML = "";
 
     // quantity of people in the ride (include driver)
     const passengerAmount = states.ride_details.passengers.length + 1
-    const saved_co2 =  Number(states.ride_details.ride_distance) * passengerAmount * 0.187
+    const saved_co2 = Number(states.ride_details.ride_distance) * passengerAmount * 0.187
 
     const impactContainer = createImpactStats(saved_co2.toFixed(2));
     impactSection.appendChild(impactContainer);
+}
+
+function renderCompleteRideBtn() {
+    completeRideBtn.hidden = states.session.role.toLowerCase() !== "driver" && Date.parse(states.ride_details.departure_datetime) > Date.now;
+    console.log(states.session.role.toLowerCase() !== "driver");
+    console.log(Date.parse(states.ride_details.departure_datetime) > Date.now);
 }
 
 
@@ -295,6 +463,7 @@ async function init() {
 
     await getGoogleAPI();
     await Promise.all([
+        fetchSession(),
         fetchRideDetails(rideId)
     ]);
     console.log("Finished Fetching:", states);
@@ -304,6 +473,46 @@ async function init() {
     renderDriverContainer();
     renderPassengersContainer();
     renderImpactContainer();
+    renderCompleteRideBtn();
+
+    //event listener
+    completeRideBtn.addEventListener('click', () => {
+        // Gather all co-riders (driver + passengers, excluding current user)
+        const allRiders = [];
+
+        // Add driver if current user is not the driver
+        if (states.session.user_id !== states.ride_details.driver.user_id) {
+            allRiders.push({
+                user_id: states.ride_details.driver.user_id,
+                username: states.ride_details.driver.username,
+                role: 'Driver'
+            });
+        }
+
+        // Add passengers (excluding current user)
+        states.ride_details.passengers.forEach(passenger => {
+            if (passenger.username !== states.session.username) {
+                allRiders.push({
+                    user_id: passenger.user_id,
+                    username: passenger.username,
+                    role: 'Passenger'
+                });
+
+                console.log("Add Passenger");
+            }
+        });
+
+        if (allRiders.length === 0) {
+            // No co-riders to rate, just complete the ride
+            if (confirm('Complete this ride?')) {
+                completeRide();
+            }
+        } else {
+            // Show rating popup
+            const popup = createRatingPopup(allRiders);
+            document.body.appendChild(popup);
+        }
+    });
 }
 
 init();

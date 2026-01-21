@@ -26,7 +26,11 @@
     </div>
 
     <div class="route-section" id="routeSection">
+
+    
     </div>
+
+    
 
     <div class="driver-section" id="driverSection">
 
@@ -52,6 +56,11 @@
     <div id="impactSection">
 
     </div>
+    
+    <div style="margin: 20px;">
+        <button style="margin-top:20px" class="complete-ride-button" id="completeRideBtn" hidden>Complete Ride</button>
+    </div>
+    
 
 
     <?php include("user_navbar.html") ?>
