@@ -130,22 +130,6 @@
     margin: 0;
 }
 
-.btn-view-all {
-    font-size: 0.875rem;
-    color: #4caf50;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.btn-view-all:hover {
-    color: #45a049;
-    text-decoration: underline;
-}
-
-
 .activity-list {
     display: flex;
     flex-direction: column;

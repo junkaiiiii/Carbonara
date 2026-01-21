@@ -67,7 +67,6 @@
             <div class="info-card activity-card">
                 <div class="card-header">
                     <h3>Recent Activities</h3>
-                    <button class="btn-view-all">View All</button>
                 </div>
                 <div class="activity-list" id="activityList">
                     <div class="activity-item">
