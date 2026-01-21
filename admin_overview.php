@@ -23,7 +23,7 @@
             <div class="stat-card">
                 <div class="stat-header">
                     <h3>Total Users</h3>
-                    <img class="stat-icon" src="./img/total-users.png" alt="Users">
+                    <img class="stat-icon" src="assets/img/total-users.png" alt="Users">
                 </div>
                 <div class="stat-value" id="totalUsers">0</div>
             </div>
@@ -31,7 +31,7 @@
             <div class="stat-card">
                 <div class="stat-header">
                     <h3>Total Rides</h3>
-                    <img class="stat-icon" src="./img/total-rides.png" alt="Car">
+                    <img class="stat-icon" src="assets/img/total-rides.png" alt="Car">
                 </div>
                 <div class="stat-value" id="totalRides">0</div>
             </div>
@@ -39,7 +39,7 @@
             <div class="stat-card">
                 <div class="stat-header">
                     <h3>Active Rides</h3>
-                    <img class="stat-icon" src="./img/active-rides.png" alt="Active">
+                    <img class="stat-icon" src="assets/img/active-rides.png" alt="Active">
                 </div>
                 <div class="stat-value" id="activeRides">0</div>
             </div>
