@@ -421,6 +421,7 @@ function createSignUpPopup(){
                     <img class="close-popup-icon" src="assets/img/close.png">
                 </button>
                 <form class="sign-up-form" id="signUpForm">
+
                     <div>
                         <label>
                             Full Name

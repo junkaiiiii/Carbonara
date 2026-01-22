@@ -570,7 +570,7 @@
     border-radius: 10px;
     padding: 20px 25px;
     margin-top: 5px;
-
+    position: relative;
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -675,10 +675,10 @@
 
 .close-popup-button:hover{
     box-shadow: 0px 0px 5px var(--button-green);
-    cursor: pointer;
+    cursor: pointer;    
 }
 
 .close-popup-icon{
-    width: 10px;
     height: 10px;
+    width: 10px;
 }
