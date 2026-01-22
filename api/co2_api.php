@@ -56,7 +56,7 @@ elseif ($method === "POST") {
     }
 
 
-    $sql = "INSERT INTO `co2_log` (`co2_id`, `ride_id`, `user_id`, `co2_saved`, `log_at`) 
+    $sql = "INSERT INTO co2_log (co2_id, ride_id, user_id, co2_saved, log_at) 
     VALUES (?, ?, ?, ?, ?);
     ";
 

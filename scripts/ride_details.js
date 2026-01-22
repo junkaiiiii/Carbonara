@@ -407,7 +407,7 @@ async function createRatingPopup(riders) {
         // submit point logs and CO2
         // 0.187kg per km
         const co2Saved = states.session.role.toLowerCase() === "driver" ? Number(states.ride_details.ride_distance) * 0.187: Number(states.ride_details.ride_distance) * 0.187 * states.ride_details.passengers.length ;
-        const points = Math.floor(co2Saved);
+        const points = Math.floor(co2Saved* 5);
         const rideId = states.ride_id;
         
         const co2Response = await fetch("api/co2_api.php",{
@@ -420,19 +420,21 @@ async function createRatingPopup(riders) {
             })
         })
 
-        const data = await co2Response.json();
-        console.log(data);
+        const co2Data = await co2Response.json();
+        console.log(co2Data);
 
+        const pointResponse = await fetch("api/point_api.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                userId: states.session.user_id,
+                rideId : rideId,
+                points: points
+            })
+        })
 
-
-        // fetch("api/point_api.php", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({
-        //         rideId : rideId,
-        //         points: points
-        //     })
-        // })
+        const pointData = await pointResponse.json();
+        console.log(pointData);
     });
 
     return overlay;
