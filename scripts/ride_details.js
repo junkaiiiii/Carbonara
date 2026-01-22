@@ -410,14 +410,19 @@ async function createRatingPopup(riders) {
         const points = Math.floor(co2Saved);
         const rideId = states.ride_id;
         
-        await fetch("api/co2_api.php",{
+        const co2Response = await fetch("api/co2_api.php",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
+                userId: states.session.user_id,
                 rideId : rideId,
                 co2Saved: co2Saved
             })
         })
+
+        const data = await co2Response.json();
+        console.log(data);
+
 
 
         // fetch("api/point_api.php", {
