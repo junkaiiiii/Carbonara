@@ -60,12 +60,15 @@ function fetchRideDetails(id) {
 }
 
 function fetchReport(){
-    return fetch(`api/report_api.php`)
+    return fetch(`api/report_api.php?user_id=${states.session.user_id}&ride_id=${states.ride_details.ride_id}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            states.isReported = data;
+            console.log(data);
+            states.isReported = data['is_reported'];
         })
+        .catch(error => {
+            console.error("Error fetching report status:", error);
+        });
 }
 
 // components
@@ -520,7 +523,7 @@ async function init() {
     await getGoogleAPI();
     await Promise.all([
         fetchSession(),
-        fetchRideDetails(rideId)
+        fetchRideDetails(rideId),
     ]);
     console.log("Finished Fetching:", states);
 

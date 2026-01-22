@@ -8,8 +8,27 @@
     $method = $_SERVER["REQUEST_METHOD"];
 
     if ($method === "GET"){
-        $mode = $_GET["mode"] ?? "";
 
+        // check a user is reported or not
+        $user_id = $_GET['user_id'];
+        $ride_id = $_GET['ride_id'];
+        if (!empty($user_id) && !empty($ride_id)){
+            $sql = "SELECT report_id FROM reports
+                    WHERE reported_user_id = ? AND ride_id = ? AND status = 'Approved'";
+
+            $stmt = mysqli_prepare($conn,$sql);
+            mysqli_stmt_bind_param($stmt, 'ss', $user_id, $ride_id);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result && mysqli_num_rows($result)){
+                respond(['ride_id'=>$ride_id, 'user_id'=>$user_id, 'is_reported' => true],200);
+            }
+
+            respond(['ride_id'=>$ride_id, 'user_id'=>$user_id, 'is_reported' => false],200);
+        }
+
+        // Get all reports details
         $sql = "SELECT re.*, 
         reporter.full_name AS reporter_name, 
         reporter.email AS reporter_email, 
