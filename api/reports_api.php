@@ -10,8 +10,8 @@
     if ($method === "GET"){
 
         // check a user is reported or not
-        $user_id = $_GET['user_id'];
-        $ride_id = $_GET['ride_id'];
+        $user_id = $_GET['user_id'] ?? "";
+        $ride_id = $_GET['ride_id'] ?? "";
         if (!empty($user_id) && !empty($ride_id)){
             $sql = "SELECT report_id FROM reports
                     WHERE reported_user_id = ? AND ride_id = ? AND status = 'Approved'";

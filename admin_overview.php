@@ -46,7 +46,7 @@
                     <img class="stat-icon" src="assets/img/pending-licenses.png" alt="Pending-licenses">
                 </div>
                 <div class="stat-content">
-                    <p class="stat-label">Pending Licenses</p>
+                    <p class="stat-label">Total CO2</p>
                     <h2 class="stat-value" id="pedingLicenses">0</h2>
                 </div>
             </div>
