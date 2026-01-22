@@ -4,7 +4,8 @@ import { getGoogleAPI, initMap, getRoute, drawRoute } from "./map_utils.js";
 let states = {
     ride_id: null,
     ride_details: null,
-    session: null
+    session: null,
+    isReported: null
 }
 let rideMap = null;
 
@@ -56,6 +57,15 @@ function fetchRideDetails(id) {
         .catch(error => {
             console.error("Error fetching rides:", error);
         });
+}
+
+function fetchReport(){
+    return fetch(`api/report_api.php`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            states.isReported = data;
+        })
 }
 
 // components
@@ -390,6 +400,32 @@ function createRatingPopup(riders) {
             .then(data => {
                 console.log(data);
             })
+
+        // submit point logs and CO2
+        // 0.187kg per km
+
+
+        const co2Saved = states.session.role.toLowerCase() === "driver" ? Number(states.ride_details.ride_distance) * 0.187: Number(states.ride_details.ride_distance) * 0.187 * states.ride_details.passengers.length ;
+        const points = Math.floor(co2Saved);
+        const rideId = states.ride_id;
+
+        fetch("api/co2_api.php",{
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                rideId : rideId,
+                co2: co2Saved
+            })
+        })
+
+        fetch("api/point_api.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                rideId : rideId,
+                points: points
+            })
+        })
     });
 
     return overlay;

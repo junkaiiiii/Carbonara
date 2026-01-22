@@ -8,6 +8,8 @@
     $method = $_SERVER["REQUEST_METHOD"];
 
     if ($method === "GET"){
+        $mode = $_GET["mode"] ?? "";
+
         $sql = "SELECT re.*, 
         reporter.full_name AS reporter_name, 
         reporter.email AS reporter_email, 
