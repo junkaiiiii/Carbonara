@@ -60,7 +60,7 @@ function fetchRideDetails(id) {
 }
 
 function fetchReport(){
-    return fetch(`api/report_api.php?user_id=${states.session.user_id}&ride_id=${states.ride_details.ride_id}`)
+    return fetch(`api/reports_api.php?user_id=${states.session.user_id}&ride_id=${states.ride_details.ride_id}`)
         .then(res => res.json())
         .then(data => {
             console.log(data);
@@ -278,7 +278,7 @@ function createImpactStats(weight) {
 }
 
 // Create rating popup function
-function createRatingPopup(riders) {
+async function createRatingPopup(riders) {
     const overlay = document.createElement('div');
     overlay.className = 'rating-overlay';
 
@@ -390,7 +390,7 @@ function createRatingPopup(riders) {
         console.log(ratingsData);
 
         // submit ratings
-        fetch("api/rating_api.php", {
+        await fetch("api/rating_api.php", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -406,29 +406,28 @@ function createRatingPopup(riders) {
 
         // submit point logs and CO2
         // 0.187kg per km
-
-
         const co2Saved = states.session.role.toLowerCase() === "driver" ? Number(states.ride_details.ride_distance) * 0.187: Number(states.ride_details.ride_distance) * 0.187 * states.ride_details.passengers.length ;
         const points = Math.floor(co2Saved);
         const rideId = states.ride_id;
-
-        fetch("api/co2_api.php",{
+        
+        await fetch("api/co2_api.php",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 rideId : rideId,
-                co2: co2Saved
+                co2Saved: co2Saved
             })
         })
 
-        fetch("api/point_api.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                rideId : rideId,
-                points: points
-            })
-        })
+
+        // fetch("api/point_api.php", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //         rideId : rideId,
+        //         points: points
+        //     })
+        // })
     });
 
     return overlay;
@@ -501,8 +500,8 @@ function renderImpactContainer() {
 }
 
 function renderCompleteRideBtn() {
-    let hidden = (states.session.role.toLowerCase() !== "driver") || (Date.parse(states.ride_details.departure_datetime) > Date.now) || (states.ride_details.ride_status.toLowerCase() !== 'incomplete');
-    // hide button if (user not driver OR departure date is in future OR ride status is incomplete)
+    let hidden = (states.session.role.toLowerCase() !== "driver") || (Date.parse(states.ride_details.departure_datetime) > Date.now) || (states.ride_details.ride_status.toLowerCase() !== 'incomplete') || (states.isReported);
+    // hide button if (user not driver OR departure date is in future OR ride status is incomplete OR the user is reported )
     completeRideBtn.style.display = hidden ? "none" : "block";
 
     console.log(states.session.role.toLowerCase() !== "driver");
@@ -525,6 +524,9 @@ async function init() {
         fetchSession(),
         fetchRideDetails(rideId),
     ]);
+    // fetch is reported after user and ride are fetched
+    await fetchReport();
+
     console.log("Finished Fetching:", states);
 
     // render functions
@@ -535,7 +537,7 @@ async function init() {
     renderCompleteRideBtn();
 
     //event listener
-    completeRideBtn.addEventListener('click', () => {
+    completeRideBtn.addEventListener('click',async () => {
         // Gather all co-riders (driver + passengers, excluding current user)
         const allRiders = [];
 
@@ -568,7 +570,7 @@ async function init() {
             }
         } else {
             // Show rating popup
-            const popup = createRatingPopup(allRiders);
+            const popup =  await createRatingPopup(allRiders);
             document.body.appendChild(popup);
         }
     });
