@@ -1,0 +1,150 @@
+.rides-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.rides-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    border-color: #4caf50;
+    color: #4caf50;
+}
+
+.filter-btn.active {
+    background: #4caf50;
+    color: white;
+    border-color: #4caf50;
+}
+
+.rides-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+.ride-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ride-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.ride-route {
+    flex: 1;
+}
+
+.ride-route h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+}
+
+.ride-driver {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
+.ride-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+.status-badge.active {
+    background: #4caf50;
+    color: white;
+}
+
+.status-badge.completed {
+    background: #2196f3;
+    color: white;
+}
+
+.status-badge.cancelled {
+    background: #f44336;
+    color: white;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #f44336;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.delete-btn:hover {
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.ride-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.ride-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #666;
+    font-size: 1rem;
+}
+
+.ride-detail i {
+    width: 20px;
+    color: #999;
+}
+
+@media (max-width: 768px) {
+    .rides-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .rides-container {
+        padding: 1rem;
+    }
+    
+    .ride-route h3 {
+        font-size: 1.25rem;
+    }
+}

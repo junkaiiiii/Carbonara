@@ -13,7 +13,7 @@
 }
 
 h1{
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 
@@ -23,7 +23,7 @@ h1{
     box-shadow: var(--primary-box-shadow);
     border-radius: 10px;
     padding: 20px 25px;
-    margin-top: 30px;
+    margin-top: 5px;
 
     width: 400px;
     display: flex;
@@ -88,3 +88,29 @@ h1{
     color: var(--dark-green);
     text-decoration: none;
 }
+
+#gender{
+    margin-top: 15px;
+    margin-bottom: -10px;
+    /* font-weight: bold; */
+}
+
+.radio-group{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    
+
+    & label{
+        cursor: pointer;
+        width: 150px;
+        text-align: center;
+
+    }
+
+    & input{
+        border: solid 2px black;
+        height: 2vh;
+    }
+}
+

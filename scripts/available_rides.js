@@ -63,7 +63,7 @@ const fetchRides = () => {
 
             data.forEach(ride => {
                 // Check both joined and requested status
-                if (ride.joined === true || ride.request_status === "requested") {
+                if (ride.joined === true || ride.request_status === "requested" || ride.request_status === "approved") {
                     states.requested_rides.push(ride);
                 } else {
                     states.available_rides.push(ride);
@@ -250,7 +250,7 @@ const renderRequestedRides = () => {
 
     states.requested_rides.forEach(ride => {
 
-        const rideCard = ride.joined ? createJoinedRideCard(ride) : createRequestedRideCard(ride, handleCancelRequest);
+        const rideCard = ride.request_status === "approved" ? createJoinedRideCard(ride) : createRequestedRideCard(ride, handleCancelRequest);
         requestedRides.appendChild(rideCard);
     });
 }

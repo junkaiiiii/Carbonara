@@ -23,7 +23,7 @@ html{
     /* height: 8ch; */
     background-color: var(--green-bg-color);
     border-bottom: solid 1px black;
-    z-index: 1000;
+    z-index: 999;
 }
 
 .navBar{
@@ -100,8 +100,15 @@ html{
     width: 40px;
     cursor: pointer;
 }
+/* Add this to prevent horizontal scroll */
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
 
-.admin-dashboard{
+/* Fix the admin-dashboard */
+.admin-dashboard {
     z-index: 999;
     margin-top: 100px;
     background-color: rgb(241,244,250);
@@ -109,35 +116,30 @@ html{
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    /* align-items: center; */
-    padding: 3ch 0ch;
-    margin-left: 10vw;
+    padding: 3ch 10vw; /* Use padding instead of margin-left */
     flex-direction: column;    
 }
 
-.admin-container{
-    margin-left: 10px;
-
-    & p{
-        color: gray;
-        /* font-size: 30; */
-    }
+.admin-container {
+    /* Remove or reduce margin-left */
+    margin-left: 0;
 }
 
-.choices{
+.choices {
     margin-top: 4ch;
     display: flex;
     list-style: none;
     gap: 10px;
     align-items: center;
-    margin-left: -37px;
+    margin-left: -10px; 
+    padding-left: 0; 
 }
 .choices a {
     display: inline;
     text-decoration: none;
     color: black;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 15px;
     transition: color 0.2s ease;
     /* border: solid 2px black; */
     padding: 8px;

@@ -44,8 +44,43 @@ if ($method === "GET"){
     }
     
 }
-else {
-    respond('Invalid Request method');
+elseif ($method === "POST") {
+    $data = json_decode(file_get_contents("php://input"),true);
+    $required = ['userId','rideId','co2Saved'];
+
+    // validate data passed from front end
+    foreach ($required as $r){
+        if (empty($data[$r])){
+            respond(['error'=>'missing required field'],400);
+        }
+    }
+
+
+    $sql = "INSERT INTO co2_log (co2_id, ride_id, user_id, co2_saved, log_at) 
+    VALUES (?, ?, ?, ?, ?);
+    ";
+
+    $stmt = mysqli_prepare($conn, $sql);
+
+    $co2_id = generateId("CO");
+    $log_at = date('Y-m-d H:i:s');
+    mysqli_stmt_bind_param($stmt,"sssds", $co2_id, $data['rideId'], $data['userId'], $data['co2Saved'], $log_at);
+    $executed = mysqli_stmt_execute($stmt);
+
+    if (!$executed) {
+        respond([
+            "error" => "Database execution failed",
+            "details" => mysqli_stmt_error($stmt)
+        ], 500);
+    }
+
+    if (mysqli_stmt_affected_rows($stmt) === 0) {
+        respond([
+            "error" => "No new co2 data is inserted"
+        ], 404);
+    }
+
+    respond(["success" => "Successfully created a new co2 entry $co2_id"],200);
 }
 
 

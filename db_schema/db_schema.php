@@ -11,7 +11,7 @@ CREATE TABLE users (
     password_hash VARCHAR(255),
     role ENUM('Driver','Passenger','Admin'),
     status ENUM('Active', 'Banned') DEFAULT 'Active',
-    gender ENUM('Male', 'Female', 'Other'),
+    gender ENUM('Male', 'Female'),
     date_of_birth DATE,
     phone VARCHAR(15),
     profile_picture_url VARCHAR(255),
@@ -68,7 +68,6 @@ CREATE TABLE co2_log (
     ride_id VARCHAR(20),
     user_id VARCHAR(20),
     co2_saved DECIMAL(10,2),
-    distance_km DECIMAL(10,2),
     log_at DATETIME,
     FOREIGN KEY (ride_id) REFERENCES rides(ride_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
@@ -129,7 +128,7 @@ CREATE TABLE prizes (
     points_required INT,
     stock INT,
     prize_type ENUM('voucher','badge'),
-    prize_image_url VARCHAR(17)
+    prize_image_url VARCHAR(255)
 );";
 
 $sql .= "
@@ -148,7 +147,7 @@ CREATE TABLE driving_license (
     license_id VARCHAR(20) PRIMARY KEY,
     user_id VARCHAR(20),
     status ENUM('Pending','Approved','Rejected'),
-    license_image_url VARCHAR(20),
+    license_image_url VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );";
 
@@ -286,9 +285,9 @@ INSERT INTO `points_log` (`point_id`, `ride_id`, `user_id`, `points_earned`, `lo
 
 
 -- CO2 Log
-INSERT INTO `co2_log` (`co2_id`, `ride_id`, `user_id`, `co2_saved`, `distance_km`, `log_at`) VALUES
-('CO_692f14271e3fe', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 1.50, 5.10, '2025-10-31 10:05:00'),
-('CO_692f14271e40f', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 2.20, 10.20, '2025-11-01 08:35:00');
+INSERT INTO `co2_log` (`co2_id`, `ride_id`, `user_id`, `co2_saved`, `log_at`) VALUES
+('CO_692f14271e3fe', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 1.50, '2025-10-31 10:05:00'),
+('CO_692f14271e40f', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 2.20, '2025-11-01 08:35:00');
 
 
 

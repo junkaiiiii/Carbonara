@@ -495,6 +495,7 @@ const createMapPopUp = (ride, onRequest) => {
             confirmBtn.addEventListener("click", () => {
                 onRequest(ride.ride_id);
                 console.log("Ride confirmed!");
+                popUp.remove();
             });
         }
         catch(error){
@@ -673,11 +674,15 @@ function requestRide(roomCode, messageBox) {
             console.log('Requested ride:', data);
 
             if (data.success) {
-                messageBox.innerHTML = data.success;
+                messageBox.innerHTML = "Successfully Requested The Ride";
                 messageBox.style.color = "green";
+                messageBox.style.text = "bold";
+                messageBox.style.textAlign = "center";
             } else if (data.error) {
                 messageBox.innerHTML = data.error;
                 messageBox.style.color = "red";
+                messageBox.style.text = "bold";
+                messageBox.style.textAlign = "center";
             }
         })
         .catch(error => {

@@ -127,7 +127,10 @@ async function submitForm(event){
     let end = document.getElementById("end").value;
     console.log(start);
     console.log(end);
-    if(!start || !end) return alert("Enter a proper location please!");
+    if(!start || !end){
+        alert("Enter a proper location please!");
+        return;
+    } 
     //nominatim api
     try{
         let resStart = await geoCodeAddress(start);
@@ -381,7 +384,7 @@ async function handleCreateRide() {
         // 1. Validate route exists
         if (!states.rides || !states.rides.origin_lat) {
             alert("Please search for a route on the map first!");
-            return;
+            return false;
         }
 
         // 2. Validate Vehicle Selection
@@ -436,6 +439,8 @@ async function handleCreateRide() {
         // console.log(response.json());
         const result = await response.json();
         console.log("SERVER RESPONSE:", result);
+        
+        return result.success ? true : false;
         // if (response.ok) {
         //     alert("Ride Created Successfully!");
         //     window.location.reload(); 
@@ -518,11 +523,18 @@ function render(){
 
 }
 
-function setupCreateRideButton() {
+async function setupCreateRideButton() {
     const createRideBtn = document.querySelector(".infoContainer button");
     
     if (createRideBtn) {
-        createRideBtn.addEventListener("click", handleCreateRide);
+        createRideBtn.addEventListener("click",async ()=>{
+            const success = await handleCreateRide();
+            if ( success ){
+                window.history.go(-1);
+            };
+            
+        
+        });
     } else {
         console.error("error");
     }

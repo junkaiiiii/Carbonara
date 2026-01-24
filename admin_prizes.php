@@ -1,20 +1,34 @@
+<?php session_start() ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="admin_styles.css">
-    <link rel="stylesheet" href="styles/admin_prizes.css">    
+    <link rel="stylesheet" href="styles/admin_style.css">
+    <link rel="stylesheet" href="styles/admin_prizes.css"> 
+    <!-- <link rel="stylesheet" href="styles/style.css">    -->
 </head>
 <body>
+    <?php
+    include("user_header.php");
+    include("admin_header.html");
+    ?>
+    <div class="prizes-nav">
+        <!-- <ul> -->
+        <a href="#vouchers">Vouchers</a>
+        <a href="#badges">Badges</a>
+        <!-- </ul> -->
+    </div>
     <div class="spaced-between-container">
         <div id="voucher-title-container">
             <div id="icon-container">
                 <img class="small-icons" src="assets/img/voucher.png" alt="">
             </div>
 
-            <h3>Vouchers</h3>
+            <h3 id="vouchers">Vouchers</h3>
+            <button class="button" id="addVoucherBtn">Add Voucher</button>
         </div>
 
 
@@ -61,7 +75,8 @@
                 <img class="small-icons" src="assets/img/voucher.png" alt="">
             </div>
 
-            <h3>Badges</h3>
+            <h3 id="badges">Badges</h3>
+            <button class="button" id="addBadgeBtn">Add Badge</button>
         </div>
 
 
