@@ -38,6 +38,33 @@ if ($method === "GET"){
         respond($response,200);
     } elseif($mode === "detailed") {
         // return profile page detail
+        $sql = "SELECT u.user_id, u.username, u.full_name, u.gender, u.role, u.email, u.phone, u.profile_picture_url, 
+                COALESCE(user_stats.total_rides,0) AS total_rides,  
+                COALESCE(user_stats.rating,0) AS rating, 
+                COALESCE(user_stats.co2_saved,0) AS co2_saved 
+                FROM users u
+                LEFT JOIN 
+                (
+                    SELECT u2.user_id, COUNT(DISTINCT rp.participant_id) AS total_rides, AVG(rt.score) AS rating, SUM(co.co2_saved) AS co2_saved
+                    FROM users u2
+                    LEFT JOIN ride_participants rp ON u2.user_id = rp.user_id
+                    LEFT JOIN ratings rt ON u2.user_id = rt.rated_id
+                    LEFT JOIN co2_log co ON u2.user_id = co.user_id
+                    GROUP BY u2.user_id
+                )as user_stats ON u.user_id = user_stats.user_id
+                WHERE u.user_id = '$user_id';";
+        $result = mysqli_query($conn,$sql);
+
+        $response = [];
+
+        if ($result){
+            while ($row = mysqli_fetch_assoc($result)){
+                $response = $row;
+                break;
+            }
+        }
+        respond($response,200);
+        
     } else {
         respond (['error'=>'invalid mode'],400);
     }
