@@ -37,18 +37,16 @@ if ($method === "GET"){
             respond(['error'=>'missing required field'],400);
         }
     }
-    
 
-    $sql = "INSERT INTO points_log ('point_id', 'ride_id', 'user_id', 'points_earned', 'log_at') 
+    $sql = "INSERT INTO points_log (point_id, ride_id, user_id, points_earned, log_at) 
     VALUES (?, ?, ?, ?, ?);
     ";
 
     $stmt = mysqli_prepare($conn, $sql);
 
-    $point_id = generateId("PO");
+    $point_id = generateId("PO_");
     $log_at = date('Y-m-d H:i:s');
-    respond($data, $point_id, $log_at);
-    mysqli_stmt_bind_param($stmt,"sssis", $point_id, $data['rideId'], $data['userId'], intval($data['points']), $log_at);
+    mysqli_stmt_bind_param($stmt,"sssis", $point_id, $data['rideId'], $data['userId'], $data['points'], $log_at);
     $executed = mysqli_stmt_execute($stmt);
 
     if (!$executed) {

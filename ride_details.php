@@ -58,7 +58,8 @@
     </div>
     
     <div style="margin: 20px;">
-        <button style="margin-top:20px" class="complete-ride-button" id="completeRideBtn" hidden>Complete Ride</button>
+        <button  style="display:none; margin-top:20px;" class="complete-ride-button" id="completeRideBtn" hidden>Complete Ride</button>
+        <button style="display:none; margin-top:20px" class="complete-ride-button" id="rateUsersBtn" hidden>Rate Co-riders</button>
     </div>
     
 

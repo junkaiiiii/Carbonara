@@ -147,7 +147,6 @@ if ($method === "GET") {
 
             // If ride not added yet, initialize it
             if (!isset($response)) {
-
                 $response = [
                     'ride_id' => $ride_id,
                     'driver' => [
@@ -556,7 +555,7 @@ if ($method === "GET") {
     // }
 } elseif ($method === "PUT") {
     $data = json_decode(file_get_contents("php://input"), true);
-    $valid_status = array('Cancelled', 'Complete', 'Incomplete');
+    $valid_status = array('Cancelled', 'Completed', 'Incomplete');
 
     $ride_id = $data['ride_id'] ?? "";
     $status = in_array($data['status'], $valid_status) ? $data['status'] : "";

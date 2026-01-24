@@ -30,7 +30,7 @@ if ($method === "GET") {
                     r.redemption_id
 
                  FROM prizes p
-                LEFT JOIN redemption r ON p.prize_id = r.prize_id AND r.user_id= ? 
+                LEFT JOIN redemption r ON p.prize_id = r.prize_id AND r.user_id= ?
                 WHERE p.stock > 0;
                 ";
                 

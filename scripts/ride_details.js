@@ -15,6 +15,7 @@ const driverSection = document.getElementById("driverSection");
 const passengersSection = document.getElementById("passengersSection");
 const impactSection = document.getElementById("impactSection");
 const completeRideBtn = document.getElementById('completeRideBtn');
+const rateUsersBtn = document.getElementById("rateUsersBtn");
 
 // general functions
 function getRideId() {
@@ -59,7 +60,7 @@ function fetchRideDetails(id) {
         });
 }
 
-function fetchReport(){
+function fetchReport() {
     return fetch(`api/reports_api.php?user_id=${states.session.user_id}&ride_id=${states.ride_details.ride_id}`)
         .then(res => res.json())
         .then(data => {
@@ -69,6 +70,10 @@ function fetchReport(){
         .catch(error => {
             console.error("Error fetching report status:", error);
         });
+}
+
+function fetchIsRated(){
+    return
 }
 
 // components
@@ -300,7 +305,7 @@ async function createRatingPopup(riders) {
                 </div>
                 <textarea 
                     class="rating-comment" 
-                    placeholder="Add a comment (optional)" 
+                    placeholder="Make Report (Plese Report Carefully)" 
                     rows="2"
                     data-rider-index="${index}"
                 ></textarea>
@@ -387,7 +392,15 @@ async function createRatingPopup(riders) {
             score: ratings[index].rating
         }));
 
+        const reports = riders.map((rider, index) => ({
+            rater_id: states.session.user_id,
+            rated_id: rider.user_id,
+            ride_id: states.ride_id,
+            description:ratings[index].comment
+        })).filter(report => report.description);
+
         console.log(ratingsData);
+        console.log(reports);
 
         // submit ratings
         await fetch("api/rating_api.php", {
@@ -406,16 +419,16 @@ async function createRatingPopup(riders) {
 
         // submit point logs and CO2
         // 0.187kg per km
-        const co2Saved = states.session.role.toLowerCase() === "driver" ? Number(states.ride_details.ride_distance) * 0.187: Number(states.ride_details.ride_distance) * 0.187 * states.ride_details.passengers.length ;
-        const points = Math.floor(co2Saved* 5);
+        const co2Saved = states.session.role.toLowerCase() === "driver" ? Number(states.ride_details.ride_distance) * 0.187 : Number(states.ride_details.ride_distance) * 0.187 * states.ride_details.passengers.length;
+        const points = Math.floor(co2Saved * 5);
         const rideId = states.ride_id;
-        
-        const co2Response = await fetch("api/co2_api.php",{
+
+        const co2Response = await fetch("api/co2_api.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 userId: states.session.user_id,
-                rideId : rideId,
+                rideId: rideId,
                 co2Saved: co2Saved
             })
         })
@@ -428,14 +441,36 @@ async function createRatingPopup(riders) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 userId: states.session.user_id,
-                rideId : rideId,
+                rideId: rideId,
                 points: points
             })
         })
 
         const pointData = await pointResponse.json();
         console.log(pointData);
-    });
+
+        // submit report
+
+
+        // Complete ride if button pressed by driver
+        if (states.session.role.toLowerCase() === "driver") {
+            fetch("api/ride_api.php", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ride_id: rideId,
+                    status: "Completed"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+        }
+    }
+    );
 
     return overlay;
 }
@@ -510,12 +545,11 @@ function renderCompleteRideBtn() {
     let hidden = (states.session.role.toLowerCase() !== "driver") || (Date.parse(states.ride_details.departure_datetime) > Date.now) || (states.ride_details.ride_status.toLowerCase() !== 'incomplete') || (states.isReported);
     // hide button if (user not driver OR departure date is in future OR ride status is incomplete OR the user is reported )
     completeRideBtn.style.display = hidden ? "none" : "block";
+}
 
-    console.log(states.session.role.toLowerCase() !== "driver");
-    console.log(Date.parse(states.ride_details.departure_datetime) > Date.now);
-    console.log(states.ride_details.ride_status.toLowerCase() !== 'incomplete')
-
-    console.log((states.session.role.toLowerCase() !== "driver") || (Date.parse(states.ride_details.departure_datetime) > Date.now) || (states.ride_details.ride_status.toLowerCase() !== 'incomplete'));
+function renderRateUsersBtn() {
+    let show = (states.session.role.toLowerCase() === "passenger") && (states.ride_details.ride_status.toLowerCase() === "completed") && (!states.isReported)
+    rateUsersBtn.style.display = show ? "block" : "none";
 }
 
 
@@ -542,9 +576,10 @@ async function init() {
     renderPassengersContainer();
     renderImpactContainer();
     renderCompleteRideBtn();
+    renderRateUsersBtn();
 
     //event listener
-    completeRideBtn.addEventListener('click',async () => {
+    completeRideBtn.addEventListener('click', async () => {
         // Gather all co-riders (driver + passengers, excluding current user)
         const allRiders = [];
 
@@ -577,7 +612,45 @@ async function init() {
             }
         } else {
             // Show rating popup
-            const popup =  await createRatingPopup(allRiders);
+            const popup = await createRatingPopup(allRiders);
+            document.body.appendChild(popup);
+        }
+    });
+
+    rateUsersBtn.addEventListener('click', async () => {
+        // Gather all co-riders (driver + passengers, excluding current user)
+        const allRiders = [];
+
+        // Add driver if current user is not the driver
+        if (states.session.user_id !== states.ride_details.driver.user_id) {
+            allRiders.push({
+                user_id: states.ride_details.driver.user_id,
+                username: states.ride_details.driver.username,
+                role: 'Driver'
+            });
+        }
+
+        // Add passengers (excluding current user)
+        states.ride_details.passengers.forEach(passenger => {
+            if (passenger.username !== states.session.username) {
+                allRiders.push({
+                    user_id: passenger.user_id,
+                    username: passenger.username,
+                    role: 'Passenger'
+                });
+
+                console.log("Add Passenger");
+            }
+        });
+
+        if (allRiders.length === 0) {
+            // No co-riders to rate, just complete the ride
+            if (confirm('Complete this ride?')) {
+                completeRide();
+            }
+        } else {
+            // Show rating popup
+            const popup = await createRatingPopup(allRiders);
             document.body.appendChild(popup);
         }
     });
