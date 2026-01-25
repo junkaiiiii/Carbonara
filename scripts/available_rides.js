@@ -22,8 +22,6 @@ const requestedRides = document.getElementById('requestedRides');
 const messageBox = document.getElementById('messageBox');
 const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
 const showMoreButton = document.getElementById('showMoreBtn');
-
-
 // // Fetch all rides
 
 
@@ -33,6 +31,7 @@ const fetchTotalCo2 = () => {
         .then(response => response.json())
         .then(weight => {
             states.co2 = weight;
+            co2 = weight;
             console.log("CO2 fetched:", weight);
         })
         .catch(error => {
@@ -276,8 +275,6 @@ const renderRequestedRides = () => {
 
 //     });
 // };
-
-
 
 
 // getAllRides();

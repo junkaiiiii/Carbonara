@@ -7,7 +7,28 @@ include("../db_connect.php");
 
 $method = $_SERVER["REQUEST_METHOD"] ?? "";
 
-if ($method === "POST"){
+if ($method === "GET"){
+    $user_id = $_GET['user_id'] ?? '';
+    $ride_id= $_GET['ride_id'] ?? '';
+
+    if  (!empty($user_id) && !empty($ride_id)){
+        $sql = 'SELECT rating_id FROM ratings WHERE ride_id = ? AND rater_id = ?';
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'ss', $ride_id, $user_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+
+        if (mysqli_stmt_fetch($stmt)){
+            respond(true);
+        } else {
+            respond(false);
+        }
+    }
+
+    respond(['error'=>'invalid request']);
+
+    
+}else if ($method === "POST"){
     $data = json_decode(file_get_contents("php://input"),true);
     $required = ['rater_id', 'rated_id', 'ride_id', 'score'];
 

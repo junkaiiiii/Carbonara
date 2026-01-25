@@ -5,7 +5,8 @@ let states = {
     ride_id: null,
     ride_details: null,
     session: null,
-    isReported: null
+    isReported: null,
+    isRated: null
 }
 let rideMap = null;
 
@@ -73,7 +74,14 @@ function fetchReport() {
 }
 
 function fetchIsRated(){
-    return
+    return fetch(`api/rating_api.php?ride_id=${states.ride_details.ride_id}&user_id=${states.session.user_id}`)
+        .then(response => response.json())
+        .then(data => {
+            states.isRated = data;
+        })
+        .catch(error => {
+            console.error("Error fetching rating status:", error);
+        });
 }
 
 // components
@@ -548,7 +556,7 @@ function renderCompleteRideBtn() {
 }
 
 function renderRateUsersBtn() {
-    let show = (states.session.role.toLowerCase() === "passenger") && (states.ride_details.ride_status.toLowerCase() === "completed") && (!states.isReported)
+    let show = (states.session.role.toLowerCase() === "passenger") && (states.ride_details.ride_status.toLowerCase() === "completed") && (!states.isReported) && (states.isRated === false);
     rateUsersBtn.style.display = show ? "block" : "none";
 }
 
@@ -563,10 +571,12 @@ async function init() {
     await getGoogleAPI();
     await Promise.all([
         fetchSession(),
+        
         fetchRideDetails(rideId),
     ]);
     // fetch is reported after user and ride are fetched
     await fetchReport();
+    await fetchIsRated();
 
     console.log("Finished Fetching:", states);
 

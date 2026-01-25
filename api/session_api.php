@@ -64,7 +64,7 @@ if ($method === "GET"){
             }
         }
         respond($response,200);
-        
+
     } else {
         respond (['error'=>'invalid mode'],400);
     }
