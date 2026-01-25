@@ -23,8 +23,10 @@ CREATE TABLE vehicles (
     vehicle_id VARCHAR(20) PRIMARY KEY,
     driver_id VARCHAR(20),
     car_plate_number VARCHAR(8),
+    brand VARCHAR(50),               
+    manufactured_year YEAR,         
     color VARCHAR(30),
-    type VARCHAR(20),
+    type ENUM('Sedan', 'SUV', 'Hatchback', 'Coupe', 'Convertible', 'MPV', 'Pickup', 'Van', 'Motorcycle') NOT NULL, 
     registered_at DATETIME,
     FOREIGN KEY (driver_id) REFERENCES users(user_id)
 );";
@@ -192,9 +194,36 @@ INSERT INTO users (
  'Admin', 'Active', 'Male', '2000-09-09', '0126673456', NULL, '2025-12-02 17:09:17');
 
 -- Vehicles
-INSERT INTO `vehicles` (`vehicle_id`, `driver_id`, `car_plate_number`, `color`, `type`, `registered_at`) VALUES
-('VH_692f13de625f8', 'US_692f0e453c9dd', 'SJK732', 'Blue', 'Sedan', '2025-12-30 09:10:00'),
-('VH_692f13de62608', 'US_692f0e453c9dd', 'WXY123', 'Red', 'SUV', '2025-12-15 17:20:00');
+INSERT INTO `vehicles` (
+    `vehicle_id`, 
+    `driver_id`, 
+    `car_plate_number`, 
+    `brand`,              
+    `manufactured_year`,  
+    `color`, 
+    `type`, 
+    `registered_at`
+) VALUES
+(
+    'VH_692f13de625f8', 
+    'US_692f0e453c9dd', 
+    'SJK732', 
+    'Toyota',            
+    2020,              
+    'Blue', 
+    'Sedan',             
+    '2025-12-30 09:10:00'
+),
+(
+    'VH_692f13de62608', 
+    'US_692f0e453c9dd', 
+    'WXY123', 
+    'Honda',             
+    2023,                 
+    'Red', 
+    'SUV',                
+    '2025-12-15 17:20:00'
+);
 
 
 -- Rides
