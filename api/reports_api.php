@@ -85,12 +85,13 @@ if ($method === "GET") {
 
     foreach ($report_list as $report) {
         $sql = "INSERT INTO reports (report_id, ride_id, reporter_id, reported_user_id, description, status, created_at) VALUES
-        (?,?,?,?,?,'Pending',NOW())";
+        (?,?,?,?,?,'Pending',?)";
 
         $stmt = mysqli_prepare($conn, $sql);
 
         $report_id = generateId("RE");
-        mysqli_stmt_bind_param($stmt, 'sssss', $report_id, $report['ride_id'], $report['reporter_id'], $report['reported_user_id'], $report['description']);
+        $created_at = date('Y-m-d H:i:s');
+        mysqli_stmt_bind_param($stmt, 'ssssss', $report_id, $report['ride_id'], $report['reporter_id'], $report['reported_user_id'], $report['description'],$created_at);
 
         $executed = mysqli_stmt_execute($stmt);
 
