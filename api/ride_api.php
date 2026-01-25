@@ -423,6 +423,95 @@ if ($method === "GET") {
 
         respond($response, 200);
     }
+    elseif($mode==="all"){
+        $sql = "SELECT 
+        r.*, 
+        u.full_name, u.username, u.email, u.phone, u.profile_picture_url, u.role, u.status AS user_status, u.created_at AS user_created,
+        
+        req.status AS user_request_status,
+        
+        rp.participant_id AS participant_exists,
+
+        dl.status AS license_status,
+        
+        COALESCE(driver_stats.total_rides, 0) AS driver_total_rides,
+        COALESCE(driver_stats.avg_rating, 0) AS driver_avg_rating,
+        COALESCE(driver_stats.total_co2_saved, 0) AS driver_total_co2_saved
+
+    FROM rides r
+    INNER JOIN users u ON r.driver_id = u.user_id
+
+    -- check if current user requested this ride
+    LEFT JOIN requests req 
+        ON req.ride_id = r.ride_id 
+        AND req.passenger_id = '$sessionUserId'
+
+    -- check if current user already joined this ride
+    LEFT JOIN ride_participants rp 
+        ON rp.ride_id = r.ride_id 
+        AND rp.user_id = '$sessionUserId'
+
+    -- check driver license status
+    LEFT JOIN driving_license dl
+        ON r.driver_id = dl.user_id
+    
+    -- Driver statistics subquery
+    LEFT JOIN (
+        SELECT 
+            driver_id,
+            COUNT(DISTINCT r2.ride_id) AS total_rides,
+            AVG(rat.score) AS avg_rating,
+            SUM(co2.co2_saved) AS total_co2_saved
+        FROM rides r2
+        LEFT JOIN ratings rat ON rat.ride_id = r2.ride_id AND rat.rated_id = r2.driver_id
+        LEFT JOIN co2_log co2 ON co2.ride_id = r2.ride_id AND co2.user_id = r2.driver_id
+        GROUP BY driver_id
+    ) AS driver_stats ON driver_stats.driver_id = u.user_id
+    
+    ORDER BY r.created_at DESC";
+    $result = mysqli_query($conn, $sql);
+    $response = [];
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+
+            $ride = [
+                'ride_id' => $row['ride_id'],
+                'origin_text' => $row['origin_text'],
+                'origin_lat' => $row['origin_lat'],
+                'origin_lon' => $row['origin_lon'],
+                'destination_text' => $row['destination_text'],
+                'destination_lat' => $row['destination_lat'],
+                'destination_lon' => $row['destination_lon'],
+                'departure_datetime' => $row['departure_datetime'],
+                'available_seats' => $row['available_seats'],
+                'ride_distance' => $row['ride_distance'],
+                'ride_status' => $row['ride_status'],
+                'created_at' => $row['created_at'],
+                'room_code' => $row['room_code'],
+                "request_status"    => $row["user_request_status"] ?? null,
+                "joined"            => $row["participant_exists"] ? true : false,
+
+                "driver" => [
+                    "user_id"            => $row["driver_id"],
+                    "name"               => $row["full_name"],
+                    "username"           => $row["username"],
+                    "email"              => $row["email"],
+                    "phone"              => $row["phone"],
+                    "profile_picture"    => $row["profile_picture_url"],
+                    "role"               => $row["role"],
+                    "created_at"         => $row["user_created"],
+                    "total_rides"        => (int)$row["driver_total_rides"],
+                    "avg_rating"         => round((float)$row["driver_avg_rating"], 1),
+                    "total_co2_saved"    => round((float)$row["driver_total_co2_saved"], 2),
+                    "license_status"     => $row['license_status']
+                    ]
+                ];
+                $response[] = $ride;
+            }   
+        }
+        respond($response, 200);
+    }
 } elseif ($method === "POST") {
     // create new ride
     $data = json_decode(file_get_contents("php://input"), true);

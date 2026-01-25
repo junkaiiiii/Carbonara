@@ -47,7 +47,7 @@
                 </div>
                 <div class="stat-content">
                     <p class="stat-label">Total CO2</p>
-                    <h2 class="stat-value" id="pedingLicenses">0</h2>
+                    <h2 class="stat-value" id="totalCo2">0</h2>
                 </div>
             </div>
 

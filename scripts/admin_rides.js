@@ -1,42 +1,24 @@
-const ridesData = [
-    {
-        id: 1,
-        from: "Putra Heights",
-        to: "Bukit Jalil",
-        driver: "John Lee",
-        phone: "+6017-7493753",
-        datetime: "Jan 01, 2026, 6.00 AM",
-        seats: 3,
-        status: "active"
-    },
-    {
-        id: 2,
-        from: "Petaling Jaya",
-        to: "Bukit Jalil",
-        driver: "Azim",
-        phone: "+6011-32453753",
-        datetime: "Jan 11, 2026, 6.30 AM",
-        seats: 2,
-        status: "completed"
-    },
-    {
-        id: 3,
-        from: "Puchong",
-        to: "Bukit Jalil",
-        driver: "Sarah",
-        phone: "+6011-2342457",
-        datetime: "Dec 25, 2025, 3.00 PM",
-        seats: 1,
-        status: "cancelled"
-    }
-];
+let states = {
+    rides : []
+}
+
+async function fetchAvailableRides(){
+    await fetch("api/ride_api.php?mode=all")
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(ride => {
+            // console.log(ride);
+            states.rides.push(ride);
+            // console.log(states.rides);
+        });
+        renderRides('all');
+    })
+}
 
 function renderRides(filter = 'all') {
     const ridesGrid = document.getElementById('ridesGrid');
     
-    const filteredRides = filter === 'all' 
-        ? ridesData 
-        : ridesData.filter(ride => ride.status === filter);
+    const filteredRides = filter === 'all' ? states.rides : states.rides.filter(ride => ride.status === filter);
     
     ridesGrid.innerHTML = '';
     
@@ -46,22 +28,19 @@ function renderRides(filter = 'all') {
         rideCard.innerHTML = `
             <div class="ride-header">
                 <div class="ride-route">
-                    <h3>${ride.from} --> ${ride.to}</h3>
-                    <p class="ride-driver">Driver: ${ride.driver} (${ride.phone})</p>
+                    <h3>${ride.origin_text} --> ${ride.destination_text}</h3>
+                    <p class="ride-driver">Driver: ${ride.driver.name} (${ride.driver.phone})</p>
                 </div>
                 <div class="ride-actions">
-                    <span class="status-badge ${ride.status}">${ride.status}</span>
-                    <button class="delete-btn" onclick="deleteRide(${ride.id})">
-                        delete
-                    </button>
+                    <span class="status-badge ${ride.ride_status}">${ride.ride_status}</span>
                 </div>
             </div>
             <div class="ride-details">
                 <div class="ride-detail">
-                    <span>${ride.datetime}</span>
+                    <span>${ride.departure_datetime}</span>
                 </div>
                 <div class="ride-detail">
-                    <span>${ride.seats} seats available</span>
+                    <span>${ride.available_seats} seats available</span>
                 </div>
             </div>
         `;
@@ -98,3 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     renderRides('all');
 });
+
+async function init(){
+    await Promise.all([
+        fetchAvailableRides()
+    ]);
+
+    console.log(states.rides);
+}   
+init();
