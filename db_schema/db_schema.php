@@ -113,7 +113,7 @@ CREATE TABLE reports (
     ride_id VARCHAR(20),
     reporter_id VARCHAR(20),
     reported_user_id VARCHAR(20),
-    description VARCHAR(30),
+    description VARCHAR(255),
     status ENUM('Pending','Approved','Rejected'),
     created_at DATETIME,
     FOREIGN KEY (ride_id) REFERENCES rides(ride_id),
