@@ -401,8 +401,8 @@ async function createRatingPopup(riders) {
         }));
 
         const reports = riders.map((rider, index) => ({
-            rater_id: states.session.user_id,
-            rated_id: rider.user_id,
+            reporter_id: states.session.user_id,
+            reported_user_id: rider.user_id,
             ride_id: states.ride_id,
             description:ratings[index].comment
         })).filter(report => report.description);
@@ -424,6 +424,18 @@ async function createRatingPopup(riders) {
             .then(data => {
                 console.log(data);
             })
+
+        // submit report
+        const reportResponse = await fetch("api/reports_api.php",{
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                reports : reports
+            })
+        });
+
+        const reportData = await reportResponse.json();
+        console.log(reportData);
 
         // submit point logs and CO2
         // 0.187kg per km
@@ -457,8 +469,7 @@ async function createRatingPopup(riders) {
         const pointData = await pointResponse.json();
         console.log(pointData);
 
-        // submit report
-
+        
 
         // Complete ride if button pressed by driver
         if (states.session.role.toLowerCase() === "driver") {
@@ -476,9 +487,15 @@ async function createRatingPopup(riders) {
             .then(data => {
                 console.log(data);
             })
+
+            states.ride_details.ride_status = "Completed";
         }
+
+        states.isRated = true
+        closePopup();
     }
     );
+
 
     return overlay;
 }
@@ -571,12 +588,13 @@ async function init() {
     await getGoogleAPI();
     await Promise.all([
         fetchSession(),
-        
         fetchRideDetails(rideId),
     ]);
     // fetch is reported after user and ride are fetched
     await fetchReport();
     await fetchIsRated();
+
+    states.isRated = false;
 
     console.log("Finished Fetching:", states);
 

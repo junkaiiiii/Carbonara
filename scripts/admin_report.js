@@ -86,7 +86,7 @@ function render(){
 
 function approveReport(id, reportedEmail){
     fetch("api/reports_api.php", {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-Type":"application/json"
         },
@@ -120,7 +120,7 @@ function approveReport(id, reportedEmail){
         if (approvedReports.length > 2){
             console.log("am i here???");
             fetch("api/users_api.php", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type":"application/json"
                 },
@@ -137,7 +137,7 @@ function approveReport(id, reportedEmail){
 
 function rejectReport(id){
     fetch("api/reports_api.php", {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-Type":"application/json"
         },
@@ -168,7 +168,7 @@ function rejectReport(id){
 
 function unbanReport(id, reportedEmail){
     fetch("api/reports_api.php", {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-Type":"application/json"
         },
