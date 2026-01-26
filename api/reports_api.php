@@ -66,7 +66,9 @@ if ($method === "GET") {
 } elseif ($method === "POST") {
     $data = json_decode(file_get_contents('php://input'), true);
 
+
     $reports_list = $data['reports'] ?? null;
+
 
     if (!$reports_list || !is_array($reports_list)) {
         respond(['error' => 'No reports data found'], 400);
@@ -82,14 +84,13 @@ if ($method === "GET") {
         }
     }
 
+    $sql = "INSERT INTO reports (report_id, ride_id, reporter_id, reported_user_id, description, status, created_at) VALUES
+    (?,?,?,?,?,'Pending',?)";
 
-    foreach ($report_list as $report) {
-        $sql = "INSERT INTO reports (report_id, ride_id, reporter_id, reported_user_id, description, status, created_at) VALUES
-        (?,?,?,?,?,'Pending',?)";
-
-        $stmt = mysqli_prepare($conn, $sql);
-
-        $report_id = generateId("RE");
+    $stmt = mysqli_prepare($conn, $sql);
+    $response = [];
+    foreach ($reports_list as $report) {
+        $report_id = generateId("RE_");
         $created_at = date('Y-m-d H:i:s');
         mysqli_stmt_bind_param($stmt, 'ssssss', $report_id, $report['ride_id'], $report['reporter_id'], $report['reported_user_id'], $report['description'],$created_at);
 
@@ -107,9 +108,11 @@ if ($method === "GET") {
                 "error" => "No request updated (already cancelled or not found)"
             ], 404);
         }
+
+        $response[] = $report_id;
     }
 
-    respond(["success" => "Successfully created the reports"]);
+    respond(["success" => "Successfully created the reports", 'reports'=>$response]);
 } elseif ($method === "PUT") {
     $data = getJsonInput();
     //check if data is not empty
