@@ -42,9 +42,19 @@ function renderRides(filter = 'all') {
                 <div class="ride-detail">
                     <span>${ride.available_seats} seats available</span>
                 </div>
+                <div class="ride-detail-button">
+                    <a href="admin_ride_details.php?id=${ride.ride_id}" style="text-decoration:none;">
+                        <button class="view-ride-btn">View Ride</button>
+                    </a>
+                </div>
             </div>
         `;
         ridesGrid.appendChild(rideCard);
+        console.log(ride.ride_id);
+        // const viewRideBtn = rideCard.querySelector('.view-ride-btn');
+        // viewRideBtn.addEventListener('click', () => {
+        //     window.location.href = `admin_ride_details.php?ride_id=${ride.ride_id}`;
+        // });
     });
 }
 

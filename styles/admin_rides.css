@@ -117,18 +117,34 @@
 }
 
 .ride-details {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
 .ride-detail {
+
     display: flex;
     align-items: center;
     gap: 0.75rem;
     color: #666;
     font-size: 1rem;
 }
+.ride-detail-button {
+    position: absolute;
+    top: 30px;
+    right: 8px;
+
+    & button{
+        background-color: rgb(111, 223, 111);
+        border: none;
+        border-radius: 5px;
+        padding: 0.1rem 0.5rem;
+        cursor: pointer;
+    }
+}
+
 
 .ride-detail i {
     width: 20px;
