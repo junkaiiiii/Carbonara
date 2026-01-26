@@ -73,7 +73,7 @@ function fetchReport() {
         });
 }
 
-function fetchIsRated(){
+function fetchIsRated() {
     return fetch(`api/rating_api.php?ride_id=${states.ride_details.ride_id}&user_id=${states.session.user_id}`)
         .then(response => response.json())
         .then(data => {
@@ -404,7 +404,7 @@ async function createRatingPopup(riders) {
             reporter_id: states.session.user_id,
             reported_user_id: rider.user_id,
             ride_id: states.ride_id,
-            description:ratings[index].comment
+            description: ratings[index].comment
         })).filter(report => report.description);
 
         console.log(ratingsData);
@@ -423,19 +423,25 @@ async function createRatingPopup(riders) {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                states.isRated = true
             })
 
-        // submit report
-        const reportResponse = await fetch("api/reports_api.php",{
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                reports : reports
-            })
-        });
+        if (reports.length > 0) {
+            // submit report
+            const reportResponse = await fetch("api/reports_api.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    reports: reports
+                })
+            });
 
-        const reportData = await reportResponse.json();
-        console.log(reportData);
+            const reportData = await reportResponse.json();
+            console.log(reportData);
+        }
+
+
+
 
         // submit point logs and CO2
         // 0.187kg per km
@@ -469,7 +475,7 @@ async function createRatingPopup(riders) {
         const pointData = await pointResponse.json();
         console.log(pointData);
 
-        
+
 
         // Complete ride if button pressed by driver
         if (states.session.role.toLowerCase() === "driver") {
@@ -483,16 +489,18 @@ async function createRatingPopup(riders) {
                     status: "Completed"
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    states.ride_details.ride_status = "Completed";
+                })
 
-            states.ride_details.ride_status = "Completed";
         }
 
-        states.isRated = true
+
         closePopup();
+        renderRateUsersBtn();
+        renderCompleteRideBtn();
     }
     );
 
