@@ -22,6 +22,7 @@ const requestedRides = document.getElementById('requestedRides');
 const messageBox = document.getElementById('messageBox');
 const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
 const showMoreButton = document.getElementById('showMoreBtn');
+const dateInput = document.getElementById("dateInputField");
 // // Fetch all rides
 
 
@@ -149,23 +150,24 @@ const highlightStars = (rating, stars) => {
 const searchRides = () => {
     const originKeyword = originInput.value.toLowerCase().trim();
     const destinationKeyword = destinationInput.value.toLowerCase().trim();
+    const dateKeyword = dateInput.value; // Format: YYYY-MM-DD
+    console.log(dateKeyword)
 
     states.filtered_available_rides = states.available_rides.filter(ride => {
-        const originMatch =
-            !originKeyword ||
+        const originMatch = !originKeyword || 
             ride.origin_text.toLowerCase().includes(originKeyword);
 
-        const destinationMatch =
-            !destinationKeyword ||
+        const destinationMatch = !destinationKeyword || 
             ride.destination_text.toLowerCase().includes(destinationKeyword);
 
-        return originMatch && destinationMatch;
+        // Date Match Logic: Extract YYYY-MM-DD from departure_datetime
+        const rideDate = ride.departure_datetime.split(' ')[0];
+        const dateMatch = !dateKeyword || rideDate === dateKeyword;
+
+        return originMatch && destinationMatch && dateMatch;
     });
 
-
-
     states.visible_ride_count = 5;
-    console.log(states.filtered_available_rides, originKeyword, destinationKeyword);
     renderAvailableRides();
 }
 
@@ -302,6 +304,7 @@ const init = async () => {
     roomCodeSubmitButton.addEventListener('click', () => requestRide(document.getElementById('roomCodeField').value, messageBox));
     originInput.addEventListener("keyup", () => searchRides());
     destinationInput.addEventListener("keyup", () => searchRides());
+    dateInput.addEventListener("change", ()=> searchRides())
     showMoreButton.addEventListener("click", () => showMore());
     document.getElementById('start-scan').addEventListener('click', ()=> startScanning(onScanSuccess));
     document.getElementById('stop-scan').addEventListener('click',()=> stopScanning());

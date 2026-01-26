@@ -55,6 +55,7 @@ session_start();
         <div class="search-container">
             <input class="search-field field-1" id="originInputField" type="text" placeholder="From (e.g., Sri Petaling)">
             <input class="search-field" id="destinationInputField" type="text" placeholder="To (e.g.,Sunway University)">
+            <input class="search-field" id="dateInputField" type="date">
             <div class="qr-room-code-row">
                 <button class="start-scan-button" id="start-scan"">
                         <img class=" scanner-icon" src="assets/img/scan.png">
