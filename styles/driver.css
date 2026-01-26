@@ -832,7 +832,7 @@ hr{
     font-weight: 550;
 }
 
-#join-request-title h1{
+.title h1{
     font-size: 16px;
     padding: 20px;
 }

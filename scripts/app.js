@@ -407,7 +407,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
 
     acceptRequestButtons.forEach((button, index) => {
         button.addEventListener("click", () => {
-            onAcceptRequest(ride.ride_id, ride.passengers[index].username);
+            onAcceptRequest(ride.ride_id, ride.passengers[index].username, ride.passengers[index].passenger_id);
         })
     });
 

@@ -24,8 +24,8 @@ const highlightStars = (rating, stars) => {
 }
 
 // accept request
-const acceptRequest = (rideId, passengerUsername) => {
-
+const acceptRequest = (rideId, passengerUsername, passengerUserId) => {
+    console.log('DEBUG:', rideId, passengerUserId, passengerUsername);
     fetch("api/request_api.php", {
         method: "PUT",
         headers: {
@@ -35,6 +35,20 @@ const acceptRequest = (rideId, passengerUsername) => {
             ride_id: rideId,
             passenger_username: passengerUsername,
             status: "approved"
+        })
+    })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+
+    fetch("api/ride_participant_api.php",{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ride_id: rideId,
+            user_id: passengerUserId
         })
     })
         .then(res => res.json())
@@ -80,13 +94,13 @@ const cancelRide = (rideId) => {
 
 
 // handle accept request
-const handleAcceptRequest = (rideId, passengerUsername) => {
+const handleAcceptRequest = (rideId, passengerUsername, passengerUserId) => {
 
     console.log(rideId);
     const selectedRide = states.hostedRides[rideId];
 
     if (selectedRide) {
-        acceptRequest(rideId, passengerUsername);
+        acceptRequest(rideId, passengerUsername, passengerUserId);
 
         // find passenger from ride.passengers 
         const passengerIndex = selectedRide.passengers.findIndex(passenger => passenger.username === passengerUsername);

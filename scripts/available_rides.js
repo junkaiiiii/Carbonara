@@ -7,6 +7,7 @@ let states = {
     available_rides: null,
     visible_ride_count: 5,
     requested_rides: null,
+    completed_rides: null,
     co2: null,
     session: null
 };
@@ -23,6 +24,7 @@ const messageBox = document.getElementById('messageBox');
 const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
 const showMoreButton = document.getElementById('showMoreBtn');
 const dateInput = document.getElementById("dateInputField");
+const completedRides = document.getElementById("completedRides");
 // // Fetch all rides
 
 
@@ -32,7 +34,6 @@ const fetchTotalCo2 = () => {
         .then(response => response.json())
         .then(weight => {
             states.co2 = weight;
-            co2 = weight;
             console.log("CO2 fetched:", weight);
         })
         .catch(error => {
@@ -59,12 +60,19 @@ const fetchRides = () => {
             // 1. Reset all state arrays to be empty
             states.available_rides = [];
             states.requested_rides = [];
-            states.filtered_available_rides = []; 
+            states.filtered_available_rides = []; ;
+            states.completed_rides = [];
+            console.log(data);
 
             data.forEach(ride => {
                 // Check both joined and requested status
+                
                 if (ride.joined === true || ride.request_status === "requested" || ride.request_status === "approved") {
-                    states.requested_rides.push(ride);
+                    if (ride.ride_status.toLowerCase() === "completed" ){
+                        states.completed_rides.push(ride);
+                    } else {
+                        states.requested_rides.push(ride);
+                    }
                 } else {
                     states.available_rides.push(ride);
                 }
@@ -247,12 +255,38 @@ const renderAvailableRides = () => {
 const renderRequestedRides = () => {
     console.log("Rendering requested rides: ", states.requested_rides);
 
+    if (states.requested_rides.length === 0){
+        const requestTitle = document.getElementById('join-request-title');
+        if (requestTitle){
+            requestTitle.remove();
+        }
+    }
+
     requestedRides.innerHTML = '';
 
     states.requested_rides.forEach(ride => {
 
         const rideCard = ride.request_status === "approved" ? createJoinedRideCard(ride) : createRequestedRideCard(ride, handleCancelRequest);
         requestedRides.appendChild(rideCard);
+    });
+
+}
+
+const renderCompletedRides = () => {
+    console.log("Rendering requested rides: ", states.requested_rides);
+
+    if (states.completed_rides.length === 0){
+        const completedTitle = document.getElementById('completed-title');
+        if (completedTitle){
+            completedTitle.remove();
+        }
+    }
+
+    completedRides.innerHTML = '';
+
+    states.completed_rides.forEach(ride => {
+        const rideCard =  createJoinedRideCard(ride);
+        completedRides.appendChild(rideCard);
     });
 }
 // const render = () => {
@@ -298,6 +332,7 @@ const init = async () => {
     renderDriverMenu();
     renderAvailableRides();
     renderRequestedRides();
+    renderCompletedRides();
     highlightNavBar("home");
 
     // // add evenlisteners

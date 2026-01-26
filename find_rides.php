@@ -93,13 +93,19 @@ session_start();
     
 
 
-    <div id="join-request-title">
+    <div class="title" id="join-request-title">
         <h1>My Join Requests</h1>
     </div>
 
     <div id="requestedRides">
         
     </div>
+
+    <div class="title" id="completed-title">
+        <h1>Completed Ride</h1>
+    </div>
+
+    <div id="completedRides"></div>
 
 
     <?php
