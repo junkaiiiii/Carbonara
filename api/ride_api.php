@@ -578,10 +578,15 @@ if ($method === "GET") {
     }
 
     // generate unique room code
-    $room_code = rand(100000, 999999);
+    do {
+        $room_code = rand(100000, 999999);
+    
+        $check_sql = "SELECT ride_id FROM rides WHERE room_code = $room_code";
+        $result = mysqli_query($conn, $check_sql);
+    
+    } while ($result && mysqli_num_rows($result) > 0);
 
     // prepare data
-
     $ride_id = generateId("RD_");
     $driver_id = mysqli_real_escape_string($conn, $data["driver_id"]);
     $vehicle_id = mysqli_real_escape_string($conn, $data["vehicle_id"]);
