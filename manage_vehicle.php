@@ -67,11 +67,12 @@
 
             <div class="stick-left button-container">
                  <div>
-                    <button class="red button" onclick="closeEdit()">Close</button>
+                    <button class="red button" type="button" onclick="closeEdit()">Close</button>
+                    <!-- changes to type button because when the browser detects the button as type submit it automatically refreshes it  -->
                 </div> 
 
                 <div>
-                    <button id="confirmEditBtn" class="green button" type="submit">Save Changes</button>
+                    <button id="confirmEditBtn" class="green button" type="button">Save Changes</button>
                 </div>
             </div>
         </form>

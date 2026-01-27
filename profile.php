@@ -89,6 +89,8 @@
             </a>
         </div>
     </div>
+
+    <button onclick="window.location.href='manage_vehicle.php'">Manage Vehicle</button>
     
     <script type="module" src="scripts/profile.js"></script>
 </body>
