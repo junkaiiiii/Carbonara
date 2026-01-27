@@ -12,8 +12,8 @@
 </head>
 <body>
     <?php
-    include("user_header.php");
-    include("admin_header.html");
+    // include("user_header.php");
+    include("admin_header.php");
     ?>
     <div class="prizes-nav">
         <!-- <ul> -->

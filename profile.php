@@ -9,12 +9,24 @@
     <link rel="stylesheet" href="styles/driver.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/profile.css">
+    <!-- <link rel="stylesheet" href="styles/admin_style.css"> -->
+
 </head>
 <body>
-    <?php include("user_header.php"); ?>
+    <?php 
+    if ($_SESSION['role'] === 'Admin')
+        include("admin_header.php");
+    else{
+        include("user_header.php");
+    }
+        
+     ?>
 
     <?php 
-        include("user_navbar.html");
+        if ($_SESSION['role'] !== 'Admin'){
+            include("user_navbar.html");
+        }
+
     ?>
     <div class="container">
         <div class="profile-title">

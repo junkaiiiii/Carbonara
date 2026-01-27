@@ -16,7 +16,7 @@ const createUserCard = (userId, username, userRole, rating, dateJoined, co2Saved
                 <div class="card-pfp"><img class="pfp-card-img" src="${pfp_img}"></div>
                 <div class="card-name">
                     <h3 class="card-username">${username}</h3>
-                    <p class="card-rating">${rating}</p>
+                    <p class="card-rating">⭐${rating}</p>
                     <p class="card-date">Joined ${dateJoined}</p>
                 </div>
                 <div class="card-role">
@@ -101,7 +101,7 @@ function render(){
                 totalDistance += Number(co2.total_distance);
             })
         }
-        if (user.role === "Admin")return;
+        // if (user.role === "Admin") return;
         const card = createUserCard(user.user_id,
                                     user.username,
                                     user.role,
@@ -177,6 +177,7 @@ searchText.addEventListener("keyup", () => {
 });
 
 function getAllUsers(){
+    console.log("FETCHING USERS");
     fetch("api/users_api.php")
         .then(response => response.json())
         .then(data => {
@@ -283,7 +284,7 @@ const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2S
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                     </div>
-                    <button class='view-rating-btn'>View Ratings</button>
+                    
                 </div>
 
                 <div class="driver-popup-row-2">
@@ -328,15 +329,15 @@ const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2S
         popUp.remove();
     });
 
-    const viewRatingBtn = popUp.querySelector(".view-rating-btn");
-    viewRatingBtn.addEventListener("click", () => {
-        if (rating === 0)return;
-        const ratingPopUp = createRatingPopUp(userId)
+    // const viewRatingBtn = popUp.querySelector(".view-rating-btn");
+    // viewRatingBtn.addEventListener("click", () => {
+    //     if (rating === 0)return;
+    //     // const ratingPopUp = createRatingPopUp(userId)
 
-        popUp.querySelector(".driver-popup").classList.add("shifted");
+    //     // popUp.querySelector(".driver-popup").classList.add("shifted");
 
-        document.body.appendChild(ratingPopUp);
-    })
+    //     document.body.appendChild(ratingPopUp);
+    // })
 
 
     return popUp;
@@ -534,4 +535,5 @@ addAdminBtn.addEventListener("click", () => {
 //     console.log(user);
 // })
 getAllUsers();
-// console.log(states.users);
+// console.log("HELLO");
+

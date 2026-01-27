@@ -321,7 +321,7 @@
 .prizes-nav{
     display: flex;
     justify-content: flex-start;
-    margin-top: 3vh;
+    margin-top: 18vh;
     margin-left: 10vw;
     align-items: center;
     gap: 20px;
@@ -493,14 +493,14 @@
 
 
 
-    #logo{
+    /* #logo{
         width: 150px;
         margin-left: 40px;
     }
 
     #header-right-section{
         margin-right: 40px;
-    }
+    } */
 
     .voucher-container,
     .badge-container{

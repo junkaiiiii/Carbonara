@@ -46,7 +46,7 @@
 } */
 
 /* Fix the admin-dashboard */
-.admin-dashboard {
+/* .admin-dashboard {
     z-index: 999;
     margin-top: 100px;
     background-color: rgb(241,244,250);
@@ -54,8 +54,13 @@
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    padding: 3ch 10vw; /* Use padding instead of margin-left */
+    padding: 3ch 10vw; 
     flex-direction: column;    
+} */
+
+.admin-dashboard{
+    display: flex;
+
 }
 
 .admin-container {
@@ -64,12 +69,11 @@
 }
 
 .choices {
-    margin-top: 4ch;
     display: flex;
     list-style: none;
-    gap: 10px;
+    gap: 70px;
     align-items: center;
-    margin-left: -10px; 
+    /* margin-left: -10px;  */
     padding-left: 0; 
 }
 .choices a {
@@ -98,6 +102,7 @@
 #header-right-section{
     display: flex;
     align-items: center;
+    /* margin-right: 20px; */
 }
 
 #right-section{
@@ -113,10 +118,29 @@
     height: fit-content;
     padding: 10px;
     border-radius: 6px;
+
+    /* & h2{
+        font-size: 19.5px;
+
+    }
+
+    & p{
+        font-size: 10px;
+    } */
 }
 
-#user-container p, h2{
-    margin: 0;
+#user-container{
+    & p{
+        font-size: 10px;
+        /* margin: 0; */
+    }
+    
+    & h2{
+        font-size: 19.5px;
+        /* margin: 0; */
+    }
+    
+    
 }
 
 #user-container{
@@ -1571,14 +1595,14 @@ sup{
         margin-bottom: 100px;
     }
 
-    #logo{
+    /* #logo{
         width: 150px;
         margin-left: 40px;
     }
 
     #header-right-section{
         margin-right: 40px;
-    }
+    } */
 
     #accept-btn,
     #reject-btn{

@@ -12,14 +12,17 @@
                 rater.user_id AS rater_user_id,
                 rater.username AS rater_username,
                 rater.full_name AS rater_full_name,
-                rater.profile_picture_url AS rater_profile_picture 
+                rater.profile_picture_url AS rater_profile_picture,
+                r.ride_id, r.ride_distance 
                 FROM users u
                 LEFT JOIN ratings rt
                 ON u.user_id = rt.rated_id
                 LEFT JOIN users rater
                 ON rt.rater_id = rater.user_id
                 LEFT JOIN co2_log co2
-                ON u.user_id = co2.user_id";
+                ON u.user_id = co2.user_id
+                LEFT JOIN rides r
+                ON co2.ride_id = r.ride_id";
 
         $result = mysqli_query($conn, $sql);
         $response = [];
@@ -42,7 +45,8 @@
                     "profile_picture" => $row["profile_picture_url"],
                     "created_at" => $row["created_at"],
                     "ratings" => [],
-                    "co2_logs" => []
+                    "co2_logs" => [],
+                    "rides" => []
                     ];
                 }
 
@@ -66,8 +70,11 @@
                     $response[$uid]["co2_logs"][] = [
                         "co2_id" => $row["co2_id"],
                         "co2_saved" => $row["co2_saved"],
+                        "total_distance" => $row["ride_distance"]
                     ];
                 }
+
+
             } 
         }
         $response = array_values($response);

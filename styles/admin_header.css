@@ -107,7 +107,7 @@ body {
     padding: 0;
 }
 
-/* Fix the admin-dashboard */
+/* Fix the admin-dashboard
 .admin-dashboard {
     z-index: 999;
     margin-top: 100px;
@@ -116,8 +116,16 @@ body {
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    padding: 3ch 10vw; /* Use padding instead of margin-left */
+    padding: 3ch 10vw; 
     flex-direction: column;    
+} */
+
+.admin-dashboard1{
+    display: flex;
+    height: 100px;
+    align-items: center;
+    padding: 1ch 5vw;
+    margin-top: 100px;
 }
 
 .admin-container {
@@ -126,12 +134,11 @@ body {
 }
 
 .choices {
-    margin-top: 4ch;
     display: flex;
     list-style: none;
-    gap: 10px;
+    gap: 70px;
     align-items: center;
-    margin-left: -10px; 
+    /* margin-left: -10px;  */
     padding-left: 0; 
 }
 .choices a {

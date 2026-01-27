@@ -1,3 +1,7 @@
+html {
+    scrollbar-gutter: stable; /* Reserve space for scrollbar */
+}
+
 body{
   margin: 0px;
   font-family: Roboto, Bitcount Prop Single,  Arial;
@@ -156,7 +160,7 @@ h1{
     list-style: none;
     gap: 70px;
     align-items: center;
-    margin-left: -10px; 
+    /* margin-left: -10px;  */
     padding-left: 0; 
 }
 .choices a {
@@ -231,7 +235,7 @@ h1{
 #header-right-section{
     display: flex;
     align-items: center;
-    margin-right: 20px
+    /* margin-right: 20px */
 }
 
 #right-section{
@@ -261,9 +265,9 @@ h1{
     margin: 0;
 }
 
-#user-contianer h2{
+/* #user-container h2{
     font-size: 12px;
-}
+} */
 
 #user-container p{
     color: rgb(127, 127, 127);
