@@ -368,7 +368,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
             <div id="status">
                 <p id="statusbox">active</p>
                 ${ride.passengers.length > 0 ? (`
-                    <p id="pendingbox">${ride.passengers.length} pending request ${ride.passengers.length > 1 ? 's' : ''}</p>
+                    <p id="pendingbox">${ride.passengers.length} pending request${ride.passengers.length > 1 ? 's' : ''}</p>
                 `
 
         ) :

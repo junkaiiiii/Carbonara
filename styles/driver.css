@@ -1071,6 +1071,10 @@ hr{
     padding: 25px;
 }
 
+.leaflet-control-container{
+    position: absolute !important;
+}
+
 #map{
     height: 200px;
     background-color: grey;

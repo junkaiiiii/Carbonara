@@ -31,7 +31,7 @@ if ($method === "GET") {
             r.destination_lat,
             r.destination_lon,
             r.departure_datetime,
-            r.available_seats,
+            (r.available_seats -  COALESCE(taken_seats.taken_seats,0)) AS available_seats,
             r.ride_distance,
             r.ride_status,
             r.created_at,
@@ -93,7 +93,15 @@ if ($method === "GET") {
         ) AS driver_stats ON driver_stats.user_id = r.driver_id
         LEFT JOIN driving_license dl2 ON dl2.user_id = r.driver_id
 
-        WHERE r.ride_id = ? ;
+        LEFT JOIN (
+            SELECT 
+            	rp.ride_id,
+                COUNT(rp.ride_id) AS taken_seats
+            FROM ride_participants rp
+            GROUP BY rp.ride_id
+        ) AS taken_seats ON taken_seats.ride_id = r.ride_id
+
+        WHERE r.ride_id = ?;
         ";
 
         $stmt = mysqli_prepare($conn, $sql);
@@ -203,7 +211,21 @@ if ($method === "GET") {
 
     if ($mode === 'available') {
         $sql = "SELECT 
-            r.*, 
+            r.ride_id,
+            r.driver_id,
+            r.origin_text,
+            r.origin_lat,
+            r.origin_lon,
+            r.destination_text,
+            r.destination_lat,
+            r.destination_lon,
+            r.departure_datetime,
+            (r.available_seats -  COALESCE(taken_seats.taken_seats,0)) AS available_seats,
+            r.ride_distance,
+            r.ride_status,
+            r.created_at,
+            r.room_code,
+
             u.full_name, u.username, u.email, u.phone, u.profile_picture_url, u.role, u.status AS user_status, u.created_at AS user_created,
             
             req.status AS user_request_status,
@@ -245,6 +267,14 @@ if ($method === "GET") {
             LEFT JOIN co2_log co2 ON co2.ride_id = r2.ride_id AND co2.user_id = r2.driver_id
             GROUP BY driver_id
         ) AS driver_stats ON driver_stats.driver_id = u.user_id
+
+        LEFT JOIN (
+            SELECT 
+            	rp.ride_id,
+                COUNT(rp.ride_id) AS taken_seats
+            FROM ride_participants rp
+            GROUP BY rp.ride_id
+        ) AS taken_seats ON taken_seats.ride_id = r.ride_id
         
         WHERE u.user_id != '$sessionUserId'
         ";
@@ -308,11 +338,12 @@ if ($method === "GET") {
             r.destination_lat,
             r.destination_lon,
             r.departure_datetime,
-            r.available_seats,
+            (r.available_seats -  COALESCE(taken_seats.taken_seats,0)) AS available_seats,
             r.ride_distance,
             r.ride_status,
             r.created_at,
             r.room_code,
+
             re.passenger_id,
             u.username,
             u.full_name,
@@ -338,6 +369,14 @@ if ($method === "GET") {
             LEFT JOIN co2_log co2 ON co2.user_id = u2.user_id
             GROUP BY u2.user_id
         ) AS passenger_stats ON passenger_stats.user_id = re.passenger_id
+
+        LEFT JOIN (
+            SELECT 
+            	rp.ride_id,
+                COUNT(rp.ride_id) AS taken_seats
+            FROM ride_participants rp
+            GROUP BY rp.ride_id
+        ) AS taken_seats ON taken_seats.ride_id = r.ride_id
         WHERE r.driver_id = ?
         ORDER BY r.created_at DESC;
     ";

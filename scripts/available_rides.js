@@ -67,8 +67,11 @@ const fetchRides = () => {
             data.forEach(ride => {
                 // Check both joined and requested status
                 
-                if (ride.joined === true || ride.request_status === "requested" || ride.request_status === "approved") {
-                    if (ride.ride_status.toLowerCase() === "completed" ){
+                if (ride.request_status === "requested"){
+                    states.requested_rides.push(ride);
+                }
+                else if(ride.joined === true || ride.request_status === "approved") {
+                    if (ride.ride_status.toLowerCase() === "completed"){
                         states.completed_rides.push(ride);
                     } else {
                         states.requested_rides.push(ride);
