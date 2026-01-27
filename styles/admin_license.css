@@ -108,10 +108,12 @@ hr{
 }
 
 .approve{
-    background-color: var(--button-green);
+    background-color: rgb(16, 185, 129);
+    color: white;
 }
 .reject{
     background-color: rgb(250, 60, 60);
+    color: white;
 }
 
 .licenses-nav{

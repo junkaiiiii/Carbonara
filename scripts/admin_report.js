@@ -59,23 +59,25 @@ function render(){
         const reportOptions = (card.querySelector('.options'));  
         if (user.status === "Approved"){
             reportCard.style.border = "solid 2px";
-            reportCard.style.borderColor = 'rgb(38, 221, 38)';
+            reportCard.style.borderColor = 'rgb(16, 185, 129)';
             reportOptions.style.display = "none";
-            reportStatus.style.color = "rgb(38, 221, 38)";
-            reportStatus.style.borderColor = "rgb(38, 221, 38)";
+            reportStatus.style.color = "rgb(16, 185, 129)";
+            reportStatus.style.borderColor = "rgb(16, 185, 129)";
         }
         else if (user.status === "Pending"){
             reportCard.style.border = "solid 2px";
-            reportCard.style.borderColor = 'orange'; 
+            // reportCard.style.borderColor = 'yellow'; 
+            reportCard.style.borderImage = 'linear-gradient(to right, yellow, orange) 1';
+            reportCard.style.borderRadius = '10px';
 
         }
         else{
             reportCard.style.border = "solid 2px";
-            reportCard.style.borderColor = 'red';  
+            reportCard.style.borderColor = 'rgb(181, 23, 23)';  
             // card.querySelector(".approve").style.display = "none";
             reportOptions.style.display = "none";
-            reportStatus.style.color = "red";
-            reportStatus.style.borderColor = "red";
+            reportStatus.style.color = "rgb(181, 23, 23)";
+            reportStatus.style.borderColor = "rgb(181, 23, 23)";
         }
         // reportCard.style.boxShadow = "var(--box-shadow)";
         count += 1;

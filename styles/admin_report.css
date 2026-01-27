@@ -66,9 +66,11 @@
 }
 
 .user-card{
+    background-color: white;
     display: flex;
     flex-direction: column;
-    border: solid 2px black;
+    border: solid 2px transparent;
+    /* border-image: linear-gradient(to right, #ff7e5f, #feb47b) 1; */
     box-shadow: var(--primary-box-shadow);
     padding: 2rem 1.5rem;
     border-radius: 10px;
@@ -236,6 +238,7 @@
         padding: 2rem 1.5rem;
         border-radius: 10px;
         max-width: 80vw;
+        background-color: white;
 
     }
     .status{

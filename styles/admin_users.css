@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     padding: 5px;
-    margin-top: 4vh;
+    margin-top: 20vh;
     height: 5ch;
     width: 38vw;
     border: solid gray 2px;
@@ -23,7 +23,6 @@
     position: absolute;
     top: 9px;
     left: 5px;
-
 }
 
 .search-bar img{
