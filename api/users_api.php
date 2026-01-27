@@ -66,7 +66,6 @@
                     $response[$uid]["co2_logs"][] = [
                         "co2_id" => $row["co2_id"],
                         "co2_saved" => $row["co2_saved"],
-                        "total_distance" => $row["distance_km"]
                     ];
                 }
             } 
