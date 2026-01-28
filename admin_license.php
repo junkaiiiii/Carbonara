@@ -9,6 +9,7 @@
     <title>Licence</title>
     <linK rel="stylesheet" href="styles/admin_style.css">
     <link rel="stylesheet" href="styles/admin_license.css">
+    <link rel="stylesheet" href="styles/admin_header.css"> 
     <!-- <link rel="stylesheet" href="styles/driver.css"> -->
 </head>
 <body>

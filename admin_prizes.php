@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles/admin_style.css">
     <link rel="stylesheet" href="styles/admin_prizes.css"> 
+    <link rel="stylesheet" href="styles/admin_header.css"> 
     <!-- <link rel="stylesheet" href="styles/style.css">    -->
 </head>
 <body>
