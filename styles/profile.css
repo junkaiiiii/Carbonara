@@ -156,3 +156,14 @@ body {
     gap: 10px;
     text-decoration: none;
 }
+
+.button{
+    padding: 12px 24px;
+    width: 100%;
+    background: none;
+    background-color: rgb(16, 185, 129);
+    color: white;
+    font-weight: 550;
+    border: none;
+    border-radius: 12px;   
+}

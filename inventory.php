@@ -17,7 +17,7 @@
         <h2>Inventory</h2>
         <div id="points-container">
             <img class="small-icons" src="assets/img/coin.png" alt="">
-            <p class="green-font">7000 points</p>
+            <p class="green-font">Loading points</p>
         </div>
     </div>
 
@@ -33,78 +33,14 @@
 
     <div id="voucher-list"></div>
 
-        <!-- <div id="rewards-filter-container">
-                <img class="small-icons" src="assets/img/filter.png" alt="">
-        </div>
-    </div>
-
-    <div class="voucher-container">
-        <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
-
-        <div class="tng-voucher-content">
-            <div class="spaced-between">
-                <p>Touch 'n Go RM5 Voucher</p>
-                <P id="active" class="active-status">Active</P>
-            </div>
-
-            <div class="group">
-                <p class="green-font">Redeemed on 24/12/2025</p>
-            </div>
-        </div>
-
-        <button class="button">
-                Reveal Code
-        </button>
-    </div> -->
-
-    <!-- <div class="voucher-container">
-        <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
-
-        <div class="tng-voucher-content">
-            <div class="spaced-between">
-                <p>Touch 'n Go RM5 Voucher</p>
-                <P id="expired" class="active-status">Expired</P>
-            </div>
-
-            <div class="group">
-                <p class="green-font">Redeemed on 17/12/2025</p>
-            </div>
-        </div>
-
-        <button class="button">
-                Reveal Code
-        </button>
-    </div>
-
-    <div class="voucher-container">
-        <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
-
-        <div class="tng-voucher-content">
-            <div class="spaced-between">
-                <p>Touch 'n Go RM5 Voucher</p>
-                <P id="used" class="active-status">Used</P>
-            </div>
-
-            <div class="group">
-                <p class="green-font">Used on 9/12/2025</p>
-            </div>
-        </div>
-
-        <button class="grey-button">
-                XXXX-XXXX-XXXX-XXXX
-        </button>
-    </div>
-
     <div class="center">
-        <button class="load-more-button">
-            Load more
-        </button>
-    </div> -->
+        <button id="loadVoucherBtn" class="load-more-button">Load more</button>
+    </div>
 
     <div class="spaced-between-container">
         <div id="voucher-title-container">
             <div id="icon-container">
-                <img class="small-icons" src="assets/img/voucher.png" alt="">
+                <img class="small-icons" src="assets/img/badge1.png" alt="">
             </div>
 
             <h3>Badges</h3>
@@ -113,56 +49,13 @@
 
     <div id="badge-list"></div>
 
-        <!-- <div id="rewards-filter-container">
-                <img class="small-icons" src="assets/img/filter.png" alt="">
-        </div>
+    <div class="center">
+        <button id="loadBadgeBtn" class="load-more-button">Load more</button>
     </div>
 
-    <div class="badge-container">
-        <div class="center">
-            <img class="badge-img-size" src="assets/img/badge1.png" alt="">
-        </div>
-
-        <div class="badge-content">
-            <p>Bronze CO2 Reducer Badge</p>
-
-            <div class="group">
-                <p class="green-font">Obtained on 22/11/2025</p>
-            </div>
-        </div>
-
-        <button class="button">
-            View Badge
-        </button>
-    </div>
-
-    <div class="badge-container">
-        <div class="center">
-            <img class="badge-img-size" src="assets/img/badge1.png" alt="">
-        </div>
-
-        <div class="badge-content">
-            <p>Bronze CO2 Reducer Badge</p>
-
-            <div class="group">
-                <p class="green-font">Obtained on 20/11/2025</p>
-            </div>
-        </div>
-
-        <button class="button">
-                View Badge
-        </button>
-    </div> -->
-    
     <?php 
         include("user_navbar.html");
     ?>
-
-    <div class="center">
-        <button class="load-more-button">
-            Load more
-        </button>
-    </div>
 
     <div class="margin">
         <!-- empty space -->
@@ -173,7 +66,7 @@
     <div class="badge-popup" id="badge_Popup">
         <div class="popup-container">
             <h2 class="hugee">Badge</h2>
-            <div class="badge-container">
+            <div class="badge-preview">
                 <img class="badge-popup-img" src="assets/img/badge1.png" alt="">
                 <div class="shine"></div>
             </div>
@@ -187,10 +80,20 @@
     <button onclick="openVoucher()">Vouchers</button>
 
     <script>
-        
-        function openBadge(){
+
+        function openBadge(img, title){
+
+            document.querySelector('.badge-popup-img').src = `assets/img/${img}`;
+            document.querySelector('.hugee').innerText= title;
+
             document.getElementById('overlay').classList.add('show');
             document.getElementById('badge_Popup').classList.add('show');
+
+            const shine = document.querySelector('.shine');
+            shine.style.left = '-150%';
+            setTimeout(() => {
+                shine.style.left = '150%';
+            }, 50);
         }
 
         function closeBadge(){
@@ -199,7 +102,7 @@
         }
 
         function openVoucher(){
-           const qrPopup = createQrPopUp("nigga");
+           const qrPopup = createQrPopUp("");
            document.body.appendChild(qrPopup); 
         }
 

@@ -88,9 +88,9 @@
                 Upload Driving License
             </a>
         </div>
-    </div>
 
-    <button onclick="window.location.href='manage_vehicle.php'">Manage Vehicle</button>
+        <button class="button" onclick="window.location.href='manage_vehicle.php'">Manage Vehicle</button>
+    </div>
     
     <script type="module" src="scripts/profile.js"></script>
 </body>

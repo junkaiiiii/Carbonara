@@ -23,9 +23,9 @@
 
         if($mode === "all"){
             $sql = "SELECT p.prize_id, p.prize_name, p.prize_type, p.prize_image_url, r.redemption_id, r.redeemed_at
-            FROM prizes p INNER JOIN redemption r ON p.prize_id = r.prize_id
-            WHERE r user_id = ?
-            ORDER BY r.redeemed_at DESC";
+                    FROM prizes p INNER JOIN redemption r ON p.prize_id = r.prize_id
+                    WHERE r.user_id = ?
+                    ORDER BY r.redeemed_at DESC";
         }
 
         $stmt = mysqli_prepare($conn, $sql);
@@ -39,7 +39,7 @@
                 "prizes_id"         => $row['prize_id'],
                 "prize_name"        => $row['prize_name'],
                 "prize_type"        => $row['prize_type'],
-                "prize_iamge_url"   => $row['prize_image_url'],
+                "prize_image_url"   => $row['prize_image_url'],
                 "redemption_id"     => $row['redemption_id'],
                 "redeemed_at"       => $row['redeemed_at']
             ];

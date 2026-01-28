@@ -9,11 +9,11 @@ let states = {
     points: 0
 };
 
-let voucherSection = document.getElementById("voucherSection");
+let voucherSection = document.getElementById("voucher-list");
 let loadVoucherBtn = document.getElementById("loadVoucherBtn");
-let badgeSection = document.getElementById("badgeSection");
+let badgeSection = document.getElementById("badge-list");
 let loadBadgeBtn = document.getElementById("loadBadgeBtn");
-let point = document.getElementById("point");
+let point = document.getElementById("points-container");
 
 async function fetchRewards(){
     console.log("Fetching rewards...");
@@ -47,7 +47,7 @@ async function fetchPoints(){
 
         console.log("Received data: ", data);
 
-        states.points = data.points;
+        states.points = (typeof data === 'object' && data !== null) ? data.points : data;
     }
     catch(error){
         console.error("Error fetching points: ", error);
@@ -55,12 +55,78 @@ async function fetchPoints(){
     }
 }
 
+function createBadgeCard(item){
+    const div = document.createElement('div');
+    
+    const obtainedDate = new Date(item.redeemed_at).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+
+    div.innerHTML = `
+        <div class="badge-container">
+            <div class="center">
+                <img class="badge-img-size" src="assets/img/badge1.png" alt="Badge">
+            </div>
+
+            <div class="badge-content">
+                <p>${item.prize_name}</p>
+
+                <div class="group">
+                    <p class="green-font">Obtained on ${obtainedDate}</p>
+                </div>
+            </div>
+
+            <button class="button" id="viewBadgeBtn" onclick="openBadge('${item.prize_image_url}', '${item.prize_name}')">
+                View Badge
+            </button>
+        </div>
+    `;
+
+    return div.firstElementChild;
+}
+
+function createRewardCard(item){
+    const div = document.createElement('div');
+
+    const redeemedDate = new Date(item.redeemed_at).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric'
+    });
+
+    div.innerHTML = `
+        <div class="voucher-container">
+            <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="Voucher">
+
+            <div class="tng-voucher-content">
+                <div class="spaced-between">
+                    <p>${item.prize_name}</p>
+                    <P id="used" class="active-status">Active</P>
+                </div>
+
+                <div class="group">
+                    <p class="green-font">Redeemed on ${redeemedDate}</p>
+                </div>
+            </div>
+
+            <button class="button" onclick="openVoucherPopup('${item.prize_name}', 'VOUCHER-CODE-HERE')">
+                Reveal Code
+            </button>
+        </div>
+    `;
+
+    return div.firstElementChild;
+}
+
 function renderVouchers(){
     console.log("Rendering vouchers: ", states.vouchers);
+    if(!voucherSection) return;
     voucherSection.innerHTML = '';
 
     for (let i = 0; i < Math.min(states.vouchers.length, states.visible_voucher_count); i++){
-        const voucherCard = createRewardCard();
+        const voucherCard = createRewardCard(states.vouchers[i]);
         voucherSection.appendChild(voucherCard);
     }
 
@@ -70,11 +136,12 @@ function renderVouchers(){
 
 function renderBadges(){
     console.log("Rendering badges: ", states.badges);
+    if(!badgeSection) return;
     badgeSection.innerHTML = '';
 
     for (let i = 0; i < Math.min(states.badges.length, states.visible_badge_count); i++) {
 
-        const badgeCard = createRewardCard(states.badges[i], createConfirmationPopUp, confirmRedeem);
+        const badgeCard = createBadgeCard(states.badges[i]);
         badgeSection.appendChild(badgeCard);
     }
 
@@ -83,7 +150,12 @@ function renderBadges(){
 
 function renderPoints(){
     console.log("Rendering points: ", states.points);
-    points.innerHTML = `${states.points} points`;
+
+    if(point){
+        point.innerHTML = `<img class="small-icons" src="assets/img/coin.png" alt="">
+                            <p class="green-font">${states.points} points</p>`
+                            ;
+    }
 }
 
 async function init() {
