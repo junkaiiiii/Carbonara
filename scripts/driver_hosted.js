@@ -236,6 +236,12 @@ const renderDriverMenu = () => {
 const renderHostedRides = () => {
     console.log("Rendering Hosted Rides")
     hostedRidesSection.innerHTML = '';
+    if (states.hostedRides.length < 1){
+        hostedRidesSection.innerHTML = `
+        <div style="margin-top:100px; display:flex; justify-content:center; font-size:25px;">
+            <h1>No Hosted Ride...</h1>
+        <div>`;
+    }
 
     for (const [key, value] of Object.entries(states.hostedRides)) {
         const hostedRide = createHostedRideCard(value, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest, handleCancelRide, createQrPopUp);

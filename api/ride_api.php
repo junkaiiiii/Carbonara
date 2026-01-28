@@ -380,7 +380,7 @@ if ($method === "GET") {
         WHERE r.driver_id = ?
         ORDER BY r.created_at DESC;
     ";
-
+    
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $sessionUserId);
         mysqli_stmt_execute($stmt);
@@ -417,6 +417,7 @@ if ($method === "GET") {
             $passenger_total_co2_saved
         );
 
+        $response = [];
         while (mysqli_stmt_fetch($stmt)) {
 
             // If ride not added yet, initialize it
