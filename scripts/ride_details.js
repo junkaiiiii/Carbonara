@@ -174,7 +174,7 @@ function createDriverContainer(driver) {
             <div id="driver-content">
                 <div id="driver-info">
                     <div id="left-section">
-                        <img class="driver-profile-picture" src="assets/img/man.png" alt="">
+                        <img class="driver-profile-picture" src="${driver.profile_picture_url}" alt="">
                         <div id="column">
                             <h3>${driver.username}</h3>
                             <p>⭐ ${driver.avg_rating} | ${driver.total_rides} rides</p>
@@ -213,7 +213,7 @@ function createPassengersContainer(ride_details) {
             passengersHTML += `
             <div id="passenger-container">
                 <div id="left-section">
-                    <img class="passenger-profile-picture" src="assets/img/man.png" alt="">
+                    <img class="passenger-profile-picture" src="${passenger.profile_picture_url}" alt="">
                     <div id="column">
                         <h3>${passenger.username}</h3>
                         <p>⭐ ${passenger.avg_rating}</p>

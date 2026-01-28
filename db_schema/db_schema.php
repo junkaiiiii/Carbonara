@@ -159,39 +159,12 @@ $sql .= "
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- Users
-INSERT INTO users (
-    user_id,
-    full_name,
-    username,
-    email,
-    password_hash,
-    role,
-    status,
-    gender,
-    date_of_birth,
-    phone,
-    profile_picture_url,
-    created_at
-) VALUES
-('US_692f0e453c9dd', 'Eng Hong Xuan', 'enghongxuan', 'eng@example.com',
- '$2y$10\$NCF.XdYUNhz8tmiTVPQ.EuFsS82VuPpYiN90VeKQv4xj2jMl9cA5i',
- 'Driver', 'Active', 'Male', '2001-05-12', '012345678', NULL, '2025-12-02 17:05:25'),
-
-('US_692f0e82a7fb7', 'Tan Jian Shen', 'tanjianshen', 'tan@example.com',
- '$2y$10\$jqw4A6f/PoQ07vgxeFmlz.RUXLvIBkRJ6DH5z9JYFhwjqWMQZ1cMy',
- 'Passenger', 'Active', 'Male', '2002-08-21', '012456783', NULL, '2025-12-02 17:06:26'),
-
-('US_692f0ebbe9265', 'Sho Jun Kai', 'shojunkai', 'sho@example.com',
- '$2y$10$4B3rHqqhmrzEURuFHC9ZW.6z.jeXS7eAJxw2SIAp/OMZCB3DlW8fK',
- 'Passenger', 'Active', 'Male', '2002-11-03', '0134445567', NULL, '2025-12-02 17:07:24'),
-
-('US_692f0f042125d', 'Thum Zhi Jian', 'thumzijian', 'thum@example.com',
- '$2y$10\$m9Um9JgPOkGb.1ErBKkAn.JmSZRKQ.Iijl4j3nHsn4psFice7RL1C',
- 'Driver', 'Active', 'Male', '2001-02-17', '0145678999', NULL, '2025-12-02 17:08:36'),
-
-('US_692f0f2dd3648', 'Leong Zi Heng', 'leongziheng', 'leong@example.com',
- '$2y$10\$ninwsFSLga6vHnBAbTJrkeHaYkBvSluuo35mHdJ84EEzkgruJjbdS',
- 'Admin', 'Active', 'Male', '2000-09-09', '0126673456', NULL, '2025-12-02 17:09:17');
+INSERT INTO `users` (`user_id`, `full_name`, `username`, `email`, `password_hash`, `role`, `status`, `gender`, `date_of_birth`, `phone`, `profile_picture_url`, `created_at`) VALUES
+('US_692f0e453c9dd', 'Eng Hong Xuan', 'enghongxuan', 'eng@example.com', '$2y$10\$NCF.XdYUNhz8tmiTVPQ.EuFsS82VuPpYiN90VeKQv4xj2jMl9cA5i', 'Driver', 'Active', 'Male', '2001-05-12', '012345678', 'assets/profile/US_692f0e453c9dd1769596198.jpeg', '2025-12-02 17:05:25'),
+('US_692f0e82a7fb7', 'Tan Jian Shen', 'tanjianshen', 'tan@example.com', '$2y$10\$jqw4A6f/PoQ07vgxeFmlz.RUXLvIBkRJ6DH5z9JYFhwjqWMQZ1cMy', 'Passenger', 'Active', 'Male', '2002-08-21', '012456783', 'assets/profile/US_692f0e82a7fb71769596169.jpeg', '2025-12-02 17:06:26'),
+('US_692f0ebbe9265', 'Sho Jun Kai', 'shojunkai', 'sho@example.com', '$2y$10$4B3rHqqhmrzEURuFHC9ZW.6z.jeXS7eAJxw2SIAp/OMZCB3DlW8fK', 'Passenger', 'Active', 'Male', '2002-11-03', '0134445567', 'assets/profile/US_692f0ebbe92651769596117.jpg', '2025-12-02 17:07:24'),
+('US_692f0f042125d', 'Thum Zhi Jian', 'thumzijian', 'thum@example.com', '$2y$10\$m9Um9JgPOkGb.1ErBKkAn.JmSZRKQ.Iijl4j3nHsn4psFice7RL1C', 'Driver', 'Active', 'Male', '2001-02-17', '0145678999', 'assets/profile/US_692f0f042125d1769596372.jpeg', '2025-12-02 17:08:36'),
+('US_692f0f2dd3648', 'Leong Zi Heng', 'leongziheng', 'leong@example.com', '$2y$10\$ninwsFSLga6vHnBAbTJrkeHaYkBvSluuo35mHdJ84EEzkgruJjbdS', 'Admin', 'Active', 'Male', '2000-09-09', '0126673456', 'assets/profile/US_692f0f2dd36481769596321.jpeg', '2025-12-02 17:09:17');
 
 -- Vehicles
 INSERT INTO `vehicles` (

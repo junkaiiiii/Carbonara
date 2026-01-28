@@ -296,6 +296,8 @@
     width: 80px;
     height: 80px;
     object-fit: cover;
+    border: none;
+    border-radius: 50%;
 }
 
 .popup-role{

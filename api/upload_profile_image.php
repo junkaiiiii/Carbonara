@@ -3,6 +3,7 @@ session_start();
 
 include("headers.php");
 include("helpers.php");
+include("../db_connect.php");
 
 // if doesnt exist create new one
 $targetDir = "../assets/profile/";
@@ -34,11 +35,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_pic'])) {
     $targetFilePath = $targetDir . $newFileName;
 
     // Move and Respond
-    if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
-        respond(['success' => true, 'path' => $targetFilePath]);
-    } else {
+    if (!move_uploaded_file($file['tmp_name'], $targetFilePath)) {
+    //     respond(['success' => true, 'path' => $targetFilePath]);
+    // } else {
         respond(['success' => false, 'message' => 'Failed to save file.']);
     }
+
+    $sql = "UPDATE users SET profile_picture_url = 'assets/profile/$newFileName'
+            WHERE user_id = '$userId'";;
+
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_affected_rows($conn) < 1){
+        respond(['error'=>'path is not updated to database']);
+    }
+
+    respond(['success'=>'Image is added and path is created in database', 'path'=>$targetFilePath]);
 } else {
     // Handle case where file is missing
     respond(['success' => false, 'message' => 'No file uploaded or wrong request method.']);

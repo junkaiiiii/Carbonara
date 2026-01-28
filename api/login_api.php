@@ -22,7 +22,7 @@ if ($method === "POST") {
         $password = $data['password'];
 
         
-        $sql = "SELECT user_id, username, password_hash, role, email FROM users WHERE username = ? OR email = ?";
+        $sql = "SELECT user_id, username, password_hash, role, email, profile_picture_url FROM users WHERE username = ? OR email = ?";
         $stmt = mysqli_prepare($conn, $sql);
         
         if (!$stmt) {
@@ -37,7 +37,7 @@ if ($method === "POST") {
         $db_password_hash = '';
         $db_role = '';
         $db_email = '';
-        mysqli_stmt_bind_result($stmt,$db_user_id, $db_username, $db_password_hash, $db_role,$db_email);
+        mysqli_stmt_bind_result($stmt,$db_user_id, $db_username, $db_password_hash, $db_role,$db_email, $profile_picture_url);
         
         if (mysqli_stmt_fetch($stmt)) {
             
@@ -47,6 +47,7 @@ if ($method === "POST") {
                 $_SESSION['username'] = $db_username;
                 $_SESSION['role'] = $db_role;
                 $_SESSION['email'] = $db_email;
+                $_SESSION['profile_picture_url'] = $profile_picture_url;
 
                 respond(["success" => "Welcome back " . $db_username, "role"=> $db_role]);
             } else {

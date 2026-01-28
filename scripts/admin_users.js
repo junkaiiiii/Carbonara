@@ -48,7 +48,7 @@ const createUserCard = (userId, username, userRole, rating, dateJoined, co2Saved
     const el = div.firstElementChild;
     const viewProfileBtn = el.querySelector(".view-profile-btn");
     viewProfileBtn.addEventListener("click", () => {
-        const popUp = createProfilePopUp(userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum, status);
+        const popUp = createProfilePopUp(userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phoneNum, status,pfp_img);
         
         document.body.appendChild(popUp);
         onHighlightStars(Number(rating), popUp.querySelectorAll(".stars i"));
@@ -253,7 +253,7 @@ function unbanReport(id, reportedEmail){
 }
 
 // profile pop up
-const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phone, status) => {
+const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2Saved, totalDistance, email, phone, status, pfp_img) => {
 
     const userLicense = states.licenses.find(license => license.user.user_id === userId);
 
@@ -270,7 +270,7 @@ const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2S
 
                 <div class="driver-popup-row-1">
                     <h3>User Profile</h3>
-                    <img class="popup-pfp" src="assets/img/leaf.png">
+                    <img class="popup-pfp" src="${pfp_img}">
                     <h1>${username}</h1>
                     <p>Joined at ${dateJoined.split(" ")[0]}</p>
                     <div class="popup-role">

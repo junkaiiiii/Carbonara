@@ -77,7 +77,7 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
 
             <div id="driver-info">
                 <div id="left-section">
-                    <img id="driver-pic" src="assets/img/man.png" alt="">
+                    <img id="driver-pic" src="${ride.driver.profile_picture_url}" alt="">
                     <div id="column">
                         <h3>${ride.driver.name || "Unknown Driver"}</h3>
                         <p>⭐ ${ride.driver.avg_rating}</p>
@@ -521,7 +521,7 @@ const createDriverPopUp = (user, onHighlightStars) => {
 
                 <div class="driver-popup-row-1">
                     <h3>User Profile</h3>
-                    <img class="popup-pfp" src="assets/img/leaf.png">
+                    <img class="popup-pfp" src="${user.profile_picture_url}">
                     <h1>${user.name}</h1>
                     <div class="popup-role">${user.role}</div>
                     <div class="stars">

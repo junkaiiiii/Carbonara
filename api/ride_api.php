@@ -308,7 +308,7 @@ if ($method === "GET") {
                         "username"           => $row["username"],
                         "email"              => $row["email"],
                         "phone"              => $row["phone"],
-                        "profile_picture"    => $row["profile_picture_url"],
+                        "profile_picture_url"    => $row["profile_picture_url"],
                         "role"               => $row["role"],
                         "created_at"         => $row["user_created"],
                         "total_rides"        => (int)$row["driver_total_rides"],

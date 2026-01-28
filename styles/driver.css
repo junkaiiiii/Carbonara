@@ -191,6 +191,9 @@
 #header .profile-picture{
     height: 40px;
     width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: none;
 }
 
 #logout{
@@ -557,6 +560,9 @@ hr{
 #userbox .passenger-profile-picture{
     width: 60px;
     height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: none;
 }
 
 #left-section{
@@ -860,6 +866,9 @@ hr{
 #driver-pic{
     width: 30px;
     height: 30px;
+    object-fit: cover;
+    border: none;
+    border-radius: 50%;
 }
 
 #left-section{
@@ -1313,6 +1322,9 @@ hr{
 #left-section .driver-profile-picture{
     width: 80px;
     height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: none;
 }
 
 #left-section .content-icons{
@@ -1391,6 +1403,9 @@ sup{
 #passenger-container .passenger-profile-picture{
     width: 60px;
     height: 60px;
+    border-radius: 50%;
+    border: none;
+    object-fit: cover;
 }
 
 #updated-ride-impact-container{
