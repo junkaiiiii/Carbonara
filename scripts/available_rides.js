@@ -25,6 +25,8 @@ const roomCodeSubmitButton = document.getElementById('roomCodeSubmitButton');
 const showMoreButton = document.getElementById('showMoreBtn');
 const dateInput = document.getElementById("dateInputField");
 const completedRides = document.getElementById("completedRides");
+const requestTitle = document.getElementById('join-request-title');
+const completedTitle = document.getElementById('completed-title');
 // // Fetch all rides
 
 
@@ -60,18 +62,18 @@ const fetchRides = () => {
             // 1. Reset all state arrays to be empty
             states.available_rides = [];
             states.requested_rides = [];
-            states.filtered_available_rides = []; ;
+            states.filtered_available_rides = [];;
             states.completed_rides = [];
             console.log(data);
 
             data.forEach(ride => {
                 // Check both joined and requested status
-                
-                if (ride.request_status === "requested"){
+
+                if (ride.request_status === "requested") {
                     states.requested_rides.push(ride);
                 }
-                else if(ride.joined === true || ride.request_status === "approved") {
-                    if (ride.ride_status.toLowerCase() === "completed"){
+                else if (ride.joined === true || ride.request_status === "approved") {
+                    if (ride.ride_status.toLowerCase() === "completed") {
                         states.completed_rides.push(ride);
                     } else {
                         states.requested_rides.push(ride);
@@ -85,11 +87,11 @@ const fetchRides = () => {
             // If the user isn't searching, this shows all. 
             // If they are searching, call searchRides() instead.
             if (originInput.value || destinationInput.value) {
-                searchRides(); 
+                searchRides();
             } else {
                 states.filtered_available_rides = [...states.available_rides];
             }
-            
+
             console.log("Data synced. Available:", states.available_rides.length, "Requested:", states.requested_rides.length);
         })
         .catch(error => console.error("Fetch error:", error));
@@ -127,10 +129,10 @@ const fetchRides = () => {
 const handleRequestRide = async (rideId) => {
     // Use loose equality (==) or ensure types match
     const ride = states.available_rides.find(r => String(r.ride_id) === String(rideId));
-    
+
     if (ride) {
         await requestRide(ride.room_code, messageBox);
-        await fetchRides(); 
+        await fetchRides();
         renderAvailableRides();
         renderRequestedRides();
     }
@@ -138,7 +140,7 @@ const handleRequestRide = async (rideId) => {
 
 const handleCancelRequest = async (rideId) => {
     const ride = states.requested_rides.find(r => String(r.ride_id) === String(rideId));
-    
+
     if (ride) {
         await cancelRequestRide(ride.ride_id, states.session.username);
         await fetchRides();
@@ -165,10 +167,10 @@ const searchRides = () => {
     console.log(dateKeyword)
 
     states.filtered_available_rides = states.available_rides.filter(ride => {
-        const originMatch = !originKeyword || 
+        const originMatch = !originKeyword ||
             ride.origin_text.toLowerCase().includes(originKeyword);
 
-        const destinationMatch = !destinationKeyword || 
+        const destinationMatch = !destinationKeyword ||
             ride.destination_text.toLowerCase().includes(destinationKeyword);
 
         // Date Match Logic: Extract YYYY-MM-DD from departure_datetime
@@ -258,13 +260,15 @@ const renderAvailableRides = () => {
 const renderRequestedRides = () => {
     console.log("Rendering requested rides: ", states.requested_rides);
 
-    if (states.requested_rides.length === 0){
-        const requestTitle = document.getElementById('join-request-title');
-        if (requestTitle){
-            requestTitle.remove();
+    if (states.requested_rides.length === 0) {
+        if (requestTitle) {
+            requestTitle.style.display = 'none';
+            return
         }
     }
 
+
+    requestTitle.style.display = 'block';
     requestedRides.innerHTML = '';
 
     states.requested_rides.forEach(ride => {
@@ -278,17 +282,19 @@ const renderRequestedRides = () => {
 const renderCompletedRides = () => {
     console.log("Rendering requested rides: ", states.requested_rides);
 
-    if (states.completed_rides.length === 0){
-        const completedTitle = document.getElementById('completed-title');
-        if (completedTitle){
-            completedTitle.remove();
+    if (states.completed_rides.length === 0) {
+        
+        if (completedTitle) {
+            completedTitle.style.display = 'none';
+            return
         }
     }
 
-    completedRides.innerHTML = '';
+    completedTitle.style.display = 'block';
+    completedRides.innerHTML = ``;
 
     states.completed_rides.forEach(ride => {
-        const rideCard =  createJoinedRideCard(ride);
+        const rideCard = createJoinedRideCard(ride);
         completedRides.appendChild(rideCard);
     });
 }
@@ -342,10 +348,10 @@ const init = async () => {
     roomCodeSubmitButton.addEventListener('click', () => requestRide(document.getElementById('roomCodeField').value, messageBox));
     originInput.addEventListener("keyup", () => searchRides());
     destinationInput.addEventListener("keyup", () => searchRides());
-    dateInput.addEventListener("change", ()=> searchRides())
+    dateInput.addEventListener("change", () => searchRides())
     showMoreButton.addEventListener("click", () => showMore());
-    document.getElementById('start-scan').addEventListener('click', ()=> startScanning(onScanSuccess));
-    document.getElementById('stop-scan').addEventListener('click',()=> stopScanning());
+    document.getElementById('start-scan').addEventListener('click', () => startScanning(onScanSuccess));
+    document.getElementById('stop-scan').addEventListener('click', () => stopScanning());
 };
 
 init();

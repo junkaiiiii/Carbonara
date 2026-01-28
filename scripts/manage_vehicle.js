@@ -108,8 +108,6 @@ function renderVehicles() {
             vehicleSection.appendChild(card);
         });
     }
-
-
 }
 
 // const dropdownTrigger = document.getElementById('dropdown-trigger');
@@ -216,7 +214,7 @@ document.getElementById('addVehicleForm').addEventListener('submit', async funct
 
         if (result.success) {
             closeAdd();
-            showMessage("Vehicles Added Successfully!", "success");
+            showMessage("Vehicle Added Successfully!", "success");
 
             await fetchVehicles();
             renderVehicles();
@@ -234,7 +232,9 @@ document.getElementById('addVehicleForm').addEventListener('submit', async funct
 });
 
 document.getElementById('confirmDeleteBtn').addEventListener('click', async function () {
-    if (!vehicleToDelete) return;
+    if (!vehicleToDelete) {
+        return
+    };
 
     try {
         const response = await fetch('api/vehicle_management_api.php?mode=delete', {

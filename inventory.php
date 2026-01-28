@@ -29,8 +29,11 @@
 
             <h3>My Vouchers</h3>
         </div>
+    </div>
 
-        <div id="rewards-filter-container">
+    <div id="voucher-list"></div>
+
+        <!-- <div id="rewards-filter-container">
                 <img class="small-icons" src="assets/img/filter.png" alt="">
         </div>
     </div>
@@ -52,9 +55,9 @@
         <button class="button">
                 Reveal Code
         </button>
-    </div>
+    </div> -->
 
-    <div class="voucher-container">
+    <!-- <div class="voucher-container">
         <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
 
         <div class="tng-voucher-content">
@@ -96,7 +99,7 @@
         <button class="load-more-button">
             Load more
         </button>
-    </div>
+    </div> -->
 
     <div class="spaced-between-container">
         <div id="voucher-title-container">
@@ -106,8 +109,11 @@
 
             <h3>Badges</h3>
         </div>
+    </div>
 
-        <div id="rewards-filter-container">
+    <div id="badge-list"></div>
+
+        <!-- <div id="rewards-filter-container">
                 <img class="small-icons" src="assets/img/filter.png" alt="">
         </div>
     </div>
@@ -146,7 +152,7 @@
         <button class="button">
                 View Badge
         </button>
-    </div>
+    </div> -->
     
     <?php 
         include("user_navbar.html");
@@ -162,6 +168,41 @@
         <!-- empty space -->
     </div>
 
+    <div class="overlay" id="overlay"></div>
+
+    <div class="badge-popup" id="badge_Popup">
+        <div class="popup-container">
+            <h2 class="hugee">Badge</h2>
+            <div class="badge-container">
+                <img class="badge-popup-img" src="assets/img/badge1.png" alt="">
+                <div class="shine"></div>
+            </div>
+            <button class="grey popup-button" onclick="closeBadge()">Close</button>
+        </div>
+    </div>
+
     <script type="module" src="scripts/inventory.js"></script>
+
+    <button onclick="openBadge()">Badge</button>
+    <button onclick="openVoucher()">Vouchers</button>
+
+    <script>
+        
+        function openBadge(){
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('badge_Popup').classList.add('show');
+        }
+
+        function closeBadge(){
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('badge_Popup').classList.remove('show');
+        }
+
+        function openVoucher(){
+           const qrPopup = createQrPopUp("nigga");
+           document.body.appendChild(qrPopup); 
+        }
+
+    </script>
 </body>
 </html>

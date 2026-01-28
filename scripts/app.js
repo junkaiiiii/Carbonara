@@ -126,7 +126,7 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
 
     viewMapButton.addEventListener("click", () => {
         const popUpMap = createMapPopUp(ride, onRequest);
-        
+
         // confirmButton.addEventListener("click", onRequest(ride.ride_id));
         document.body.appendChild(popUpMap);
     });
@@ -477,8 +477,8 @@ const createMapPopUp = (ride, onRequest) => {
     });
 
     //init map
-    setTimeout(async() => {
-        try{
+    setTimeout(async () => {
+        try {
             await getGoogleAPI();
 
             const map = await initMap("map");
@@ -487,10 +487,10 @@ const createMapPopUp = (ride, onRequest) => {
             const routeData = await getRoute(
                 [ride.origin_lon, ride.origin_lat],
                 [ride.destination_lon, ride.destination_lat]
-            ); 
+            );
 
-            await drawRoute(map, routeData,[ride.origin_lon, ride.origin_lat],[ride.destination_lon, ride.destination_lat]);
-        
+            await drawRoute(map, routeData, [ride.origin_lon, ride.origin_lat], [ride.destination_lon, ride.destination_lat]);
+
             const confirmBtn = popUp.querySelector("#confirm-ride-button");
             confirmBtn.addEventListener("click", () => {
                 onRequest(ride.ride_id);
@@ -498,7 +498,7 @@ const createMapPopUp = (ride, onRequest) => {
                 popUp.remove();
             });
         }
-        catch(error){
+        catch (error) {
             console.error("Error initializing map:", error);
         }
     })
