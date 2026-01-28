@@ -108,7 +108,7 @@
     position: absolute;
     margin-top: -10px;
     top: 0vh;
-    left: 31.5vw;
+    right: 0.1vw;
 }
 .card-pfp-img{
     width: 50px;
@@ -173,11 +173,11 @@
     }
 }
 
-@media (max-width:550px){
+@media (max-width:1000px){
     .reports-nav{
         display: flex;
         justify-content: flex-start;
-        margin-top: 3vh;
+        margin-top: 20vh;
         margin-left: 10vw;
         align-items: center;
         gap: 20px;
@@ -246,7 +246,7 @@
         position: absolute;
         /* margin-top: -10px; */
         top: -0.5vh;
-        left: 60vw;
+        right: 0.05vw;
     }
     .button button{
         cursor: pointer;

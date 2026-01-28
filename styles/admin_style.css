@@ -287,6 +287,7 @@ h1{
 }
 
 #profile-dropdown{
+    max-height: 400px;
     position: fixed;
     top: 100px;
     right: 20px;
@@ -297,6 +298,8 @@ h1{
     z-index: 1001;
     overflow: hidden;
     opacity: 0;
+    overflow-y: auto;
+
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.2s ease;
@@ -354,9 +357,10 @@ h1{
     border: 1px solid rgb(229, 231, 235);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     min-width: 200px;
-    max-height: 140px;
+    max-height: 400px;
     z-index: 1001;
     overflow: hidden;
+    overflow-y: auto;
 
     opacity: 0;
     visibility: hidden;
@@ -388,4 +392,38 @@ h1{
 .logout{
     color: #dc2626;
     border-top: 1px solid rgb(229, 231, 235);
+}
+
+@media (max-width: 1000px){
+    .desktop-nav {
+        display: none !important;
+    }
+    
+    .choices {
+        display: none;
+    }
+    .mobile-nav{
+        display: block;
+    }
+    
+    .dropdown-divider {
+        display: block;
+        height: 1px;
+        background-color: rgb(229, 231, 235);
+        margin: 8px 0;
+    }
+    
+    /* Adjust dropdown position for mobile */
+    #profile-dropdown {
+        top: 70px; /* Adjust based on your header height */
+        right: 10px;
+        min-width: 200px;
+        max-width: 250px;
+    }
+    
+    /* Make dropdown items more touch-friendly on mobile */
+    .dropdown-item {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
 }

@@ -124,7 +124,7 @@ body {
     display: flex;
     height: 100px;
     align-items: center;
-    padding: 1ch 5vw;
+    padding: 0.5ch 5vw;
     margin-top: 100px;
 }
 
@@ -168,17 +168,64 @@ hr{
     margin-top: -1px;
 }
 
-@media (max-width: 500px){
-    .admin-dashboard{
-        z-index: 999;
-        margin-top: 100px;
-        background-color: rgb(241,244,250);
-        height: 100px;
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        /* align-items: center; */
-        padding: 3ch 0;
-        flex-direction: column;    
+
+.mobile-nav{
+    display: none; 
+}
+
+.dropdown-divider {
+    display: none;
+}
+
+#profile-dropdown{
+    max-height: 400px;
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 180px;
+    z-index: 1001;
+    overflow: hidden;
+    opacity: 0;
+    overflow-y: auto;
+
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+}
+
+@media (max-width: 1000px){
+    .desktop-nav {
+        display: none !important;
+    }
+    
+    .choices {
+        display: none;
+    }
+    .mobile-nav{
+        display: block;
+    }
+    
+    .dropdown-divider {
+        display: block;
+        height: 1px;
+        background-color: rgb(229, 231, 235);
+        margin: 8px 0;
+    }
+    
+    /* Adjust dropdown position for mobile */
+    #profile-dropdown {
+        top: 70px; /* Adjust based on your header height */
+        right: 10px;
+        min-width: 200px;
+        max-width: 250px;
+    }
+    
+    /* Make dropdown items more touch-friendly on mobile */
+    .dropdown-item {
+        padding: 14px 16px;
+        font-size: 14px;
     }
 }

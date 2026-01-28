@@ -3,11 +3,11 @@
         <div id="logo-container" onclick="window.location.href='profile.php'">
             <img id="logo" src="assets/img/carbonara-logo.png">
         </div>
-        <div class="admin-dashboard" id="admin-dashboard">
+        <div class="admin-dashboard desktop-nav" id="admin-dashboard">
             <ul class="choices">
                 <li><a href="./admin_overview.php">Overview</a></li>
                 <li><a href="./admin_rides.php">Rides</a></li>
-                <li><a href="./admin_users.php" onclick="">Users</a></li>
+                <li><a href="./admin_users.php">Users</a></li>
                 <li><a href="./admin_license.php">Licenses</a></li>
                 <li><a href="./admin_reports.php">Reports</a></li>
                 <li><a href="./admin_prizes.php">Prizes</a></li>
@@ -35,6 +35,14 @@
 
 
 <div id="profile-dropdown">
+    <div class="mobile-nav">
+        <div class="dropdown-item" onclick="window.location.href='./admin_overview.php'">Overview</div>
+        <div class="dropdown-item" onclick="window.location.href='./admin_rides.php'">Rides</div>
+        <div class="dropdown-item" onclick="window.location.href='./admin_users.php'">Users</div>
+        <div class="dropdown-item" onclick="window.location.href='./admin_license.php'">Licenses</div>
+        <div class="dropdown-item" onclick="window.location.href='./admin_reports.php'">Reports</div>
+        <div class="dropdown-item" onclick="window.location.href='./admin_prizes.php'">Prizes</div>
+    </div>
     <div class="dropdown-item" onclick="window.location.href='profile.php'">View Profile</div>
     <div class="dropdown-item">Settings</div>
     <div class="dropdown-item">FAQ</div>
@@ -44,3 +52,16 @@
 </div>
 
 <script src="scripts/header.js"></script>
+<script>
+    const navLinks = document.querySelectorAll(".choices a");
+
+    let currentPage = window.location.pathname.split("/").pop();
+
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href'); //get href value
+        
+        if (linkPage === `./${currentPage}`){
+            link.classList.add('active');
+        }
+    })  
+</script>

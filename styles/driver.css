@@ -1545,9 +1545,10 @@ sup{
     border: 1px solid rgb(229, 231, 235);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     min-width: 200px;
-    max-height: 140px;
+    max-height: 400px;
     z-index: 1001;
     overflow: hidden;
+    overflow-y: auto;
 
     opacity: 0;
     visibility: hidden;
@@ -1617,6 +1618,8 @@ sup{
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
+
+
 }
     
 
@@ -1866,6 +1869,40 @@ sup{
 
 .complete-ride-button:active {
     transform: scale(0.98);
+}
+
+@media (max-width:1000px){
+    .desktop-nav {
+        display: none !important;
+    }
+
+    .choices {
+        display: none;
+    }
+    .mobile-nav{
+        display: block;
+    }
+
+    .dropdown-divider {
+        display: block;
+        height: 1px;
+        background-color: rgb(229, 231, 235);
+        margin: 8px 0;
+    }
+
+    /* Adjust dropdown position for mobile */
+    #profile-dropdown {
+        top: 70px; /* Adjust based on your header height */
+        right: 10px;
+        min-width: 200px;
+        max-width: 250px;
+    }
+
+    /* Make dropdown items more touch-friendly on mobile */
+    .dropdown-item {
+        padding: 14px 16px;
+        font-size: 14px;
+    }    
 }
 
 /* Mobile Responsive */

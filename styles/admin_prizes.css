@@ -15,6 +15,12 @@
     margin-left: 5px;
 }
 
+.voucher-section,
+.badge-section{
+    margin-left: 10vw;
+}
+
+
 #points-container{
     display: flex;
     flex-direction: row;
@@ -49,6 +55,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-left: 10vw;
     /* width: calc(100% - 40px);
     height: 30px; */
     /* justify-content: space-evenly; */
@@ -61,7 +68,7 @@
 
 
 #addVoucherBtn,#addBadgeBtn {
-    margin-left: 52vw;
+    margin-left: 24vw;
     width: auto;
     padding: 12px 24px;
     white-space: nowrap;
@@ -486,13 +493,21 @@
 
 
 
+
+
     .voucher-section,
     .badge-section{
         margin-left: 10vw;
     }
 
+    #addVoucherBtn,#addBadgeBtn {
+        margin-left: 52vw;
+        width: auto;
+        padding: 12px 24px;
+        white-space: nowrap;
+    }
 
-
+    /* if i want to make my logo bigger */
     /* #logo{
         width: 150px;
         margin-left: 40px;
