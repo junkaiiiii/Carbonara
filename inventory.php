@@ -70,30 +70,37 @@
                 <img class="badge-popup-img" src="assets/img/badge1.png" alt="">
                 <div class="shine"></div>
             </div>
+            <h2 id="obtained_on" class="green-font">Obtained on:</h2> 
             <button class="grey popup-button" onclick="closeBadge()">Close</button>
+        </div>
+    </div>
+
+    <div class="voucher-popup" id="voucher_Popup">
+        <div class="popup-container">
+            <h2 class="hugee">Voucher</h2>
+            <h2>Scan the below QR code to redeem</h2>
+            <div class="voucher-preview">
+                <img id="voucher_qr_img" class="badge-popup-img" src="" alt="QR Code">
+                <div class="shine"></div>
+            </div>
+                <h2 id="redemption_id"></h2>
+            <button class="grey popup-button" onclick="closeVoucher()">Close</button>
         </div>
     </div>
 
     <script type="module" src="scripts/inventory.js"></script>
 
-    <button onclick="openBadge()">Badge</button>
-    <button onclick="openVoucher()">Vouchers</button>
-
     <script>
 
-        function openBadge(img, title){
+        function openBadge(img, title, redeemed_date){
 
             document.querySelector('.badge-popup-img').src = `assets/img/${img}`;
             document.querySelector('.hugee').innerText= title;
+            document.getElementById('obtained_on').innerText = "Obtained on: " + redeemed_date;
+
 
             document.getElementById('overlay').classList.add('show');
             document.getElementById('badge_Popup').classList.add('show');
-
-            const shine = document.querySelector('.shine');
-            shine.style.left = '-150%';
-            setTimeout(() => {
-                shine.style.left = '150%';
-            }, 50);
         }
 
         function closeBadge(){
@@ -101,9 +108,20 @@
             document.getElementById('badge_Popup').classList.remove('show');
         }
 
-        function openVoucher(){
-           const qrPopup = createQrPopUp("");
-           document.body.appendChild(qrPopup); 
+        function openVoucher(title, redemption_id){
+            document.querySelector('.hugee').innerText= title;
+            document.getElementById('redemption_id').innerText = "Redemption ID: " + redemption_id;
+
+            let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${redemption_id}`;
+            document.getElementById('voucher_qr_img').src = qrUrl;
+
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('voucher_Popup').classList.add('show');
+        }
+
+        function closeVoucher(){
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('voucher_Popup').classList.remove('show');
         }
 
     </script>

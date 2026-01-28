@@ -19,7 +19,7 @@ async function fetchRewards(){
     console.log("Fetching rewards...");
 
     try{
-        const response = await fetch("api/reward_api.php?mode=all");
+        const response = await fetch("api/inventory_api.php?mode=all");
         const data = await response.json();
 
         console.log("Received data: ", data);
@@ -78,7 +78,7 @@ function createBadgeCard(item){
                 </div>
             </div>
 
-            <button class="button" id="viewBadgeBtn" onclick="openBadge('${item.prize_image_url}', '${item.prize_name}')">
+            <button class="button" id="viewBadgeBtn" onclick="openBadge('${item.prize_image_url}', '${item.prize_name}', '${obtainedDate}')">
                 View Badge
             </button>
         </div>
@@ -87,38 +87,40 @@ function createBadgeCard(item){
     return div.firstElementChild;
 }
 
-function createRewardCard(item){
-    const div = document.createElement('div');
+    function createRewardCard(item){
+        const div = document.createElement('div');
 
-    const redeemedDate = new Date(item.redeemed_at).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric'
-    });
+        const redeemedDate = new Date(item.redeemed_at).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
 
-    div.innerHTML = `
-        <div class="voucher-container">
-            <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="Voucher">
+        const redemptionId = item.redemption_id;
 
-            <div class="tng-voucher-content">
-                <div class="spaced-between">
-                    <p>${item.prize_name}</p>
-                    <P id="used" class="active-status">Active</P>
+        div.innerHTML = `
+            <div class="voucher-container">
+                <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="Voucher">
+
+                <div class="tng-voucher-content">
+                    <div class="spaced-between">
+                        <p>${item.prize_name}</p>
+                        <P id="activea" class="active-status">Active</P>
+                    </div>
+
+                    <div class="group">
+                        <p class="green-font">Redeemed on ${redeemedDate}</p>
+                    </div>
                 </div>
 
-                <div class="group">
-                    <p class="green-font">Redeemed on ${redeemedDate}</p>
-                </div>
+                <button class="button" onclick="openVoucher('${item.prize_name}', '${redemptionId}')">
+                    Reveal Code
+                </button>
             </div>
+        `;
 
-            <button class="button" onclick="openVoucherPopup('${item.prize_name}', 'VOUCHER-CODE-HERE')">
-                Reveal Code
-            </button>
-        </div>
-    `;
-
-    return div.firstElementChild;
-}
+        return div.firstElementChild;
+    }
 
 function renderVouchers(){
     console.log("Rendering vouchers: ", states.vouchers);

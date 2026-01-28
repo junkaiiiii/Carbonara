@@ -344,7 +344,27 @@
     overflow: hidden;
 }
 
-.badge-popup.show{
+.voucher-popup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 350px;
+    max-width: 350px;
+    height: 500px;
+    background: white;
+    padding: 20px 0;
+    border-radius: 12px;
+    z-index: 1002;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.badge-popup.show,
+.voucher-popup.show{
     opacity: 1;
     visibility: visible;
 }
@@ -403,8 +423,8 @@
 
 .badge-preview{
     position: relative;
-    width: 300px; 
-    height: 300px;
+    width: 270px; 
+    height: 270px;
     align-self: center;
     flex-shrink: 0;
     aspect-ratio: 1/1;

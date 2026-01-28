@@ -30,13 +30,13 @@
 
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, 's', $user_id);
-        mysqli_stmt_execute($stmt);
+        mysqli_stmt_execute($stmt);     
         $result = mysqli_stmt_get_result($stmt);
 
         $response = [];
         while ($row = mysqli_fetch_assoc($result)){
             $response[] = [
-                "prizes_id"         => $row['prize_id'],
+                "prize_id"          => $row['prize_id'],
                 "prize_name"        => $row['prize_name'],
                 "prize_type"        => $row['prize_type'],
                 "prize_image_url"   => $row['prize_image_url'],
