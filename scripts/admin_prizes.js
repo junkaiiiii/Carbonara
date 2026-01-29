@@ -41,6 +41,19 @@ function createRewardCard(reward){
     //             Redeem ${reward.prize_name.charAt(0).toUpperCase() + reward.prize_name.slice(1)}
     //         </button>`;
 
+    let updateStockBtnHTML = "";
+    let stockValue = "";
+
+    if (reward.prize_type === "voucher"){
+        updateStockBtnHTML = `
+            <button class="restock-btn">Update Stock</button>
+
+        `;
+        stockValue = `
+            <p>Stock: ${reward.stock}</p>
+        `
+    }
+
     let div = document.createElement("div");
     div.innerHTML = `
         <div class="voucher-container">
@@ -53,12 +66,36 @@ function createRewardCard(reward){
                     <img class="small-icons" src="assets/img/coin.png" alt="">
                     <p class="green-font">${reward.points_required} points</p>
                 </div>
+
+                ${stockValue}
+            </div>
+            
+            <div class="update-btn">
+                ${updateStockBtnHTML}
+                <button class="update-point-btn">Update Points</button>
             </div>
         </div>
     `;
 
     let el = div.firstElementChild;
+    const updatePointBtn = el.querySelector(".update-point-btn");
+    const restockBtn = el.querySelector(".restock-btn");
+    const prizeId = reward.prize_id;
+    const prizeName = reward.prize_name;
+    if (restockBtn){
+        restockBtn.addEventListener("click", () => {
 
+            const currentStock = reward.stock;
+
+            const popup = restockPopup(prizeId, prizeName, currentStock);
+            document.body.appendChild(popup);
+        });  
+    }
+    updatePointBtn.addEventListener("click", () => {
+        const currentPoint = reward.points_required;
+        const popup = updatePointsPopup(prizeId,prizeName,currentPoint);
+        document.body.appendChild(popup);
+    })
 
     return div.firstElementChild;
 }
@@ -106,6 +143,23 @@ function setupListeners(){
 }
 
 function createPopUp(type){
+    let stockInputHTML = ''
+    if (type === "voucher"){
+        stockInputHTML = `
+            <div class="form-group">
+                <label>Stock Quantity:</label>
+                <input type="number" id="stock" name="stock" required>
+            </div>
+        `;
+    }
+    else{
+        stockInputHTML = `
+            <div class="form-group">
+                <input type="hidden" id="stock" name="stock" value="${null}"required>
+            </div>
+        `;
+    }
+
     const wrapper = document.createElement('div');
     wrapper.innerHTML = `
         <div class="popup-container">
@@ -123,10 +177,7 @@ function createPopUp(type){
                         <label>Points Required:</label>
                         <input type="number" id="pointsReq" name="points_required" required>
                     </div>
-                    <div class="form-group">
-                        <label>Stock Quantity:</label>
-                        <input type="number" id="stock" name="stock" required>
-                    </div>
+                    ${stockInputHTML}
                     <div class="form-group">
                         <label>Upload Prize Image:</label>
                         <input type="file" id="prizeImg" name="prize_image_url" required>
@@ -219,6 +270,225 @@ function createPopUp(type){
     return popUp;
 }
 
+function restockPopup(prizeId, prizeName, currentStock){
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div class="popup-container">
+            <div class="popup-content">
+                <button class="close-popup-button">
+                    <img class="close-popup-icon" src="assets/img/close.png">
+                </button>
+
+                <h2 style="margin-bottom: 10px;">Update Stock</h2>
+                <p style="margin-bottom: 20px; color: #6b7280;">${prizeName}</p>
+
+                <div class="form-group">
+                    <label>Current Stock</label>
+                    <input type="number" value="${currentStock}" disabled style="background-color: #f3f4f6; cursor: not-allowed;">
+                </div>
+
+                <div class="form-group">
+                    <label>New Stock Quantity</label>
+                    <input type="number" id="newStockInput" value="${currentStock}" min="0" placeholder="Enter new stock quantity">
+                    <p id="stockError" style="color: #dc2626; font-size: 12px; margin-top: 5px; display: none;"></p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" id="cancelBtn">Cancel</button>
+                    <button type="button" class="submit-button" id="updateStockBtn">Update Stock</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const popup = wrapper.firstElementChild;
+    const cancelBtn = popup.querySelector(".cancel-button");
+    const closeBtn = popup.querySelector(".close-popup-button");
+    closeBtn.addEventListener("click", () => {
+        popup.remove();
+    });
+    
+    cancelBtn.addEventListener("click", () => {
+        popup.remove();
+    })
+    
+
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup){
+            popup.remove();
+        }
+    })
+
+    const updateBtn = popup.querySelector("#updateStockBtn");
+    const newStockInput = popup.querySelector("#newStockInput");
+    const stockErr = popup.querySelector("#stockError");
+
+    updateBtn.addEventListener('click', async () => {
+        const newStock = parseInt(newStockInput.value);
+        if (newStock < 0){
+            stockErr.textContent = "Please enter a valid stock quantity"
+            stockErr.style.display ='block';
+            return;
+        }
+
+        // stockErr.style.display = 'none';
+
+        updateBtn.disabled = true;
+        updateBtn.textContent = 'Updating...'
+
+        try{
+            console.log("TESTESTSTTTT");
+            const response = await fetch("api/reward_api.php?mode=stock", {
+                method: "PUT",
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prize_id: prizeId,
+                    new_stock: newStock
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok){
+                popup.remove();
+
+                //re-render states
+                states.vouchers = [];
+                states.badges = [];
+                await fetchRewards();
+                renderVouchers();
+                renderBadges();
+
+            }
+            else{
+                stockErr.textContent = result.error || 'Failed to update stock';
+                stockErr.style.display = 'block';
+                updateBtn.disabled = false;
+                updateBtn.textContent = 'Update Stock';
+            }
+        }
+        catch(error){
+            console.log("why am i here???")
+            stockErr.textContent = 'Network error. Please try again.';
+            stockErr.style.display = 'block';
+            updateBtn.disabled = false;
+            updateBtn.textContent = 'Update Stock';
+        }
+    })
+    return popup;
+}
+
+function updatePointsPopup(prizeId,prizeName,prizePoints){
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+        <div class="popup-container">
+            <div class="popup-content">
+                <button class="close-popup-button">
+                    <img class="close-popup-icon" src="assets/img/close.png">
+                </button>
+
+                <h2 style="margin-bottom: 10px;">Update Points</h2>
+                <p style="margin-bottom: 20px; color: #6b7280;">${prizeName}</p>
+
+                <div class="form-group">
+                    <label>Current Points</label>
+                    <input type="number" value="${prizePoints}" disabled style="background-color: #f3f4f6; cursor: not-allowed;">
+                </div>
+
+                <div class="form-group">
+                    <label>New Points Required</label>
+                    <input type="number" id="newPointInput" value="${prizePoints}" min="0" placeholder="Enter new stock quantity">
+                    <p id="stockError" style="color: #dc2626; font-size: 12px; margin-top: 5px; display: none;"></p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" id="cancelBtn">Cancel</button>
+                    <button type="button" class="submit-button" id="updateStockBtn">Update Stock</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const popup = wrapper.firstElementChild;
+    const cancelBtn = popup.querySelector(".cancel-button");
+    const closeBtn = popup.querySelector(".close-popup-button");
+    closeBtn.addEventListener("click", () => {
+        popup.remove();
+    });
+    
+    cancelBtn.addEventListener("click", () => {
+        popup.remove();
+    })
+    
+
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup){
+            popup.remove();
+        }
+    })
+
+    const updateBtn = popup.querySelector("#updateStockBtn");
+    const newPointInput = popup.querySelector("#newPointInput");
+    const stockErr = popup.querySelector("#stockError");
+
+    updateBtn.addEventListener('click', async () => {
+        const newPoint = parseInt(newPointInput.value);
+        if (newPoint < 0){
+            stockErr.textContent = "Please enter a valid stock quantity"
+            stockErr.style.display ='block';
+            return;
+        }
+
+        // stockErr.style.display = 'none';
+
+        updateBtn.disabled = true;
+        updateBtn.textContent = 'Updating...'
+
+        try{
+            console.log("TESTESTSTTTT");
+            const response = await fetch("api/reward_api.php?mode=points", {
+                method: "PUT",
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prize_id: prizeId,
+                    new_point: newPoint
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok){
+                popup.remove();
+
+                //re-render states
+                states.vouchers = [];
+                states.badges = [];
+                await fetchRewards();
+                renderVouchers();
+                renderBadges();
+
+            }
+            else{
+                stockErr.textContent = result.error || 'Failed to update stock';
+                stockErr.style.display = 'block';
+                updateBtn.disabled = false;
+                updateBtn.textContent = 'Update Stock';
+            }
+        }
+        catch(error){
+            console.log("why am i here???")
+            stockErr.textContent = 'Network error. Please try again.';
+            stockErr.style.display = 'block';
+            updateBtn.disabled = false;
+            updateBtn.textContent = 'Update Stock';
+        }
+    })
+    return popup;  
+}
 
 async function init(){
     // fetch functions
