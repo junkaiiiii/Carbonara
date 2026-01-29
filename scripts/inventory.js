@@ -175,7 +175,7 @@ async function init() {
     renderBadges();
 
     // general function
-    highlightNavBar("rewards");
+    highlightNavBar("inventory");
 
     // event listeners
     loadVoucherBtn.addEventListener('click', () => {

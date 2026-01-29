@@ -78,7 +78,7 @@ const fetchRides = () => {
                     } else {
                         states.requested_rides.push(ride);
                     }
-                } else {
+                } else if (ride.ride_status.toLowerCase() === "incomplete") {
                     states.available_rides.push(ride);
                 }
             });

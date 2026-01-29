@@ -40,17 +40,11 @@ if ($method === "GET") {
 
         $response = [];
         while ($row = mysqli_fetch_assoc($result)) {
-            if ($row['stock'] === null || $row['stock'] === ""){
-                $stock = null;
-            }
-            else{
-                $stock = (int)$row['stock'];
-            }
             $response[] = [
                 "prize_id"        => $row['prize_id'],
                 "prize_name"      => $row['prize_name'],
-                "points_required" => (int)$row['points_required'], // Cast to int for safety
-                "stock"           => $stock,           // Cast to int for safety
+                "points_required" => (int)$row['points_required'], 
+                "stock"           => $row['stock'] ? (int)$row['stock'] : null,           
                 "prize_type"      => $row['prize_type'],
                 "prize_image_url" => $row['prize_image_url'],
                 
