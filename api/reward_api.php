@@ -30,8 +30,7 @@ if ($method === "GET") {
                     r.redemption_id
 
                  FROM prizes p
-                LEFT JOIN redemption r ON p.prize_id = r.prize_id AND r.user_id= ?
-                WHERE p.stock > 0;
+                LEFT JOIN redemption r ON p.prize_id = r.prize_id AND r.user_id= ?;
                 ";
                 
         $stmt = mysqli_prepare($conn, $sql);
@@ -44,8 +43,8 @@ if ($method === "GET") {
             $response[] = [
                 "prize_id"        => $row['prize_id'],
                 "prize_name"      => $row['prize_name'],
-                "points_required" => (int)$row['points_required'], // Cast to int for safety
-                "stock"           => (int)$row['stock'],           // Cast to int for safety
+                "points_required" => (int)$row['points_required'], 
+                "stock"           => $row['stock'] ? (int)$row['stock'] : null,           
                 "prize_type"      => $row['prize_type'],
                 "prize_image_url" => $row['prize_image_url'],
                 
@@ -111,15 +110,21 @@ else if($method === "POST") {
     $prize_id = generateId("PR_");
     $prize_name      = mysqli_real_escape_string($conn, $_POST['prize_name']);
     $points_required = intval($_POST['points_required']);
-    $stock           = intval($_POST['stock']);
     $prize_type      = $_POST['prize_type'];
     // $prize_image_url = $_POST['prize_image_url'];
+
+    if ($_POST['stock'] === "null" || $_POST['stock'] ===""){
+        $stock = null;
+    }
+    else{
+        $stock = intval($_POST['stock']);        
+    }
 
     if (empty($prize_name)){
         respond(['error' => 'Prize Image URL is required', 400]);
     }
 
-    if (empty($prize_name) || empty($points_required) || empty($stock) || empty($prize_type) || empty($prize_image_url)) {
+    if (empty($prize_name) || empty($points_required) || empty($prize_type) || empty($prize_image_url)) {
         respond(['error' => 'Missing Required Fields', 400]);
     }
 
@@ -138,6 +143,65 @@ else if($method === "POST") {
 
         respond(['error' => 'Database Insertion Failed', 500]);
     }
-} else {
+} 
+else if($method === "PUT"){
+    $mode = $_GET['mode'] ?? "";
+    
+
+    if ($mode === "stock"){
+        $data = json_decode(file_get_contents("php://input"), true);
+        if (!isset($data['prize_id']) || !isset($data['new_stock'])){
+            respond(['error' => 'Missing prize_id or new_stock'], 400);
+        }
+        $prize_id = mysqli_real_escape_string($conn, $data['prize_id']);
+        $new_stock = intval($data['new_stock']);
+
+        if ($new_stock < 0){
+            respond(['error' => 'Stock cannot be negative'],400);
+        }
+
+        $sql = "UPDATE prizes SET stock = ? WHERE prize_id = ?";
+        $stmt = mysqli_prepare($conn,$sql);
+        mysqli_stmt_bind_param($stmt, "is", $new_stock, $prize_id);
+
+        if (mysqli_stmt_execute($stmt)){
+            if (mysqli_stmt_affected_rows($stmt) > 0){
+                respond(['message' => "Stock Updated", "stock" => $new_stock], 200);
+            }
+            else{
+                respond(["error" => "No rows updated"], 400);
+            }
+        }
+    }
+    else if($mode ==="points"){
+        $data = json_decode(file_get_contents("php://input"), true);
+        if (!isset($data['prize_id']) || !isset($data['new_point'])){
+            respond(['error' => 'Missing prize_id or new_point'], 400);
+        }
+
+        $prize_id = mysqli_real_escape_string($conn,$data['prize_id']);
+        $new_point = intval($data['new_point']);
+
+        if ($new_point < 0){
+            respond(['error' => 'Points cannot be negative'],400);
+        }
+
+        $sql = "UPDATE prizes SET points_required = ? WHERE prize_id = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "is", $new_point, $prize_id);
+         if (mysqli_stmt_execute($stmt)){
+            if (mysqli_stmt_affected_rows($stmt) > 0){
+                respond(['message' => "Point Updated", "points" => $new_point], 200);
+            }
+            else{
+                respond(["error" => "No rows updated"], 400);
+            }
+        }
+    }
+
+
+}
+
+else {
     respond(['error' => 'Invalid Request Method', 405]);
 }

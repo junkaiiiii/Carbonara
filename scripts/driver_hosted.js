@@ -4,7 +4,9 @@ import { createQrPopUp } from "./qr.js";
 let states = {
     co2: null,
     session: null,
-    hostedRides: null
+    hostedRides: null,
+    requestedRides: null,
+    completedRides: null
 };
 
 //DOM
@@ -12,6 +14,10 @@ const welcomeSection = document.getElementById("welcome-section");
 const impactSection = document.getElementById("impact-section");
 const driverMenuSection = document.getElementById("driver-menu-section");
 const hostedRidesSection = document.getElementById('hosted-rides-section');
+const requestedRidesSection = document.getElementById('requestedRidesSection');
+const completedRidesSection = document.getElementById('completedRidesSection');
+const requestedRidesTitle = document.getElementById('requestedRidesTitle')
+const completedRidesTitle = document.getElementById('completedRidesTitle');
 
 // General Functions
 // highlight profile star
@@ -41,7 +47,7 @@ const acceptRequest = (rideId, passengerUsername, passengerUserId) => {
         .then(data => console.log(data))
         .catch(error => console.error(error));
 
-    fetch("api/ride_participant_api.php",{
+    fetch("api/ride_participant_api.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -97,7 +103,7 @@ const cancelRide = (rideId) => {
 const handleAcceptRequest = (rideId, passengerUsername, passengerUserId) => {
 
     console.log(rideId);
-    const selectedRide = states.hostedRides[rideId];
+    const selectedRide = states.requestedRides.find(ride => ride.ride_id === rideId);
 
     if (selectedRide) {
         acceptRequest(rideId, passengerUsername, passengerUserId);
@@ -107,11 +113,18 @@ const handleAcceptRequest = (rideId, passengerUsername, passengerUserId) => {
 
         if (passengerIndex !== -1) {
             selectedRide.passengers.splice(passengerIndex, 1);
+
+            if (selectedRide.passengers.length < 1){
+                states.hostedRides.push(selectedRide);
+                states.requestedRides = states.requestedRides.filter(
+                    ride => ride !== selectedRide
+                );
+            }
         }
 
     }
     console.log(states.hostedRides);
-
+    renderRequestedRides();
     renderHostedRides();
 }
 
@@ -119,7 +132,7 @@ const handleAcceptRequest = (rideId, passengerUsername, passengerUserId) => {
 const handleRejectRequest = (rideId, passengerUsername) => {
 
     console.log(rideId);
-    const selectedRide = states.hostedRides[rideId];
+    const selectedRide = states.requestedRides.find(ride => ride.ride_id === rideId);
 
     if (selectedRide) {
         rejectRequest(rideId, passengerUsername);
@@ -129,23 +142,30 @@ const handleRejectRequest = (rideId, passengerUsername) => {
 
         if (passengerIndex !== -1) {
             selectedRide.passengers.splice(passengerIndex, 1);
+
+            if (selectedRide.passengers.length < 1){
+                states.hostedRides.push(selectedRide);
+                states.requestedRides = states.requestedRides.filter(
+                    ride => ride !== selectedRide
+                );
+            }
         }
 
     }
     console.log(states.hostedRides);
 
+    renderRequestedRides();
     renderHostedRides();
 }
 
 const handleCancelRide = (rideId) => {
-    const selectedRide = states.hostedRides[rideId];
+    const selectedRideId = states.requestedRides.findIndex(ride => ride.ride_id === rideId);
 
-    if (selectedRide) {
+    if (selectedRideId  !== -1) {
         cancelRide(rideId);
-
-        delete states.hostedRides[rideId];
+        states.requestedRides.splice(selectedRideId,1);
     }
-    renderHostedRides();
+    renderRequestedRides()
 }
 
 
@@ -178,7 +198,20 @@ const fetchHostedRides = () => {
     return fetch('api/ride_api.php?mode=hosted')
         .then(response => response.json())
         .then(data => {
-            states.hostedRides = data;
+            states.completedRides = [];
+            states.hostedRides = [];
+            states.requestedRides = [];
+            console.log("RIDES: ", data);
+
+            for (const [rideId, ride] of Object.entries(data)) {
+                if (ride.passengers.length > 0) {
+                    states.requestedRides.push(ride);
+                } else if (ride.ride_status.toLowerCase() === 'completed') {
+                    states.completedRides.push(ride);
+                } else {
+                    states.hostedRides.push(ride);
+                }
+            }
         })
 }
 
@@ -233,21 +266,61 @@ const renderDriverMenu = () => {
     }
 };
 
+const renderRequestedRides = () => {
+    console.log("Rendering Requested Rides: ", states.requestedRides)
+    requestedRidesSection.innerHTML = '';
+    if (states.requestedRides.length < 1) {
+        requestedRidesTitle.style.display = 'none';
+        return
+    }
+
+    states.requestedRides.forEach(ride => {
+        requestedRidesTitle.style.display = 'block';
+        const requestedRide = createHostedRideCard(ride, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest, handleCancelRide, createQrPopUp);
+
+        requestedRidesSection.appendChild(requestedRide);
+    });
+}
+
 const renderHostedRides = () => {
-    console.log("Rendering Hosted Rides")
+    console.log("Rendering Hosted Rides: ", states.hostedRides)
     hostedRidesSection.innerHTML = '';
-    if (states.hostedRides.length < 1){
+    if (states.hostedRides.length < 1) {
         hostedRidesSection.innerHTML = `
         <div style="margin-top:100px; display:flex; justify-content:center; font-size:25px;">
             <h1>No Hosted Ride...</h1>
         <div>`;
     }
 
-    for (const [key, value] of Object.entries(states.hostedRides)) {
-        const hostedRide = createHostedRideCard(value, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest, handleCancelRide, createQrPopUp);
+    states.hostedRides.forEach(ride => {
+        const hostedRide = createHostedRideCard(ride, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest, handleCancelRide, createQrPopUp);
 
+        // if (ride.passengers.length > 0){
+        //     requestedRidesSection.appendChild(hostedRide);
+        //     return;
+        // }
         hostedRidesSection.appendChild(hostedRide);
+    })
+}
+
+const renderCompletedRides = () => {
+    console.log("Rendering Completed Rides: ", states.completedRides)
+    completedRidesSection.innerHTML = '';
+    if (states.completedRides.length < 1) {
+        completedRidesTitle.style.display = 'none';
+        return
     }
+
+    states.completedRides.forEach(ride => {
+        completedRidesTitle.style.display = 'block';
+        const completedRide = createHostedRideCard(ride, createDriverPopUp, highlightStars, handleAcceptRequest, handleRejectRequest, handleCancelRide, createQrPopUp);
+
+        // if (ride.passengers.length > 0){
+        //     requestedRidesSection.appendChild(completedRide);
+        //     return;
+        // }
+        completedRidesSection.appendChild(completedRide);
+    })
 }
 
 const init = async () => {
@@ -264,7 +337,9 @@ const init = async () => {
     renderWelcome();
     renderImpact();
     renderDriverMenu();
+    renderRequestedRides();
     renderHostedRides();
+    renderCompletedRides();
     highlightNavBar("home");
 };
 

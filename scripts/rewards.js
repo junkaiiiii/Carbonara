@@ -81,7 +81,7 @@ function createRewardCard(reward, onConfirmPopUp, onConfirm) {
     let div = document.createElement("div");
     div.innerHTML = `
         <div class="voucher-container">
-            <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="">
+            <img class="voucher-img-size" src="assets/img/${reward.prize_image_url}" alt="">
 
             <div class="tng-voucher-content">
                 <p>${reward.prize_name}</p>

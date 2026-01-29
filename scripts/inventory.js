@@ -66,7 +66,7 @@ function createBadgeCard(item){
     div.innerHTML = `
         <div class="badge-container">
             <div class="center">
-                <img class="badge-img-size" src="assets/img/badge1.png" alt="Badge">
+                <img class="badge-img-size" src="assets/img/${item.prize_image_url}" alt="Badge">
             </div>
 
             <div class="badge-content">
@@ -99,7 +99,7 @@ function createBadgeCard(item){
 
         div.innerHTML = `
             <div class="voucher-container">
-                <img class="voucher-img-size" src="assets/img/tng-pic.jpg" alt="Voucher">
+                <img class="voucher-img-size" src="assets/img/${item.prize_image_url}" alt="Voucher">
 
                 <div class="tng-voucher-content">
                     <div class="spaced-between">
@@ -174,7 +174,7 @@ async function init() {
     renderBadges();
 
     // general function
-    highlightNavBar("rewards");
+    highlightNavBar("inventory");
 
     // event listeners
     loadVoucherBtn.addEventListener('click', () => {

@@ -317,7 +317,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
                 <div id="userbox">
                     <div id="top-row">
                         <div id="left-section">
-                            <img class="passenger-profile-picture" id="profilePic-2" src="assets/img/man.png">
+                            <img class="passenger-profile-picture" id="profilePic-2" src="${passenger.profile_picture_url}">
                             <div id="user-info">
                                 <h3>${passenger.username}</h3>
                                 <p>⭐${passenger.avg_rating}</p>

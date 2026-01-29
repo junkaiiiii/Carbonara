@@ -325,23 +325,22 @@ INSERT INTO `reports` (`report_id`, `ride_id`, `reporter_id`, `reported_user_id`
 
 -- Prizes
 INSERT INTO `prizes` (`prize_id`, `prize_name`, `points_required`, `stock`, `prize_type`, `prize_image_url`) VALUES
-('PR_692f18730aefd', 'BadgeA', 100, 50, 'badge', 'badgeA.png'),
-('PR_692f18730b37e', 'BadgeB', 150, 40, 'badge', 'badgeB.png'),
-('PR_692f18730c123', 'RM5 Ride Voucher', 200, 200, 'voucher', 'voucher_rm5.png'),
-('PR_692f18730d456', 'RM10 Ride Voucher', 350, 150, 'voucher', 'voucher_rm10.png'),
-('PR_692f18730e789', 'Exclusive T-Shirt', 1200, 30, 'voucher', 'merch_tshirt.png'),
-('PR_692f18730f012', 'Stainless Steel Tumbler', 1500, 20, 'voucher', 'merch_tumbler.png'),
-('PR_692f18731a345', 'Free Ride Pass (1 Trip)', 800, 50, 'badge', 'pass_freeride.png'),
-('PR_692f18731b678', 'Touch n Go RM20 Credit', 900, 40, 'voucher', 'ewallet_tng20.png');
+('PR_697b15949d784', '1000 Points Badge', 1000, NULL, 'badge', 'prize_697b15949d4853.95895305.png'),
+('PR_697b4ff4057fd', 'RM1000000 Discount Voucher', 2147483647, 100, 'voucher', 'prize_697b4ff40567d3.41427375.png'),
+('PR_697b6b81745d9', '50% Discount Voucher for Shopee', 10000, 70, 'voucher', 'prize_697b6b81742a03.22407598.png'),
+('PR_697b6bc54e9e0', 'RM50 Voucher', 500, 100, 'voucher', 'prize_697b6bc54e4de6.55837734.jpg'),
+('PR_697b6c00e9710', 'RM50 Parkson Voucher', 500, 100, 'voucher', 'prize_697b6c00e93f03.66681002.png'),
+('PR_697b6d8f6f294', 'User Loyalty Badge', 5000, NULL, 'badge', 'prize_697b6d8f6ef743.09108463.png'),
+('PR_697b6dee89eef', 'Premium Badge', 10000, NULL, 'badge', 'prize_697b6dee89bdf0.71987875.png'),
+('PR_697b723cbe3fd', 'Test Badge', 20, NULL, 'badge', 'prize_697b723cbe2539.67996142.png');
 
 
 
 -- Redemption
 INSERT INTO `redemption` (`redemption_id`, `prize_id`, `user_id`, `cost`, `redeemed_at`) VALUES
-('RED_692f135fd2663', 'PR_692f18730aefd', 'US_692f0e82a7fb7', 100, '2025-11-10 14:00:00'),
-('RED_692f135fd2dcc', 'PR_692f18730b37e', 'US_692f0ebbe9265', 150, '2025-11-12 16:00:00'),
--- Tan Jian Shen (Passenger) redeeming a small voucher
-('RED_692f2001a1111', 'PR_692f18730c123', 'US_692f0e82a7fb7', 200, '2025-12-05 09:30:00'),
+('RED697b6ed8dd4e0', 'PR_697b15949d784', 'US_692f0ebbe9265', 1000, '2026-01-29 15:29:44'),
+('RED697b6edde98f0', 'PR_697b6c00e9710', 'US_692f0ebbe9265', 500, '2026-01-29 15:29:49'),
+('RED697b6ee1ed030', 'PR_697b6b81745d9', 'US_692f0ebbe9265', 10000, '2026-01-29 15:29:53');
 
 -- Eng Hong Xuan (Driver) redeeming a large merch item
 ('RED_692f2001b2222', 'PR_692f18730f012', 'US_692f0e453c9dd', 1500, '2025-12-10 18:45:15'),

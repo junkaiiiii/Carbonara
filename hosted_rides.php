@@ -13,6 +13,7 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
 <body>
     <!-- header -->
     <?php
@@ -39,15 +40,29 @@ session_start();
 
     <!-- driver menu section -->
     <div id="driver-menu-section">
-
     </div>
 
-    <div id="hostedride-title">
+    <div id="requestedRidesTitle" class="hostedTitles">
+        <h1 class="bolded-title">Pending Requests</h1>
+    </div>
+
+    <div id="requestedRidesSection">
+    </div>
+
+    <div id="hostedride-title" class="hostedTitles">
         <h1 class="bolded-title">My Hosted Rides</h1>
     </div>
 
     <div id="hosted-rides-section">
     </div>
+
+    <div id="completedRidesTitle" class="hostedTitles">
+        <h1 class="bolded-title">My Completed Rides</h1>
+    </div>
+
+    <div id="completedRidesSection">
+    </div>
+
 
 
     <?php
