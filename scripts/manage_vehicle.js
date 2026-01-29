@@ -23,6 +23,8 @@ async function fetchVehicles() {
 function createVehicleCard(vehicle) {
     let div = document.createElement("div");
 
+    const imagePath = vehicle.vehicle_image ? vehicle.vehicle_image : 'assets/img/kancil.jpg';
+
     const registeredDate = new Date(vehicle.registered_at);
     const formattedDate = registeredDate.toLocaleDateString('en-GB', {
         day: 'numeric',
@@ -32,7 +34,7 @@ function createVehicleCard(vehicle) {
 
     div.innerHTML = `
                 <div class="car-details-container">
-                    <img class="car-img" src="assets/img/kancil.jpg" alt="kancil">
+                    <img class="car-img" src="${imagePath}" alt="${vehicle.brand}">
                     <div class="container-content flex-column">
                         <div class="flex-spaced-between">
                             <div class="left-section">
@@ -78,7 +80,8 @@ function createVehicleCard(vehicle) {
                                     '${vehicle.color}',
                                     '${vehicle.type}',
                                     '${vehicle.brand || ''}',
-                                    '${vehicle.manufactured_year || ''}'
+                                    '${vehicle.manufactured_year || ''}',
+                                    '${vehicle.vehicle_image || ""}'
                                 )">Edit</button>
                             </div> 
 
@@ -124,7 +127,7 @@ function renderVehicles() {
 //     }
 // });
 
-function openEdit(registered_at, id, plate, color, type, brand, manufactured_year) {
+function openEdit(registered_at, id, plate, color, type, brand, manufactured_year, imagePath) {
     document.getElementById('registeredTimeLabel').textContent =  registered_at;
     document.getElementById('edit_id').value = id;
     document.getElementById('edit_plate').value = plate;
@@ -132,6 +135,15 @@ function openEdit(registered_at, id, plate, color, type, brand, manufactured_yea
     document.getElementById('edit_type').value = type;
     document.getElementById('edit_brand').value = brand || '';
     document.getElementById('edit_year').value = manufactured_year || '';
+
+    const imgPreview = document.getElementById('current_edit_img');
+    if(imagePath && imagePath !== 'null'){
+        imgPreview.src = imagePath;
+        imgPreview.style.display = 'block';
+    }
+    else{
+        imgPreview.style.display = 'none';
+    }
 
     document.getElementById('overlay').classList.add('show');
     document.getElementById('edit').classList.add('show');
@@ -195,19 +207,34 @@ function closeDelete() {
 document.getElementById('addVehicleForm').addEventListener('submit', async function (e) {
     e.preventDefault(); //stopping it from refreshing
 
-    const data = {
-        car_plate_number: document.getElementById('add_plate').value,
-        color: document.getElementById('add_colour').value,
-        type: document.getElementById('add_type').value,
-        brand: document.getElementById('add_brand').value,
-        year: parseInt(document.getElementById('add_year').value)
-    };
+    // const data = {
+    //     car_plate_number: document.getElementById('add_plate').value,
+    //     color: document.getElementById('add_colour').value,
+    //     type: document.getElementById('add_type').value,
+    //     brand: document.getElementById('add_brand').value,
+    //     year: parseInt(document.getElementById('add_year').value)
+    // };
+
+    //form data instead of json object
+
+    const formData = new FormData();
+    formData.append('car_plate_number', document.getElementById('add_plate').value);
+    formData.append('color', document.getElementById('add_colour').value);
+    formData.append('type', document.getElementById('add_type').value);
+    formData.append('brand', document.getElementById('add_brand').value);
+    formData.append('year', parseInt(document.getElementById('add_year').value));
+
+    const fileInput = document.getElementById('add_image');
+    if(fileInput.files[0]){
+        formData.append('vehicle_image', fileInput.files[0]);
+    }
+
+    // Content-Type removed since we;re not using json 
 
     try {
         const response = await fetch('api/vehicle_management_api.php?mode=add', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: formData
         });
 
         const result = await response.json();
@@ -231,7 +258,7 @@ document.getElementById('addVehicleForm').addEventListener('submit', async funct
     }
 });
 
-document.getElementById('confirmDeleteBtn').addEventListener('click', async function () {
+document.getElementById('confirmDeleteBtn').addEventListener('click', async function (e) {
     if (!vehicleToDelete) {
         return
     };
@@ -267,20 +294,32 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', async func
 document.getElementById('confirmEditBtn').addEventListener('click', async function (e) {
     e.preventDefault();
 
-    const data = {
-        vehicle_id: document.getElementById('edit_id').value,
-        car_plate_number: document.getElementById('edit_plate').value,
-        color: document.getElementById('edit_colour').value,
-        type: document.getElementById('edit_type').value,
-        brand: document.getElementById('edit_brand').value,
-        year: document.getElementById('edit_year').value
-    };
+    // const data = {
+    //     vehicle_id: document.getElementById('edit_id').value,
+    //     car_plate_number: document.getElementById('edit_plate').value,
+    //     color: document.getElementById('edit_colour').value,
+    //     type: document.getElementById('edit_type').value,
+    //     brand: document.getElementById('edit_brand').value,
+    //     year: document.getElementById('edit_year').value
+    // };
+
+    const formData = new FormData();
+    formData.append('vehicle_id', document.getElementById('edit_id').value);
+    formData.append('car_plate_number', document.getElementById('edit_plate').value);
+    formData.append('color', document.getElementById('edit_colour').value);
+    formData.append('type', document.getElementById('edit_type').value);
+    formData.append('brand', document.getElementById('edit_brand').value);
+    formData.append('year', document.getElementById('edit_year').value);
+
+    const fileInput = document.getElementById('edit_image');
+    if(fileInput.files[0]) {
+        formData.append('vehicle_image', fileInput.files[0]);
+    }
 
     try {
         const response = await fetch('api/vehicle_management_api.php?mode=update', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            method: 'POST',
+            body: formData
         });
 
         const result = await response.json();

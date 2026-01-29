@@ -38,6 +38,12 @@
         <p class="bolded grey" id="registeredTimeLabel"></p>
         <hr class="margin10top">
         <form id="editVehicleForm">
+
+            <img class="margin10top" id="current_edit_img" src="" alt="Current Vehicle" style="max-width: 150px; border-radius: 8px; display: none;">
+        
+            <p>Update Image (Optional):</p>
+            <input type="file" id="edit_image" name="vehicleImage" accept="image/*">
+
             <p>Vehicle Brand:</p>
             <input type="hidden" id="edit_id" name="vehicle_id">
 
@@ -65,7 +71,7 @@
                 <option value="Motorcycle">Motorcycle</option>
             </select>
 
-            <div class="stick-left button-container">
+            <div class="stick-left button-container margin20bottom">
                  <div>
                     <button class="red button" type="button" onclick="closeEdit()">Close</button>
                     <!-- changes to type button because when the browser detects the button as type submit it automatically refreshes it  -->
@@ -87,6 +93,9 @@
         <h2 class="bolded huge">Add New Vehicle</h2>
         <hr class="margin10top">
         <form id="addVehicleForm">
+            <p>Vehicle Image:</p>
+            <input type="file" id="add_image" name="vehicleImage" accept="image/*">
+
             <p>Vehicle Brand:</p>
             <input type="text" id="add_brand" name="carbrandInput" placeholder="Perodua Kancil" required="required">
 
@@ -112,7 +121,7 @@
                 <option value="Motorcycle">Motorcycle</option>
             </select>
 
-            <div class="stick-left button-container">
+            <div class="stick-left button-container margin10bottom">
                  <div>
                     <button class="red button" onclick="closeAdd()">Close</button>
                 </div> 

@@ -290,6 +290,14 @@
     margin-top: 10px;
 }
 
+.margin10bottom{
+    margin-bottom: 10px;
+}
+
+.margin20bottom{
+    margin-bottom: 20px;
+}
+
 .notice{
     position: fixed;
     top: 50%;
@@ -390,8 +398,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.8);
-    width: 30%;
-    height: 240px;
+    width: 400px;
+    max-width: 90%;
+    height: auto;
+    min-height: 200px;
     border-radius: 12px;
     background: white;
     padding: 20px 0;

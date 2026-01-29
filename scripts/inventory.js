@@ -1,5 +1,4 @@
 import { highlightNavBar  } from "./app.js";
-import { createQrPopUp } from "./qr.js";
 
 let states = {
     vouchers: [],
@@ -105,7 +104,7 @@ function createBadgeCard(item){
                 <div class="tng-voucher-content">
                     <div class="spaced-between">
                         <p>${item.prize_name}</p>
-                        <P id="activea" class="active-status">Active</P>
+                        <p id="active" class="active-status">Active</p>
                     </div>
 
                     <div class="group">
@@ -182,6 +181,11 @@ async function init() {
         states.visible_voucher_count += 4;
         renderVouchers();
     })
+
+    loadBadgeBtn?.addEventListener('click', () => {
+        states.visible_badge_count += 4;
+        renderBadges();
+    });
 }
 
 
