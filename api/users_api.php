@@ -8,71 +8,41 @@
     $method = $_SERVER["REQUEST_METHOD"];
 
     if ($method === "GET"){
-        $sql = "SELECT u.*, rt.rating_id, rt.rated_id, rt.score, co2.co2_id, co2.co2_saved,
-                rater.user_id AS rater_user_id,
-                rater.username AS rater_username,
-                rater.full_name AS rater_full_name,
-                rater.profile_picture_url AS rater_profile_picture,
-                r.ride_id, r.ride_distance 
-                FROM users u
-                LEFT JOIN ratings rt
-                ON u.user_id = rt.rated_id
-                LEFT JOIN users rater
-                ON rt.rater_id = rater.user_id
-                LEFT JOIN co2_log co2
-                ON u.user_id = co2.user_id
-                LEFT JOIN rides r
-                ON co2.ride_id = r.ride_id";
+        $sql = "SELECT 
+                u.*, 
+                (SELECT AVG(score) FROM ratings r WHERE r.rated_id = u.user_id) as average_rating,
+                (SELECT SUM(co2_saved) FROM co2_log c WHERE c.user_id = u.user_id) as total_co2,
+                (SELECT SUM(r.ride_distance) FROM rides r 
+                WHERE r.ride_id IN (
+                    SELECT DISTINCT c.ride_id 
+                    FROM co2_log c 
+                    WHERE c.user_id = u.user_id
+                )
+                AND r.ride_status = 'Completed') as total_distance
+                
+                FROM users u";
+                
 
         $result = mysqli_query($conn, $sql);
         $response = [];
 
         if ($result && mysqli_num_rows($result) > 0){
             while ($row = mysqli_fetch_assoc($result)){
-
-                $uid = $row['user_id'];
-
-                //check if user already inside response
-                if (!isset($response[$uid])){
-                    $response[$uid] = [
-                    "user_id" => $row["user_id"],
-                    "full_name" => $row["full_name"],
-                    "username" => $row["username"],
-                    "email" => $row["email"],
-                    "role" => $row["role"],
-                    "status" => $row["status"],
-                    "phone" => $row["phone"],
-                    "profile_picture" => $row["profile_picture_url"],
-                    "created_at" => $row["created_at"],
-                    "ratings" => [],
-                    "co2_logs" => [],
-                    "rides" => []
-                    ];
-                }
-
-
-                
-                //if row has rating (temporary)
-                if ($row["rating_id"] !== null){
-                    $response[$uid]["ratings"][] = [
-                        "rating_id" => $row["rating_id"],
-                        "score" => $row["score"],
-                        "rater" => [
-                            "rater_id" => $row['rater_user_id'],
-                            "rater_username" => $row["rater_username"],
-                            "rater_full_name" => $row['rater_full_name'],
-                            "rater_profile_picture" => $row['rater_profile_picture']
-                        ]
-                    ];
-                }
-
-                if ($row["co2_id"] !== null){
-                    $response[$uid]["co2_logs"][] = [
-                        "co2_id" => $row["co2_id"],
-                        "co2_saved" => $row["co2_saved"],
-                        "total_distance" => $row["ride_distance"]
-                    ];
-                }
+            $response[] = [
+                "user_id" => $row["user_id"],
+                "full_name" => $row["full_name"],
+                "username" => $row["username"],
+                "email" => $row["email"],
+                "role" => $row["role"],
+                "status" => $row["status"],
+                "phone" => $row["phone"],
+                "profile_picture" => $row["profile_picture_url"],
+                "created_at" => $row["created_at"],
+        
+                "average_rating" => number_format((float)$row['average_rating'], 1),
+                "total_co2" => number_format((float)$row['total_co2'], 2),
+                "total_distance" => number_format((float)$row['total_distance'], 2),
+            ];
 
 
             } 

@@ -82,33 +82,15 @@ function render(){
 
     userGrid.innerHTML = "";
     states.users.forEach(user => {
-        let ratingScore = 0;
-        let rated = 0;
-        let avgRating = 0;
-        if (user.ratings){
-            user.ratings.forEach(rating => {
-                ratingScore += Number(rating.score);
-                rated += 1;
-                avgRating = Number(ratingScore / rated);   
-                // states.users.user.push(ratingScore); 
-            })
-        }
-        let co2Saved = 0;
-        let totalDistance = 0;
-        if (user.co2_logs){
-            user.co2_logs.forEach(co2 => {
-                co2Saved += Number(co2.co2_saved);
-                totalDistance += Number(co2.total_distance);
-            })
-        }
+
         // if (user.role === "Admin") return;
         const card = createUserCard(user.user_id,
                                     user.username,
                                     user.role,
-                                    avgRating,
+                                    user.average_rating,
                                     user.created_at,
-                                    co2Saved,
-                                    totalDistance, 
+                                    user.total_co2,
+                                    user.total_distance, 
                                     user.email,
                                     user.phone,
                                     user.profile_picture ?? defaultPfp,
