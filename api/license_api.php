@@ -53,17 +53,22 @@
 
         if ($action === "approve"){
             $newStatus = "Approved";
+            $sql = "UPDATE driving_license dl 
+                    INNER JOIN users u ON u.user_id = dl.user_id
+                    SET dl.status = ?, u.role = 'Driver'
+                    WHERE dl.license_id = ?";
         }
         elseif ($action === "reject"){
             $newStatus = "Rejected";
+            $sql = "UPDATE driving_license 
+                    SET status = ?
+                    WHERE license_id = ?";
         }
         else{
             respond(["error" => "Invalid action"], 400);
         }
         
-        $sql = "UPDATE driving_license 
-                SET status = ?
-                WHERE license_id = ?";
+
         
         $stmt = mysqli_prepare($conn, $sql);
 

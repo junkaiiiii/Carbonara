@@ -142,7 +142,9 @@ hr{
     } */
 
     & a{
-        border: solid 2px black;
+        border: solid 2px transparent;
+        background-color: var(--button-green);
+        color: white;
         text-align: center;
         padding: 0.5rem 1rem;
         width: 14vw;
@@ -150,13 +152,12 @@ hr{
         font-weight: bold;
         font-size: 2.5ch; 
         text-decoration: none;
-        color: black;
         transition: all 0.3s ease;
     }
 
     & a:hover{
         transform: translateY(-3px);
-        background-color: rgb(206, 253, 226);
+        box-shadow: 0px 0px 5px var(--button-green);
     }
 
 }
@@ -231,6 +232,15 @@ hr{
             border-radius: 8px;
         }
     }
+}
+
+.no-state{
+    text-align: center;
+    font-style: italic;
+    color: gray;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    
 }
 
 @media (max-width:1000px){
