@@ -509,7 +509,7 @@ async function createRatingPopup(riders) {
 
         // submit point logs and CO2
         // 0.187kg per km
-        const co2Saved = states.session.role.toLowerCase() === "driver" ? Number(states.ride_details.ride_distance) * 0.187 : Number(states.ride_details.ride_distance) * 0.187 * states.ride_details.passengers.length;
+        const co2Saved = states.session.role.toLowerCase() === "driver" ? Number(states.ride_details.ride_distance) * 0.187 * states.ride_details.passengers.length : Number(states.ride_details.ride_distance) * 0.187 ;
         const points = Math.floor(co2Saved * 5);
         const rideId = states.ride_id;
 

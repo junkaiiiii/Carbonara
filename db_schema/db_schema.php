@@ -172,7 +172,6 @@ INSERT INTO vehicles (vehicle_id, driver_id, car_plate_number, brand, manufactur
 ('VH_692f13de62608', 'US_692f0e453c9dd', 'WXY123', 'Honda', '2023', 'Red', 'SUV', '2025-12-15 17:20:00', 'assets/vehicle_images/car_697c22ba87f6f.jpeg');
 
 
--- Rides
 INSERT INTO rides (
     ride_id,
     driver_id,
@@ -193,148 +192,204 @@ INSERT INTO rides (
 ('RD_692f17d1e7ebd', 'US_692f0e453c9dd', 'VH_692f13de625f8',
  'Sri Petaling', 3.068810, 101.689710,
  'Asia Pacific University', 3.042300, 101.688800,
- '2025-10-31 10:05:00', 3, 5.20, 'Completed', '2025-10-25 09:00:00', 123456),
+ '2026-01-20 10:05:00', 3, 5.20, 'Completed', '2026-01-18 09:00:00', 123456),
 
 ('RD_692f17d1e7eda', 'US_692f0e453c9dd', 'VH_692f13de625f8',
  'Bukit Jalil', 3.054300, 101.690200,
  'APU Campus', 3.052000, 101.689000,
- '2025-11-01 08:30:00', 2, 2.10, 'Completed', '2025-10-26 11:00:00', 654321),
+ '2026-01-21 08:30:00', 2, 2.10, 'Completed', '2026-01-19 11:00:00', 654321),
 
-('RD_692f17d1e7edb', 'US_692f0e453c9dd', 'VH_692f13de625f8',
+('RD_692f17d1e7edb', 'US_692f0f042125d', 'VH_692f13de625f8',
  'Puchong IOI Mall', 3.043210, 101.618400,
  'APU Campus', 3.052100, 101.689200,
- '2025-11-02 09:15:00', 3, 12.50, 'Completed', '2025-10-27 10:20:00', 223344),
+ '2026-01-22 09:15:00', 3, 12.50, 'Completed', '2026-01-20 10:20:00', 223344),
 
-('RD_692f17d1e7edc', 'US_692f0e453c9dd', 'VH_692f13de625f8',
+('RD_692f17d1e7edc', 'US_692f0f042125d', 'VH_692f13de625f8',
  'OUG Parklane', 3.066900, 101.658900,
  'Bukit Jalil LRT', 3.056700, 101.692200,
- '2025-11-03 07:45:00', 4, 6.80, 'Completed', '2025-10-28 08:15:00', 998877),
+ '2026-01-23 07:45:00', 4, 6.80, 'Completed', '2026-01-21 08:15:00', 998877),
 
 ('RD_692f17d1e7edd', 'US_692f0e453c9dd', 'VH_692f13de625f8',
  'Cheras Leisure Mall', 3.084300, 101.742900,
  'APU Campus', 3.052000, 101.689000,
- '2025-11-04 08:00:00', 2, 14.30, 'Completed', '2025-10-29 09:00:00', 121212),
+ '2026-01-24 08:00:00', 2, 14.30, 'Completed', '2026-01-22 09:00:00', 121212),
 
-('RD_692f17d1e7ede', 'US_692f0e453c9dd', 'VH_692f13de625f8',
+ ('RD_692f17d1e7ede', 'US_692f0f042125d', 'VH_692f13de625f8',
  'Kuchai Lama', 3.095500, 101.690300,
  'Sri Petaling', 3.068800, 101.689700,
- '2025-11-05 09:30:00', 3, 4.90, 'Completed', '2025-10-30 11:10:00', 343434),
+ '2026-01-25 09:30:00', 3, 4.90, 'Completed', '2026-01-23 11:10:00', 343434),
 
 ('RD_692f17d1e7edf', 'US_692f0e453c9dd', 'VH_692f13de625f8',
  'KL Sentral', 3.134800, 101.686300,
  'APU Campus', 3.052100, 101.689200,
- '2025-11-06 08:20:00', 1, 17.80, 'Completed', '2025-11-01 13:00:00', 565656),
+ '2026-01-29 08:20:00', 1, 17.80, 'Completed', '2026-01-27 13:00:00', 565656),
 
 ('RD_692f17d1e7ee0', 'US_692f0e453c9dd', 'VH_692f13de625f8',
  'Mid Valley Megamall', 3.118500, 101.677000,
  'Technology Park Malaysia', 3.049900, 101.702300,
- '2025-11-07 09:40:00', 3, 11.40, 'Incomplete', '2025-11-02 14:30:00', 787878),
+ '2026-01-30 09:40:00', 3, 11.40, 'Incomplete', '2026-01-28 14:30:00', 787878),
 
-('RD_692f17d1e7ee1', 'US_692f0e453c9dd', 'VH_692f13de62608',
+('RD_692f17d1e7ee1', 'US_692f0f042125d', 'VH_692f13de62608',
  'Sunway Pyramid', 3.072200, 101.606900,
  'Bukit Jalil Stadium', 3.056300, 101.689500,
- '2025-11-08 10:00:00', 4, 15.60, 'Incomplete', '2025-11-03 09:45:00', 909090),
+ '2026-01-31 10:00:00', 4, 15.60, 'Incomplete', '2026-01-29 09:45:00', 909090),
 
 ('RD_692f17d1e7ee2', 'US_692f0e453c9dd', 'VH_692f13de62608',
  'Taman Connaught', 3.074800, 101.739800,
  'APU Campus', 3.052100, 101.689200,
- '2025-11-09 07:55:00', 2, 13.20, 'Incomplete', '2025-11-04 12:40:00', 454545),
+ '2026-02-01 07:55:00', 2, 13.20, 'Incomplete', '2026-01-30 12:40:00', 454545),
 
-('RD_692f17d1e7ee3', 'US_692f0e453c9dd', 'VH_692f13de62608',
+('RD_692f17d1e7ee3', 'US_692f0f042125d', 'VH_692f13de62608',
  'Bandar Kinrara 5', 3.038600, 101.635000,
  'Sri Petaling LRT', 3.074300, 101.690800,
- '2025-11-10 08:25:00', 3, 9.70, 'Incomplete', '2025-11-05 18:30:00', 112233),
+ '2026-02-03 08:25:00', 3, 9.70, 'Incomplete', '2026-01-31 18:30:00', 112233),
 
 ('RD_692f17d1e7ee4', 'US_692f0e453c9dd', 'VH_692f13de62608',
  'Old Klang Road', 3.089200, 101.666600,
  'Bukit Jalil', 3.054300, 101.690200,
- '2025-11-11 09:05:00', 2, 7.40, 'Incomplete', '2025-11-06 10:00:00', 889900);
+ '2026-02-06 09:05:00', 2, 7.40, 'Incomplete', '2026-02-01 10:00:00', 889900);
 
 
 
 -- Points Log
 INSERT INTO `points_log` (`point_id`, `ride_id`, `user_id`, `points_earned`, `log_at`) VALUES
-('PO_692f1407c294e', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 20, '2025-10-31 10:05:00'),
-('PO_692f1407c3bcb', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 15, '2025-11-01 08:35:00');
+-- RD_692f17d1e7ebd (5.2 km, 2 passengers)
+('PO_692f1407c294e', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 40, '2026-01-20 10:05:00'), -- passenger
+('PO_692f1407c3bcb', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 40, '2026-01-20 10:05:00'), -- passenger
+('PO_692f1407c3bcc', 'RD_692f17d1e7ebd', 'US_692f0e453c9dd', 100, '2026-01-20 10:05:00'), -- driver
+
+-- RD_692f17d1e7eda (2.1 km, 1 passenger)
+('PO_692f1407c3bcd', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 10, '2026-01-21 08:35:00'), -- passenger
+('PO_692f1407c3bce', 'RD_692f17d1e7eda', 'US_692f0e453c9dd', 20, '2026-01-21 08:35:00'), -- driver
+
+-- RD_692f17d1e7edb (12.5 km, 1 passenger)
+('PO_692f1407c3bcf', 'RD_692f17d1e7edb', 'US_692f0ebbe9265', 20, '2026-01-22 09:15:00'), -- passenger
+('PO_692f1407c3bd0', 'RD_692f17d1e7edb', 'US_692f0f042125d', 110, '2026-01-22 09:15:00'), -- driver
+
+-- RD_692f17d1e7edc (6.8 km, 0 passengers)
+('PO_692f1407c3bd1', 'RD_692f17d1e7edc', 'US_692f0e453c9dd', 60, '2026-01-23 07:45:00'),
+
+-- RD_692f17d1e7edd (14.3 km, 0 passengers)
+('PO_692f1407c3bd2', 'RD_692f17d1e7edd', 'US_692f0e453c9dd', 70, '2026-01-24 08:00:00'),
+
+-- RD_692f17d1e7ede (4.9 km, 0 passengers)
+('PO_692f1407c3bd3', 'RD_692f17d1e7ede', 'US_692f0f042125d', 40, '2026-01-25 09:30:00'),
+
+-- RD_692f17d1e7edf (17.8 km, 0 passengers)
+('PO_692f1407c3bd4', 'RD_692f17d1e7edf', 'US_692f0e453c9dd', 80, '2026-01-29 08:20:00');
 
 
 
 -- CO2 Log
 INSERT INTO `co2_log` (`co2_id`, `ride_id`, `user_id`, `co2_saved`, `log_at`) VALUES
-('CO_692f14271e3fe', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 1.50, '2025-10-31 10:05:00'),
-('CO_692f14271e40f', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 2.20, '2025-11-01 08:35:00');
+-- RD_692f17d1e7ebd (5.2 km, 2 passengers)
+('CO_692f14271e3fe', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 0.97, '2026-01-20 10:05:00'), -- passenger: 5.2*0.187
+('CO_692f14271e40f', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 0.97, '2026-01-20 10:05:00'), -- passenger
+('CO_692f14271e410', 'RD_692f17d1e7ebd', 'US_692f0e453c9dd', 2.91, '2026-01-20 10:05:00'), -- driver: 5.2*0.187*3 (driver + 2 passengers)
+
+-- RD_692f17d1e7eda (2.1 km, 1 passenger)
+('CO_692f14271e411', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 0.39, '2026-01-21 08:35:00'),
+('CO_692f14271e412', 'RD_692f17d1e7eda', 'US_692f0e453c9dd', 0.78, '2026-01-21 08:35:00'),
+
+-- RD_692f17d1e7edb (12.5 km, 1 passenger)
+('CO_692f14271e413', 'RD_692f17d1e7edb', 'US_692f0ebbe9265', 2.34, '2026-01-22 09:15:00'),
+('CO_692f14271e414', 'RD_692f17d1e7edb', 'US_692f0f042125d', 4.68, '2026-01-22 09:15:00'),
+
+-- RD_692f17d1e7edc (6.8 km, 0 passengers)
+('CO_692f14271e415', 'RD_692f17d1e7edc', 'US_692f0e453c9dd', 1.27, '2026-01-23 07:45:00'),
+
+-- RD_692f17d1e7edd (14.3 km, 0 passengers)
+('CO_692f14271e416', 'RD_692f17d1e7edd', 'US_692f0e453c9dd', 2.67, '2026-01-24 08:00:00'),
+
+-- RD_692f17d1e7ede (4.9 km, 0 passengers)
+('CO_692f14271e417', 'RD_692f17d1e7ede', 'US_692f0f042125d', 0.92, '2026-01-25 09:30:00'),
+
+-- RD_692f17d1e7edf (17.8 km, 0 passengers)
+('CO_692f14271e418', 'RD_692f17d1e7edf', 'US_692f0e453c9dd', 3.33, '2026-01-29 08:20:00');
 
 
 
 -- Ride Participants
 INSERT INTO `ride_participants` (`participant_id`, `ride_id`, `user_id`, `joined_at`) VALUES
-('RP_692f1451a6442', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', '2025-10-31 09:50:00'),
-('RP_692f1451a6452', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', '2025-10-31 09:52:00');
+-- Ride RD_692f17d1e7ebd (Completed, Driver US_692f0e453c9dd)
+('RP_692f1451a6442', 'RD_692f17d1e7ebd', 'US_692f0e453c9dd', '2026-01-20 09:00:00'), -- driver
+('RP_692f1451a6443', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', '2026-01-20 09:50:00'), -- passenger approved
+('RP_692f1451a6444', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', '2026-01-20 09:52:00'), -- passenger approved
+
+-- Ride RD_692f17d1e7eda (Completed, Driver US_692f0e453c9dd)
+('RP_692f1451a6445', 'RD_692f17d1e7eda', 'US_692f0e453c9dd', '2026-01-21 08:00:00'),
+
+-- Ride RD_692f17d1e7edb (Completed, Driver US_692f0f042125d)
+('RP_692f1451a6446', 'RD_692f17d1e7edb', 'US_692f0f042125d', '2026-01-22 09:00:00'),
+
+-- Ride RD_692f17d1e7ee0 (Incomplete, Driver US_692f0e453c9dd)
+('RP_692f1451a6447', 'RD_692f17d1e7ee0', 'US_692f0e453c9dd', '2026-01-30 09:00:00');
 
 
 
 
 -- Requests
 INSERT INTO `requests` (`request_id`, `ride_id`, `passenger_id`, `status`, `requested_at`) VALUES
-('RQ_692f1479d6ca1', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'approved', '2025-10-30 20:00:00'),
-('RQ_692f1479d6cb3', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'approved', '2025-10-30 20:10:00'),
-('RQ_692f1479d6cb4', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'requested', '2025-10-31 14:00:00');
+('RQ_692f1479d6ca1', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'approved', '2026-01-19 20:00:00'),
+('RQ_692f1479d6cb3', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'approved', '2026-01-19 20:10:00'),
+('RQ_692f1479d6cb4', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'requested', '2026-01-20 14:00:00'),
+
+-- New request example for future ride (Incomplete)
+('RQ_692f1479d6cb5', 'RD_692f17d1e7ee0', 'US_692f0ebbe9265', 'requested', '2026-01-29 11:00:00');
 
 
 
--- Ratings
+-- Ratings (extended)
 INSERT INTO `ratings` (`rating_id`, `ride_id`, `rater_id`, `rated_id`, `score`, `created_at`) VALUES
-('RT_692f14ac09ceb', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0e453c9dd', 5.0, '2025-10-31 12:00:00'),
-('RT_692f14ac09f38', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 4.5, '2025-10-31 12:10:00');
+-- Existing
+('RT_692f14ac09ceb', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0e453c9dd', 5.0, '2026-01-20 12:00:00'),
+('RT_692f14ac09f38', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 4.5, '2026-01-20 12:10:00'),
+
+-- New ratings: passengers rating drivers
+('RT_692f14ac09f39', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 4.0, '2026-01-21 12:15:00'),
+('RT_692f14ac09f40', 'RD_692f17d1e7edb', 'US_692f0ebbe9265', 'US_692f0f042125d', 5.0, '2026-01-22 12:30:00'),
+
+-- New ratings: drivers rating passengers
+('RT_692f14ac09f41', 'RD_692f17d1e7ebd', 'US_692f0e453c9dd', 'US_692f0e82a7fb7', 5.0, '2026-01-20 12:20:00'),
+('RT_692f14ac09f42', 'RD_692f17d1e7ebd', 'US_692f0e453c9dd', 'US_692f0ebbe9265', 4.5, '2026-01-20 12:25:00'),
+('RT_692f14ac09f43', 'RD_692f17d1e7eda', 'US_692f0e453c9dd', 'US_692f0ebbe9265', 4.0, '2026-01-21 12:20:00'),
+('RT_692f14ac09f44', 'RD_692f17d1e7edb', 'US_692f0f042125d', 'US_692f0ebbe9265', 5.0, '2026-01-22 12:35:00');
 
 
 
 -- Reports
 INSERT INTO `reports` (`report_id`, `ride_id`, `reporter_id`, `reported_user_id`, `description`, `status`, `created_at`) VALUES
-('RE_692f14ebc30eb', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 'Driver was late', 'Pending', '2025-11-01 09:00:00'),
-('RE_692f14ebc319e', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0ebbe9265', 'Passenger was rude', 'Approved', '2025-10-31 13:20:00');
-
+('RE_692f14ebc30eb', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 'Driver was late', 'Pending', '2026-01-21 09:00:00'),
+('RE_692f14ebc319e', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0ebbe9265', 'Passenger was rude', 'Approved', '2026-01-20 13:20:00');
 
 
 -- Prizes
 INSERT INTO `prizes` (`prize_id`, `prize_name`, `points_required`, `stock`, `prize_type`, `prize_image_url`) VALUES
-('PR_697b15949d784', '1000 Points Badge', 1000, NULL, 'badge', 'prize_697b15949d4853.95895305.png'),
-('PR_697b4ff4057fd', 'RM1000000 Discount Voucher', 2147483647, 100, 'voucher', 'prize_697b4ff40567d3.41427375.png'),
-('PR_697b6b81745d9', '50% Discount Voucher for Shopee', 10000, 70, 'voucher', 'prize_697b6b81742a03.22407598.png'),
+('PR_697b15949d784', '1000 Points Badge', 50, NULL, 'badge', 'prize_697b15949d4853.95895305.png'),
+('PR_697b6b81745d9', '50% Discount Voucher for Shopee', 3000, 100, 'voucher', 'prize_697b6b81742a03.22407598.png'),
 ('PR_697b6bc54e9e0', 'RM50 Voucher', 500, 100, 'voucher', 'prize_697b6bc54e4de6.55837734.jpg'),
 ('PR_697b6c00e9710', 'RM50 Parkson Voucher', 500, 100, 'voucher', 'prize_697b6c00e93f03.66681002.png'),
 ('PR_697b6d8f6f294', 'User Loyalty Badge', 5000, NULL, 'badge', 'prize_697b6d8f6ef743.09108463.png'),
-('PR_697b6dee89eef', 'Premium Badge', 10000, NULL, 'badge', 'prize_697b6dee89bdf0.71987875.png'),
-('PR_697b723cbe3fd', 'Test Badge', 20, NULL, 'badge', 'prize_697b723cbe2539.67996142.png');
+('PR_697c3cf7d4974', 'APU Economy Rice 10% Discount', 50, 100, 'voucher', 'prize_697c3cf7d43002.91219446.png'),
+('PR_697c3d14bc21e', 'APU Economy Rice 50% Discount', 500, 100, 'voucher', 'prize_697c3d14bc0496.81875129.png'),
+('PR_697c3d2e3d94a', 'Carbonara MVP Badge', 5000, NULL, 'badge', 'prize_697c3d2e3cfda9.94499364.jpg'),
+('PR_697c437212f63', 'RM50 ddsadsa', 900, 50, 'voucher', 'prize_697c437212afc2.44626043.png'),
+('PR_697c4384c82fa', 'Carbonara MVP Badge', 5000, NULL, 'badge', 'prize_697c4384c7d1b8.72807287.png');
 
 
-
--- Redemption
+-- Redemption (adjusted to match prizes & points_required)
 INSERT INTO `redemption` (`redemption_id`, `prize_id`, `user_id`, `cost`, `redeemed_at`) VALUES
-('RED697b6ed8dd4e0', 'PR_697b15949d784', 'US_692f0ebbe9265', 1000, '2026-01-29 15:29:44'),
-('RED697b6edde98f0', 'PR_697b6c00e9710', 'US_692f0ebbe9265', 500, '2026-01-29 15:29:49'),
-('RED697b6ee1ed030', 'PR_697b6b81745d9', 'US_692f0ebbe9265', 10000, '2026-01-29 15:29:53');
+-- Sho Jun Kai redeeming vouchers/badges he can afford
+('RED_692f2001b2222', 'PR_697b15949d784', 'US_692f0ebbe9265', 50, '2026-01-29 15:29:44'),  -- 1000 Points Badge
 
--- Eng Hong Xuan (Driver) redeeming a large merch item
-('RED_692f2001b2222', 'PR_692f18730f012', 'US_692f0e453c9dd', 1500, '2025-12-10 18:45:15'),
+-- Eng Hong Xuan redeeming badges/vouchers
+('RED_692f2001d4444', 'PR_697b15949d784', 'US_692f0e453c9dd', 50, '2026-01-30 10:00:00'), -- 1000 Points Badge
 
--- Sho Jun Kai (Passenger) redeeming a Free Ride Pass
-('RED_692f2001c3333', 'PR_692f18731a345', 'US_692f0ebbe9265', 800, '2025-12-15 12:20:00'),
+-- Thum Zhi Jian redeeming a high-tier badge
+('RED_692f2001f6666', 'PR_697b6d8f6f294', 'US_692f0f042125d', 50, '2026-01-30 11:00:00'), -- User Loyalty Badge
 
--- Thum Zhi Jian (Driver) redeeming TnG Credit
-('RED_692f2001d4444', 'PR_692f18731b678', 'US_692f0f042125d', 900, '2025-12-20 14:10:00'),
-
--- Leong Zi Heng (Admin) testing a redemption (Badge A)
-('RED_692f2001e5555', 'PR_692f18730aefd', 'US_692f0f2dd3648', 100, '2025-12-22 10:05:00'),
-
--- Eng Hong Xuan (Driver) redeeming another voucher later
-('RED_692f2001f6666', 'PR_692f18730d456', 'US_692f0e453c9dd', 350, '2026-01-02 08:00:00'),
-
--- Sho Jun Kai (Passenger) redeeming a T-Shirt
-('RED_692f2001g7777', 'PR_692f18730e789', 'US_692f0ebbe9265', 1200, '2026-01-05 16:30:45'),
-
--- Tan Jian Shen (Passenger) redeeming Badge B
-('RED_692f2001h8888', 'PR_692f18730b37e', 'US_692f0e82a7fb7', 150, '2026-01-10 11:15:20');
+-- Tan Jian Shen redeeming a small prize
+('RED_692f2001g7777', 'PR_697c3cf7d4974', 'US_692f0e82a7fb7', 30, '2026-01-30 11:15:00'); -- APU Economy Rice 10% Discount
 
 
 
