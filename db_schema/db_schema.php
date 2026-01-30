@@ -167,9 +167,9 @@ INSERT INTO `users` (`user_id`, `full_name`, `username`, `email`, `password_hash
 ('US_692f0f2dd3648', 'Leong Zi Heng', 'leongziheng', 'leong@example.com', '$2y$10\$ninwsFSLga6vHnBAbTJrkeHaYkBvSluuo35mHdJ84EEzkgruJjbdS', 'Admin', 'Active', 'Male', '2000-09-09', '0126673456', 'assets/profile/US_692f0f2dd36481769596321.jpeg', '2025-12-02 17:09:17');
 
 -- Vehicles
-INSERT INTO `vehicles` (`vehicle_id`, `driver_id`, `car_plate_number`, `brand`, `manufactured_year`, `color`, `type`, `registered_at`, `vehicle_image`) VALUES
-('VH_692f13de625f8', 'US_692f0e453c9dd', 'SJK732', 'Toyota', '2020', 'Blue', 'Sedan', '2025-12-30 09:10:00', ''),
-('VH_692f13de62608', 'US_692f0e453c9dd', 'WXY123', 'Honda', '2023', 'Red', 'SUV', '2025-12-15 17:20:00', '');
+INSERT INTO vehicles (vehicle_id, driver_id, car_plate_number, brand, manufactured_year, color, type, registered_at, vehicle_image) VALUES
+('VH_692f13de625f8', 'US_692f0e453c9dd', 'SJK732', 'Toyota', '2020', 'Blue', 'Sedan', '2025-12-30 09:10:00', 'assets/vehicle_images/car_697c21a1a17d1.jpeg'),
+('VH_692f13de62608', 'US_692f0e453c9dd', 'WXY123', 'Honda', '2023', 'Red', 'SUV', '2025-12-15 17:20:00', 'assets/vehicle_images/car_697c22ba87f6f.jpeg');
 
 
 -- Rides
