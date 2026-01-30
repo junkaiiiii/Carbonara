@@ -286,10 +286,11 @@ if ($method === "GET") {
         LEFT JOIN (
             SELECT 
                 driver_id,
-                COUNT(DISTINCT r2.ride_id) AS total_rides,
+                COUNT(DISTINCT rp.ride_id) AS total_rides,
                 AVG(rat.score) AS avg_rating,
                 SUM(co2.co2_saved) AS total_co2_saved
             FROM rides r2
+            LEFT JOIN ride_participants rp ON rp.user_id = r2.driver_id
             LEFT JOIN ratings rat ON rat.ride_id = r2.ride_id AND rat.rated_id = r2.driver_id
             LEFT JOIN co2_log co2 ON co2.ride_id = r2.ride_id AND co2.user_id = r2.driver_id
             GROUP BY driver_id
