@@ -178,7 +178,7 @@ function createDriverContainer(driver) {
                         <img class="driver-profile-picture" src="${driver.profile_picture_url}" alt="">
                         <div id="column">
                             <h3>${driver.username}</h3>
-                            <p>⭐ ${driver.avg_rating} | ${driver.total_rides} rides</p>
+                            <p>⭐ ${Math.round(driver.avg_rating * 100)/100} | ${driver.total_rides} rides</p>
                             <div id="phone-number-row">
                                 <img class="content-icons" src="assets/img/telephone.png" alt="">
                                 <p>${driver.phone}</p>
@@ -280,7 +280,7 @@ function createPassengersContainer(ride_details) {
                     <img class="passenger-profile-picture" src="${passenger.profile_picture_url}" alt="">
                     <div id="column">
                         <h3>${passenger.username}</h3>
-                        <p>⭐ ${passenger.avg_rating}</p>
+                        <p>⭐ ${Math.round(passenger.avg_rating * 100)/100}</p>
                         <div id="phone-number-row">
                             <img class="content-icons" src="assets/img/telephone.png" alt="">
                             <p>${passenger.phone}</p>
