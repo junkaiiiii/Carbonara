@@ -26,14 +26,12 @@
     </div>
 
     <div class="route-section" id="routeSection">
-
-    
     </div>
 
-    
-
     <div class="driver-section" id="driverSection">
+    </div>
 
+    <div class="vehicle-section" id="vehicleSection">
     </div>
 
     <div class="passengers-section" id="passengersSection">
@@ -56,12 +54,12 @@
     <div id="impactSection">
 
     </div>
-    
+
     <div style="margin: 20px;">
-        <button  style="display:none; margin-top:20px;" class="complete-ride-button" id="completeRideBtn" hidden>Complete Ride</button>
+        <button style="display:none; margin-top:20px;" class="complete-ride-button" id="completeRideBtn" hidden>Complete Ride</button>
         <button style="display:none; margin-top:20px" class="complete-ride-button" id="rateUsersBtn" hidden>Rate Co-riders</button>
     </div>
-    
+
 
 
     <?php include("user_navbar.html") ?>

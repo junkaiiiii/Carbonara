@@ -13,6 +13,7 @@ let rideMap = null;
 // DOM
 const routeSection = document.getElementById("routeSection");
 const driverSection = document.getElementById("driverSection");
+const vehicleSection = document.getElementById("vehicleSection");
 const passengersSection = document.getElementById("passengersSection");
 const impactSection = document.getElementById("impactSection");
 const completeRideBtn = document.getElementById('completeRideBtn');
@@ -202,6 +203,69 @@ function createDriverContainer(driver) {
         const popUp = createDriverPopUp(driver, highlightStars);
         document.body.appendChild(popUp);
     });
+
+    return div.firstElementChild;
+}
+
+function createVehicleContainer(vehicle){
+    let div = document.createElement('div');
+    div.innerHTML = `
+    <div class="vehicle-container">
+            <div class="vehicle-header-container">
+                <h3 class="vehicle-header">Vehicle</h3>
+            </div>
+            <div class="vehicle-info-container">
+                <div class="vehicle-detail-container">
+                    <p class="bold">${vehicle.brand} ${vehicle.manufactured_year} (${vehicle.type})</p>
+                    <p class="grey-text">Color: ${vehicle.color}</p>
+                    <p class="grey-text">Carplate Number: ${vehicle.car_plate_number}</p>
+                </div>
+                <div class="vehicle-button-container">
+                    <button class="view-vehicle-button">
+                        <img src="assets/img/car.svg">
+                        View Vehicle
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    let el = div.firstElementChild;
+    
+    // add eventlistener to view vehicle button
+    let viewVehicleBtn = el.querySelector('.view-vehicle-button');
+
+    if (viewVehicleBtn){
+        viewVehicleBtn.addEventListener('click', ()=>{
+            const vehiclePopUp = createVehiclePopUp(vehicle.vehicle_image_url);
+            document.body.appendChild(vehiclePopUp);
+        })
+    }
+    
+    return div.firstElementChild;
+}
+
+function createVehiclePopUp(vehicleImageUrl){
+    let div = document.createElement('div');
+    div.innerHTML = `
+    <div class="vehicle-popup-bg">
+        <div class="vehicle-popup-container">
+            <span class="close-btn">&times;</span>
+
+            <img src="${vehicleImageUrl}" alt="Vehicle Image">
+        </div>
+    </div>
+    `;
+
+    let el = div.firstElementChild;
+
+    // add eventlistener to close button
+    let closeBtn = el.querySelector('.close-btn');
+    if (closeBtn){
+        closeBtn.addEventListener('click', ()=>{
+            el.remove();
+        })
+    }
 
     return div.firstElementChild;
 }
@@ -554,6 +618,14 @@ function renderDriverContainer() {
     driverSection.appendChild(driverContainer)
 }
 
+function renderVehicleContainer(){
+    console.log("Rendering Vehicle Container...");
+    vehicleSection.innerHTML = ``;
+
+    const vehicleContainer = createVehicleContainer(states.ride_details.vehicle);
+    vehicleSection.appendChild(vehicleContainer);
+}
+
 function renderPassengersContainer() {
     console.log("Rendering Passenger Container...");
     passengersSection.innerHTML = "";
@@ -609,6 +681,7 @@ async function init() {
     // render functions
     renderRoute();
     renderDriverContainer();
+    renderVehicleContainer();
     renderPassengersContainer();
     renderImpactContainer();
     renderCompleteRideBtn();
