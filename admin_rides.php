@@ -26,6 +26,11 @@
             <button class="filter-btn" data-filter="completed">Completed</button>
             <button class="filter-btn" data-filter="cancelled">Cancelled</button>
         </div>
+
+        <div class="rides-grid" id="ridesGrid">
+
+
+        </div>
     </div>
 
     <script src="scripts/admin_rides.js"></script>
