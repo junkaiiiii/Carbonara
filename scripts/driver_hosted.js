@@ -159,12 +159,17 @@ const handleRejectRequest = (rideId, passengerUsername) => {
 }
 
 const handleCancelRide = (rideId) => {
-    const selectedRideId = states.requestedRides.findIndex(ride => ride.ride_id === rideId);
+    const selectedRequestedRideIndex = states.requestedRides.findIndex(ride => ride.ride_id === rideId);
+    const selectedHostedRideIndex = states.hostedRides.findIndex(ride => ride.ride_id === rideId);
 
-    if (selectedRideId  !== -1) {
-        cancelRide(rideId);
-        states.requestedRides.splice(selectedRideId,1);
+    if (selectedRequestedRideIndex  !== -1) {
+        states.requestedRides.splice(selectedRequestedRideIndex,1);
     }
+    if (selectedHostedRideIndex  !== -1) {
+        states.hostedRides.splice(selectedHostedRideIndex,1);
+    }
+
+    cancelRide(rideId);
     renderRequestedRides()
 }
 
