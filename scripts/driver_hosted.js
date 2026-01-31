@@ -16,7 +16,7 @@ const driverMenuSection = document.getElementById("driver-menu-section");
 const hostedRidesSection = document.getElementById('hosted-rides-section');
 const requestedRidesSection = document.getElementById('requestedRidesSection');
 const completedRidesSection = document.getElementById('completedRidesSection');
-const requestedRidesTitle = document.getElementById('requestedRidesTitle')
+const requestedRidesTitle = document.getElementById('requestedRidesTitle');
 const completedRidesTitle = document.getElementById('completedRidesTitle');
 
 // General Functions
@@ -170,7 +170,8 @@ const handleCancelRide = (rideId) => {
     }
 
     cancelRide(rideId);
-    renderRequestedRides()
+    renderRequestedRides();
+    renderHostedRides();
 }
 
 

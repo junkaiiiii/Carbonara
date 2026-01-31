@@ -405,7 +405,7 @@ if ($method === "GET") {
             FROM ride_participants rp
             GROUP BY rp.ride_id
         ) AS taken_seats ON taken_seats.ride_id = r.ride_id
-        WHERE r.driver_id = ?
+        WHERE r.driver_id = ? AND r.ride_status != 'Cancelled'
         ORDER BY r.created_at DESC;
     ";
     
