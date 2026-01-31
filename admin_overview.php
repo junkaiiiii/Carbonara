@@ -46,7 +46,7 @@
                     <img class="stat-icon" src="assets/img/co2-saved.png" alt="Total-co2">
                 </div>
                 <div class="stat-content">
-                    <p class="stat-label">Total CO2</p>
+                    <p class="stat-label">Total CO₂ Saved</p>
                     <h2 class="stat-value" id="totalCo2">0</h2>
                 </div>
             </div>
@@ -63,10 +63,10 @@
         </div>
 
         <div class="info-grid">
-            <!-- CO2 Leaderboard Section-->
+            <!--CO2 Leaderboard Section-->
             <div class="info-card leaderboard-card">
                 <div class="card-header">
-                    <h3>CO2 Leaderboard</h3>
+                    <h3>CO₂ Leaderboard</h3>
                     <a href="leaderboard.php" class="view-all-link">View All</a>
                 </div>
                 <div class="leaderboard-list" id="leaderboardList">
@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <!-- Quick Actions Section-->
+            <!--Quick Actions Section-->
             <div class="info-card actions-card">
                 <div class="card-header">
                     <h3>Quick Actions</h3>
@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            <!-- User Breakdown Section-->
+            <!--User Breakdown Section-->
             <div class="info-card stats-breakdown-card">
                 <div class="card-header">
                     <h3>User Breakdown</h3>
@@ -126,12 +126,6 @@
                             <span>Passengers</span>
                         </div>
                         <span class="breakdown-value" id="passengerCount">0</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <div class="breakdown-label">
-                            <span>Banned Users</span>
-                        </div>
-                        <span class="breakdown-value" id="bannedCount">0</span>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,6 @@ async function fetchAvailableRides(){
     .then(response => response.json())
     .then(data => {
         data.forEach(ride => {
-            // Debug: log the status to see what values we're getting
             console.log('Ride status:', ride.ride_status, 'Type:', typeof ride.ride_status);
             states.rides.push(ride);
         });
@@ -18,7 +17,6 @@ async function fetchAvailableRides(){
 function renderRides(filter = 'all') {
     const ridesGrid = document.getElementById('ridesGrid');
     
-    // Normalize the filter value to lowercase for comparison
     const normalizedFilter = filter.toLowerCase().trim();
     
     console.log('Filtering by:', normalizedFilter);
@@ -40,14 +38,13 @@ function renderRides(filter = 'all') {
         const rideCard = document.createElement('div');
         rideCard.className = 'ride-card';
         
-        // Normalize status to lowercase and trim whitespace
         const normalizedStatus = ride.ride_status ? ride.ride_status.toLowerCase().trim() : 'unknown';
         
         rideCard.innerHTML = `
             <div class="ride-header">
                 <div class="ride-route">
                     <h3>📍${ride.origin_text} --> ${ride.destination_text}</h3>
-                    <p class="ride-driver">👤Driver: ${ride.driver.name} (${ride.driver.phone})</p>
+                    <p class="ride-driver">👤Driver: ${ride.driver.name} 📞(${ride.driver.phone})</p>
                 </div>
                 <div class="ride-actions">
                     <span class="status-badge ${normalizedStatus}">${normalizedStatus}</span>

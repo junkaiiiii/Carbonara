@@ -12,6 +12,7 @@
     flex-wrap: wrap;
 }
 
+/*Filter buttons*/
 .filter-btn {
     padding: 0.75rem 1.5rem;
     border: 1px solid #000000;
@@ -72,6 +73,7 @@
     color: white;
 }
 
+/*Rides Section*/
 .rides-grid {
     display: grid;
     gap: 1.5rem;
@@ -145,21 +147,6 @@
     color: white !important;
 }
 
-.delete-btn {
-    background: transparent;
-    border: none;
-    color: #f44336;
-    font-size: 1.25rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 4px;
-    transition: background 0.2s;
-}
-
-.delete-btn:hover {
-    background: rgba(244, 67, 54, 0.1);
-}
-
 .ride-details {
     position: relative;
     display: flex;
@@ -168,7 +155,6 @@
 }
 
 .ride-detail {
-
     display: flex;
     align-items: center;
     gap: 0.75rem;

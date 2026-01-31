@@ -130,7 +130,6 @@ async function init(){
         
         console.log("All data fetched. Current states:", states);
         
-        // Update overview stats
         if (totalUsersEl) totalUsersEl.textContent = states.totalUsers || '0';
         if (totalCo2El) totalCo2El.textContent = states.totalCo2 || '0';
         if (totalReportsEl) totalReportsEl.textContent = states.totalReports || '0';
@@ -140,7 +139,6 @@ async function init(){
         if (passengersEl) passengersEl.textContent = states.passengers || '0';
         if (bannedUsersEl) bannedUsersEl.textContent = states.bannedUsers || '0';
         
-        // Render leaderboard
         renderLeaderboard();
         
         console.log("=== Initialization complete ===");
@@ -149,7 +147,6 @@ async function init(){
     }
 }
 
-// Wait for DOM to be fully loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
