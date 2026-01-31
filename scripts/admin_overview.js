@@ -78,7 +78,7 @@ function createLeaderboardItem(user, index) {
         </div>
         <div class="leaderboard-co2">
             <p class="co2-value">${user.saved_co2 || '0'}</p>
-            <p class="co2-unit">kg CO2</p>
+            <p class="co2-unit">kg CO₂</p>
         </div>
     `;
     
