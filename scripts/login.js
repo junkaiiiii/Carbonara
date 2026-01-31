@@ -40,7 +40,7 @@ button.addEventListener('click',(e)=>{
             setTimeout(()=>{
 
                 if (result.role === "Admin"){
-                    window.location.href = 'admin_users.php';
+                    window.location.href = 'admin_overview.php';
                 } else {
                     window.location.href = 'find_rides.php';
                 }

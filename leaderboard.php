@@ -14,7 +14,17 @@
 </head>
 
 <body>
-    <?php include("user_header.php") ?>
+    <div id="header-container">
+        <div id="view-ride-header">
+            <div class="button-container">
+                <img src="assets/img/left-arrow.png" alt="" onclick="history.go(-1)">
+            </div>
+            <div id="header-details">
+                <h3>CO₂ Leaderboard</h3>
+                <p>View Your Ranking!</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Leaderboard Intro -->
     <div class="intro-section">

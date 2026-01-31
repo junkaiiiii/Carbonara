@@ -59,7 +59,7 @@
     <!-- Search Bar -->
     <div class="search-row">
         <div class="search-bar">
-            <div class="search-icon"><img src="./images/adc.jpg"></div>
+            <div class="search-icon"><img src="assets/img/search-icon-png.png"></div>
             <div class="search-placeholder">
                 <input id="search-text" placeholder="Search by name, email, or role...">
             </div>

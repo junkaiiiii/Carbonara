@@ -41,9 +41,9 @@
                 </div>
             </div>
 
-            <div class="stat-card pending-licenses-card">
+            <div class="stat-card total-co2-card">
                 <div class="stat-icon-wrapper">
-                    <img class="stat-icon" src="assets/img/pending-licenses.png" alt="Pending-licenses">
+                    <img class="stat-icon" src="assets/img/co2-saved.png" alt="Total-co2">
                 </div>
                 <div class="stat-content">
                     <p class="stat-label">Total CO2</p>
@@ -63,27 +63,14 @@
         </div>
 
         <div class="info-grid">
-            <!-- Recent Activities Section-->
-            <div class="info-card activity-card">
+            <!-- CO2 Leaderboard Section-->
+            <div class="info-card leaderboard-card">
                 <div class="card-header">
-                    <h3>Recent Activities</h3>
+                    <h3>CO2 Leaderboard</h3>
+                    <a href="leaderboard.php" class="view-all-link">View All</a>
                 </div>
-                <div class="activity-list" id="activityList">
-                    <div class="activity-item">
-                        <div class="activity-content">
-                            <p class="activity-title">New user registered</p>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-content">
-                            <p class="activity-title">New ride posted</p>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-content">
-                            <p class="activity-title">License approved</p>
-                        </div>
-                    </div>
+                <div class="leaderboard-list" id="leaderboardList">
+                    
                 </div>
             </div>
 
@@ -93,13 +80,13 @@
                     <h3>Quick Actions</h3>
                 </div>
                 <div class="quick-actions">
+                    <a href="admin_rides.php" class="action-btn action-rides">
+                        <img class="action-icon" src="assets/img/total-rides.png" alt="Rides">
+                        <span>View Rides</span>                    
                     <a href="admin_users.php" class="action-btn action-users">
                         <img class="action-icon" src="assets/img/total-users.png" alt="Users">
                         <span>Manage Users</span>
                     </a>
-                    <a href="admin_rides.php" class="action-btn action-rides">
-                        <img class="action-icon" src="assets/img/total-rides.png" alt="Rides">
-                        <span>View Rides</span>
                     </a>
                     <a href="admin_license.php" class="action-btn action-licenses">
                         <img class="action-icon" src="assets/img/pending-licenses.png" alt="Licenses">
@@ -108,6 +95,10 @@
                     <a href="admin_reports.php" class="action-btn action-reports">
                         <img class="action-icon" src="assets/img/pending-reports.png" alt="Reports">
                         <span>Check Reports</span>
+                    </a>
+                    <a href="admin_prizes.php" class="action-btn action-prizes">
+                        <img class="action-icon" src="assets/img/present-icon.png" alt="Prizes">
+                        <span>Manage Prizes</span>
                     </a>
                 </div>
             </div>

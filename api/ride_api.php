@@ -59,7 +59,15 @@ if ($method === "GET") {
             COALESCE(driver_stats.total_rides, 0) AS driver_total_rides,
             COALESCE(driver_stats.avg_rating, 0) AS driver_avg_rating,
             COALESCE(driver_stats.total_co2_saved, 0) AS driver_total_co2_saved,
-            dl2.status
+            dl2.status,
+
+            vh.vehicle_id,
+            vh.car_plate_number,
+            vh.brand,
+            vh.manufactured_year,
+            vh.color,
+            vh.type,
+            vh.vehicle_image
 
         FROM rides r
         LEFT JOIN requests re ON r.ride_id = re.ride_id AND re.status = 'approved'
@@ -100,6 +108,8 @@ if ($method === "GET") {
             FROM ride_participants rp
             GROUP BY rp.ride_id
         ) AS taken_seats ON taken_seats.ride_id = r.ride_id
+
+        LEFT JOIN vehicles vh ON vh.vehicle_id = r.vehicle_id
 
         WHERE r.ride_id = ?;
         ";
@@ -149,7 +159,15 @@ if ($method === "GET") {
             $driver_total_rides,
             $driver_avg_rating,
             $driver_total_co2_saved,
-            $driver_license_status
+            $driver_license_status,
+
+            $vehicle_id,
+            $car_plate_number,
+            $brand,
+            $manufactured_year,
+            $color,
+            $type,
+            $vehicle_image
         );
         while (mysqli_stmt_fetch($stmt)) {
 
@@ -184,7 +202,16 @@ if ($method === "GET") {
                     $ride_status,
                     'created_at' => $created_at,
                     'room_code' => $room_code,
-                    'passengers' => []  // create array
+                    'passengers' => [],  // create array
+                    'vehicle' => [
+                        'vehicle_id' => $vehicle_id,
+                        'car_plate_number' => $car_plate_number,
+                        'brand' => $brand,
+                        'manufactured_year' => $manufactured_year,
+                        'color' => $color,
+                        'type' => $type,
+                        'vehicle_image_url' => $vehicle_image
+                    ]
                 ];
             }
 
@@ -259,10 +286,11 @@ if ($method === "GET") {
         LEFT JOIN (
             SELECT 
                 driver_id,
-                COUNT(DISTINCT r2.ride_id) AS total_rides,
+                COUNT(DISTINCT rp.ride_id) AS total_rides,
                 AVG(rat.score) AS avg_rating,
                 SUM(co2.co2_saved) AS total_co2_saved
             FROM rides r2
+            LEFT JOIN ride_participants rp ON rp.user_id = r2.driver_id
             LEFT JOIN ratings rat ON rat.ride_id = r2.ride_id AND rat.rated_id = r2.driver_id
             LEFT JOIN co2_log co2 ON co2.ride_id = r2.ride_id AND co2.user_id = r2.driver_id
             GROUP BY driver_id
@@ -377,7 +405,7 @@ if ($method === "GET") {
             FROM ride_participants rp
             GROUP BY rp.ride_id
         ) AS taken_seats ON taken_seats.ride_id = r.ride_id
-        WHERE r.driver_id = ?
+        WHERE r.driver_id = ? AND r.ride_status != 'Cancelled'
         ORDER BY r.created_at DESC;
     ";
     

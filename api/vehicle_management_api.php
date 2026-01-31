@@ -15,7 +15,7 @@
     }
 
     function uploadImage($file){
-        $target_dir = "../assets/img/vehicle_images/";
+        $target_dir = "../assets/vehicle_images/";
         if(!file_exists($target_dir)){
             mkdir($target_dir, 0777, true);
         }
@@ -30,7 +30,7 @@
         }
 
         if(move_uploaded_file($file["tmp_name"], $target_file)){
-            return "assets/img/vehicle_images/" . $new_filename;
+            return "assets/vehicle_images/" . $new_filename;
         }
         return ["error" => "Failed to move uploaded file."];
     }

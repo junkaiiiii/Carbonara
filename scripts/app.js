@@ -80,7 +80,7 @@ const createAvailableRideCard = (ride, onRequest, onHighlightStars) => {
                     <img id="driver-pic" src="${ride.driver.profile_picture_url}" alt="">
                     <div id="column">
                         <h3>${ride.driver.name || "Unknown Driver"}</h3>
-                        <p>⭐ ${ride.driver.avg_rating}</p>
+                        <p>⭐ ${Math.round(ride.driver.avg_rating * 100)/100}</p>
                     </div>
                 </div>
 
@@ -320,7 +320,7 @@ const createHostedRideCard = (ride, onPopUp, onHighlightStars, onAcceptRequest, 
                             <img class="passenger-profile-picture" id="profilePic-2" src="${passenger.profile_picture_url}">
                             <div id="user-info">
                                 <h3>${passenger.username}</h3>
-                                <p>⭐${passenger.avg_rating}</p>
+                                <p>⭐${Math.round(passenger.avg_rating * 100)/100}</p>
                             </div>
                         </div>
 

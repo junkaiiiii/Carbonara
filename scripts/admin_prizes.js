@@ -405,7 +405,7 @@ function updatePointsPopup(prizeId,prizeName,prizePoints){
 
                 <div class="form-actions">
                     <button type="button" class="cancel-button" id="cancelBtn">Cancel</button>
-                    <button type="button" class="submit-button" id="updateStockBtn">Update Stock</button>
+                    <button type="button" class="submit-button" id="updateStockBtn">Update Points</button>
                 </div>
             </div>
         </div>

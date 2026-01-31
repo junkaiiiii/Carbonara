@@ -21,8 +21,7 @@ const createLicenseCard = (name, email, pfpImgUrl, status, licenseNum, licenseUr
                 <div class="status"><p>${status}</p> </div>
             </div>
             <div class="license">
-                <h3>License Number: ${licenseNum}</h3>
-                <div class="license-img"><img src="${licenseUrl}"></div>
+                <div class="license-img"><img src="assets/img/${licenseUrl}"></div>
             </div>
             <div class="options">
                 <div class="button"><button class="approve" data-id='${licenseId}'>Approve</button></div>
@@ -52,18 +51,32 @@ function render(){
     console.log("Am i here???");
     licenseGrid.innerHTML = ``;
     console.log(states);
-    states.licenses.forEach(license => {
-        console.log("but im not here???");
-        const card = createLicenseCard(license.user.name,
-                                    license.user.email,
-                                    license.user.pfp ?? "assets/img/leaf.png",
-                                    license.license_status,
-                                    "SJK732",
-                                    license.license_img_url,
-                                    license.license_id);
-        // console.log(card);
-        licenseGrid.appendChild(card);
-    })
+    console.log(states.licenses.length);
+    if (states.licenses.length === 0){
+        console.log("I AM 0");
+        licenseGrid.innerHTML = `
+            <div class='no-state'>
+                <p>No License Pending Request</p>
+            </div>
+        `;
+    }
+    else{
+        console.log("Am i here?")
+        states.licenses.forEach(license => {
+
+            console.log("but im not here???");
+            const card = createLicenseCard(license.user.name,
+                                        license.user.email,
+                                        license.user.pfp ?? "assets/img/leaf.png",
+                                        license.license_status,
+                                        "SJK732",
+                                        license.license_img_url,
+                                        license.license_id);
+            // console.log(card);
+            licenseGrid.appendChild(card);
+        })
+    }
+
     reviewedGrid.innerHTML = `
         <div class="column-header">
             <p class="reviewed-user">User</p>

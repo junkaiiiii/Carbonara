@@ -82,33 +82,15 @@ function render(){
 
     userGrid.innerHTML = "";
     states.users.forEach(user => {
-        let ratingScore = 0;
-        let rated = 0;
-        let avgRating = 0;
-        if (user.ratings){
-            user.ratings.forEach(rating => {
-                ratingScore += Number(rating.score);
-                rated += 1;
-                avgRating = Number(ratingScore / rated);   
-                // states.users.user.push(ratingScore); 
-            })
-        }
-        let co2Saved = 0;
-        let totalDistance = 0;
-        if (user.co2_logs){
-            user.co2_logs.forEach(co2 => {
-                co2Saved += Number(co2.co2_saved);
-                totalDistance += Number(co2.total_distance);
-            })
-        }
+
         // if (user.role === "Admin") return;
         const card = createUserCard(user.user_id,
                                     user.username,
                                     user.role,
-                                    avgRating,
+                                    user.average_rating,
                                     user.created_at,
-                                    co2Saved,
-                                    totalDistance, 
+                                    user.total_co2,
+                                    user.total_distance, 
                                     user.email,
                                     user.phone,
                                     user.profile_picture ?? defaultPfp,
@@ -155,14 +137,14 @@ searchText.addEventListener("keyup", () => {
                     totalDistance += Number(co2.total_distance);
                 })
             }
-            if (user.role === "Admin" || user.status === "Banned")return;
+            // if (user.role === "Admin" || user.status === "Banned")return;
             const card = createUserCard(user.user_id,
                                         user.username,
                                         user.role,
-                                        avgRating,
+                                        user.average_rating,
                                         user.created_at,
-                                        co2Saved,
-                                        totalDistance, 
+                                        user.total_co2,
+                                        user.total_distance, 
                                         user.email,
                                         user.phone,
                                         user.profile_picture ?? defaultPfp,
@@ -178,39 +160,25 @@ searchText.addEventListener("keyup", () => {
 
 function getAllUsers(){
     console.log("FETCHING USERS");
-    fetch("api/users_api.php")
-        .then(response => response.json())
-        .then(data => {
-            states.users = [];
+    const usersPromise = fetch("api/users_api.php").then(response => response.json());
+    const licensesPromise = fetch("api/license_api.php").then(response => response.json());
+    const ridesPromise = fetch("api/ride_api.php").then(response => response.json());
+
+    Promise.all([usersPromise, licensesPromise, ridesPromise])
+        .then(([usersData, licensesData, ridesData]) => {
             
-            data.forEach(user => {
-                states.users.push(user);
-                render();
-                console.log(states.users);
-                // states.users.forEach(user => {
-                //     user.ratings.forEach(rater=> {
-                //         console.log(rater.rater.rater_username);
-                //     });
-                // })
-            })
+            states.users = usersData;
+            states.licenses = licensesData;
+            states.rides = ridesData;
+
+            //rendering one time
+            render();
+            console.log("All data loaded and rendered");
         })
-        .catch(error => console.error());;
-    fetch("api/license_api.php")
-        .then(response => response.json())
-        .then(data => {
-            states.licenses = [];
-            data.forEach(license => {
-                states.licenses.push(license);
-            });
+        .catch(error => {
+            console.error("Error loading data:", error);
         });
-    fetch("api/ride_api.php")
-        .then(res => res.json())
-        .then(data => {
-            states.rides = [];
-            data.forEach(ride => {
-                states.rides.push(ride);
-            });
-        });
+
 }
 
 function unbanReport(id, reportedEmail){
@@ -328,6 +296,12 @@ const createProfilePopUp = (userId, username, userRole, rating, dateJoined, co2S
     popUp.querySelector(".close-driver-popup-button").addEventListener("click", () => {
         popUp.remove();
     });
+
+    popUp.addEventListener("click", (e) => {
+        if (e.target === popUp){
+            popUp.remove();
+        }
+    })
 
     // const viewRatingBtn = popUp.querySelector(".view-rating-btn");
     // viewRatingBtn.addEventListener("click", () => {

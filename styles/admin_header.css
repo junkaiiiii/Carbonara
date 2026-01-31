@@ -195,6 +195,14 @@ hr{
     transform: translateY(-10px);
     transition: all 0.2s ease;
 }
+#header .profile-picture{
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: none;
+}
+
 #profile-dropdown:hover{
     background-color: rgb(242, 242, 242);
     /* height: 100%; */
