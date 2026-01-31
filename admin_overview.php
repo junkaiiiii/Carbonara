@@ -41,9 +41,9 @@
                 </div>
             </div>
 
-            <div class="stat-card pending-licenses-card">
+            <div class="stat-card total-co2-card">
                 <div class="stat-icon-wrapper">
-                    <img class="stat-icon" src="assets/img/pending-licenses.png" alt="Pending-licenses">
+                    <img class="stat-icon" src="assets/img/co2-saved.png" alt="Total-co2">
                 </div>
                 <div class="stat-content">
                     <p class="stat-label">Total CO2</p>
@@ -108,6 +108,10 @@
                     <a href="admin_reports.php" class="action-btn action-reports">
                         <img class="action-icon" src="assets/img/pending-reports.png" alt="Reports">
                         <span>Check Reports</span>
+                    </a>
+                    <a href="admin_prizes.php" class="action-btn action-prizes">
+                        <img class="action-icon" src="assets/img/present-icon.png" alt="Prizes">
+                        <span>Manage Prizes</span>
                     </a>
                 </div>
             </div>
