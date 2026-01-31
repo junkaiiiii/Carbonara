@@ -9,6 +9,8 @@ states = {
 }
 
 const createLicenseCard = (name, email, pfpImgUrl, status, licenseNum, licenseUrl, licenseId) =>{
+    console.log(pfpImgUrl);
+    console.log(licenseUrl);
     const div = document.createElement('div');
     div.innerHTML = `
         <div class="user-card">
@@ -21,7 +23,7 @@ const createLicenseCard = (name, email, pfpImgUrl, status, licenseNum, licenseUr
                 <div class="status"><p>${status}</p> </div>
             </div>
             <div class="license">
-                <div class="license-img"><img src="assets/img/${licenseUrl}"></div>
+                <div class="license-img"><img src="${licenseUrl}"></div>
             </div>
             <div class="options">
                 <div class="button"><button class="approve" data-id='${licenseId}'>Approve</button></div>

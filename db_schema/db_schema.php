@@ -159,7 +159,7 @@ $sql .= "
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- Users
-INSERT INTO `users` (`user_id`, `full_name`, `username`, `email`, `password_hash`, `role`, `status`, `gender`, `date_of_birth`, `phone`, `profile_picture_url`, `created_at`) VALUES
+INSERT INTO users (user_id, full_name, username, email, password_hash, role, status, gender, date_of_birth, phone, profile_picture_url, created_at) VALUES
 ('US_692f0e453c9dd', 'Eng Hong Xuan', 'enghongxuan', 'eng@example.com', '$2y$10\$NCF.XdYUNhz8tmiTVPQ.EuFsS82VuPpYiN90VeKQv4xj2jMl9cA5i', 'Driver', 'Active', 'Male', '2001-05-12', '012345678', 'assets/profile/US_692f0e453c9dd1769596198.jpeg', '2025-12-02 17:05:25'),
 ('US_692f0e82a7fb7', 'Tan Jian Shen', 'tanjianshen', 'tan@example.com', '$2y$10\$jqw4A6f/PoQ07vgxeFmlz.RUXLvIBkRJ6DH5z9JYFhwjqWMQZ1cMy', 'Passenger', 'Active', 'Male', '2002-08-21', '012456783', 'assets/profile/US_692f0e82a7fb71769596169.jpeg', '2025-12-02 17:06:26'),
 ('US_692f0ebbe9265', 'Sho Jun Kai', 'shojunkai', 'sho@example.com', '$2y$10$4B3rHqqhmrzEURuFHC9ZW.6z.jeXS7eAJxw2SIAp/OMZCB3DlW8fK', 'Passenger', 'Active', 'Male', '2002-11-03', '0134445567', 'assets/profile/US_692f0ebbe92651769596117.jpg', '2025-12-02 17:07:24'),
@@ -252,7 +252,7 @@ INSERT INTO rides (
 
 
 -- Points Log
-INSERT INTO `points_log` (`point_id`, `ride_id`, `user_id`, `points_earned`, `log_at`) VALUES
+INSERT INTO points_log (point_id, ride_id, user_id, points_earned, log_at) VALUES
 -- RD_692f17d1e7ebd (5.2 km, 2 passengers)
 ('PO_692f1407c294e', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 40, '2026-01-20 10:05:00'), -- passenger
 ('PO_692f1407c3bcb', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 40, '2026-01-20 10:05:00'), -- passenger
@@ -281,7 +281,7 @@ INSERT INTO `points_log` (`point_id`, `ride_id`, `user_id`, `points_earned`, `lo
 
 
 -- CO2 Log
-INSERT INTO `co2_log` (`co2_id`, `ride_id`, `user_id`, `co2_saved`, `log_at`) VALUES
+INSERT INTO co2_log (co2_id, ride_id, user_id, co2_saved, log_at) VALUES
 -- RD_692f17d1e7ebd (5.2 km, 2 passengers)
 ('CO_692f14271e3fe', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 0.97, '2026-01-20 10:05:00'), -- passenger: 5.2*0.187
 ('CO_692f14271e40f', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 0.97, '2026-01-20 10:05:00'), -- passenger
@@ -310,7 +310,7 @@ INSERT INTO `co2_log` (`co2_id`, `ride_id`, `user_id`, `co2_saved`, `log_at`) VA
 
 
 -- Ride Participants
-INSERT INTO `ride_participants` (`participant_id`, `ride_id`, `user_id`, `joined_at`) VALUES
+INSERT INTO ride_participants (participant_id, ride_id, user_id, joined_at) VALUES
 -- Ride RD_692f17d1e7ebd (Completed, Driver US_692f0e453c9dd)
 ('RP_692f1451a6442', 'RD_692f17d1e7ebd', 'US_692f0e453c9dd', '2026-01-20 09:00:00'), -- driver
 ('RP_692f1451a6443', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', '2026-01-20 09:50:00'), -- passenger approved
@@ -329,7 +329,7 @@ INSERT INTO `ride_participants` (`participant_id`, `ride_id`, `user_id`, `joined
 
 
 -- Requests
-INSERT INTO `requests` (`request_id`, `ride_id`, `passenger_id`, `status`, `requested_at`) VALUES
+INSERT INTO requests (request_id, ride_id, passenger_id, status, requested_at) VALUES
 ('RQ_692f1479d6ca1', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'approved', '2026-01-19 20:00:00'),
 ('RQ_692f1479d6cb3', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'approved', '2026-01-19 20:10:00'),
 ('RQ_692f1479d6cb4', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'requested', '2026-01-20 14:00:00'),
@@ -340,7 +340,7 @@ INSERT INTO `requests` (`request_id`, `ride_id`, `passenger_id`, `status`, `requ
 
 
 -- Ratings (extended)
-INSERT INTO `ratings` (`rating_id`, `ride_id`, `rater_id`, `rated_id`, `score`, `created_at`) VALUES
+INSERT INTO ratings (rating_id, ride_id, rater_id, rated_id, score, created_at) VALUES
 -- Existing
 ('RT_692f14ac09ceb', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0e453c9dd', 5.0, '2026-01-20 12:00:00'),
 ('RT_692f14ac09f38', 'RD_692f17d1e7ebd', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 4.5, '2026-01-20 12:10:00'),
@@ -358,13 +358,13 @@ INSERT INTO `ratings` (`rating_id`, `ride_id`, `rater_id`, `rated_id`, `score`, 
 
 
 -- Reports
-INSERT INTO `reports` (`report_id`, `ride_id`, `reporter_id`, `reported_user_id`, `description`, `status`, `created_at`) VALUES
+INSERT INTO reports (report_id, ride_id, reporter_id, reported_user_id, description, status, created_at) VALUES
 ('RE_692f14ebc30eb', 'RD_692f17d1e7eda', 'US_692f0ebbe9265', 'US_692f0e453c9dd', 'Driver was late', 'Pending', '2026-01-21 09:00:00'),
 ('RE_692f14ebc319e', 'RD_692f17d1e7ebd', 'US_692f0e82a7fb7', 'US_692f0ebbe9265', 'Passenger was rude', 'Approved', '2026-01-20 13:20:00');
 
 
 -- Prizes
-INSERT INTO `prizes` (`prize_id`, `prize_name`, `points_required`, `stock`, `prize_type`, `prize_image_url`) VALUES
+INSERT INTO prizes (prize_id, prize_name, points_required, stock, prize_type, prize_image_url) VALUES
 ('PR_697b15949d784', '1000 Points Badge', 50, NULL, 'badge', 'prize_697b15949d4853.95895305.png'),
 ('PR_697b6b81745d9', '50% Discount Voucher for Shopee', 3000, 100, 'voucher', 'prize_697b6b81742a03.22407598.png'),
 ('PR_697b6bc54e9e0', 'RM50 Voucher', 500, 100, 'voucher', 'prize_697b6bc54e4de6.55837734.jpg'),
@@ -378,7 +378,7 @@ INSERT INTO `prizes` (`prize_id`, `prize_name`, `points_required`, `stock`, `pri
 
 
 -- Redemption (adjusted to match prizes & points_required)
-INSERT INTO `redemption` (`redemption_id`, `prize_id`, `user_id`, `cost`, `redeemed_at`) VALUES
+INSERT INTO redemption (redemption_id, prize_id, user_id, cost, redeemed_at) VALUES
 -- Sho Jun Kai redeeming vouchers/badges he can afford
 ('RED_692f2001b2222', 'PR_697b15949d784', 'US_692f0ebbe9265', 50, '2026-01-29 15:29:44'),  -- 1000 Points Badge
 
@@ -394,9 +394,10 @@ INSERT INTO `redemption` (`redemption_id`, `prize_id`, `user_id`, `cost`, `redee
 
 
 -- Driving License
-INSERT INTO `driving_license` (`license_id`, `user_id`, `status`, `license_image_url`) VALUES
-('DL_692f13c0e2812', 'US_692f0e453c9dd', 'Approved', 'license1.png'),
-('DL_692f13c0e2822', 'US_692f0ebbe9265', 'Pending', 'license2.png');
+INSERT INTO driving_license (license_id, user_id, status, license_image_url) VALUES
+('DL_04645046f1124', 'US_692f0f042125d', 'Approved', 'assets/licenses/DL_04645046f1124.jpg'),
+('DL_603ddd5abd580', 'US_692f0e453c9dd', 'Approved', 'assets/licenses/DL_603ddd5abd580.jpg'),
+('DL_6b5926d9c4f62', 'US_692f0ebbe9265', 'Pending', 'assets/licenses/DL_6b5926d9c4f62.jpg');
 
 
 

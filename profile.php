@@ -136,13 +136,13 @@
             <?php elseif ($status == "Approved"): ?>
 
                 <div id="license-preview-container" style="margin-bottom: 15px;">
-                    <img id="license-img" src="assets/licenses/<?php echo $license_img; ?>" alt="Approved License" style="width: 100%;">
+                    <img id="license-img" src="<?php echo $license_img; ?>" alt="Approved License" style="width: 100%;">
                 </div>
 
             <?php elseif ($status == "Pending"): ?>
                 
                 <div id="license-preview-container" style="margin-bottom: 15px;">
-                    <img id="license-img" src="assets/licenses/<?php echo $license_img; ?>" alt="Pending License" style="width: 100%;">
+                    <img id="license-img" src="<?php echo $license_img; ?>" alt="Pending License" style="width: 100%;">
                 </div>
 
             <?php endif; ?>

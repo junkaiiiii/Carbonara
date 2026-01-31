@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['license_image'])) {
     // 2. Update driving_license table
     // If user already has a row, we update the image and reset status to 'Pending'
     $sql = "INSERT INTO driving_license (license_id, user_id, status, license_image_url) 
-            VALUES ('$licenseId', '$userId', 'Pending', '$newFileName')
+            VALUES ('$licenseId', '$userId', 'Pending', 'assets/licenses/$newFileName')
             ON DUPLICATE KEY UPDATE 
-            license_image_url = '$newFileName', 
+            license_image_url = 'assets/licenses/$newFileName', 
             status = 'Pending'";
 
     $result = mysqli_query($conn, $sql);
