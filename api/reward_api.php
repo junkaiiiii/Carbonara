@@ -136,11 +136,6 @@ else if($method === "POST") {
     if (mysqli_stmt_execute($stmt)) {
         respond(['message' => 'Prize Added Successfully', 'prize_id' => $prize_id, 'image_url' => $prize_image_url], 201);
     } else {
-        // Delete uploaded file if database insertion fails
-        if (file_exists($upload_path)) {
-            unlink($upload_path);
-        }
-
         respond(['error' => 'Database Insertion Failed', 500]);
     }
 } 
