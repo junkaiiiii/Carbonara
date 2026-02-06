@@ -21,6 +21,7 @@ async function getGoogleAPI(){
 }
 
 async function initMap(elementId){
+    // L is an object from leaflet library when importing from html
     const map = L.map(elementId, {
         center: [3.139, 101.6869], //coords of starting point
         zoom: 13 // zoom level
@@ -54,7 +55,7 @@ async function geoCodeAddress(address) {
             console.log(result);
             const { lat, lng } = result.geometry.location;
         
-            // Extract city, state from address components
+            // extract city or states from address components
             const addressComponents = result.address_components;
             let geocodeCity = '';
             let state = '';
@@ -68,7 +69,7 @@ async function geoCodeAddress(address) {
                 }
             });
             
-            // Create clean address format
+            // create formatAddress
             const formattedAddress = geocodeCity && state ? `${geocodeCity}, ${state}` : result.formatted_address;
             
             return { 
@@ -125,7 +126,7 @@ async function getRoute(start,end){
 }
 
 async function drawRoute(map, routeData, startCoords, endCoords){
-    // Remove existing layers if any
+    // Remove existing layers 
     console.log(map);
     map.eachLayer((layer) => {
         if (layer instanceof L.Polyline || layer instanceof L.Marker) {

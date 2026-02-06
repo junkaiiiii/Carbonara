@@ -93,7 +93,7 @@ else if($method === "POST") {
         respond(['error' => 'Invalid image type. Allowed types: JPEG, JPG, PNG, GIF, WEBP', 400]);
     }
 
-    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION); // gives the end of the dot eg :png, jpg, webpg etc
     $filename = uniqid('prize_', true) . '.' . $extension;
 
     $upload_dir = '../assets/img/';
