@@ -7,9 +7,8 @@ async function fetchAvailableRides(){
     .then(response => response.json())
     .then(data => {
         data.forEach(ride => {
-            // console.log(ride);
+            console.log('Ride status:', ride.ride_status, 'Type:', typeof ride.ride_status);
             states.rides.push(ride);
-            // console.log(states.rides);
         });
         renderRides('all');
     })
@@ -18,33 +17,49 @@ async function fetchAvailableRides(){
 function renderRides(filter = 'all') {
     const ridesGrid = document.getElementById('ridesGrid');
     
-    const filteredRides = filter === 'all' ? states.rides : states.rides.filter(ride => ride.status === filter);
+    const normalizedFilter = filter.toLowerCase().trim();
+    
+    console.log('Filtering by:', normalizedFilter);
+    console.log('Total rides:', states.rides.length);
+    
+    const filteredRides = normalizedFilter === 'all' 
+        ? states.rides 
+        : states.rides.filter(ride => {
+            const rideStatus = ride.ride_status ? ride.ride_status.toLowerCase().trim() : '';
+            console.log('Comparing:', rideStatus, '===', normalizedFilter, ':', rideStatus === normalizedFilter);
+            return rideStatus === normalizedFilter;
+        });
+    
+    console.log('Filtered rides:', filteredRides.length);
     
     ridesGrid.innerHTML = '';
     
     filteredRides.forEach(ride => {
         const rideCard = document.createElement('div');
         rideCard.className = 'ride-card';
+        
+        const normalizedStatus = ride.ride_status ? ride.ride_status.toLowerCase().trim() : 'unknown';
+        
         rideCard.innerHTML = `
             <div class="ride-header">
                 <div class="ride-route">
-                    <h3>${ride.origin_text} --> ${ride.destination_text}</h3>
-                    <p class="ride-driver">Driver: ${ride.driver.name} (${ride.driver.phone})</p>
+                    <h3>📍${ride.origin_text} --> ${ride.destination_text}</h3>
+                    <p class="ride-driver">👤Driver: ${ride.driver.name} 📞(${ride.driver.phone})</p>
                 </div>
                 <div class="ride-actions">
-                    <span class="status-badge ${ride.ride_status}">${ride.ride_status}</span>
+                    <span class="status-badge ${normalizedStatus}">${normalizedStatus}</span>
                 </div>
             </div>
             <div class="ride-details">
                 <div class="ride-detail">
-                    <span>${ride.departure_datetime}</span>
+                    <span>📅${ride.departure_datetime}</span>
                 </div>
                 <div class="ride-detail">
-                    <span>${ride.available_seats} seats available</span>
+                    <span>💺${ride.available_seats} seats available</span>
                 </div>
                 <div class="ride-detail-button">
                     <a href="admin_ride_details.php?id=${ride.ride_id}" style="text-decoration:none;">
-                        <button class="view-ride-btn">View Ride</button>
+                        <button class="view-ride-btn">View Ride Details</button>
                     </a>
                 </div>
             </div>
@@ -72,7 +87,7 @@ function getCurrentFilter() {
     return activeBtn ? activeBtn.dataset.filter : 'all';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function setupFilterButtons() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     
     filterButtons.forEach(button => {
@@ -84,15 +99,20 @@ document.addEventListener('DOMContentLoaded', () => {
             renderRides(button.dataset.filter);
         });
     });
-    
-    renderRides('all');
-});
+}
 
 async function init(){
     await Promise.all([
         fetchAvailableRides()
     ]);
 
-    console.log(states.rides);
-}   
-init();
+    console.log('Loaded rides:', states.rides);
+    
+    // Setup filter buttons after data is loaded
+    setupFilterButtons();
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+});

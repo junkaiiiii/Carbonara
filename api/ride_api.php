@@ -405,7 +405,7 @@ if ($method === "GET") {
             FROM ride_participants rp
             GROUP BY rp.ride_id
         ) AS taken_seats ON taken_seats.ride_id = r.ride_id
-        WHERE r.driver_id = ?
+        WHERE r.driver_id = ? AND r.ride_status != 'Cancelled'
         ORDER BY r.created_at DESC;
     ";
     
@@ -617,19 +617,19 @@ if ($method === "GET") {
 
     // prepare data
     $ride_id = generateId("RD_");
-    $driver_id = mysqli_real_escape_string($conn, $data["driver_id"]);
+    $driver_id = mysqli_real_escape_string($conn, $data["driver_id"]); // escape any special letters
     $vehicle_id = mysqli_real_escape_string($conn, $data["vehicle_id"]);
     $origin_text = mysqli_real_escape_string($conn, $data["origin_text"]);
-    $origin_lat = floatval($data["origin_lat"]);
+    $origin_lat = floatval($data["origin_lat"]); //get float
     $origin_lon = floatval($data["origin_lon"]);
     $destination_text = mysqli_real_escape_string($conn, $data["destination_text"]);
     $destination_lat = floatval($data["destination_lat"]);
     $destination_lon = floatval($data["destination_lon"]);
     $departure_datetime = str_replace('T', ' ', $data["departure_datetime"]);
-    $available_seats = intval($data["available_seats"]);
+    $available_seats = intval($data["available_seats"]); //get int
     $ride_distance = floatval($data["ride_distance"]);
     $ride_status = "Incomplete";
-    $created_at = date('Y-m-d H:i:s');
+    $created_at = date('Y-m-d H:i:s'); //get date
 
 
     // $created_at = isset($data["created_at"]);
@@ -720,8 +720,10 @@ if ($method === "GET") {
     $valid_status = array('Cancelled', 'Completed', 'Incomplete');
 
     $ride_id = $data['ride_id'] ?? "";
+    //checks if status is in array
     $status = in_array($data['status'], $valid_status) ? $data['status'] : "";
 
+    //check if status is empty
     if (empty($status)) {
         respond(["error" => "invalid request method"], 400);
     }

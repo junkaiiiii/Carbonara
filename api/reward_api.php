@@ -93,7 +93,7 @@ else if($method === "POST") {
         respond(['error' => 'Invalid image type. Allowed types: JPEG, JPG, PNG, GIF, WEBP', 400]);
     }
 
-    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION); // gives the end of the dot eg :png, jpg, webpg etc
     $filename = uniqid('prize_', true) . '.' . $extension;
 
     $upload_dir = '../assets/img/';
@@ -136,11 +136,6 @@ else if($method === "POST") {
     if (mysqli_stmt_execute($stmt)) {
         respond(['message' => 'Prize Added Successfully', 'prize_id' => $prize_id, 'image_url' => $prize_image_url], 201);
     } else {
-        // Delete uploaded file if database insertion fails
-        if (file_exists($upload_path)) {
-            unlink($upload_path);
-        }
-
         respond(['error' => 'Database Insertion Failed', 500]);
     }
 } 

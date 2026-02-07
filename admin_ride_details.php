@@ -35,6 +35,10 @@
 
     </div>
 
+    <div id="vehicleSection">
+
+    </div>
+
     <div class="passengers-section" id="passengersSection">
 
     </div>

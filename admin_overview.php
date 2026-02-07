@@ -41,12 +41,12 @@
                 </div>
             </div>
 
-            <div class="stat-card pending-licenses-card">
+            <div class="stat-card total-co2-card">
                 <div class="stat-icon-wrapper">
-                    <img class="stat-icon" src="assets/img/pending-licenses.png" alt="Pending-licenses">
+                    <img class="stat-icon" src="assets/img/co2-saved.png" alt="Total-co2">
                 </div>
                 <div class="stat-content">
-                    <p class="stat-label">Total CO2</p>
+                    <p class="stat-label">Total CO₂ Saved</p>
                     <h2 class="stat-value" id="totalCo2">0</h2>
                 </div>
             </div>
@@ -63,43 +63,30 @@
         </div>
 
         <div class="info-grid">
-            <!-- Recent Activities Section-->
-            <div class="info-card activity-card">
+            <!--CO2 Leaderboard Section-->
+            <div class="info-card leaderboard-card">
                 <div class="card-header">
-                    <h3>Recent Activities</h3>
+                    <h3>CO₂ Leaderboard</h3>
+                    <a href="leaderboard.php" class="view-all-link">View All</a>
                 </div>
-                <div class="activity-list" id="activityList">
-                    <div class="activity-item">
-                        <div class="activity-content">
-                            <p class="activity-title">New user registered</p>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-content">
-                            <p class="activity-title">New ride posted</p>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-content">
-                            <p class="activity-title">License approved</p>
-                        </div>
-                    </div>
+                <div class="leaderboard-list" id="leaderboardList">
+                    
                 </div>
             </div>
 
-            <!-- Quick Actions Section-->
+            <!--Quick Actions Section-->
             <div class="info-card actions-card">
                 <div class="card-header">
                     <h3>Quick Actions</h3>
                 </div>
                 <div class="quick-actions">
+                    <a href="admin_rides.php" class="action-btn action-rides">
+                        <img class="action-icon" src="assets/img/total-rides.png" alt="Rides">
+                        <span>View Rides</span>                    
                     <a href="admin_users.php" class="action-btn action-users">
                         <img class="action-icon" src="assets/img/total-users.png" alt="Users">
                         <span>Manage Users</span>
                     </a>
-                    <a href="admin_rides.php" class="action-btn action-rides">
-                        <img class="action-icon" src="assets/img/total-rides.png" alt="Rides">
-                        <span>View Rides</span>
                     </a>
                     <a href="admin_license.php" class="action-btn action-licenses">
                         <img class="action-icon" src="assets/img/pending-licenses.png" alt="Licenses">
@@ -109,10 +96,14 @@
                         <img class="action-icon" src="assets/img/pending-reports.png" alt="Reports">
                         <span>Check Reports</span>
                     </a>
+                    <a href="admin_prizes.php" class="action-btn action-prizes">
+                        <img class="action-icon" src="assets/img/present-icon.png" alt="Prizes">
+                        <span>Manage Prizes</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- User Breakdown Section-->
+            <!--User Breakdown Section-->
             <div class="info-card stats-breakdown-card">
                 <div class="card-header">
                     <h3>User Breakdown</h3>
@@ -135,12 +126,6 @@
                             <span>Passengers</span>
                         </div>
                         <span class="breakdown-value" id="passengerCount">0</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <div class="breakdown-label">
-                            <span>Banned Users</span>
-                        </div>
-                        <span class="breakdown-value" id="bannedCount">0</span>
                     </div>
                 </div>
             </div>

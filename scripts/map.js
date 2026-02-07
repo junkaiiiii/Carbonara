@@ -381,13 +381,13 @@ async function handleCreateRide() {
         console.log("Inside handleCreateRide function");
         console.log("Current states.rides:", states.rides);
         console.log(states.vehicles);
-        // 1. Validate route exists
+        //validate route exists
         if (!states.rides || !states.rides.origin_lat) {
             alert("Please search for a route on the map first!");
             return false;
         }
 
-        // 2. Validate Vehicle Selection
+        //validate vehicle selection
         if (!selectedVehicleId) {
             alert("Please select a vehicle from the dropdown!");
             return;
@@ -405,17 +405,17 @@ async function handleCreateRide() {
         console.log("Selected Vehicle ID:", selectedVehicleId);
         const selectedVehicle = states.vehicles.find(vehicle => vehicle.vehicle_id === selectedVehicleId);
         
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
+        // const now = new Date();
+        // const year = now.getFullYear();
+        // const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        // const day = String(now.getDate()).padStart(2, '0');
+        // const hours = String(now.getHours()).padStart(2, '0');
+        // const minutes = String(now.getMinutes()).padStart(2, '0');
+        // const seconds = String(now.getSeconds()).padStart(2, '0');
 
-        // Format as YYYY-MM-DD HH:MM:SS
-        const formatted = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        console.log(formatted);
+        // // Format as YYYY-MM-DD HH:MM:SS
+        // const formatted = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        // console.log(formatted);
         const rideData = {
             driver_id: selectedVehicle.driver_id,
             vehicle_id: selectedVehicleId,

@@ -16,7 +16,7 @@ const driverMenuSection = document.getElementById("driver-menu-section");
 const hostedRidesSection = document.getElementById('hosted-rides-section');
 const requestedRidesSection = document.getElementById('requestedRidesSection');
 const completedRidesSection = document.getElementById('completedRidesSection');
-const requestedRidesTitle = document.getElementById('requestedRidesTitle')
+const requestedRidesTitle = document.getElementById('requestedRidesTitle');
 const completedRidesTitle = document.getElementById('completedRidesTitle');
 
 // General Functions
@@ -159,13 +159,19 @@ const handleRejectRequest = (rideId, passengerUsername) => {
 }
 
 const handleCancelRide = (rideId) => {
-    const selectedRideId = states.requestedRides.findIndex(ride => ride.ride_id === rideId);
+    const selectedRequestedRideIndex = states.requestedRides.findIndex(ride => ride.ride_id === rideId);
+    const selectedHostedRideIndex = states.hostedRides.findIndex(ride => ride.ride_id === rideId);
 
-    if (selectedRideId  !== -1) {
-        cancelRide(rideId);
-        states.requestedRides.splice(selectedRideId,1);
+    if (selectedRequestedRideIndex  !== -1) {
+        states.requestedRides.splice(selectedRequestedRideIndex,1);
     }
-    renderRequestedRides()
+    if (selectedHostedRideIndex  !== -1) {
+        states.hostedRides.splice(selectedHostedRideIndex,1);
+    }
+
+    cancelRide(rideId);
+    renderRequestedRides();
+    renderHostedRides();
 }
 
 

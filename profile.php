@@ -28,6 +28,7 @@
         }
 
     ?>
+
     <div class="container">
         <div class="profile-title">
             <h1>My Profile</h1>
@@ -80,13 +81,72 @@
             </div>
         </div>
 
+        <?php
+        include "db_connect.php";
+
+        $user_id = $_SESSION['user_id'];
+        $status = "None"; // Default license status
+        $license_img = "";
+
+        $sql = "SELECT status, license_image_url FROM driving_license WHERE user_id = '$user_id' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+
+        if ($row = mysqli_fetch_assoc($result)) {
+            $status = $row['status']; // 'Pending', 'Approved', or 'Rejected'
+            $license_img = $row['license_image_url'];
+        }
+        ?>
+
         <div class="card">
-            <h2 class="card-title">Become a Driver</h2>
-            <p class="card-desc">Upload your driving license to start hosting rides</p>
-            <a href="#" class="primary-btn" id="upload-license-link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-                Upload Driving License
-            </a>
+
+            <h2 class="card-title" id="card-title">
+                <?php 
+                    if($status == 'Pending') echo "Under Review";
+                    elseif($status == 'Approved') echo "License Approved";
+                    elseif($status == 'Rejected') echo "License Rejected";
+                    else echo "Become a Driver";
+                ?>
+            </h2>
+
+            <p class="card-desc" id="card-desc">
+                <?php 
+                    if($status == 'Pending') echo "Your license is being reviewed by our admins.";
+                    elseif($status == 'Approved') echo "Congratulations! You can now host rides.";
+                    elseif($status == 'Rejected') echo "Your previous upload was rejected. Please try again.";
+                    else echo "Upload your driving license to start hosting rides";
+                ?>
+            </p>
+
+            <?php if ($status == "None" || $status == "Rejected"): ?>
+                                                <!--hide it-->
+                <div id="license-preview-container" style="display: none; margin-bottom: 15px;">
+                    <img id="license-img" src="" alt="License Preview" style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+                </div>
+
+                <input type="file" id="license-file-input" accept="image/*" hidden>
+                <label for="license-file-input" class="primary-btn" id="upload-license-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                    </svg>
+                    <span id="btn-text">Upload Driving License</span>
+                </label>
+
+                <button id="submit-license" style="display:none;" class="primary-btn">Submit for Approval</button>
+
+            <?php elseif ($status == "Approved"): ?>
+
+                <div id="license-preview-container" style="margin-bottom: 15px;">
+                    <img id="license-img" src="<?php echo $license_img; ?>" alt="Approved License" style="width: 100%;">
+                </div>
+
+            <?php elseif ($status == "Pending"): ?>
+                
+                <div id="license-preview-container" style="margin-bottom: 15px;">
+                    <img id="license-img" src="<?php echo $license_img; ?>" alt="Pending License" style="width: 100%;">
+                </div>
+
+            <?php endif; ?>
+
         </div>
 
         <button class="button" onclick="window.location.href='manage_vehicle.php'">Manage Vehicle</button>

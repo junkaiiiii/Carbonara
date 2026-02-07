@@ -15,14 +15,13 @@
 </head>
 <body>
     <?php
-    // include("user_header.php");
     include("admin_header.php");
     ?>
 
     <div class="rides-container">
         <div class="rides-nav">
             <button class="filter-btn active" data-filter="all">All Rides</button>
-            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="incomplete">Incomplete</button>
             <button class="filter-btn" data-filter="completed">Completed</button>
             <button class="filter-btn" data-filter="cancelled">Cancelled</button>
         </div>
@@ -30,7 +29,6 @@
         <div class="rides-grid" id="ridesGrid">
 
 
-        
         </div>
     </div>
 
