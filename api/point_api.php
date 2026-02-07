@@ -10,7 +10,7 @@ include "../db_connect.php";
 
 $method = $_SERVER["REQUEST_METHOD"];
 
-if ($method === "GET"){
+if ($method === "GET"){ // COALESCE => if result is null then use 0 
     $sql = "SELECT 
     (
         COALESCE((SELECT SUM(points_earned) FROM points_log WHERE user_id = ?), 0) 
@@ -25,7 +25,7 @@ if ($method === "GET"){
     if ($result){
         $row = mysqli_fetch_assoc($result);
 
-        respond(intval($row['available_points']));
+        respond(intval($row['available_points'])); // converts the object to number
     }
 }elseif($method === "POST"){
     $data = json_decode(file_get_contents("php://input"),true);

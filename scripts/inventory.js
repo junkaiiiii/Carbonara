@@ -2,51 +2,53 @@ import { highlightNavBar  } from "./app.js";
 
 let states = {
     vouchers: [],
-    visible_voucher_count: 4,
+    visible_voucher_count: 4, // shows only 4 vouchers initially
     badges: [],
     visible_badge_count: 4,
     points: 0
 };
 
+//references
 let voucherSection = document.getElementById("voucher-list");
 let loadVoucherBtn = document.getElementById("loadVoucherBtn");
 let badgeSection = document.getElementById("badge-list");
 let loadBadgeBtn = document.getElementById("loadBadgeBtn");
 let point = document.getElementById("points-container");
 
+//fetching rewards from the server
 async function fetchRewards(){
     console.log("Fetching rewards...");
 
     try{
-        const response = await fetch("api/inventory_api.php?mode=all");
-        const data = await response.json();
+        const response = await fetch("api/inventory_api.php?mode=all"); // HTTP GET request with mode=all parameter and gets json 
+        const data = await response.json(); // converts json to js block
 
         console.log("Received data: ", data);
 
         data.forEach(prize => {
             if(prize.prize_type === "voucher"){
-                states.vouchers.push(prize); // adding multiple arrays
+                states.vouchers.push(prize); // add to states.vouchers array
             }
             else{
-                states.badges.push(prize);
+                states.badges.push(prize); // otherwise add to states.badges array
             };
         })
     }
     catch(error){
         console.error("Error fetching data: ", error);
-        showMessage("Failed to load vehicles", "delete");
+        showMessage("Failed to load vehicles", "delete"); // popup that shows successful/failure
     }
 };
 
 async function fetchPoints(){
     console.log("Fetching points...");
     try{
-        const response = await fetch("api/point_api.php");
-        const data = await response.json();
+        const response = await fetch("api/point_api.php"); // fetch json data from point_api
+        const data = await response.json(); // converts it to js block
 
-        console.log("Received data: ", data);
+        console.log("Received data: ", data); // debugging
 
-        states.points = (typeof data === 'object' && data !== null) ? data.points : data;
+        states.points = (typeof data === 'object' && data !== null) ? data.points : data; // checks whether the data is object and not null. if yes set states.points to data.points. || object is like "key:value"
     }
     catch(error){
         console.error("Error fetching points: ", error);
@@ -55,9 +57,9 @@ async function fetchPoints(){
 }
 
 function createBadgeCard(item){
-    const div = document.createElement('div');
+    const div = document.createElement('div'); // creates a div element
     
-    const obtainedDate = new Date(item.redeemed_at).toLocaleDateString('en-GB', {
+    const obtainedDate = new Date(item.redeemed_at).toLocaleDateString('en-GB', { // sets the date format to english british or smthing
         day: 'numeric',
         month: 'long',
         year: 'numeric'
@@ -83,9 +85,10 @@ function createBadgeCard(item){
         </div>
     `;
 
-    return div.firstElementChild;
+    return div.firstElementChild; // returns only the code inside the created div
 }
 
+    //creating reward card
     function createRewardCard(item){
         const div = document.createElement('div');
 
@@ -121,24 +124,26 @@ function createBadgeCard(item){
         return div.firstElementChild;
     }
 
+// update the page with new vouchers 
 function renderVouchers(){
     console.log("Rendering vouchers: ", states.vouchers);
-    if(!voucherSection) return;
-    voucherSection.innerHTML = '';
+    if(!voucherSection) return; // if no vouchers exit this function
+    voucherSection.innerHTML = ''; // set the innerHTML to '' so that previous data wont remain
 
-    for (let i = 0; i < Math.min(states.vouchers.length, states.visible_voucher_count); i++){
-        const voucherCard = createRewardCard(states.vouchers[i]);
-        voucherSection.appendChild(voucherCard);
+    for (let i = 0; i < Math.min(states.vouchers.length, states.visible_voucher_count); i++){ //when i is less than the Min between(the length of the states.vouchers and the visible voucher count) e.g length is now 3 and visible is 4, we use length. we use the smaller one. 
+        const voucherCard = createRewardCard(states.vouchers[i]); //creates the voucher card
+        voucherSection.appendChild(voucherCard); // append it to voucher section
     }
 
     console.log(states.visible_voucher_count, states.vouchers.length);
-    loadVoucherBtn.style.display = states.visible_voucher_count >= states.vouchers.length ? 'none' : 'flex';
+    loadVoucherBtn.style.display = states.visible_voucher_count >= states.vouchers.length ? 'none' : 'flex'; // if visible voucher count is more than the length then we hide the show more button
 }
 
+//update the page with new badges
 function renderBadges(){
-    console.log("Rendering badges: ", states.badges);
-    if(!badgeSection) return;
-    badgeSection.innerHTML = '';
+    console.log("Rendering badges: ", states.badges); //debugging
+    if(!badgeSection) return; // if no badges then exit function
+    badgeSection.innerHTML = ''; // same approach with rendervouchers
 
     for (let i = 0; i < Math.min(states.badges.length, states.visible_badge_count); i++) {
 
@@ -149,10 +154,11 @@ function renderBadges(){
     loadBadgeBtn.style.display = states.visible_badge_count >= states.badges.length ? 'none' : 'flex';
 }
 
+//update the page with updated points
 function renderPoints(){
     console.log("Rendering points: ", states.points);
 
-    if(point){
+    if(point){ // if the points container exist then chaneg the content to the current points thats saved in states
         point.innerHTML = `<img class="small-icons" src="assets/img/coin.png" alt="">
                             <p class="green-font">${states.points} points</p>`
                             ;
@@ -161,7 +167,7 @@ function renderPoints(){
 
 async function init() {
     // fetch functions
-    await Promise.all([
+    await Promise.all([ // wait until rewards and points are all fetched
         fetchRewards(),
         fetchPoints()
     ]);
@@ -178,7 +184,7 @@ async function init() {
 
     // event listeners
     loadVoucherBtn.addEventListener('click', () => {
-        states.visible_voucher_count += 4;
+        states.visible_voucher_count += 4; // when users click the + 4 button, the visible vouchers becomes 4 -> 8 until its bigger than the length
         renderVouchers();
     })
 

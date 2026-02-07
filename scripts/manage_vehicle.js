@@ -2,17 +2,17 @@ let states = {
     vehicles: []
 };
 
-const vehicleSection = document.getElementById('vehicleSection');
+const vehicleSection = document.getElementById('vehicleSection'); // create a constant (cant be reassigned) for vehicle section
 
-async function fetchVehicles() {
-    console.log("Fetching vehicles...");
+async function fetchVehicles() { //makes function asynchronous using await 
+    console.log("Fetching vehicles..."); // debug message
     try {
-        const response = await fetch("api/vehicle_management_api.php");
-        const data = await response.json();
+        const response = await fetch("api/vehicle_management_api.php"); // wait for this response to be fetched. php takes data from db and sends it back to js
+        const data = await response.json(); // converts from JSON text to Js object
 
         console.log("Received data: ", data);
 
-        states.vehicles = data.vehicles || [];
+        states.vehicles = data.vehicles || []; //replaces the vehicles we defined in states to the data we obtained. if null then assign to empty array
     }
     catch (error) {
         console.error("Error fetching vehicles: ", error);
@@ -21,17 +21,18 @@ async function fetchVehicles() {
 }
 
 function createVehicleCard(vehicle) {
-    let div = document.createElement("div");
+    let div = document.createElement("div"); // create a div element in memory. 
 
-    const imagePath = vehicle.vehicle_image ? vehicle.vehicle_image : 'assets/img/kancil.jpg';
+    const imagePath = vehicle.vehicle_image ? vehicle.vehicle_image : 'assets/img/kancil.jpg'; // checks whether vehicle has an image? if yes use it, if no use the default img
 
-    const registeredDate = new Date(vehicle.registered_at);
-    const formattedDate = registeredDate.toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+    const registeredDate = new Date(vehicle.registered_at); // create date object using the registered time 
+    const formattedDate = registeredDate.toLocaleDateString('en-GB', { // British English format
+        day: 'numeric', // e.g 24
+        month: 'long', // e.g January
+        year: 'numeric' //e.g 2026
     });
 
+    // sets the HTML content for the div | ` => allow multi line strings and ${} for variables
     div.innerHTML = `
                 <div class="car-details-container">
                     <img class="car-img" src="${imagePath}" alt="${vehicle.brand}">
@@ -74,7 +75,7 @@ function createVehicleCard(vehicle) {
                         <div class="stick-left button-container">
                             <div>
                                 <button class="blue button" onclick="openEdit(
-                                    'Registered at: ${vehicle.registered_at}',
+                                    'Registered at: ${vehicle.registered_at}', 
                                     '${vehicle.vehicle_id}',
                                     '${vehicle.car_plate_number}',
                                     '${vehicle.color}',
@@ -91,44 +92,30 @@ function createVehicleCard(vehicle) {
                         </div>
                     </div>
                 </div>
-            `;
+            `; // the value being passed in openEdit() has '' to prevent the code from breaking due to spaces or special character
 
-    return div.firstElementChild;
+    return div.firstElementChild; // send back the content without the created div
 }
 
 function renderVehicles() {
     console.log("Rendering vehicles: ", states.vehicles);
-    vehicleSection.innerHTML = '';
+    vehicleSection.innerHTML = ''; // set it to an empty string so that the previous loaded data wont remain
 
     if (states.vehicles.length === 0) {
         vehicleSection.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">No vehicles registered yet. Add one to get started!</p>';
         return;
-    }
+    } // if none then return a message 
 
     else {
-        states.vehicles.forEach(vehicle => {
+        states.vehicles.forEach(vehicle => { // passes every object of vehicles in the states.vehicles array
             const card = createVehicleCard(vehicle);
-            vehicleSection.appendChild(card);
+            vehicleSection.appendChild(card); // add card to the page
         });
     }
 }
 
-// const dropdownTrigger = document.getElementById('dropdown-trigger');
-// const profileDropdown = document.getElementById('profile-dropdown');
-
-// dropdownTrigger.addEventListener('click', function(event) {
-//     event.stopPropagation();
-//     profileDropdown.classList.toggle('active');
-// });
-
-// document.addEventListener('click', function(event) {
-//     if (!profileDropdown.contains(event.target)) {
-//         profileDropdown.classList.remove('active');
-//     }
-// });
-
-function openEdit(registered_at, id, plate, color, type, brand, manufactured_year, imagePath) {
-    document.getElementById('registeredTimeLabel').textContent =  registered_at;
+function openEdit(registered_at, id, plate, color, type, brand, manufactured_year, imagePath) { // pass in 7 parameters
+    document.getElementById('registeredTimeLabel').textContent =  registered_at; // replace the texts with the passed in parameters
     document.getElementById('edit_id').value = id;
     document.getElementById('edit_plate').value = plate;
     document.getElementById('edit_colour').value = color;
@@ -136,21 +123,21 @@ function openEdit(registered_at, id, plate, color, type, brand, manufactured_yea
     document.getElementById('edit_brand').value = brand || '';
     document.getElementById('edit_year').value = manufactured_year || '';
 
-    const imgPreview = document.getElementById('current_edit_img');
-    if(imagePath && imagePath !== 'null'){
+    const imgPreview = document.getElementById('current_edit_img'); // finds the img element in the edit form
+    if(imagePath && imagePath !== 'null'){ // if exist and not null set the source to the imagePath to load it 
         imgPreview.src = imagePath;
-        imgPreview.style.display = 'block';
+        imgPreview.style.display = 'block'; // access its CSS display property and set it to visible 
     }
     else{
-        imgPreview.style.display = 'none';
+        imgPreview.style.display = 'none'; // else hide it 
     }
 
-    document.getElementById('overlay').classList.add('show');
+    document.getElementById('overlay').classList.add('show'); // add show class to the overlay class to make it appear since its hidden
     document.getElementById('edit').classList.add('show');
 }
 
 function closeEdit() {
-    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('overlay').classList.remove('show'); // remove the show class to make it hidden again
     document.getElementById('edit').classList.remove('show');
 }
 
@@ -164,7 +151,7 @@ function closeAdd() {
     document.getElementById('add').classList.remove('show');
 }
 
-let messageTimer;
+let messageTimer; // variable to store timeout ID 
 
 function showMessage(text, type) {
     const notice = document.getElementById("notice");
@@ -172,21 +159,21 @@ function showMessage(text, type) {
     const msg = document.getElementById("notice-msg");
     const icon = document.getElementById("notice-icon");
 
-    clearTimeout(messageTimer);
+    clearTimeout(messageTimer); // cancel any existing timer
 
     notice.classList.remove("success", "delete", "active"); // Reset the classes just in case
 
-    void notice.offsetWidth; //lets the browser know that classes are removed
+    void notice.offsetWidth; //forces the browser to recalculate layout and discard value
 
     msg.innerText = text;
-    icon.innerText = type === "success" ? "✓" : "✘";
+    icon.innerText = type === "success" ? "✓" : "✘"; // ternary operator 
     const themeColor = type === "success" ? "#10b981" : "#ef4444";
-    progress.style.setProperty('--bar-color', themeColor);
+    progress.style.setProperty('--bar-color', themeColor); // custom CSS property so that we dont have to change the color manually like making several classes. we just assign the -- to themeColour
 
-    notice.classList.add(type);
+    notice.classList.add(type); /// this changes the font colour 
     notice.classList.add("active");
 
-    messageTimer = setTimeout(() => {
+    messageTimer = setTimeout(() => { // after a specific amount of time, remove the active class so it will be hidden
         notice.classList.remove("active");
     }, 3000); // 3000 milliseconds 
 }
@@ -194,7 +181,7 @@ function showMessage(text, type) {
 let vehicleToDelete = null;
 
 function openDelete(id) {
-    vehicleToDelete = id;
+    vehicleToDelete = id; // store the id being passed in
     document.getElementById('overlay').classList.add('show');
     document.getElementById('deleteContainer').classList.add('show');
 }
@@ -204,73 +191,65 @@ function closeDelete() {
     document.getElementById('deleteContainer').classList.remove('show');
 }
 
-document.getElementById('addVehicleForm').addEventListener('submit', async function (e) {
-    e.preventDefault(); //stopping it from refreshing
-
-    // const data = {
-    //     car_plate_number: document.getElementById('add_plate').value,
-    //     color: document.getElementById('add_colour').value,
-    //     type: document.getElementById('add_type').value,
-    //     brand: document.getElementById('add_brand').value,
-    //     year: parseInt(document.getElementById('add_year').value)
-    // };
+document.getElementById('addVehicleForm').addEventListener('submit', async function (e) { // finds the form, listen for submit event, async function which recieves event object
+    e.preventDefault(); //stopping it from refreshing since its the default behaviour when submitting
 
     //form data instead of json object
 
-    const formData = new FormData();
-    formData.append('car_plate_number', document.getElementById('add_plate').value);
+    const formData = new FormData(); // form data used. json cant hold file data but file data can hold file data and automatically formats them too
+    formData.append('car_plate_number', document.getElementById('add_plate').value); // append adds a key-value pair to formData e.g (car_plate_number = "ABC123")
     formData.append('color', document.getElementById('add_colour').value);
     formData.append('type', document.getElementById('add_type').value);
     formData.append('brand', document.getElementById('add_brand').value);
-    formData.append('year', parseInt(document.getElementById('add_year').value));
+    formData.append('year', parseInt(document.getElementById('add_year').value)); // converts string to integer
 
-    const fileInput = document.getElementById('add_image');
-    if(fileInput.files[0]){
-        formData.append('vehicle_image', fileInput.files[0]);
+    const fileInput = document.getElementById('add_image'); // finds the file input element 
+    if(fileInput.files[0]){ // selects the first image in the array but why [0] we send the object instead of the whole array
+        formData.append('vehicle_image', fileInput.files[0]); 
     }
 
     // Content-Type removed since we;re not using json 
 
     try {
         const response = await fetch('api/vehicle_management_api.php?mode=add', {
-            method: 'POST',
-            body: formData
-        });
+            method: 'POST', // no need headers since formdata set Content-Type automatically
+            body: formData // sends form data directly instead of using JSON.stringify() to encode back to json to send data back to PHP
+        });     
 
-        const result = await response.json();
+        const result = await response.json(); // wait for php response 
 
         if (result.success) {
             closeAdd();
             showMessage("Vehicle Added Successfully!", "success");
 
-            await fetchVehicles();
-            renderVehicles();
+            await fetchVehicles(); // fetch new data from the database 
+            renderVehicles(); // update the screen with new data
 
-            document.getElementById('addVehicleForm').reset();
+            document.getElementById('addVehicleForm').reset(); // resets the form
         }
         else {
             showMessage(result.error || "Failed to add vehicle", "delete");
         }
     }
-    catch (error) {
+    catch (error) { // error if it crashed
         console.error("Error: ", error);
-        showMessage("Connection Error", "delete");
+        showMessage("Connection Error", "delete"); 
     }
 });
 
 document.getElementById('confirmDeleteBtn').addEventListener('click', async function (e) {
-    if (!vehicleToDelete) {
+    if (!vehicleToDelete) { // check whether vehicle id exists
         return
     };
 
     try {
-        const response = await fetch('api/vehicle_management_api.php?mode=delete', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ vehicle_id: vehicleToDelete })
+        const response = await fetch('api/vehicle_management_api.php?mode=delete', { // stores response
+            method: 'POST', // use POST method
+            headers: { 'Content-Type': 'application/json' }, // tell the server that we're using json
+            body: JSON.stringify({ vehicle_id: vehicleToDelete }) // convert object to JSON string 
         });
 
-        const result = await response.json();
+        const result = await response.json(); // convert json to js object
 
         if (result.success) {
             closeDelete();
@@ -279,7 +258,7 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', async func
             await fetchVehicles();
             renderVehicles();
 
-            vehicleToDelete = null;
+            vehicleToDelete = null; // sets the vehicle to delete back to null 
         }
         else {
             showMessage(result.error || "Failed to delete", "delete");
@@ -294,17 +273,8 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', async func
 document.getElementById('confirmEditBtn').addEventListener('click', async function (e) {
     e.preventDefault();
 
-    // const data = {
-    //     vehicle_id: document.getElementById('edit_id').value,
-    //     car_plate_number: document.getElementById('edit_plate').value,
-    //     color: document.getElementById('edit_colour').value,
-    //     type: document.getElementById('edit_type').value,
-    //     brand: document.getElementById('edit_brand').value,
-    //     year: document.getElementById('edit_year').value
-    // };
-
     const formData = new FormData();
-    formData.append('vehicle_id', document.getElementById('edit_id').value);
+    formData.append('vehicle_id', document.getElementById('edit_id').value); // vehicle id is hidden
     formData.append('car_plate_number', document.getElementById('edit_plate').value);
     formData.append('color', document.getElementById('edit_colour').value);
     formData.append('type', document.getElementById('edit_type').value);
@@ -314,7 +284,7 @@ document.getElementById('confirmEditBtn').addEventListener('click', async functi
     const fileInput = document.getElementById('edit_image');
     if(fileInput.files[0]) {
         formData.append('vehicle_image', fileInput.files[0]);
-    }
+    } //same thing as add but we access vehicle id to know which vehicle to update
 
     try {
         const response = await fetch('api/vehicle_management_api.php?mode=update', {
@@ -322,7 +292,7 @@ document.getElementById('confirmEditBtn').addEventListener('click', async functi
             body: formData
         });
 
-        const result = await response.json();
+        const result = await response.json(); // same thing as add too
 
         if (result.success) {
             closeEdit();
@@ -342,10 +312,10 @@ document.getElementById('confirmEditBtn').addEventListener('click', async functi
 });
 
 
-async function init() {
+async function init() { // async init function
     console.log("Initializing app...");
 
-    await fetchVehicles();
+    await fetchVehicles(); //fetch vehicles data and render
     renderVehicles();
 
     console.log("App loaded!");

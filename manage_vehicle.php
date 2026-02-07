@@ -94,7 +94,7 @@
         <hr class="margin10top">
         <form id="addVehicleForm">
             <p>Vehicle Image:</p>
-            <input type="file" id="add_image" name="vehicleImage" accept="image/*">
+            <input type="file" id="add_image" name="vehicleImage" accept="image/*"> <!-- accept image means like u filter out only images can be uploaded /* means png jpg etc -->
 
             <p>Vehicle Brand:</p>
             <input type="text" id="add_brand" name="carbrandInput" placeholder="Perodua Kancil" required="required">

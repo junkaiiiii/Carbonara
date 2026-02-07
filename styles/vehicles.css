@@ -380,7 +380,7 @@
     right: 0;
     height: 100%;
     width: 100%;
-    background-color: var(--bar-color);
+    background-color: var(--bar-color); /* searches the value inside manage_vehicles.js since we determine what colour will be used there */
 }
 
 .notice.active .progress:before{

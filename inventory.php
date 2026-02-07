@@ -112,7 +112,7 @@
             document.querySelector('.hugee').innerText= title;
             document.getElementById('redemption_id').innerText = "Redemption ID: " + redemption_id;
 
-            let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${redemption_id}`;
+            let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${redemption_id}`; // create qr using external API
             document.getElementById('voucher_qr_img').src = qrUrl;
 
             document.getElementById('overlay').classList.add('show');

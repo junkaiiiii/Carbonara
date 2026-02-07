@@ -1,25 +1,25 @@
 <?php
-session_start();
+session_start(); // starts session to access session variables
 
-if (empty($_SESSION["user_id"])) {
-    respond(['error' => 'Please Log In First', 400]);
+if (empty($_SESSION["user_id"])) { // if the current session has no user id then 
+    respond(['error' => 'Please Log In First', 400]); // sends the response array as JSON to javascript
 }
 
 include("../db_connect.php");
 include("headers.php");
 include("helpers.php");
 
-$method = $_SERVER["REQUEST_METHOD"];
-$user_id = $_SESSION['user_id'];
+$method = $_SERVER["REQUEST_METHOD"]; // get HTTP method 
+$user_id = $_SESSION['user_id'];  
 
-if ($method === "GET") {
-    $mode = $_GET['mode'] ?? '';
+if ($method === "GET") { // if the HTTP method is get, checks whats the mode 
+    $mode = $_GET['mode'] ?? ''; // if we dont get the mode set it to ''
 
-    if (empty($mode)) {
+    if (empty($mode)) { // no mode = '', thus sends error JSON to js
         respond(['error' => 'Invalid Request Attribute', 400]);
     }
 
-    if ($mode === "all") {
+    if ($mode === "all") { // if mode = all
         $sql = "SELECT p.prize_id, 
                     p.prize_name,
                     p.points_required,
@@ -31,15 +31,15 @@ if ($method === "GET") {
 
                  FROM prizes p
                 LEFT JOIN redemption r ON p.prize_id = r.prize_id AND r.user_id= ?;
-                ";
+                "; // shows all the prizes even if not redeemed
                 
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 's', $user_id);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        $stmt = mysqli_prepare($conn, $sql); // prepares the sql statement
+        mysqli_stmt_bind_param($stmt, 's', $user_id); // bind parameters
+        mysqli_stmt_execute($stmt); // executes the prepared sql statement
+        $result = mysqli_stmt_get_result($stmt); // get the result and store them
 
-        $response = [];
-        while ($row = mysqli_fetch_assoc($result)) {
+        $response = []; // creates an empty array
+        while ($row = mysqli_fetch_assoc($result)) { // loop through each row and append it into the empty array
             $response[] = [
                 "prize_id"        => $row['prize_id'],
                 "prize_name"      => $row['prize_name'],
@@ -53,7 +53,7 @@ if ($method === "GET") {
             ];
         }
     }
-    else if($mode === "admin_all"){
+    else if($mode === "admin_all"){ // admin obtain all data 
         $sql = "SELECT prize_id, prize_name, points_required, stock, prize_type, prize_image_url FROM prizes;";
         $result = mysqli_query($conn, $sql);
         $response = [];
@@ -69,7 +69,7 @@ if ($method === "GET") {
         }
     }
 
-    respond($response);
+    respond($response); // sends JSON to js
 }
 else if($method === "POST") {
     // Admin Adding New Prize
