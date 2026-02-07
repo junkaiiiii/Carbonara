@@ -7,14 +7,14 @@
             <div id="account-container" onclick="window.location.href='profile.php'" style="cursor: pointer;">
                 <?php
                  if (!empty($_SESSION['user_id'])): ?>
-                    <img class="profile-picture" src="
-                    <?php echo $_SESSION['profile_picture_url'];?> ">
+                    <img class="profile-picture" src="<?= $_SESSION['profile_picture_url'];?>">
                     <div id="user-container">
-                        <h2><?= htmlspecialchars($_SESSION['username']) ?></h2>
-                        <p><?= htmlspecialchars($_SESSION['email']) ?></p>
+                        <h2><?= $_SESSION['username'] ?></h2>
+                        <p><?= $_SESSION['email'] ?></p>
                     </div>
                 <?php endif; ?>
             </div>
+
             <svg id="dropdown-trigger" class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>

@@ -358,13 +358,14 @@ function createImpactStats(weight) {
 async function createRatingPopup(riders) {
     const overlay = document.createElement('div');
     overlay.className = 'rating-overlay';
+    console.log("FUCKER:", riders);
 
     let ridersHTML = '';
     riders.forEach((rider, index) => {
         ridersHTML += `
             <div class="rider-rating-card" data-rider-id="${rider.user_id}">
                 <div class="rider-info">
-                    <img class="rider-avatar" src="assets/img/man.png" alt="">
+                    <img class="rider-avatar" src="${rider.profile_picture_url}" alt="">
                     <div class="rider-details">
                         <h3>${rider.username}</h3>
                         <p class="rider-role">${rider.role || 'Passenger'}</p>
@@ -732,21 +733,15 @@ async function init() {
 
         // Add driver if current user is not the driver
         if (states.session.user_id !== states.ride_details.driver.user_id) {
-            allRiders.push({
-                user_id: states.ride_details.driver.user_id,
-                username: states.ride_details.driver.username,
-                role: 'Driver'
-            });
+            allRiders.push(
+                states.ride_details.driver
+                );
         }
 
         // Add passengers (excluding current user)
         states.ride_details.passengers.forEach(passenger => {
             if (passenger.username !== states.session.username) {
-                allRiders.push({
-                    user_id: passenger.user_id,
-                    username: passenger.username,
-                    role: 'Passenger'
-                });
+                allRiders.push(passenger);
 
                 console.log("Add Passenger");
             }
