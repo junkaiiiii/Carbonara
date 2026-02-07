@@ -9,6 +9,7 @@ let states = {
 };
 
 // DOM (Document Object Model)
+// DOM (Document Object Model)
 let voucherSection = document.getElementById("voucherSection");
 let loadVoucherBtn = document.getElementById("loadVoucherBtn");
 let badgeSection = document.getElementById("badgeSection");
@@ -75,9 +76,10 @@ function createRewardCard(reward, onConfirmPopUp, onConfirm) {
                 Redeemed
             </button>` :
         `<button class="button" id="redeemButton">
-                Redeem ${reward.prize_name.charAt(0).toUpperCase() + reward.prize_name.slice(1)}
+                Redeem ${reward.prize_name.charAt(0).toUpperCase() + reward.prize_name.slice(1)} 
             </button>`;
-    // gets the first letter of the prize name to be capitalized and get the rest of the string using /slice(1)
+        // gets the first letter of the prize name to be capitalized and get the rest of the string using /slice(1)
+
     let div = document.createElement("div"); // creates a div in memory 
     div.innerHTML = `
         <div class="voucher-container">

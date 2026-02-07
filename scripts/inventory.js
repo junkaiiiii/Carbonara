@@ -188,7 +188,7 @@ async function init() {
         renderVouchers();
     })
 
-    loadBadgeBtn?.addEventListener('click', () => {
+    loadBadgeBtn.addEventListener('click', () => {
         states.visible_badge_count += 4;
         renderBadges();
     });

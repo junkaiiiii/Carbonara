@@ -30,7 +30,7 @@
             return ["error" => "Invalid file type. Only JPG, JPEG, and PNG file type are allowed."]; //exits the function and returns an array
         }
 
-        if(move_uploaded_file($file["tmp_name"], $target_file)){ // files uploaded are stored inside temporary file, we move it to our target file 
+        if(move_uploaded_file($file["tmp_name"], $target_file)){ // built in tool for security which saves the data in a temporary file first 
             return "assets/img/vehicle_images/" . $new_filename; // we return the new file path without the ../ allowing browser to load image correctly from the web root
         }
 
@@ -72,7 +72,7 @@
         // JSON only reads text
         // $input = getJsonInput();
 
-        $input = $_POST; // We use $input instead of using $_POST all the time
+        $input = $_POST; // Reads form data from request which is already in array
 
         $new_vehicle_id = generateId("VH_"); //prefix for the ID
 

@@ -50,6 +50,7 @@ if ($method === "POST"){
     
     mysqli_stmt_close($stmt);
 
+
 }else {
     respond(['Error'=>"Invalid Request Method"]);
 }

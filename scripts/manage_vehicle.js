@@ -214,7 +214,7 @@ document.getElementById('addVehicleForm').addEventListener('submit', async funct
         const response = await fetch('api/vehicle_management_api.php?mode=add', {
             method: 'POST', // no need headers since formdata set Content-Type automatically
             body: formData // sends form data directly instead of using JSON.stringify() to encode back to json to send data back to PHP
-        });     
+        });
 
         const result = await response.json(); // wait for php response 
 
