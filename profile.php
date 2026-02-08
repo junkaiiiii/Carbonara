@@ -28,6 +28,28 @@
         }
 
     ?>
+    <?php
+        include "db_connect.php";
+        $user_id = $_SESSION['user_id'];
+        $sql = "SELECT username, email, role, phone, profile_picture_url, 
+        (SELECT AVG(score) FROM ratings WHERE rated_id = '$user_id') as rating_score, 
+        (SELECT SUM(co2_saved) FROM co2_log WHERE user_id = '$user_id') as co2_saved, 
+        (SELECT COUNT(ride_id) FROM rides WHERE driver_id = '$user_id' AND ride_status = 'Completed') as total_rides 
+        FROM users 
+        WHERE user_id = '$user_id' LIMIT 1";
+
+        $result = mysqli_query($conn, $sql);
+        if ($row = mysqli_fetch_assoc($result)) {
+            $username = $row['username'];
+            $email = $row['email'];
+            $role = $row['role'];
+            $phone = $row['phone'];
+            $profile_picture_url = $row['profile_picture_url'];
+            $rating_score = $row['rating_score'] ?? 0.0;
+            $co2_saved = $row['co2_saved'] ?? 0.0;
+            $total_rides = $row['total_rides'] ?? 0;
+        }
+    ?>
 
     <div class="container">
         <div class="profile-title">
@@ -37,18 +59,23 @@
         <div class="card user-info-card">
             <div class="profile-img-wrapper">
                 <div class="profile-img-container" id="profile-display">
-                    <img id="placeholder-svg"  width="40" height="40" src="assets/img/profile-default.svg">
+                    <?php if (!empty($profile_picture_url)): ?>
+                        <img id="profile-img-real" src="<?php echo $profile_picture_url; ?>" width="100%" style="border-radius: 50%; height: 100%; object-fit: cover;">
+                    <?php else: ?>
+                        <img id="placeholder-svg" width="40" height="40" src="assets/img/profile-default.svg">
+                    <?php endif; ?>
                 </div>
+
                 <input type="file" id="image-input" accept="image/*" hidden>
                 <label for="image-input" class="upload-icon">+</label>
             </div>
 
-            <h1 class="user-name">User</h1>
-            <span class="role-text">Passenger</span>
+            <h1 class="user-name"><?php echo $username ?></h1>
+            <span class="role-text"><?php echo $role ?></span>
 
             <div class="rating">
-                <div class="stars">☆☆☆☆☆</div>
-                <span class="rating-score">0.0</span>
+                <div class="stars">☆</div>
+                <span class="rating-score"><?php echo number_format($rating_score, 1) ?></span>
             </div>
 
             <div class="stats-grid">
@@ -57,14 +84,14 @@
                         <img width="14" height="14" src="assets/img/car-profile.svg">
                         Total Rides
                     </div>
-                    <div class="stat-value">0</div>
+                    <div class="stat-value"><?php echo $total_rides ?></div>
                 </div>
                 <div class="stat-box green">
                     <div class="stat-title">
                         <img width="14" height="14" src="assets/img/co2-profile.svg">
                         CO₂ Saved
                     </div>
-                    <div class="stat-value">0.0 kg</div>
+                    <div class="stat-value"><?php echo number_format($co2_saved, 1) ?> kg</div>
                 </div>
             </div>
         </div>
@@ -73,18 +100,15 @@
             <h2 class="card-title">Contact Information</h2>
             <div class="info-group">
                 <span>Email</span>
-                <div class="info-display">piza@gmail.com</div>
+                <div class="info-display"><?php echo $email ?></div>
             </div>
             <div class="info-group">
                 <span>Phone</span>
-                <div class="info-display">example</div>
+                <div class="info-display"><?php echo $phone ?></div>
             </div>
         </div>
 
         <?php
-        include "db_connect.php";
-
-        $user_id = $_SESSION['user_id'];
         $status = "None"; // Default license status
         $license_img = "";
 

@@ -7,9 +7,6 @@ include("../db_connect.php");
 
 // if doesnt exist create new one
 $targetDir = "../assets/profile/";
-if (!file_exists($targetDir)) {
-    mkdir($targetDir);
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_pic'])) {
     $file = $_FILES['profile_pic'];
@@ -46,13 +43,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_pic'])) {
 
     $result = mysqli_query($conn, $sql);
 
-    if (mysqli_affected_rows($conn) < 1){
-        respond(['error'=>'path is not updated to database']);
+    if ($result) {
+        respond([
+            'success' => true, 
+            'message' => 'Profile picture updated successfully.', 
+            'path' => $dbPath
+        ]);
+    } else {
+        respond([
+            'success' => false, 
+            'message' => 'Database update error: ' . mysqli_error($conn)
+        ]);
     }
 
-    respond(['success'=>'Image is added and path is created in database', 'path'=>$targetFilePath]);
-} else {
-    // Handle case where file is missing
-    respond(['success' => false, 'message' => 'No file uploaded or wrong request method.']);
-}
+    } else {
+    // Error for direct access or missing file
+        respond([
+            'success' => false, 
+            'message' => 'Invalid request. No file detected.'
+        ]);
+    }
 ?>

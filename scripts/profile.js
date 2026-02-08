@@ -1,4 +1,4 @@
-// Handle Profile Image Upload and Preview
+// Handle profile image upload and preview
 document.addEventListener('DOMContentLoaded', () => {
     const imageInput = document.getElementById('image-input');
     const profileDisplay = document.getElementById('profile-display');
@@ -10,17 +10,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                // Remove the default icon
+                // Handle Placeholder
                 if (placeholderSvg) placeholderSvg.style.display = 'none';
                 
-                // set chosen image as background
-                profileDisplay.style.backgroundImage = `url(${e.target.result})`;
-                profileDisplay.style.backgroundSize = 'cover';
-                profileDisplay.style.backgroundPosition = 'center';
+                // Find or Create the image tag
+                let imgTag = document.getElementById('profile-img-real');
+                
+                if (!imgTag) {
+                    imgTag = document.createElement('img');
+                    imgTag.id = 'profile-img-real';
+                    imgTag.style.width = '100%';
+                    imgTag.style.height = '100%';
+                    imgTag.style.borderRadius = '50%';
+                    imgTag.style.objectFit = 'cover';
+                    profileDisplay.appendChild(imgTag);
+                }
+                
+                // Update source to the preview
+                imgTag.src = e.target.result;
             }
             reader.readAsDataURL(file);
 
-            // link to server
+            // Link to server
             const formData = new FormData();
             formData.append('profile_pic', file);
 
@@ -33,17 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     console.log('Upload successful:', data.path);
                 } else {
-                    alert('Upload failed: ' + data.message);
+                    alert('Upload failed: ' + (data.message || data.error));
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
         }
     });
 });
 
-// Handle Driver's License Upload and Preview
+// Handle drivers license upload and preview
 document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('license-file-input');
     const uploadBtn = document.getElementById('upload-license-btn');
@@ -53,12 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewImg = document.getElementById('license-img');
     const btnText = document.getElementById('btn-text');
 
-    // 1. Handle File Selection and UI Preview
+    // Handle file selection preview
     fileInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         
         if (file) {
-            // Validate it's an image
+            // Validate if its image
             if (!file.type.startsWith('image/')) {
                 alert('Please select an image file.');
                 return;
@@ -66,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const reader = new FileReader();
             reader.onload = function(event) {
-                // Show the preview
+                // Show preview
                 previewImg.src = event.target.result;
                 previewContainer.style.display = 'block';
 
@@ -80,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Handle the Actual Upload to the API
+    // Link to API for upload
     uploadBtn.addEventListener('click', async (e) => {
         // If no file is selected yet, let the label handle the click
         if (!fileInput.files[0]) return;

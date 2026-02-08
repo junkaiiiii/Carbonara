@@ -5,7 +5,7 @@ include("headers.php");
 include("helpers.php");
 include("../db_connect.php");
 
-// 1. Change target directory to license folder
+// Change target directory to license folder
 $targetDir = "../assets/licenses/"; 
 if (!file_exists($targetDir)) {
     mkdir($targetDir, 0777, true);
@@ -15,33 +15,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['license_image'])) {
     $file = $_FILES['license_image'];
     $fileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
-    // Validate Image
+    // Validate image
     if (getimagesize($file['tmp_name']) === false) {
         respond(['success' => false, 'message' => 'File is not an image.']);
         exit;
     }
 
-    // Validate Size (2MB)
+    // Validate size (2MB)
     if ($file['size'] > 2000000) {
         respond(['success' => false, 'message' => 'File is too large (Max 2MB).']);
         exit;
     }
 
-    // Generate Unique Name
+    // Generate unique name
     $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : exit(json_encode(['success' => false, 'message' => 'User not logged in']));
     
-    // Create a unique License ID (matching your DL_... format)
+    // Create a unique license ID 
     $licenseId = "DL_" . substr(md5(uniqid()), 0, 13);
     $newFileName = $licenseId . "." . $fileType;
     $targetFilePath = $targetDir . $newFileName;
 
-    // Move File
+    // Move file
     if (!move_uploaded_file($file['tmp_name'], $targetFilePath)) {
         respond(['success' => false, 'message' => 'Failed to save file.']);
         exit;
     }
 
-    // 2. Update driving_license table
+    // Update driving_license table
     // If user already has a row, we update the image and reset status to 'Pending'
     $sql = "INSERT INTO driving_license (license_id, user_id, status, license_image_url) 
             VALUES ('$licenseId', '$userId', 'Pending', 'assets/licenses/$newFileName')
