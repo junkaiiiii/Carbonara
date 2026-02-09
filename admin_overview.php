@@ -27,7 +27,7 @@
                 </div>
                 <div class="stat-content">
                     <p class="stat-label">Total Users</p>
-                    <h2 class="stat-value" id="totalUsers">0</h2>
+                    <h2 class="stat-value" id="totalUsers"></h2>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
                 </div>
                 <div class="stat-content">
                     <p class="stat-label">Total Rides</p>
-                    <h2 class="stat-value" id="totalRides">0</h2>
+                    <h2 class="stat-value" id="totalRides"></h2>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                 </div>
                 <div class="stat-content">
                     <p class="stat-label">Total CO₂ Saved</p>
-                    <h2 class="stat-value" id="totalCo2">0</h2>
+                    <h2 class="stat-value" id="totalCo2"></h2>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                 </div>
                 <div class="stat-content">
                     <p class="stat-label">Pending Reports</p>
-                    <h2 class="stat-value" id="pendingReports">0</h2>
+                    <h2 class="stat-value" id="pendingReports"></h2>
                 </div>
             </div>
         </div>
