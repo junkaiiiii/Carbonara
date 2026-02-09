@@ -17,7 +17,6 @@
         $response = [];
 
         if ($result && mysqli_num_rows($result) > 0){
-            // echo "IT WORKED <br>";
             while ($row = mysqli_fetch_assoc($result)){
 
                 $license = [
