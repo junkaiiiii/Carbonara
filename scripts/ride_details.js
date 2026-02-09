@@ -346,7 +346,7 @@ function createImpactStats(weight) {
                 </div>
                 <div>
                     <p>Co2 saved through carpooling</p>
-                    <h1 id="stats">${weight}kg CO₂<sup>2</sup></h1>
+                    <h1 id="stats">${weight}kg CO₂<sup></sup></h1>
                 </div>
             </div>
         </div>
