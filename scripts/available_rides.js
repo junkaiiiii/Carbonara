@@ -83,9 +83,7 @@ const fetchRides = () => {
                 }
             });
 
-            // 2. Sync filtered rides with the new data
-            // If the user isn't searching, this shows all. 
-            // If they are searching, call searchRides() instead.
+
             if (originInput.value || destinationInput.value) {
                 searchRides();
             } else {
@@ -189,13 +187,9 @@ const showMore = () => {
     states.visible_ride_count += 5;
     renderAvailableRides();
 }
-// // view ride Details
-// const viewRideDetails = (ride) =>{
-//     console.log(ride);
-// }
 
 
-// // Render all UI
+// // render functions
 const renderWelcome = () => {
     console.log("Rendering welcome, role:", states.session.role);
     if (!states.session) {

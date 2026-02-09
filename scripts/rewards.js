@@ -9,7 +9,6 @@ let states = {
 };
 
 // DOM (Document Object Model)
-// DOM (Document Object Model)
 let voucherSection = document.getElementById("voucherSection");
 let loadVoucherBtn = document.getElementById("loadVoucherBtn");
 let badgeSection = document.getElementById("badgeSection");

@@ -450,7 +450,6 @@ async function createRatingPopup(riders) {
 
     // Submit ratings
     overlay.querySelector('#submitRatings').addEventListener('click', async () => {
-        // Validate that all riders have been rated
         const unratedRiders = ratings.filter(r => r.rating === 0);
         if (unratedRiders.length > 0) {
             alert('Please rate all co-riders before submitting');
