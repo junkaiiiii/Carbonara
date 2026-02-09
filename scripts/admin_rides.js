@@ -37,6 +37,7 @@ function renderRides(filter = 'all') {
     
     ridesGrid.innerHTML = '';
     
+    //Creates new div for card
     filteredRides.forEach(ride => {
         const rideCard = document.createElement('div');
         rideCard.className = 'ride-card';
@@ -72,12 +73,13 @@ function renderRides(filter = 'all') {
     });
 }
 
-
+//Current active filter from UI
 function getCurrentFilter() {
     const activeBtn = document.querySelector('.filter-btn.active');
     return activeBtn ? activeBtn.dataset.filter : 'all';
 }
 
+// Event listener to handle filter swithcing 
 function setupFilterButtons() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     

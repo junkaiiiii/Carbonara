@@ -10,7 +10,7 @@ let states = {
     leaderboardUsers: []
 };
 
-// Get all references
+// Get all DOM references
 const totalUsersEl = document.getElementById("totalUsers");
 const totalCo2El = document.getElementById("totalCo2");
 const totalReportsEl = document.getElementById("pendingReports");
@@ -40,6 +40,7 @@ function fetchOverviewStats(){
         });
 }
 
+//Fetch Leaderboard data
 function fetchLeaderboard(){
     console.log("Fetching leaderboard");
     return fetch('api/co2_api.php?mode=ranking')
@@ -71,6 +72,7 @@ function createLeaderboardItem(user, index) {
     const div = document.createElement('div');
     div.className = `leaderboard-item rank-${ranking}`;
     
+    //if fail, display error
     div.innerHTML = `
         <div class="rank-badge">#${ranking}</div>
         <div class="leaderboard-user-info">
@@ -86,6 +88,8 @@ function createLeaderboardItem(user, index) {
     return div;
 }
 
+
+//Error handling
 function renderLeaderboard() {
     console.log("Starting leaderboard render");
     console.log("Leaderboard element exists:", !!leaderboardListEl);
@@ -110,6 +114,7 @@ function renderLeaderboard() {
     
     console.log(`Rendering ${states.leaderboardUsers.length} leaderboard items`);
     
+    //Append item for each user
     states.leaderboardUsers.forEach((user, index) => {
         console.log(`Creating item ${index + 1}:`, user);
         const item = createLeaderboardItem(user, index);
@@ -120,11 +125,13 @@ function renderLeaderboard() {
     console.log("Leaderboard render complete");
 }
 
+//Fetch all the data and update it in the UI
 async function init(){
     console.log("Initializing admin overview");
     
+    //Asynchoronously fetch data
     try {
-        await Promise.all([
+        await Promise.all([ 
             fetchOverviewStats(),
             fetchLeaderboard()
         ]);
