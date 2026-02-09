@@ -10,6 +10,7 @@
     <title>Overview</title>
     <link rel="stylesheet" href="styles/admin_style.css">
     <link rel="stylesheet" href="styles/admin_overview.css">
+</head>
 <body>
     <?php
     include("admin_header.php");
