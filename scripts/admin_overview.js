@@ -10,6 +10,7 @@ let states = {
     leaderboardUsers: []
 };
 
+// Get all references
 const totalUsersEl = document.getElementById("totalUsers");
 const totalCo2El = document.getElementById("totalCo2");
 const totalReportsEl = document.getElementById("pendingReports");
@@ -20,8 +21,9 @@ const passengersEl = document.getElementById("passengerCount");
 const bannedUsersEl = document.getElementById("bannedCount");
 const leaderboardListEl = document.getElementById("leaderboardList");
 
+//Fetch data
 function fetchOverviewStats(){
-    console.log("Fetching overview stats...");
+    console.log("Fetching overview stats");
     return fetch("api/overview_api.php")
         .then(response => response.json())
         .then(data => {
@@ -39,7 +41,7 @@ function fetchOverviewStats(){
 }
 
 function fetchLeaderboard(){
-    console.log("Fetching leaderboard...");
+    console.log("Fetching leaderboard");
     return fetch('api/co2_api.php?mode=ranking')
         .then(response => {
             console.log("Leaderboard response status:", response.status);
@@ -51,8 +53,7 @@ function fetchLeaderboard(){
             console.log("Data length:", data ? data.length : 0);
             
             if (Array.isArray(data) && data.length > 0) {
-                // Get top 3 users for the dashboard
-                states.leaderboardUsers = data.slice(0, 3);
+                states.leaderboardUsers = data.slice(0, 3); // Get top 3 users for the dashboard
                 console.log("Top 3 users stored:", states.leaderboardUsers);
             } else {
                 console.warn("No valid leaderboard data received");
@@ -86,7 +87,7 @@ function createLeaderboardItem(user, index) {
 }
 
 function renderLeaderboard() {
-    console.log("=== Starting leaderboard render ===");
+    console.log("Starting leaderboard render");
     console.log("Leaderboard element exists:", !!leaderboardListEl);
     console.log("Leaderboard users:", states.leaderboardUsers);
     
@@ -98,10 +99,10 @@ function renderLeaderboard() {
     leaderboardListEl.innerHTML = '';
     
     if (!states.leaderboardUsers || states.leaderboardUsers.length === 0) {
-        console.log("No leaderboard data - showing empty state");
+        console.log("No leaderboard data");
         leaderboardListEl.innerHTML = `
             <div style="text-align: center; padding: 2rem; color: #9ca3af;">
-                <p style="margin: 0;">No leaderboard data available yet</p>
+                <p style="margin: 0;">No leaderboard data</p>
             </div>
         `;
         return;
@@ -116,11 +117,11 @@ function renderLeaderboard() {
     });
     
     console.log("Leaderboard HTML after render:", leaderboardListEl.innerHTML.substring(0, 200));
-    console.log("=== Leaderboard render complete ===");
+    console.log("Leaderboard render complete");
 }
 
 async function init(){
-    console.log("=== Initializing admin overview ===");
+    console.log("Initializing admin overview");
     
     try {
         await Promise.all([
@@ -130,6 +131,7 @@ async function init(){
         
         console.log("All data fetched. Current states:", states);
         
+        //Update the leaderboard card with fetched value
         if (totalUsersEl) totalUsersEl.textContent = states.totalUsers || '0';
         if (totalCo2El) totalCo2El.textContent = states.totalCo2 || '0';
         if (totalReportsEl) totalReportsEl.textContent = states.totalReports || '0';
@@ -141,12 +143,13 @@ async function init(){
         
         renderLeaderboard();
         
-        console.log("=== Initialization complete ===");
+        console.log("Initialization complete");
     } catch (error) {
         console.error("Error during initialization:", error);
     }
 }
 
+//Ensures Jscipt loads first before others
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {

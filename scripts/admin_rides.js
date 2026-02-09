@@ -1,7 +1,8 @@
 let states = {
-    rides : []
+    rides : [] //Array to store all rides' data
 }
 
+// Fetch all the data regardless of ride's status
 async function fetchAvailableRides(){
     await fetch("api/ride_api.php?mode=all")
     .then(response => response.json())
@@ -14,6 +15,7 @@ async function fetchAvailableRides(){
     })
 }
 
+// Display rides abased on filters
 function renderRides(filter = 'all') {
     const ridesGrid = document.getElementById('ridesGrid');
     
@@ -22,6 +24,7 @@ function renderRides(filter = 'all') {
     console.log('Filtering by:', normalizedFilter);
     console.log('Total rides:', states.rides.length);
     
+    //Filter rides based on all, if not "all" then show other filtered rides
     const filteredRides = normalizedFilter === 'all' 
         ? states.rides 
         : states.rides.filter(ride => {
@@ -44,7 +47,7 @@ function renderRides(filter = 'all') {
             <div class="ride-header">
                 <div class="ride-route">
                     <h3>📍${ride.origin_text} --> ${ride.destination_text}</h3>
-                    <p class="ride-driver">👤Driver: ${ride.driver.name} 📞(${ride.driver.phone})</p>
+                    <p class="ride-driver">👤Driver: ${ride.driver.name} <br> 📞(${ride.driver.phone})</p>
                 </div>
                 <div class="ride-actions">
                     <span class="status-badge ${normalizedStatus}">${normalizedStatus}</span>
@@ -66,19 +69,7 @@ function renderRides(filter = 'all') {
         `;
         ridesGrid.appendChild(rideCard);
         console.log(ride.ride_id);
-        // const viewRideBtn = rideCard.querySelector('.view-ride-btn');
-        // viewRideBtn.addEventListener('click', () => {
-        //     window.location.href = `admin_ride_details.php?ride_id=${ride.ride_id}`;
-        // });
     });
-}
-
-function deleteRide(rideId) {
-  const index = ridesData.findIndex(ride => ride.id === rideId);
-    if (index > -1) {
-      ridesData.splice(index, 1);
-      renderRides(getCurrentFilter());
-    }
 }
 
 
@@ -102,9 +93,7 @@ function setupFilterButtons() {
 }
 
 async function init(){
-    await Promise.all([
-        fetchAvailableRides()
-    ]);
+        fetchAvailableRides();
 
     console.log('Loaded rides:', states.rides);
     

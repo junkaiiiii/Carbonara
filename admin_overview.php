@@ -10,8 +10,6 @@
     <title>Overview</title>
     <link rel="stylesheet" href="styles/admin_style.css">
     <link rel="stylesheet" href="styles/admin_overview.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
 <body>
     <?php
     include("admin_header.php");
@@ -19,7 +17,8 @@
     ?>
 
     <div class="overview-container">
-        <!-- Quick Stats Grid -->
+
+        <!--Stats Grid-->
         <div class="stats-grid">
             <div class="stat-card total-users-card">
                 <div class="stat-icon-wrapper">
@@ -70,7 +69,7 @@
                     <a href="leaderboard.php" class="view-all-link">View All</a>
                 </div>
                 <div class="leaderboard-list" id="leaderboardList">
-                    
+                    <!--Leadearboard Data-->
                 </div>
             </div>
 
@@ -113,25 +112,24 @@
                         <div class="breakdown-label">
                             <span>Admins</span>
                         </div>
-                        <span class="breakdown-value" id="adminCount">0</span>
+                        <span class="breakdown-value" id="adminCount"></span>
                     </div>
                     <div class="breakdown-item">
                         <div class="breakdown-label">
                             <span>Drivers</span>
                         </div>
-                        <span class="breakdown-value" id="driverCount">0</span>
+                        <span class="breakdown-value" id="driverCount"></span>
                     </div>
                     <div class="breakdown-item">
                         <div class="breakdown-label">
                             <span>Passengers</span>
                         </div>
-                        <span class="breakdown-value" id="passengerCount">0</span>
+                        <span class="breakdown-value" id="passengerCount"></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="scripts/admin_overview.js"></script>
 </body>
 </html>

@@ -2,14 +2,12 @@
     padding: 2rem;
     max-width: 1400px;
     margin: 0 auto;
-    animation: fadeIn 0.5s ease-in;
 }
-
 
 /*Stats Grid*/
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /*Adjust num of columns based on container width*/
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
@@ -33,7 +31,7 @@
     left: 0;
     width: 0;
     height: 100%;
-    background: linear-gradient(180deg, #4caf50, #45a049);
+    background: #45a049;
     transition: none;
 }
 
@@ -48,19 +46,19 @@
 
 
 .total-users-card::before {
-    background: linear-gradient(180deg, #11c7ff, #11c7ff);
+    background: #11c7ff;
 }
 
 .total-rides-card::before {
-    background: linear-gradient(180deg, #ff1717, #ff1717);
+    background: #ff1717;
 }
 
 .total-co2-card::before {
-    background: linear-gradient(180deg, #12ff12, #12ff12);
+    background: #12ff12;
 }
 
 .pending-reports-card::before {
-    background: linear-gradient(180deg, #FFA726, #FF9800);
+    background:#FF9800;
 }
 
 .stat-icon-wrapper {
@@ -71,7 +69,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    background:#f9fafb;
 }
 
 .stat-icon {
@@ -157,7 +155,6 @@
     padding: 0.875rem;
     border-radius: 10px;
     background: #f9fafb;
-    transition: all 0.2s ease;
     border: 1px solid transparent;
 }
 
