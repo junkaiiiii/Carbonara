@@ -183,7 +183,7 @@ function getAllUsers(){
 
 function unbanReport(id, reportedEmail){
     fetch("api/users_api.php", {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-Type":"application/json"
         },

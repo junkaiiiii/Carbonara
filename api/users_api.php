@@ -51,7 +51,7 @@
 
         respond($response, 200);
     }
-    elseif($method === "POST"){
+    elseif($method === "PUT"){
         $data = getJsonInput();
         //check if data is not empty
         if (!$data){

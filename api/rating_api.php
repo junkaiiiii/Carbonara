@@ -10,6 +10,7 @@ $method = $_SERVER["REQUEST_METHOD"] ?? "";
 if ($method === "GET"){
     $user_id = $_GET['user_id'] ?? '';
     $ride_id= $_GET['ride_id'] ?? '';
+    //check if whether the user rated a ride already
 
     if  (!empty($user_id) && !empty($ride_id)){
         $sql = 'SELECT rating_id FROM ratings WHERE ride_id = ? AND rater_id = ?';
