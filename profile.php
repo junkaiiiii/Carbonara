@@ -172,8 +172,10 @@
             <?php endif; ?>
 
         </div>
-
-        <button class="button" onclick="window.location.href='manage_vehicle.php'">Manage Vehicle</button>
+        
+        <?php if ($_SESSION['role'] === 'Driver'): 
+        echo '<button id="manageVehicleBtn" class="button" onclick="window.location.href=\'manage_vehicle.php\'">Manage Vehicle</button>';
+        endif; ?>
     </div>
     
     <script type="module" src="scripts/profile.js"></script>

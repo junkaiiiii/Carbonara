@@ -10,8 +10,6 @@ if ($method === "POST"){
 
     $data = json_decode(file_get_contents("php://input"), true);
 
-    
-
     if ($data){
         // validate if received all required inputs  
         $required = ['fullName', 'username', 'email', 'password', 'phoneNumber', 'gender', 'dateOfBirth'];
@@ -61,8 +59,6 @@ if ($method === "POST"){
         if (!mysqli_stmt_execute($stmt)) {
             die("Execute failed: " . mysqli_stmt_error($stmt));
         }
-
-        $_SESSION['user_id'] = $user_id;
 
         respond(["success" => true, "user_id" => $user_id]);
     }

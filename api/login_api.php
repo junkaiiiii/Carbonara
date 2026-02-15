@@ -16,11 +16,9 @@ if ($method === "POST") {
             if (!isset($data[$field]) || empty($data[$field])) {
                 respond(['error' => $field . " is required"], 400);
             }
-        }
-        
+        }  
         $username = $data['username'];
         $password = $data['password'];
-
         
         $sql = "SELECT user_id, username, password_hash, role, email, profile_picture_url FROM users WHERE username = ? OR email = ?";
         $stmt = mysqli_prepare($conn, $sql);
@@ -28,7 +26,6 @@ if ($method === "POST") {
         if (!$stmt) {
             respond(['error' => 'Database error: ' . mysqli_error($conn)], 500);
         }
-
         
         mysqli_stmt_bind_param($stmt, 'ss', $username, $username);
         mysqli_stmt_execute($stmt);
@@ -40,8 +37,6 @@ if ($method === "POST") {
         mysqli_stmt_bind_result($stmt,$db_user_id, $db_username, $db_password_hash, $db_role,$db_email, $profile_picture_url);
         
         if (mysqli_stmt_fetch($stmt)) {
-            
-            
             if (password_verify($password, $db_password_hash)) {
                 $_SESSION['user_id'] = $db_user_id;
                 $_SESSION['username'] = $db_username;
@@ -55,8 +50,7 @@ if ($method === "POST") {
             }
         } else {
             respond(["error" => "User not found"], 401);
-        }
-        
+        }    
         mysqli_stmt_close($stmt);
     } else {
         respond(['error' => 'Invalid JSON data'], 400);
